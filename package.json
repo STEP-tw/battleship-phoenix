@@ -4,11 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "sh bin/setup.sh",
-    "run": "node server.js",
+    "start": "node server.js",
     "nodemon": "nodemon -w src -w server.js -w app.js",
-    "linter": "eslint .",
-    "coverage": "nyc --reporter=html mocha",
     "test": "mocha --recursive"
   },
   "repository": {
