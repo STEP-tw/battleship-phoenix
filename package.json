@@ -1,0 +1,38 @@
+{
+  "name": "battleship-phoenix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "sh bin/setup.sh",
+    "run": "node server.js",
+    "nodemon": "nodemon -w src -w server.js -w app.js",
+    "linter": "eslint .",
+    "coverage": "nyc --reporter=html mocha",
+    "test": "mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STEP-tw/battleship-phoenix.git"
+  },
+  "keywords": [],
+  "author": "phoenix",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/STEP-tw/battleship-phoenix/issues"
+  },
+  "homepage": "https://github.com/STEP-tw/battleship-phoenix#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.17.0",
+    "nodemon": "^1.14.12",
+    "supertest": "^3.0.0",
+    "mocha": "^5.0.0"
+  }
+}
