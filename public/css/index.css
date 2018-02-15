@@ -6,22 +6,117 @@
 .animateZoom{
   animation: animatezoom;
 }
-
-.popup{
-  display: none;
-  width: 100%;
-  position: fixed;
-  left : 40%;
-  top: 20%;
-  height: 100%;
-  margin: auto;
+.header {
+  color: green;
+  font-size: 2em;
+  height: 30px;
 }
 
-.opponent_arrival_message{
-  animation: animatezoom 0.6s;
-  background-color:rgba(74, 52, 75, 0.64);
+.playerDetails {
   text-align: center;
-  font-size: 30px;
-  width: 350px;
+  width: 100%;
+  height: 200px;
+
+}
+
+.shipsBlock {
+  margin-top: 87px;
+  text-align: center;
+  width: 100%;
   height: 350px;
+
+}
+
+.oceanGridBlock {
+  padding-top: 70px;
+  text-align: center;
+  width: 100%;
+  height: 400px;
+}
+
+.targetGridBlock {
+  padding-top: 70px;
+  text-align: center;
+  width: 100%;
+  height: 400px;
+}
+
+.statusBlock {
+  text-align: center;
+  width: 100%;
+  height: 213px;
+  /* margin-top: 20px; */
+}
+.buttonBlock {
+  width: 100%;
+}
+@media only screen and (min-width:768px){
+  .playerDetails {
+    border:1px solid black;
+    float: right;
+    width: 15%;
+  }
+  .shipsBlock {
+    border:1px solid black;
+    float: left;
+    width: 15%;
+  }
+  .oceanGridBlock {
+    float: left;
+    width: 34%;
+  }
+  .targetGridBlock {
+    float: left;
+    width: 34%;
+  }
+  .statusBlock {
+    border:1px solid black;
+    float: right;
+    width: 15%;
+  }
+  .buttonBlock {
+    text-align: center;
+    float: left;
+    width: 100%;
+  }
+  .popup{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    height: 100%;
+    margin: auto;
+    background-color: rgba(16, 17, 15, 0.48);
+  }
+
+  .opponent_arrival_message{
+    animation: animatezoom 0.6s;
+    background-color: rgba(255, 255, 255, 1);
+    text-align: center;
+    font-size: 30px;
+    width: 350px;
+    position: absolute;
+    top:20%;
+    left: 40%;
+    height: 350px;
+  }
+}
+.footer {
+  height: 10px;
+  width: 100%;
+}
+.buttonBlock {
+  width: 100%;
+  height: 100px;
+}
+
+#targetGrid {
+  width: 350px;
+  height:350px;
+  border: solid black;
+}
+#oceanGrid {
+  width: 350px;
+  height:350px;
+  border: solid black;
 }

@@ -19,10 +19,7 @@ const showOpponentArrival = function() {
 
 const askHasOpponentJoined = function() {
   let xml = new XMLHttpRequest();
-  xml.addEventListener("load",displayOpponentArrival);
+  xml.addEventListener("load",showOpponentArrival);
   xml.open('GET','/hasOpponentPlayer');
   xml.send();
 };
-
-
-window.onload = addClickListener;

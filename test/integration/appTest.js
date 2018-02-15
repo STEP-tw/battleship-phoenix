@@ -12,13 +12,20 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /gamepage',() => {
+  describe('GET /',() => {
     it('responds with page contents', function (done) {
       request(app)
-        .get('/gamepage')
+        .get('/')
         .expect(200)
-        .expect(/Battleship/)
         .end(done);
+    });
+  });
+  describe('GET /index.html', () => {
+    it('should serve the game page', (done) => {
+      request(app)
+      .get('/index.html')
+      .expect(/Battleship/)
+      .end(done);
     });
   });
   describe('GET /hasOpponentPlayer', function () {
@@ -42,6 +49,14 @@ describe('app', () => {
         .get('/hasOpponentPlayer')
         .expect(200)
         .expect(/false/)
+        .end(done);
+    })
+  })
+  describe('GET /create-game', () => {
+    it('adds 1st player and gives a joining message', (done) => {
+      request(app)
+        .get('/create-game')
+        .expect("Welcome you are the first player")
         .end(done);
     });
   });
