@@ -1,0 +1,9 @@
+[ishu anjum] :
+
+story name : [Player 1 is waiting]
+tasks :
+
+                 ✔ A requestHandler which responds the player count. @done(2018-02-15 15:34) @project(tasks )
+                 ✔ A requestHandler to serve the game page. @done(2018-02-15 15:34) @project(tasks )
+                 ✔ Client side : Function that will ask about the opponent's presence. @done(2018-02-15 18:00) @project(tasks )
+                 ✔ Client side : Function that will update the game page. @done(2018-02-15 18:00) @project(tasks )

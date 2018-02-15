@@ -1,0 +1,27 @@
+
+@keyframes animatezoom{
+  from{transform:scale(0)}
+  to{transform:scale(1)}
+}
+.animateZoom{
+  animation: animatezoom;
+}
+
+.popup{
+  display: none;
+  width: 100%;
+  position: fixed;
+  left : 40%;
+  top: 20%;
+  height: 100%;
+  margin: auto;
+}
+
+.opponent_arrival_message{
+  animation: animatezoom 0.6s;
+  background-color:rgba(74, 52, 75, 0.64);
+  text-align: center;
+  font-size: 30px;
+  width: 350px;
+  height: 350px;
+}
