@@ -23,9 +23,9 @@ describe('app', () => {
   describe('GET /index.html', () => {
     it('should serve the game page', (done) => {
       request(app)
-      .get('/index.html')
-      .expect(/Battleship/)
-      .end(done);
+        .get('/index.html')
+        .expect(/Battleship/)
+        .end(done);
     });
   });
   describe('GET /hasOpponentPlayer', function () {
@@ -50,8 +50,8 @@ describe('app', () => {
         .expect(200)
         .expect(/false/)
         .end(done);
-    })
-  })
+    });
+  });
   describe('GET /create-game', () => {
     it('adds 1st player and gives a joining message', (done) => {
       request(app)
