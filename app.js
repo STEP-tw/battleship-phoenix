@@ -3,19 +3,13 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const Game = require('./src/models/game.js');
+const createGame = require('./src/handlers/create_game_handler').createGame;
 let app = express();
 
 app.playerCount = 0;
 let logStream = fs.createWriteStream("./log/request.log",{flags:"a"});
 let games = [];
 
-const createGame = function(req, res) {
-  let game = new Game();
-  games.push(game);
-  game.addPlayer();
-  res.send('Welcome you are the first player');
-};
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
@@ -34,8 +28,6 @@ app.use(morgan(function(tokens, req, res) {
   stream: logStream
 }));
 
-app.use(express.static('./public'));
-
 app.get("/hasOpponentPlayer",function(req,res) {
   if (app.playerCount==2) {
     res.send("true");
@@ -46,6 +38,6 @@ app.get("/hasOpponentPlayer",function(req,res) {
 
 app.use(express.static('public'));
 
+app.get('/create-game', (req,res)=>createGame(req,res,games));
 
-app.get('/create-game', createGame);
 module.exports = app;

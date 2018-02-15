@@ -120,3 +120,7 @@
   height:350px;
   border: solid black;
 }
+
+#oceanGrid td:hover {
+   background-color: grey;
+}
