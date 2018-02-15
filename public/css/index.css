@@ -1,0 +1,94 @@
+
+.header {
+  color: green;
+  font-size: 2em;
+  height: 30px;
+}
+
+.playerDetails {
+  text-align: center;
+  width: 100%;
+  height: 200px;
+
+}
+
+.shipsBlock {
+  margin-top: 87px;
+  text-align: center;
+  width: 100%;
+  height: 350px;
+
+}
+
+.oceanGridBlock {
+  padding-top: 70px;
+  text-align: center;
+  width: 100%;
+  height: 400px;
+}
+
+.targetGridBlock {
+  padding-top: 70px;
+  text-align: center;
+  width: 100%;
+  height: 400px;
+}
+
+.statusBlock {
+  text-align: center;
+  width: 100%;
+  height: 213px;
+  margin-top: 20px;
+}
+.buttonBlock {
+  width: 100%;
+}
+@media only screen and (min-width:768px){
+  .playerDetails {
+    border:1px solid black;
+    float: right;
+    width: 15%;
+  }
+  .shipsBlock {
+    border:1px solid black;
+    float: left;
+    width: 15%;
+  }
+  .oceanGridBlock {
+    float: left;
+    width: 34%;
+  }
+  .targetGridBlock {
+    float: left;
+    width: 34%;
+  }
+  .statusBlock {
+    border:1px solid black;
+    float: right;
+    width: 15%;
+  }
+  .buttonBlock {
+    text-align: center;
+    float: left;
+    width: 100%;
+  }
+}
+.footer {
+  height: 10px;
+  width: 100%;
+}
+.buttonBlock {
+  width: 100%;
+  height: 100px;
+}
+
+#targetGrid {
+  width: 350px;
+  height:350px;
+  border: solid black;
+}
+#oceanGrid {
+  width: 350px;
+  height:350px;
+  border: solid black;
+}

@@ -20,4 +20,5 @@ app.use(morgan(function (tokens, req, res) {
   ].join(' ');
 },{stream:logStream}));
 
+app.use(express.static('./public'));
 module.exports = app;
