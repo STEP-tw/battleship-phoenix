@@ -12,4 +12,12 @@ describe('app', () => {
         .end(done);
     });
   });
+  describe('GET /create-game', () => {
+    it('adds 1st player and gives a joining message', (done) => {
+      request(app)
+        .get('/create-game')
+        .expect("Welcome you are the first player")
+        .end(done);
+    });
+  });
 });
