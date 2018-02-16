@@ -98,8 +98,8 @@ describe('app', () => {
     it('should start the game with two players', (done) => {
       request(app)
         .get('/start-game')
-        .expect(200)
-        .expect(/Game started/)
+        .expect(302)
+        .expect('location','/index.html')
         .end(done);
     });
     after(()=>{
@@ -112,7 +112,6 @@ describe('app', () => {
       request(app)
         .get('/start-game')
         .expect(200)
-        .expect(/Need Game and players/)
         .end(done);
     });
     after(()=>{
@@ -130,7 +129,6 @@ describe('app', () => {
       request(app)
         .get('/start-game')
         .expect(200)
-        .expect(/Need Game and players/)
         .end(done);
     });
     after(()=>{

@@ -1,9 +1,9 @@
 const startGame=function(req,res){
   let game = req.app.game ;
   if (game && game.hasTwoPlayers()) {
-    res.send('Game started');
+    res.redirect('/index.html');
     return;
   }
-  res.end('Need Game and players');
+  res.end();
 };
 exports.startGame=startGame;

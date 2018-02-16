@@ -1,8 +1,6 @@
 let interval;
-const showArrival = function () {
-  setTimeout(()=>{
-    interval = setInterval(askHasOpponentJoined,1000);
-  },500);
+const addListeners = function () {
+  interval = setInterval(askHasOpponentJoined,1000);
 };
 
 const showOpponentArrival = function() {
@@ -21,17 +19,27 @@ const createGetRequest = function(url,listener) {
   let xml = new XMLHttpRequest();
   xml.addEventListener("load",listener);
   xml.open('GET',url);
-  xml.send();
+  return xml;
 };
 
 const askHasOpponentJoined = function() {
-  createGetRequest('/hasOpponentJoined',showOpponentArrival);
+  let oreq = createGetRequest('/hasOpponentJoined',showOpponentArrival);
+  oreq.send();
 };
 
+const redirectOnStart = function() {
+  var myHeader = this.getResponseHeader('location');
+  if(!myHeader){
+    document.querySelector('#message').innerHTML = "Game started !!!";
+    setTimeout(()=>window.location='/',1000);
+  }
+};
 
 const startGameRequest = function() {
-  createGetRequest('/start-game',()=>{
-    document.querySelector('#message').innerHTML = "Game started !!!";
-  });
+  let oreq = createGetRequest('/start-game',redirectOnStart);
+  oreq.setRequestHeader('location',undefined);
+  oreq.send();
+  createGetRequest('/start-game',redirectOnStart);
 };
-window.onload = showArrival;
+
+window.onload = addListeners;

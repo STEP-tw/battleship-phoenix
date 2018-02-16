@@ -18,7 +18,8 @@ const addPlayerTwo = function(req,res){
 };
 
 const hasOpponentJoined = function(req,res) {
-  res.send(`${req.app.game.hasTwoPlayers()}`);
+  let text = `${req.app.game && req.app.game.hasTwoPlayers()}`;
+  res.send(text);
 };
 
 exports.createGame = [createGame,addPlayerTwo];
