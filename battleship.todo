@@ -15,5 +15,19 @@ story name : [view Battleship]
 
 tasks :
 
-    ☐ made a list of contains ship names.
-    ☐ put it into dock.
+    ✔ made a list of contains ship names. @done(2018-02-16 12:06) @project(tasks )
+    ✔ put it into dock. @done(2018-02-16 12:06) @project(tasks )
+
+
+    [arvind sudhin] :
+
+    story name : [view possible ship placement area for any ship at center]
+
+    tasks :
+
+    ✔ implement position system for getting ship's occupying area. @done(2018-02-16 15:02) @project(tasks )
+    ☐ assume the ship size is 3.
+    ☐ find the cell id on mouseover the cell.
+    ☐ generate ships co-ordinates.
+    ☐ highlight that cells.
+    ☐ highlight the cells according to the ship length.

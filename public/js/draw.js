@@ -10,7 +10,7 @@ const createGrid = function(tableName,prefix,rowSize,colSize) {
 const createRow = function(row,colSize,rowIndex,prefix){
   for (let colIndex = 0; colIndex < colSize; colIndex++) {
     let cell = document.createElement('td');
-    cell.id = `${prefix}_${rowIndex}_${colIndex}`;
+    cell.id = `${prefix}_${colIndex}_${rowIndex}`;
     cell.style.border = "1px solid black";
     row.appendChild(cell);
   }
