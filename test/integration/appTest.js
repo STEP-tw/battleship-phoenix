@@ -28,36 +28,14 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /hasOpponentPlayer', function () {
-    before(function () {
-      app.playerCount = 2;
-    });
-    it('responds true if opponent is present', function (done) {
-      request(app)
-        .get('/hasOpponentPlayer')
-        .expect(200)
-        .expect(/true/)
-        .end(done);
-    });
-    after(function () {
-      app.playerCount = 0;
-    });
-  });
-  describe('GET /hasOpponentPlayer', function () {
+  describe('GET /create-game', function () {
     it('responds false if opponent is not present', function (done) {
       request(app)
-        .get('/hasOpponentPlayer')
+        .get('/create-game')
         .expect(200)
         .expect(/false/)
         .end(done);
     });
   });
-  describe('GET /create-game', () => {
-    it('adds 1st player and gives a joining message', (done) => {
-      request(app)
-        .get('/create-game')
-        .expect("Welcome you are the first player")
-        .end(done);
-    });
-  });
+
 });

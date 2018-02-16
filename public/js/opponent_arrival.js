@@ -20,6 +20,6 @@ const showOpponentArrival = function() {
 const askHasOpponentJoined = function() {
   let xml = new XMLHttpRequest();
   xml.addEventListener("load",showOpponentArrival);
-  xml.open('GET','/hasOpponentPlayer');
+  xml.open('GET','/create-game');
   xml.send();
 };

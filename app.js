@@ -28,14 +28,6 @@ app.use(morgan(function(tokens, req, res) {
   stream: logStream
 }));
 
-app.get("/hasOpponentPlayer",function(req,res) {
-  if (app.playerCount==2) {
-    res.send("true");
-    return;
-  }
-  res.send("false");
-});
-
 app.use(express.static('public'));
 
 app.get('/create-game', (req,res)=>createGame(req,res,games));

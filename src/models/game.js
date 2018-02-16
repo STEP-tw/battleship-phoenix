@@ -13,5 +13,8 @@ class Game {
   get players(){
     return this._players;
   }
+  hasTwoPlayers(){
+    return this._playerCount==2;
+  }
 }
 module.exports = Game;

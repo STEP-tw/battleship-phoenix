@@ -1,9 +1,15 @@
 const Game = require('../models/game');
 
 const createGame = function(req, res, games) {
-  let game = new Game();
-  games.push(game);
-  game.addPlayer();
-  res.send('Welcome you are the first player');
+  if (games.length==0) {
+    let game = new Game();
+    game.addPlayer();
+    games.push(game);
+  }
+  if(games[0].hasTwoPlayers()){
+    res.send("true");
+    return;
+  }
+  res.send("false");
 };
 exports.createGame = createGame;
