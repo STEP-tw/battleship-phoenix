@@ -26,7 +26,7 @@ tasks :
     tasks :
 
     ✔ implement position system for getting ship's occupying area. @done(2018-02-16 15:02) @project(tasks )
-    ☐ assume the ship size is 3.
+    ✔ assume the ship size is 3. @done(2018-02-16 15:24) @project(tasks )
     ☐ find the cell id on mouseover the cell.
     ☐ generate ships co-ordinates.
     ☐ highlight that cells.

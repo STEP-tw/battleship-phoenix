@@ -17,10 +17,10 @@ const createRow = function(row,colSize,rowIndex,prefix){
   return row;
 };
 
-let drawGrid = function(){
+let setupGrid = function(){
   createGrid('targetGrid','tg',10,10);
   createGrid('oceanGrid','og',10,10);
   addClickListener();
 };
 
-window.onload = drawGrid;
+window.onload = setupGrid;

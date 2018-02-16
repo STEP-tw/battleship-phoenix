@@ -121,16 +121,13 @@ h4 {
   border: solid black;
 }
 
-#oceanGrid td:hover {
-   background-color: grey;
-}
-
 li {
   list-style: none;
   padding: 15px;
 }
 
 li:hover {
+  cursor: pointer;
   color: SteelBlue;
   animation: fadeIn 1s;
 }

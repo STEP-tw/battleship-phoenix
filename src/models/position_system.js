@@ -3,12 +3,12 @@
 // W <-+-> E
 //     S
 
-
 const getSouthCoordinates = (initialPos,length)=>{
   let coords = parseCoordinates(initialPos);
   let xCoord = coords[0];
   let yCoord = coords[1];
   let occupiedCoords = [];
+
   for (let iter = 0; iter < length; iter++) {
     let pos = [];
     pos.push(+xCoord,yCoord++);

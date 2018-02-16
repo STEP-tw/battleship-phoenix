@@ -1,7 +1,9 @@
 const chai = require('chai');
 const assert = chai.assert;
 const request = require('supertest');
+const mockfs = require('../testHelper/mockfs');
 const app = require('../../app.js');
+app.fs = mockfs;
 
 describe('app', () => {
   describe('GET /bad', () => {
@@ -37,5 +39,13 @@ describe('app', () => {
         .end(done);
     });
   });
-
+  describe('GET /positionSystem', function () {
+    it('should response with content of position_system file', function (done) {
+      request(app)
+        .get('/positionSystem')
+        .expect(200)
+        .expect(/positionSystemContent/)
+        .end(done);
+    });
+  });
 });
