@@ -34,7 +34,7 @@ describe('app', () => {
       app.game = new Game();
       app.game.addPlayer();
     });
-    it('serves the opponent arrival status', function (done) {
+    it('redirects to home page on opponents arrival', function (done) {
       request(app)
         .get('/createGame')
         .expect(302)
@@ -46,7 +46,7 @@ describe('app', () => {
     before(()=>{
       app.game = undefined;
     });
-    it('serves the opponent arrival status', function (done) {
+    it('redirects to create game page', function (done) {
       request(app)
         .get('/createGame')
         .expect(302)
@@ -89,4 +89,52 @@ describe('app', () => {
     });
   });
 
+  describe('GET /start-game', () => {
+    before(()=>{
+      app.game=new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+    });
+    it('should start the game with two players', (done) => {
+      request(app)
+        .get('/start-game')
+        .expect(200)
+        .expect(/Game started/)
+        .end(done);
+    });
+    after(()=>{
+      app.game=undefined;
+    });
+  });
+
+  describe('GET /start-game', () => {
+    it('should respond that game and players are needed', (done) => {
+      request(app)
+        .get('/start-game')
+        .expect(200)
+        .expect(/Need Game and players/)
+        .end(done);
+    });
+    after(()=>{
+      app.game=undefined;
+    });
+  });
+
+  describe('GET /start-game', () => {
+    before(()=>{
+      app.game=new Game();
+      app.game.addPlayer();
+    });
+    it(`should respond that game and players are
+        needed for one player`, (done) => {
+      request(app)
+        .get('/start-game')
+        .expect(200)
+        .expect(/Need Game and players/)
+        .end(done);
+    });
+    after(()=>{
+      app.game=undefined;
+    });
+  });
 });

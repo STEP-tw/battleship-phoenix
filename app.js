@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const gameHandlerPath = "./src/handlers/create_game_handler";
 const createGame = require(gameHandlerPath).createGame;
+const startGame = require("./src/handlers/start_game_handler").startGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 let app = express();
 
@@ -29,6 +30,7 @@ app.use(morgan(function(tokens, req, res) {
 
 app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
 app.get('/createGame',createGame);
+app.get('/start-game',startGame);
 app.use(express.static('public'));
 
 module.exports = app;
