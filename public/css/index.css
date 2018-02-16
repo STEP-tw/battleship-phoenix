@@ -33,7 +33,7 @@
  height: 100px;
  border-radius: 50%;
  box-sizing: border-box;
- border:16px solid ;
+ border:16px solid rgb(244, 234, 238);
  border-top-color:rgb(39, 191, 231);
  animation-name: spin;
  animation-duration: 2500ms;
