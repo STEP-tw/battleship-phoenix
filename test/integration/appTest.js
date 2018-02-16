@@ -29,22 +29,35 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /createGame.html', function () {
+  describe('GET /createGame', function () {
     before(()=>{
-      app.games = [];
+      app.game = new Game();
+      app.game.addPlayer();
     });
     it('serves the opponent arrival status', function (done) {
       request(app)
-        .get('/createGame.html')
-        .expect(200)
-        .expect(/Welcome/)
+        .get('/createGame')
+        .expect(302)
+        .expect("Location","/")
+        .end(done);
+    });
+  });
+  describe('GET /createGame', function () {
+    before(()=>{
+      app.game = undefined;
+    });
+    it('serves the opponent arrival status', function (done) {
+      request(app)
+        .get('/createGame')
+        .expect(302)
+        .expect("Location","/createGame.html")
         .end(done);
     });
   });
   describe('GET /hasOpponentJoined', function () {
     before(()=>{
-      app.games = [new Game()];
-      app.games[0].addPlayer();
+      app.game = new Game();
+      app.game.addPlayer();
     });
     it('responds false if opponent is not present', function (done) {
       request(app)
@@ -54,15 +67,15 @@ describe('app', () => {
         .end(done);
     });
     after(()=>{
-      app.games = [];
+      app.game = undefined;
     });
   });
 
   describe('GET /hasOpponentJoined', function () {
     before(()=>{
-      app.games = [new Game()];
-      app.games[0].addPlayer();
-      app.games[0].addPlayer();
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
     });
     it('responds true if opponent is present', function (done) {
       request(app)
@@ -72,7 +85,7 @@ describe('app', () => {
         .end(done);
     });
     after(()=>{
-      app.games = [];
+      app.game = undefined;
     });
   });
 
