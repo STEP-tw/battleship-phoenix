@@ -1,9 +1,8 @@
 let interval;
-const addClickListener = function () {
-  let readyButton = document.querySelector('#ready');
-  readyButton.onclick = ()=>{
+const showArrival = function () {
+  setTimeout(()=>{
     interval = setInterval(askHasOpponentJoined,1000);
-  };
+  },500);
 };
 
 const showOpponentArrival = function() {
@@ -12,14 +11,27 @@ const showOpponentArrival = function() {
   if (this.responseText=="true") {
     arrivalMessage.innerHTML = "Opponent Arrived";
     clearInterval(interval);
+    startGameRequest();
     return;
   }
-  arrivalMessage.innerHTML = "Waiting For Opponent";
+  arrivalMessage.innerHTML = "Hello! player 1.....Waiting For Opponent";
+};
+
+const createGetRequest = function(url,listener) {
+  let xml = new XMLHttpRequest();
+  xml.addEventListener("load",listener);
+  xml.open('GET',url);
+  xml.send();
 };
 
 const askHasOpponentJoined = function() {
-  let xml = new XMLHttpRequest();
-  xml.addEventListener("load",showOpponentArrival);
-  xml.open('GET','/create-game');
-  xml.send();
+  createGetRequest('/hasOpponentJoined',showOpponentArrival);
 };
+
+
+const startGameRequest = function() {
+  createGetRequest('/start-game',()=>{
+    document.querySelector('#message').innerHTML = "Game started !!!";
+  });
+};
+window.onload = showArrival;

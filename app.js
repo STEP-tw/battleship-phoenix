@@ -5,15 +5,15 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 let path = './src/handlers/pos_sys_router';
 const servePosSysRoute = require(path).servePosSysRoute;
-const createGame = require('./src/handlers/create_game_handler').createGame;
+const gameHandlerPath = "./src/handlers/create_game_handler";
+const createGame = require(gameHandlerPath).createGame;
+const startGame = require("./src/handlers/start_game_handler").startGame;
+const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 let app = express();
 app.fs = fs;
-
 app.playerCount = 0;
 
 let logStream = fs.createWriteStream("./log/request.log",{flags:"a"});
-let games = [];
-
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
@@ -32,9 +32,11 @@ app.use(morgan(function(tokens, req, res) {
   stream: logStream
 }));
 
+app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
+app.get('/start-game',startGame);
+app.get('/createGame.html',createGame);
 app.use(express.static('public'));
-
-app.get('/create-game', (req,res)=>createGame(req,res,games));
 app.get('/positionSystem',servePosSysRoute);
+
 
 module.exports = app;

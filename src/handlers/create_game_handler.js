@@ -1,15 +1,17 @@
 const Game = require('../models/game');
-
-const createGame = function(req, res, games) {
-  if (games.length==0) {
-    let game = new Game();
-    game.addPlayer();
-    games.push(game);
+const Player = require('../models/player');
+const createGame = function(req,res,next) {
+  if (!req.app.game) {
+    req.app.game = new Game();
+    req.app.game.addPlayer();
+    next();
   }
-  if(games[0].hasTwoPlayers()){
-    res.send("true");
-    return;
-  }
-  res.send("false");
 };
+
+
+const hasOpponentJoined = function(req,res) {
+  res.send(`${req.app.game.hasTwoPlayers()}`);
+};
+
 exports.createGame = createGame;
+exports.hasOpponentJoined = hasOpponentJoined;
