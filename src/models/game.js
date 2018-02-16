@@ -7,8 +7,7 @@ class Game {
   }
   addPlayer(){
     let id = ++this._playerCount;
-    let player=new Player(id);
-    this._players[id]=player;
+    this._players[id]=new Player(id);
   }
   get players(){
     return this._players;

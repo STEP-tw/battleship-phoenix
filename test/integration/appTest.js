@@ -31,7 +31,7 @@ describe('app', () => {
   });
   describe('GET /createGame.html', function () {
     before(()=>{
-      app.games = [];
+      app.game = undefined;
     });
     it('serves the opponent arrival status', function (done) {
       request(app)
@@ -43,8 +43,8 @@ describe('app', () => {
   });
   describe('GET /hasOpponentJoined', function () {
     before(()=>{
-      app.games = [new Game()];
-      app.games[0].addPlayer();
+      app.game = new Game();
+      app.game.addPlayer(1);
     });
     it('responds false if opponent is not present', function (done) {
       request(app)
@@ -54,15 +54,15 @@ describe('app', () => {
         .end(done);
     });
     after(()=>{
-      app.games = [];
+      app.game = undefined;
     });
   });
 
   describe('GET /hasOpponentJoined', function () {
     before(()=>{
-      app.games = [new Game()];
-      app.games[0].addPlayer();
-      app.games[0].addPlayer();
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
     });
     it('responds true if opponent is present', function (done) {
       request(app)
@@ -72,8 +72,56 @@ describe('app', () => {
         .end(done);
     });
     after(()=>{
-      app.games = [];
+      app.game=undefined;
     });
   });
 
+  describe('GET /start-game', () => {
+    before(()=>{
+      app.game=new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+    });
+    it('should start the game with two players', (done) => {
+      request(app)
+        .get('/start-game')
+        .expect(200)
+        .expect(/Game started/)
+        .end(done);
+    });
+    after(()=>{
+      app.game=undefined;
+    });
+  });
+
+  describe('GET /start-game', () => {
+    it('should respond that game and players are needed', (done) => {
+      request(app)
+        .get('/start-game')
+        .expect(200)
+        .expect(/Need Game and players/)
+        .end(done);
+    });
+    after(()=>{
+      app.game=undefined;
+    });
+  });
+
+  describe('GET /start-game', () => {
+    before(()=>{
+      app.game=new Game();
+      app.game.addPlayer();
+    });
+    it(`should respond that game and players are
+        needed for one player`, (done) => {
+      request(app)
+        .get('/start-game')
+        .expect(200)
+        .expect(/Need Game and players/)
+        .end(done);
+    });
+    after(()=>{
+      app.game=undefined;
+    });
+  });
 });

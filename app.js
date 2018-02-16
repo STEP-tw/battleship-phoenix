@@ -5,11 +5,11 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const gameHandlerPath = "./src/handlers/create_game_handler";
 const createGame = require(gameHandlerPath).createGame;
+const startGame = require("./src/handlers/start_game_handler").startGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 let app = express();
 
 let logStream = fs.createWriteStream("./log/request.log",{flags:"a"});
-
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
@@ -28,11 +28,9 @@ app.use(morgan(function(tokens, req, res) {
   stream: logStream
 }));
 
-app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res,app.games));
-app.get('/createGame.html', (req,res,next)=>{
-  createGame(app.games);
-  next();
-});
+app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
+app.get('/start-game',startGame);
+app.get('/createGame.html',createGame);
 app.use(express.static('public'));
 
 module.exports = app;
