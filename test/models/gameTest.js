@@ -1,5 +1,4 @@
 const assert = require('chai').assert;
-// const assert = chai.assert;
 const Game = require('./../../src/models/game.js');
 
 describe('Game', () => {
