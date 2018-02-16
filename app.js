@@ -33,8 +33,8 @@ app.use(morgan(function(tokens, req, res) {
 }));
 
 app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
+app.get('/createGame',createGame);
 app.get('/start-game',startGame);
-app.get('/createGame.html',createGame);
 app.use(express.static('public'));
 app.get('/positionSystem',servePosSysRoute);
 

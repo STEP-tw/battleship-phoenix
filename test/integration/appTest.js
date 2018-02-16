@@ -30,22 +30,36 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /createGame.html', function() {
+  describe('GET /createGame', function() {
     before(() => {
       app.game = undefined;
     });
-    it('serves the opponent arrival status', function(done) {
+    it('redirects to create game page', function(done) {
       request(app)
-        .get('/createGame.html')
-        .expect(200)
-        .expect(/Welcome/)
+        .get('/createGame')
+        .expect(302)
+        .expect("Location", "/createGame.html")
+        .end(done);
+    });
+  });
+  describe('GET /createGame', function() {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+    });
+    it('redirects to home page', function(done) {
+      request(app)
+        .get('/createGame')
+        .expect(302)
+        .expect("Location", "/")
         .end(done);
     });
   });
   describe('GET /hasOpponentJoined', function() {
     before(() => {
       app.game = new Game();
-      app.game.addPlayer(1);
+      app.game.addPlayer();
     });
     it('responds false if opponent is not present', function(done) {
       request(app)
@@ -58,7 +72,6 @@ describe('app', () => {
       app.game = undefined;
     });
   });
-
   describe('GET /hasOpponentJoined', function() {
     before(() => {
       app.game = new Game();
