@@ -20,7 +20,6 @@ const createRow = function(row,colSize,rowIndex,prefix){
 let drawGrid = function(){
   createGrid('targetGrid','tg',10,10);
   createGrid('oceanGrid','og',10,10);
-  addClickListener();
 };
 
 window.onload = drawGrid;

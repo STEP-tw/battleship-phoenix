@@ -3,12 +3,12 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const createGame = require('./src/handlers/create_game_handler').createGame;
+const gameHandlerPath = "./src/handlers/create_game_handler";
+const createGame = require(gameHandlerPath).createGame;
+const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 let app = express();
 
-app.playerCount = 0;
 let logStream = fs.createWriteStream("./log/request.log",{flags:"a"});
-let games = [];
 
 
 app.use(cookieParser());
@@ -28,8 +28,11 @@ app.use(morgan(function(tokens, req, res) {
   stream: logStream
 }));
 
+app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res,app.games));
+app.get('/createGame.html', (req,res,next)=>{
+  createGame(app.games);
+  next();
+});
 app.use(express.static('public'));
-
-app.get('/create-game', (req,res)=>createGame(req,res,games));
 
 module.exports = app;

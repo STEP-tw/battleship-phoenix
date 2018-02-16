@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="/css/index.css">
-  <script src="/js/opponent_arrival.js" charset="utf-8"></script>
+  <!-- <script src="/js/opponent_arrival.js" charset="utf-8"></script> -->
   <script src="/js/draw.js" charset="utf-8"></script>
   <title>Battleship</title>
 </head>
@@ -15,7 +15,14 @@
     playerDetails
   </div>
   <div class="shipsBlock">
-    Dock
+    <h4>Dock</h4>
+    <ul>
+      <li>Carrier</li>
+      <li>Battleship</li>
+      <li>Cruiser</li>
+      <li>Submarine</li>
+      <li>Destroyer</li>
+    </ul>
   </div>
   <div class="oceanGridBlock">
     Ocean Grid
@@ -30,13 +37,6 @@
   </div>
   <div class="buttonBlock">
     <button align="center" id="ready">Ready</button>
-  </div>
-  <div class="popup">
-    <div class="opponent_arrival_message">
-      <h2 id="message"></h2>
-      <div class="spin"></div>
-      <a href="/"><button>Go Back</button></a>
-    </div>
   </div>
 </body>
 

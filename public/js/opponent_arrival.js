@@ -1,9 +1,8 @@
 let interval;
-const addClickListener = function () {
-  let readyButton = document.querySelector('#ready');
-  readyButton.onclick = ()=>{
+const showArrival = function () {
+  setTimeout(()=>{
     interval = setInterval(askHasOpponentJoined,1000);
-  };
+  },1000);
 };
 
 const showOpponentArrival = function() {
@@ -14,12 +13,14 @@ const showOpponentArrival = function() {
     clearInterval(interval);
     return;
   }
-  arrivalMessage.innerHTML = "Waiting For Opponent";
+  arrivalMessage.innerHTML = "Hello! player 1.....Waiting For Opponent";
 };
 
 const askHasOpponentJoined = function() {
   let xml = new XMLHttpRequest();
   xml.addEventListener("load",showOpponentArrival);
-  xml.open('GET','/create-game');
+  xml.open('GET','/hasOpponentJoined');
   xml.send();
 };
+
+window.onload = showArrival;
