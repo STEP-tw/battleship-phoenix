@@ -28,10 +28,12 @@ const askHasOpponentJoined = function() {
 };
 
 const redirectOnStart = function() {
-  var myHeader = this.getResponseHeader('location');
+  let myHeader = this.getResponseHeader('location');
   if(!myHeader){
     document.querySelector('#message').innerHTML = "Game started !!!";
-    setTimeout(()=>window.location='/',1000);
+    setTimeout(()=>{
+      window.location='/';
+    },1000);
   }
 };
 
