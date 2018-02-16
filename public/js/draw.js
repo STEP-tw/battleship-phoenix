@@ -10,16 +10,16 @@ const createGrid = function(tableName,prefix,rowSize,colSize) {
 const createRow = function(row,colSize,rowIndex,prefix){
   for (let colIndex = 0; colIndex < colSize; colIndex++) {
     let cell = document.createElement('td');
-    cell.id = `${prefix}_${rowIndex}_${colIndex}`;
+    cell.id = `${prefix}_${colIndex}_${rowIndex}`;
     cell.style.border = "1px solid black";
     row.appendChild(cell);
   }
   return row;
 };
 
-let drawGrid = function(){
+let setupGrid = function(){
   createGrid('targetGrid','tg',10,10);
   createGrid('oceanGrid','og',10,10);
 };
 
-window.onload = drawGrid;
+window.onload = setupGrid;

@@ -6,22 +6,24 @@
   <link rel="stylesheet" href="/css/index.css">
   <!-- <script src="/js/opponent_arrival.js" charset="utf-8"></script> -->
   <script src="/js/draw.js" charset="utf-8"></script>
+  <script src="/js/show.js" charset="utf-8"></script>
+  <script src="positionSystem" charset="utf-8"></script>
   <title>Battleship</title>
 </head>
 
 <body>
   <div align="center" class="header">BATTLESHIP</div>
   <div class="playerDetails">
-    playerDetails
+    Player details
   </div>
   <div class="shipsBlock">
     <h4>Dock</h4>
     <ul>
-      <li>Carrier</li>
-      <li>Battleship</li>
-      <li>Cruiser</li>
-      <li>Submarine</li>
-      <li>Destroyer</li>
+      <li onclick="showShipScope(5)">Carrier</li>
+      <li onclick="showShipScope(4)">Battleship</li>
+      <li onclick="showShipScope(3)">Cruiser</li>
+      <li onclick="showShipScope(3)">Submarine</li>
+      <li onclick="showShipScope(2)">Destroyer</li>
     </ul>
   </div>
   <div class="oceanGridBlock">

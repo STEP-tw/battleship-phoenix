@@ -1,5 +1,5 @@
 const Game = require('../models/game');
-
+const Player = require('../models/player');
 const createGame = function(req,res,next) {
   if (req.app.game) {
     next();
