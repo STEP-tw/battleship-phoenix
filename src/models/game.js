@@ -7,9 +7,6 @@ class Game {
     this._playerCount=0;
   }
   addPlayer(){
-    if(this.hasTwoPlayers()){
-      this.updateStatus("ready to start");
-    }
     let id = ++this._playerCount;
     this._players[id]=new Player(id);
   }
@@ -17,7 +14,7 @@ class Game {
     return this._players;
   }
   hasTwoPlayers(){
-    return this._playerCount==2;
+    return this._playerCount>=2;
   }
   updateStatus(status){
     this._status = status;

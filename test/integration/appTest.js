@@ -61,7 +61,7 @@ describe('app', () => {
       app.game = new Game();
       app.game.addPlayer();
       app.game.addPlayer();
-      app.game.addPlayer();
+      app.game.updateStatus("ready to start");
     });
     it('redirects to home page', function(done) {
       request(app)

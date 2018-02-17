@@ -26,6 +26,7 @@ const createGame = function(req,res,next) {
 
 const addSecondPlayer = function(req,res){
   req.app.game.addPlayer();
+  req.app.game.updateStatus("ready to start");
   res.cookie('player','2');
   res.redirect('/');
 };

@@ -23,9 +23,7 @@ describe('Game', () => {
   describe('updateStatus', () => {
     it('should update game status when second player has joined',() => {
       let game=new Game();
-      game.addPlayer();
-      game.addPlayer();
-      game.addPlayer();
+      game.updateStatus("ready to start");
       let actual = game.status;
       let expected = "ready to start";
       assert.equal(actual,expected);
