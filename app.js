@@ -8,6 +8,7 @@ const servePosSysRoute = require(path).servePosSysRoute;
 const gameHandlerPath = "./src/handlers/create_game_handler";
 const createGame = require(gameHandlerPath).createGame;
 const startGame = require("./src/handlers/start_game_handler").startGame;
+const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 let app = express();
 app.fs = fs;
@@ -36,6 +37,7 @@ app.use(express.static('public'));
 app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
 app.get('/create-game',createGame);
 app.get('/start-game',startGame);
+app.get('/cancel-game',cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 
 

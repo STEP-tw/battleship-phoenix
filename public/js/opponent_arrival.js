@@ -1,5 +1,18 @@
 let interval;
+
+const afterCancel = function(){
+  window.location.href = '/';
+};
+
+const cancelGame = function(){
+  let url = '/cancel-game';
+  let onReq = createGetRequest(url,afterCancel);
+  onReq.send();
+};
+
 const addListeners = function () {
+  let cancelButton = document.getElementById('cancel');
+  cancelButton.onclick = cancelGame;
   interval = setInterval(askHasOpponentJoined,1000);
 };
 
@@ -37,9 +50,9 @@ const redirectOnStart = function() {
 };
 
 const startGameRequest = function() {
-  let oreq = createGetRequest('/start-game',redirectOnStart);
-  oreq.setRequestHeader('location',undefined);
-  oreq.send();
+  let onReq = createGetRequest('/start-game',redirectOnStart);
+  onReq.setRequestHeader('location',undefined);
+  onReq.send();
 };
 
 window.onload = addListeners;

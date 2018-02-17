@@ -142,6 +142,25 @@ describe('app', () => {
     });
   });
 
+  describe('GET /cancel-game', () => {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+    });
+    it('should ', (done) => {
+      request(app)
+        .get('/cancel-game')
+        .expect("done")
+        .expect((res)=>{
+          assert.equal(app.game,undefined);
+        })
+        .end(done);
+    });
+    after(() => {
+      app.game = undefined;
+    });
+  });
+
   describe('GET /start-game', () => {
     before(() => {
       app.game = new Game();
