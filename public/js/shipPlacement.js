@@ -1,4 +1,6 @@
 let shipSize = undefined;
+let direction = 'south';
+let shipsHeadPositions = [];
 
 const makeShipPlacable = function (size){
   shipSize = size;
@@ -21,6 +23,9 @@ const placeShip = function(event){
   disableMouseEvents();
   markCellsChecked(event);
   document.getElementById(shipSize).style.display="none";
+
+  let shipDetails = {dir:direction,headPos:event.target.id,length:shipSize};
+  shipsHeadPositions.push(shipDetails);
 };
 
 const markCellsChecked = function(){

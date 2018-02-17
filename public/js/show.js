@@ -1,7 +1,7 @@
 
 const showOccupiedPosition = function(event){
   if((event.target.id).startsWith('og')){
-    let coords = positionSystem['south'](event.target.id,shipSize);
+    let coords = positionSystem[direction](event.target.id,shipSize);
     let cellIdList=coords.map(generateCellId);
 
     cellIdList.forEach((cellId)=>{
@@ -14,7 +14,7 @@ const showOccupiedPosition = function(event){
 
 const removeHighlight = function(event){
   if((event.target.id).startsWith('og')){
-    let coords = positionSystem['south'](event.target.id,shipSize);
+    let coords = positionSystem[direction](event.target.id,shipSize);
     let cellIdList=coords.map(generateCellId);
 
     cellIdList.forEach((cellId)=>{

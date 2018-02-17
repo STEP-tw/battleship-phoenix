@@ -155,7 +155,6 @@ li:hover {
 }
 
 .messageBox {
-  display: none;
   width: 200px;
   height: 20px;
   font-size: 13px;
@@ -163,7 +162,7 @@ li:hover {
   color:white;
   background-color: rgba(0, 0, 0, 0.53);
   border-radius: 67px 67px 67px 67px;
-  animation: fadeIn 1s;
+  animation: fadeIn 2s;
 }
 
 @keyframes fadeIn {
