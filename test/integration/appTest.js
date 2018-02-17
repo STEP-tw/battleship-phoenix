@@ -30,19 +30,19 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /createGame', function() {
+  describe('GET /create-game', function() {
     before(() => {
       app.game = undefined;
     });
     it('redirects to create game page', function(done) {
       request(app)
-        .get('/createGame')
+        .get('/create-game')
         .expect(302)
         .expect("Location", "/createGame.html")
         .end(done);
     });
   });
-  describe('GET /createGame', function() {
+  describe('GET /create-game', function() {
     before(() => {
       app.game = new Game();
       app.game.addPlayer();
@@ -50,9 +50,23 @@ describe('app', () => {
     });
     it('redirects to home page', function(done) {
       request(app)
-        .get('/createGame')
+        .get('/create-game')
         .expect(302)
         .expect("Location", "/")
+        .end(done);
+    });
+  });
+  describe('GET /create-game', function() {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+      app.game.updateStatus("ready to start");
+    });
+    it('redirects to home page', function(done) {
+      request(app)
+        .get('/create-game')
+        .expect("Game has enough players, you can't join")
         .end(done);
     });
   });
@@ -99,8 +113,8 @@ describe('app', () => {
     it('should start the game with two players', (done) => {
       request(app)
         .get('/start-game')
-        .expect(200)
-        .expect(/Game started/)
+        .expect(302)
+        .expect('location','/index.html')
         .end(done);
     });
     after(() => {
@@ -121,7 +135,25 @@ describe('app', () => {
       request(app)
         .get('/start-game')
         .expect(200)
-        .expect(/Need Game and players/)
+        .end(done);
+    });
+    after(() => {
+      app.game = undefined;
+    });
+  });
+
+  describe('GET /cancel-game', () => {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+    });
+    it('should ', (done) => {
+      request(app)
+        .get('/cancel-game')
+        .expect("done")
+        .expect((res)=>{
+          assert.equal(app.game,undefined);
+        })
         .end(done);
     });
     after(() => {
@@ -139,7 +171,6 @@ describe('app', () => {
       request(app)
         .get('/start-game')
         .expect(200)
-        .expect(/Need Game and players/)
         .end(done);
     });
     after(() => {

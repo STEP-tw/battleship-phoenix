@@ -8,6 +8,7 @@ const servePosSysRoute = require(path).servePosSysRoute;
 const gameHandlerPath = "./src/handlers/create_game_handler";
 const createGame = require(gameHandlerPath).createGame;
 const startGame = require("./src/handlers/start_game_handler").startGame;
+const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 let app = express();
 app.fs = fs;
@@ -24,18 +25,19 @@ app.use(morgan(function(tokens, req, res) {
     tokens.method(req, res),
     tokens.url(req, res),
     tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), '-',
+    tokens.res(req, res, 'content-length'), `-`,
     tokens['response-time'](req, res), 'ms',
     JSON.stringify(req.cookies)
   ].join(' ');
 }, {
   stream: logStream
 }));
+app.use(express.static('public'));
 
 app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
-app.get('/createGame',createGame);
+app.get('/create-game',createGame);
 app.get('/start-game',startGame);
-app.use(express.static('public'));
+app.get('/cancel-game',cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 
 
