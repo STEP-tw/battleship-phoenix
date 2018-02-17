@@ -7,6 +7,7 @@
   <!-- <script src="/js/opponent_arrival.js" charset="utf-8"></script> -->
   <script src="/js/draw.js" charset="utf-8"></script>
   <script src="/js/show.js" charset="utf-8"></script>
+  <script src="/js/shipPlacement.js" charset="utf-8"></script>
   <script src="positionSystem" charset="utf-8"></script>
   <title>Battleship</title>
 </head>
@@ -19,11 +20,11 @@
   <div class="shipsBlock">
     <h4>Dock</h4>
     <ul>
-      <li onclick="showShipScope(5)">Carrier</li>
-      <li onclick="showShipScope(4)">Battleship</li>
-      <li onclick="showShipScope(3)">Cruiser</li>
-      <li onclick="showShipScope(3)">Submarine</li>
-      <li onclick="showShipScope(2)">Destroyer</li>
+      <li id="5" onclick="makeShipPlacable(5)">Carrier</li>
+      <li id="4" onclick="makeShipPlacable(4)">Battleship</li>
+      <li id="3" onclick="makeShipPlacable(3)">Cruiser</li>
+      <li id="3" onclick="makeShipPlacable(3)">Submarine</li>
+      <li id="2" onclick="makeShipPlacable(2)">Destroyer</li>
     </ul>
   </div>
   <div class="oceanGridBlock">

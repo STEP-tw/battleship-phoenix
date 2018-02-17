@@ -27,7 +27,20 @@ tasks :
 
     ✔ implement position system for getting ship's occupying area. @done(2018-02-16 15:02) @project(tasks )
     ✔ assume the ship size is 3. @done(2018-02-16 15:24) @project(tasks )
-    ☐ find the cell id on mouseover the cell.
-    ☐ generate ships co-ordinates.
-    ☐ highlight that cells.
-    ☐ highlight the cells according to the ship length.
+    ✔ find the cell id on mouseover the cell. @done(2018-02-17 10:27) @project(tasks )
+    ✔ generate ships co-ordinates. @done(2018-02-17 10:27) @project(tasks )
+    ✔ highlight that cells. @done(2018-02-17 10:27) @project(tasks )
+    ✔ highlight the cells according to the ship length. @done(2018-02-17 10:27) @project(tasks )
+    [arvind / sudhin] :
+
+    story name : [place a ship at center]
+
+    tasks :
+
+    ✔ onclicking on any ship in dock, ocean grid should be active to listen click. @done(2018-02-17 13:30) @project(tasks )
+    ✔ onclicking on any cell on ocean grid should highlight that ship on ocean gird @done(2018-02-17 13:30) @project(tasks )
+    ☐ store the head position of placed ship
+    ✔ ship will disappear from dock after it placing on ocean grid. @done(2018-02-17 13:30) @project(tasks )
+    ✔ after placed all the ships start game button. @done(2018-02-17 13:30) @project(tasks )
+    bug :
+    ☐ submarine won't disappear and you can place 3 size ship as many as you want.

@@ -1,15 +1,3 @@
-let shipSize=undefined;
-
-const showShipScope = (size)=>{
-  shipSize = size;
-  addMouseEvent();
-};
-
-const addMouseEvent=function(){
-  let table=document.getElementById('oceanGrid');
-  table.onmouseover=showOccupiedPosition;
-  table.onmouseout=removeHighlight;
-};
 
 const showOccupiedPosition = function(event){
   if((event.target.id).startsWith('og')){
@@ -30,7 +18,9 @@ const removeHighlight = function(event){
     let cellIdList=coords.map(generateCellId);
 
     cellIdList.forEach((cellId)=>{
-      document.getElementById(cellId).style["background-color"]="white";
+      if(!document.getElementById(cellId).checked) {
+        document.getElementById(cellId).style["background-color"]="white";
+      }
     });
   }
 };
