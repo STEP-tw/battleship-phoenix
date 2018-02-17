@@ -20,8 +20,9 @@ const showOpponentArrival = function() {
   document.querySelector(".popup").style.display = "block";
   let arrivalMessage = document.querySelector('#message');
   if (this.responseText=="true") {
-    arrivalMessage.innerHTML = "Opponent Arrived";
+    arrivalMessage.innerHTML = "Opponent Arrived !!!";
     clearInterval(interval);
+    setTimeout(startGameReq,1000);
     return;
   }
   arrivalMessage.innerHTML = "Hello! player 1.....Waiting For Opponent";
@@ -31,28 +32,28 @@ const createGetRequest = function(url,listener) {
   let xml = new XMLHttpRequest();
   xml.addEventListener("load",listener);
   xml.open('GET',url);
-  return xml;
+  xml.send();
 };
 
 const askHasOpponentJoined = function() {
-  let onReq = createGetRequest('/hasOpponentJoined',showOpponentArrival);
-  onReq.send();
+  createGetRequest('/hasOpponentJoined',showOpponentArrival);
 };
 
-const redirectOnStart = function() {
-  let myHeader = this.getResponseHeader('location');
-  if(!myHeader){
-    document.querySelector('#message').innerHTML = "Game started !!!";
-    setTimeout(()=>{
-      window.location='/';
-    },1000);
-  }
+const startGameReq = function(){
+  createGetRequest('/start-game',changeLocation);
 };
 
 const startGameRequest = function() {
   let onReq = createGetRequest('/start-game',redirectOnStart);
   onReq.setRequestHeader('location',undefined);
   onReq.send();
+};
+
+const changeLocation = function(){
+  document.querySelector('#message').innerHTML = "Game starts";
+  setTimeout(()=>{
+    window.location = this.responseURL;
+  },1000);
 };
 
 window.onload = addListeners;
