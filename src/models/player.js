@@ -3,7 +3,6 @@ class Player {
     this._id=id;
   }
   get playerId(){
-    console.log('hello');
     return this._id;
   }
 }

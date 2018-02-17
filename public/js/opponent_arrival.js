@@ -6,7 +6,6 @@ const addListeners = function () {
 const showOpponentArrival = function() {
   document.querySelector(".popup").style.display = "block";
   let arrivalMessage = document.querySelector('#message');
-  console.log(this.responseText);
   if (this.responseText=="true") {
     arrivalMessage.innerHTML = "Opponent Arrived";
     clearInterval(interval);
