@@ -154,7 +154,24 @@ li:hover {
   animation: fadeIn 1s;
 }
 
+.messageBox {
+  display: none;
+  width: 200px;
+  height: 20px;
+  font-size: 13px;
+  padding-top: 10px;
+  color:white;
+  background-color: rgba(0, 0, 0, 0.53);
+  border-radius: 67px 67px 67px 67px;
+  animation: fadeIn 1s;
+}
+
 @keyframes fadeIn {
   from {opacity: 0;}
     to {opacity:1 ;}
+}
+
+#ready {
+  width: 100px;
+  height: 40px;
 }
