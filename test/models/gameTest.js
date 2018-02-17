@@ -11,4 +11,24 @@ describe('Game', () => {
       assert.deepEqual(actual, expected);
     });
   });
+  describe('hasTwoPlayers', () => {
+    it('should return true when game has two players', () => {
+      let game=new Game();
+      game.addPlayer();
+      game.addPlayer();
+      let actual=game.hasTwoPlayers();
+      assert.ok(actual);
+    });
+  });
+  describe('updateStatus', () => {
+    it('should update game status when second player has joined',() => {
+      let game=new Game();
+      game.addPlayer();
+      game.addPlayer();
+      game.addPlayer();
+      let actual = game.status;
+      let expected = "ready to start";
+      assert.equal(actual,expected);
+    });
+  });
 });

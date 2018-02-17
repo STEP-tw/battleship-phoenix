@@ -2,8 +2,8 @@ class Player {
   constructor(id) {
     this._id=id;
   }
-
-  getPlayerId(){
+  get playerId(){
+    console.log('hello');
     return this._id;
   }
 }

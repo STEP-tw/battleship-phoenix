@@ -6,10 +6,10 @@ const addListeners = function () {
 const showOpponentArrival = function() {
   document.querySelector(".popup").style.display = "block";
   let arrivalMessage = document.querySelector('#message');
+  console.log(this.responseText);
   if (this.responseText=="true") {
     arrivalMessage.innerHTML = "Opponent Arrived";
     clearInterval(interval);
-    startGameRequest();
     return;
   }
   arrivalMessage.innerHTML = "Hello! player 1.....Waiting For Opponent";
@@ -23,8 +23,8 @@ const createGetRequest = function(url,listener) {
 };
 
 const askHasOpponentJoined = function() {
-  let oreq = createGetRequest('/hasOpponentJoined',showOpponentArrival);
-  oreq.send();
+  let onReq = createGetRequest('/hasOpponentJoined',showOpponentArrival);
+  onReq.send();
 };
 
 const redirectOnStart = function() {
@@ -41,7 +41,6 @@ const startGameRequest = function() {
   let oreq = createGetRequest('/start-game',redirectOnStart);
   oreq.setRequestHeader('location',undefined);
   oreq.send();
-  createGetRequest('/start-game',redirectOnStart);
 };
 
 window.onload = addListeners;
