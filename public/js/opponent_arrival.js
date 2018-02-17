@@ -36,4 +36,5 @@ const changeLocation = function(){
     window.location = this.responseURL;
   },1000);
 };
+
 window.onload = addListeners;

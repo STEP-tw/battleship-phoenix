@@ -24,18 +24,18 @@ app.use(morgan(function(tokens, req, res) {
     tokens.method(req, res),
     tokens.url(req, res),
     tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), '-',
+    tokens.res(req, res, 'content-length'), `-`,
     tokens['response-time'](req, res), 'ms',
     JSON.stringify(req.cookies)
   ].join(' ');
 }, {
   stream: logStream
 }));
+app.use(express.static('public'));
 
 app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
-app.get('/createGame',createGame);
+app.get('/create-game',createGame);
 app.get('/start-game',startGame);
-app.use(express.static('public'));
 app.get('/positionSystem',servePosSysRoute);
 
 

@@ -2,6 +2,7 @@ const Player = require('./player');
 
 class Game {
   constructor() {
+    this._status = "waiting";
     this._players={};
     this._playerCount=0;
   }
@@ -13,7 +14,13 @@ class Game {
     return this._players;
   }
   hasTwoPlayers(){
-    return this._playerCount==2;
+    return this._playerCount>=2;
+  }
+  updateStatus(status){
+    this._status = status;
+  }
+  get status(){
+    return this._status;
   }
 }
 module.exports = Game;
