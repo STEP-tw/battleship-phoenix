@@ -1,19 +1,35 @@
 let interval;
+const createGetRequest = function(url,listener) {
+  let xml = new XMLHttpRequest();
+  xml.addEventListener("load",listener);
+  xml.open('GET',url);
+  xml.send();
+};
 
 const afterCancel = function(){
-  window.location.href = '/';
+  document.querySelector(".popup").style.display = "none";
+  clearInterval(interval);
 };
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  let onReq = createGetRequest(url,afterCancel);
-  onReq.send();
+  sendReq('GET',url,afterCancel);
 };
 
 const addListeners = function () {
-  let cancelButton = document.getElementById('cancel');
-  cancelButton.onclick = cancelGame;
   interval = setInterval(askHasOpponentJoined,1000);
+};
+
+const showTurnsMessage = function(){
+  let playerName = this.responseText;
+  let messageBox = document.getElementsByClassName('messageBox')[0];
+  messageBox.innerHTML = `${playerName}'s turn`;
+};
+
+const createGame = function(){
+  addListeners();
+  let url = '/create-game';
+  sendReq('GET',url,showOpponentArrival);
 };
 
 const showOpponentArrival = function() {
@@ -22,32 +38,26 @@ const showOpponentArrival = function() {
   if (this.responseText=="true") {
     arrivalMessage.innerHTML = "Opponent Arrived !!!";
     clearInterval(interval);
+    document.querySelector(".popup").style.display = "none";
     setTimeout(startGameReq,1000);
     return;
   }
   arrivalMessage.innerHTML = "Hello! player 1.....Waiting For Opponent";
 };
-
-const createGetRequest = function(url,listener) {
-  let xml = new XMLHttpRequest();
-  xml.addEventListener("load",listener);
-  xml.open('GET',url);
-  xml.send();
-};
-
 const askHasOpponentJoined = function() {
   createGetRequest('/hasOpponentJoined',showOpponentArrival);
 };
 
 const startGameReq = function(){
-  createGetRequest('/start-game',changeLocation);
+  createGetRequest('/getTurn',showTurnsMessage);
 };
 
-const changeLocation = function(){
-  setTimeout(()=>{
-    window.location = this.responseURL;
-  },1000);
+const sendReq = function(method,url,callback,data) {
+  let req = new XMLHttpRequest();
+  req.open(method,url);
+  if(data) {
+    req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+  }
+  req.onload = callback;
+  req.send();
 };
-
-
-window.onload = addListeners;

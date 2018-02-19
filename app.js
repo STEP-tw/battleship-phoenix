@@ -10,6 +10,8 @@ const createGame = require(gameHandlerPath).createGame;
 const startGame = require("./src/handlers/start_game_handler").startGame;
 const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
+const turnHandler = require(gameHandlerPath).turnHandler;
+
 let app = express();
 app.fs = fs;
 
@@ -34,10 +36,11 @@ app.use(morgan(function(tokens, req, res) {
 app.use(express.static('public'));
 
 app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
-app.get('/create-game',createGame);
 app.get('/start-game',startGame);
+app.get('/create-game',createGame);
 app.get('/cancel-game',cancelGame);
 app.get('/positionSystem',servePosSysRoute);
+app.get('/getTurn',turnHandler);
 
 
 module.exports = app;

@@ -7,7 +7,17 @@ describe('Game', () => {
       let game=new Game();
       game.addPlayer();
       let actual=game.players;
-      let expected={'1': {_id: 1}};
+      let expected={'1': {_id: 1,_name: 'player1'}};
+      assert.deepEqual(actual, expected);
+    });
+  });
+  describe('getTurn', () => {
+    it('should give the name of the current player', () => {
+      let game=new Game();
+      game.addPlayer();
+      game.addPlayer();
+      let actual=game.getTurn();
+      let expected="player1";
       assert.deepEqual(actual, expected);
     });
   });
