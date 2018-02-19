@@ -4,9 +4,8 @@ const addListener = function() {
 };
 
 const areAllShipsPlaced=function(){
-  let selector='.shipsBlock ul [style="display: none;"]';
-  let placedShips=document.querySelectorAll(selector);
-  return placedShips.length == 5;
+  let placedShips=document.querySelectorAll(".shipsBlock ul li");
+  return placedShips.length == 0;
 };
 
 const startGamePlay=function(){
@@ -15,5 +14,5 @@ const startGamePlay=function(){
     readyButton.href="/create-game";
     return;
   }
-  alert("Please place all ships");
+  document.querySelector('.messageBox').innerHTML="Please place all your ships";
 };
