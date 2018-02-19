@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>sample</title>
     <link rel="stylesheet" href="/css/index.css">
-    <link href="https://fonts.googleapis.com/css?family=Cinzel|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel|Montserrat:100,400,500,700" rel="stylesheet">
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <link rel="stylesheet" href="font-awesome.min.css">
     <script src="js/settings.js" charset="utf-8"></script>
@@ -18,8 +18,8 @@
       <ul>
         <li onclick="document.getElementById('playnow').style.display='block'">Play now</li>
         <!-- <li class="inactive" >Learn how to play</li> -->
-        <!-- <li class="inactive" >About game</li> -->
-        <li class="inactive" onclick="document.getElementById('settings').style.display='block'">Settings</li>
+        <li onclick="document.getElementById('aboutGame').style.display='block'">About game</li>
+        <li onclick="document.getElementById('settings').style.display='block'">Settings</li>
       </ul>
     </div>
     <div id="settings" class="overflow-model">
@@ -43,11 +43,42 @@
       </div>
     </div>
     <div id="aboutGame" class="overflow-model">
-      <div class="popupContent animateZoom" style="padding:32px">
+      <div class="aboutGamePopup animateZoom" style="padding:32px">
         <i onclick="document.getElementById('settings').style.display='block'"></i>
         <a class="close" href="index">×</a>
         <h2>What is Battleship game</h2><br>
-        <button type="button" class="cancel" onclick="document.getElementById('aboutGame').style.display='none'" >Cancel</button>
+        <p>&nbsp;Battleship is a guessing game for two players. It is played on ruled grids (paper or board) on which the players' fleets of ships (including battleships) are marked.
+           The locations of the fleet are concealed from the other player. Players alternate turns calling "shots" at the other player's ships,
+           and the objective of the game is to destroy the opposing player's fleet.</p>
+        <h2>How to play</h2>
+        <h3>Objective</h3>
+        <b>Be the first to sink all five of your opponent's ships.</b>
+        <h3>Contents</h3>
+        <ul>
+          <li>Ocean grid</li>
+          <li>Target grid</li>
+          <li>Ships</li>
+          <ol>
+            <li>carrier, with five holes</li>
+            <li>Battleship, with four holes</li>
+            <li>Cruiser, with three holes</li>
+            <li>Submarine, with three holes</li>
+            <li>Destroyer, with two holes</li>
+          </ol>
+        </ul>
+        <h3>Setting Up the Board Game</h3>
+        <p>&nbsp;&nbsp;Each player receives a game board with two grids, one of each type of ship.Each opponent secretly positions his own five ships on the ocean grid.</p>
+        </ol>
+          <li>Each ship must be placed horizontally or vertically—not diagonally—across grid spaces.</li>
+          <li>The ships can't hang off the grid.</li>
+          <li>Ships can touch each other, but they can't occupy the same grid space.</li>
+          <li>You cannot change the position of the ships after the game begins.</li>
+        </ol>
+        <h2>Basic Game Play</h2>
+        <p>&nbsp;&nbsp;Players take turns to attack enemy ships.
+          On your turn, Hit on a position of your opponent's target grid where you suspect the ship. If there will be a ship that position will be marked as hit and if there is no ship on that position it will be marked as miss.
+          After every shot turn will change. When it is your opponent's turn to fire shots at you, each time one of your ships receives a hit, that position will be marked as red.
+        </p>
       </div>
     </div>
     <div class="footer">Designed and developed by team Phoenix | Copyright©2018 | All rights reserved.</div>

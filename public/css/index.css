@@ -24,6 +24,9 @@ h1 {
                0px 0px 20px rgba(264, 237, 84, 0.4),
                0px 0px 20px rgba(204, 237, 84, 0.40);
 }
+b {
+  font-weight: 500;
+}
 .options li {
   list-style-type: none;
   padding:10px;
@@ -87,6 +90,18 @@ h1 {
   outline:0;
   width:600px;
   height: 400px;
+  border-radius: 7px;
+}
+.aboutGamePopup{
+  margin:0 auto;
+  background-color:#fff;
+  position:relative;
+  padding:0;
+  outline:0;
+  width:900px;
+  height:650px;
+  overflow: scroll;
+  font-family: 'Montserrat', sans-serif;
   border-radius: 7px;
 }
 .cancel {
