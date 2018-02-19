@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="/css/game.css">
-  <script src="/js/check_for_ready.js" charset="utf-8"></script>
   <script src="/js/draw.js" charset="utf-8"></script>
   <script src="/js/show.js" charset="utf-8"></script>
   <script src="/js/shipPlacement.js" charset="utf-8"></script>
+  <script src="/js/opponent_arrival.js" charset="utf-8"></script>
   <script src="positionSystem" charset="utf-8"></script>
+  <script src="/js/check_for_ready.js" charset="utf-8"></script>
   <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
   <title>Battleship</title>
 </head>
@@ -41,9 +42,15 @@
     <span class="titles">Game Status</span>
   </div>
   <div class="buttonBlock">
-    <a>
-    <button align="center" id="ready">Ready</button>
-  </a>
+      <button align="center" id="ready" >Ready</button>
   </div>
+</div>
+<div class="popup">
+  <div class="opponent_arrival_message">
+    <h2 id="message"></h2>
+    <div class="spin"></div>
+    <button id="cancel" onclick="cancelGame()">Cancel</button></a>
+  </div>
+</div>
 </body>
 </html>
