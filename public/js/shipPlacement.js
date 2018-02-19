@@ -32,7 +32,8 @@ const placeShip = function(event){
 
     let shipDetails = {dir:direction,headPos:event.target.id,length:shipSize};
     shipsHeadPositions.push(shipDetails);
-    document.getElementById(shipName).style.display="none";
+    let ship = document.getElementById(shipName);
+    ship.remove();
   }else {
     showInvalidCell(event);
   }
