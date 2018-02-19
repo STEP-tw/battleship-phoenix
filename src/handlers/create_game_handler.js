@@ -13,8 +13,9 @@ const isGameReadyToStart = function(game){
 };
 
 const createGame = function(req,res,next) {
-  if (req.app.game) {
-    if(isGameReadyToStart(req.app.game)){
+  let game=req.app.game;
+  if (game) {
+    if(isGameReadyToStart(game)){
       res.send("Game has enough players, you can't join");
       return;
     }
@@ -28,7 +29,9 @@ const addSecondPlayer = function(req,res){
   req.app.game.addPlayer();
   req.app.game.updateStatus("ready to start");
   res.cookie('player','2');
-  res.redirect('/');
+  let content=req.app.fs.readFileSync('./public/index.html','utf8');
+  content=content.replace('Place your ships','game started');
+  res.send(content);
 };
 
 const hasOpponentJoined = function(req,res) {

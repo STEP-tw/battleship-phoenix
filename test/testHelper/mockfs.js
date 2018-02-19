@@ -1,9 +1,16 @@
-let mockfs = {
-  readFileSync : function(path,encoding){
-    if(path == './src/models/position_system.js'){
-      return "positionSystemContent";
-    }
+class Mockfs{
+  constructor(){
+    this.files = {};
   }
-};
+  addFile(fileName,content){
+    this.files[fileName] = content || '';
+  }
+  readFileSync(fileName){
+    return this.files[fileName];
+  }
+  existsSync(fileName){
+    return Object.keys(this.files).includes(fileName);
+  }
+}
 
-module.exports = mockfs;
+module.exports = Mockfs;

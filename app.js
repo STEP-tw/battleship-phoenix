@@ -12,7 +12,6 @@ const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 let app = express();
 app.fs = fs;
-app.playerCount = 0;
 
 let logStream = fs.createWriteStream("./log/request.log",{flags:"a"});
 

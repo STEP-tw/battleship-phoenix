@@ -43,17 +43,11 @@ const startGameReq = function(){
   createGetRequest('/start-game',changeLocation);
 };
 
-const startGameRequest = function() {
-  let onReq = createGetRequest('/start-game',redirectOnStart);
-  onReq.setRequestHeader('location',undefined);
-  onReq.send();
-};
-
 const changeLocation = function(){
-  document.querySelector('#message').innerHTML = "Game starts";
   setTimeout(()=>{
     window.location = this.responseURL;
   },1000);
 };
+
 
 window.onload = addListeners;

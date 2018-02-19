@@ -1,9 +1,12 @@
 const chai = require('chai');
 const assert = chai.assert;
 const request = require('supertest');
-const mockfs = require('../testHelper/mockfs');
+const Mockfs = require('../testHelper/mockfs');
 const app = require('../../app.js');
-app.fs = mockfs;
+app.fs = new Mockfs();
+app.fs.addFile('./public/index.html','game started');
+
+
 const Game = require('../../src/models/game.js');
 describe('app', () => {
   describe('GET /bad', () => {
@@ -51,8 +54,8 @@ describe('app', () => {
     it('redirects to home page', function(done) {
       request(app)
         .get('/create-game')
-        .expect(302)
-        .expect("Location", "/")
+        .expect(200)
+        .expect(/game started/)
         .end(done);
     });
   });
@@ -113,8 +116,8 @@ describe('app', () => {
     it('should start the game with two players', (done) => {
       request(app)
         .get('/start-game')
-        .expect(302)
-        .expect('location','/index.html')
+        .expect(200)
+        .expect(/game started/)
         .end(done);
     });
     after(() => {
@@ -123,6 +126,7 @@ describe('app', () => {
   });
   describe('GET /positionSystem', function() {
     it('should response with content of position_system file', function(done) {
+      app.fs.addFile('./src/models/position_system.js','positionSystemContent');
       request(app)
         .get('/positionSystem')
         .expect(200)
