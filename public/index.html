@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <title>Battleship</title>
     <link rel="stylesheet" href="/css/index.css">
-    <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel|Montserrat" rel="stylesheet">
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <link rel="stylesheet" href="font-awesome.min.css">
-    <script src="clickActions.js" charset="utf-8"></script>
+    <script src="js/settings.js" charset="utf-8"></script>
   </head>
   <body>
     <audio autoplay loop id="bgm"><source src="/assets/audio/battleship.mp3" type="audio/mp3"></audio>
@@ -18,9 +18,9 @@
     <div class="options">
       <ul>
         <li onclick="document.getElementById('playnow').style.display='block'">Play now</li>
-        <!-- <li class="inactive" >Learn how to play</li>
-        <li class="inactive" >About game</li>
-        <li class="inactive" >Settings</li> -->
+        <!-- <li class="inactive" >Learn how to play</li> -->
+        <!-- <li class="inactive" >About game</li> -->
+        <li class="inactive" onclick="document.getElementById('settings').style.display='block'">Settings</li>
       </ul>
     </div>
     <div id="settings" class="overflow-model">
@@ -45,7 +45,7 @@
     </div>
     <div id="aboutGame" class="overflow-model">
       <div class="popupContent animateZoom" style="padding:32px">
-        <i onclick="document.getElementById('settings').style.display='none'"></i>
+        <i onclick="document.getElementById('settings').style.display='block'"></i>
         <a class="close" href="index">×</a>
         <h2>What is Battleship game</h2><br>
         <button type="button" class="cancel" onclick="document.getElementById('aboutGame').style.display='none'" >Cancel</button>
