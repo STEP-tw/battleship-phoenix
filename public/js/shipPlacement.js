@@ -1,4 +1,6 @@
 let shipSize = undefined;
+let direction = 'south';
+let shipsHeadPositions = [];
 
 const makeShipPlacable = function (size){
   shipSize = size;
@@ -17,9 +19,13 @@ const addMouseEvent=function(){
 };
 
 const placeShip = function(event){
-  showOccupiedPosition(event);
+  drawShip(event);
+  removeHighlight(event);
   disableMouseEvents();
   markCellsChecked(event);
+
+  let shipDetails = {dir:direction,headPos:event.target.id,length:shipSize};
+  shipsHeadPositions.push(shipDetails);
   document.getElementById(shipSize).style.display="none";
 };
 

@@ -9,6 +9,7 @@
   <script src="/js/show.js" charset="utf-8"></script>
   <script src="/js/shipPlacement.js" charset="utf-8"></script>
   <script src="positionSystem" charset="utf-8"></script>
+  <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
   <title>Battleship</title>
 </head>
 
@@ -17,10 +18,10 @@
     <div class="messageBox">Place your ships</div>
   </div>
   <div class="playerDetails">
-    Player details
+    <span class="titles">Player details</span>
   </div>
   <div class="shipsBlock">
-    <h4>Dock</h4>
+    <span align="center" class="titles">Dock</span>
     <ul>
       <li id="5" onclick="makeShipPlacable(5)">Carrier</li>
       <li id="4" onclick="makeShipPlacable(4)">Battleship</li>
@@ -30,18 +31,20 @@
     </ul>
   </div>
   <div class="oceanGridBlock">
-    Ocean Grid
-    <table align="center" id="oceanGrid"></table>
+    <span class="titles">Ocean Grid</span>
+    <table align="center" id="oceanGrid" cellspacing="0" cellpadding="0"></table>
   </div>
   <div class="targetGridBlock">
-    Target Grid
+    <span class="titles">Target Grid</span>
     <table align="center" id="targetGrid"></table>
   </div>
   <div class="statusBlock">
-    Game Status
+    <span class="titles">Game Status</span>
   </div>
   <div class="buttonBlock">
-    <button align="center" id="ready" >Ready</button>
+    <a href="/create-game">
+    <button align="center" id="ready">Ready</button>
+  </a>
   </div>
 </body>
 
