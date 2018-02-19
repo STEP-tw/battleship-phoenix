@@ -155,10 +155,9 @@ li:hover {
 }
 
 .messageBox {
-  display: none;
   width: 200px;
   height: 20px;
-  font-size: 13px;
+  font-size: 16px;
   padding-top: 10px;
   color:white;
   background-color: rgba(0, 0, 0, 0.53);
