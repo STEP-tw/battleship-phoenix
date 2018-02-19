@@ -33,7 +33,7 @@ const placeShip = function(event){
   let lastCoord=coords[coords.length-1];
   if(doesShipOverlap(event)){
     showInvalidCell(event);
-    removeHighlightOnShips();
+    remHighlightOnShips();
     return;
   }
   if (lastCoord[1] < 10) {
