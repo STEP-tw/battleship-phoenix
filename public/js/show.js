@@ -1,12 +1,12 @@
 const showOccupiedPosition = function(event){
   let cellIdList = getAllCoordsOfShip(event);
   let color = "rgba(177, 177, 177, 0.63)";
-  if(doesShipOverlap(event)){
-    showInvalidCell(event);
+  if(!doesShipOverlap(event)){
+    changeCellColor(cellIdList,color);
     remHighlightOnShips();
     return;
   }
-  changeCellColor(cellIdList,color);
+  showInvalidCell(event);
 };
 
 const removeHighlight = function(event){
@@ -40,8 +40,11 @@ const generateCellId = function (coordinates){
 };
 
 const showInvalidCell = function(event) {
+  remHighlightOnShips();
   let cellIdList = getAllCoordsOfShip(event);
+  let overLappingCells= cellsThatOverlap(cellIdList);
   let color = "rgba(255, 9, 9, 0.3)";
+  changeCellColor(overLappingCells,color);
   changeCellColor(cellIdList,color);
 };
 
