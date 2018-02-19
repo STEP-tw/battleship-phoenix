@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/css/game.css">
+  <script src="/js/check_for_ready.js" charset="utf-8"></script>
+  <script src="/js/draw.js" charset="utf-8"></script>
+  <script src="/js/show.js" charset="utf-8"></script>
+  <script src="/js/shipPlacement.js" charset="utf-8"></script>
+  <script src="positionSystem" charset="utf-8"></script>
+  <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
+  <title>Battleship</title>
+</head>
+
+<body>
+  <div align="center" class="header">BATTLESHIP
+    <div class="messageBox">Place your ships</div>
+  </div>
+  <div class="playerDetails">
+    <span class="titles">Player details</span>
+  </div>
+  <div class="shipsBlock">
+    <span id = "dockTitle" class="titles">Dock</span>
+    <ul>
+      <li id="carrier" onclick="makeShipPlacable(5)">Carrier</li>
+      <li id="battleship" onclick="makeShipPlacable(4)">Battleship</li>
+      <li id="cruiser" onclick="makeShipPlacable(3)">Cruiser</li>
+      <li id="submarine" onclick="makeShipPlacable(3)">Submarine</li>
+      <li id="destroyer" onclick="makeShipPlacable(2)">Destroyer</li>
+    </ul>
+  </div>
+  <div class="oceanGridBlock">
+    <span class="titles">Ocean Grid</span>
+    <table align="center" id="oceanGrid" cellspacing="0" cellpadding="0"></table>
+  </div>
+  <div class="targetGridBlock">
+    <span class="titles">Target Grid</span>
+    <table align="center" id="targetGrid"></table>
+  </div>
+  <div class="statusBlock">
+    <span class="titles">Game Status</span>
+  </div>
+  <div class="buttonBlock">
+    <a>
+    <button align="center" id="ready">Ready</button>
+  </a>
+  </div>
+</body>
+</html>

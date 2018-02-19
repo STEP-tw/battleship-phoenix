@@ -1,49 +1,55 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="/css/index.css">
-  <script src="/js/check_for_ready.js" charset="utf-8"></script>
-  <script src="/js/draw.js" charset="utf-8"></script>
-  <script src="/js/show.js" charset="utf-8"></script>
-  <script src="/js/shipPlacement.js" charset="utf-8"></script>
-  <script src="positionSystem" charset="utf-8"></script>
-  <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
-  <title>Battleship</title>
-</head>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>sample</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <link rel="stylesheet" href="font-awesome.min.css">
+    <script src="clickActions.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <audio autoplay loop id="bgm"><source src="/assets/audio/battleship.mp3" type="audio/mp3"></audio>
 
-<body>
-  <div align="center" class="header">BATTLESHIP
-    <div class="messageBox">Place your ships</div>
-  </div>
-  <div class="playerDetails">
-    <span class="titles">Player details</span>
-  </div>
-  <div class="shipsBlock">
-    <span id = "dockTitle" class="titles">Dock</span>
-    <ul>
-      <li id="carrier" onclick="makeShipPlacable(5)">Carrier</li>
-      <li id="battleship" onclick="makeShipPlacable(4)">Battleship</li>
-      <li id="cruiser" onclick="makeShipPlacable(3)">Cruiser</li>
-      <li id="submarine" onclick="makeShipPlacable(3)">Submarine</li>
-      <li id="destroyer" onclick="makeShipPlacable(2)">Destroyer</li>
-    </ul>
-  </div>
-  <div class="oceanGridBlock">
-    <span class="titles">Ocean Grid</span>
-    <table align="center" id="oceanGrid" cellspacing="0" cellpadding="0"></table>
-  </div>
-  <div class="targetGridBlock">
-    <span class="titles">Target Grid</span>
-    <table align="center" id="targetGrid"></table>
-  </div>
-  <div class="statusBlock">
-    <span class="titles">Game Status</span>
-  </div>
-  <div class="buttonBlock">
-    <a>
-    <button align="center" id="ready">Ready</button>
-  </a>
-  </div>
-</body>
+    <img src="/assets/images/ship.png" id="ship">
+    <header><h1>BATTLESHIP</h1></header>
+    <div class="options">
+      <ul>
+        <li onclick="document.getElementById('playnow').style.display='block'">Play now</li>
+        <!-- <li class="inactive" >Learn how to play</li>
+        <li class="inactive" >About game</li>
+        <li class="inactive" >Settings</li> -->
+      </ul>
+    </div>
+    <div id="settings" class="overflow-model">
+      <div class="popupContent animateZoom" style="padding:32px">
+        <i onclick="document.getElementById('settings').style.display='none'"></i>
+        <h2>Settings</h2>
+        <ul>
+          <li>Sound</li>
+          <li onclick=bgmController() id="music">Music</li>
+          <li id="translater"></li>
+        </ul>
+        <button type="button" class="cancel" onclick="document.getElementById('settings').style.display='none'" >Cancel</button>
+      </div>
+    </div>
+    <div id="playnow" class="overflow-model">
+      <div class="popupContent animateZoom" style="padding:32px">
+        <a class="close" href="index.html">X</a>
+        <i onclick="document.getElementById('settings').style.display='none'"></i>
+        <button class="hostButton">Host</button>
+        <button class="joinButton">Join</button>
+      </div>
+    </div>
+    <div id="aboutGame" class="overflow-model">
+      <div class="popupContent animateZoom" style="padding:32px">
+        <i onclick="document.getElementById('settings').style.display='none'"></i>
+        <a class="close" href="index">×</a>
+        <h2>What is Battleship game</h2><br>
+        <button type="button" class="cancel" onclick="document.getElementById('aboutGame').style.display='none'" >Cancel</button>
+      </div>
+    </div>
+    <div class="footer">Designed and developed by team Phoenix | Copyright©2018 | All rights reserved.</div>
+  </body>
 </html>
