@@ -19,13 +19,14 @@ const addMouseEvent=function(){
 };
 
 const placeShip = function(event){
-  showOccupiedPosition(event);
+  drawShip(event);
+  removeHighlight(event);
   disableMouseEvents();
   markCellsChecked(event);
-  document.getElementById(shipSize).style.display="none";
 
   let shipDetails = {dir:direction,headPos:event.target.id,length:shipSize};
   shipsHeadPositions.push(shipDetails);
+  document.getElementById(shipSize).style.display="none";
 };
 
 const markCellsChecked = function(){

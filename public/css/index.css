@@ -1,21 +1,21 @@
-
+body {
+  background-image: url("../assets/images/battleshipBg3.jpg");
+  background-size: 100%;
+  font-family: 'Coda', cursive;
+}
 @keyframes animatezoom{
   from{transform:scale(0)}
   to{transform:scale(1)}
 }
 @keyframes spin {
-    from {
-        transform:rotate(0deg);
-    }
-    to {
-        transform:rotate(360deg);
-    }
+  from { transform:rotate(0deg); }
+  to { transform:rotate(360deg);}
 }
 .animateZoom{
   animation: animatezoom;
 }
 .header {
-  color: green;
+  color: rgba(48, 171, 167, 0.73);
   font-size: 2em;
   height: 30px;
 }
@@ -24,7 +24,6 @@
   text-align: center;
   width: 100%;
   height: 200px;
-
 }
 
 .spin{
@@ -45,6 +44,7 @@
   margin-top: 87px;
   width: 100%;
   height: 350px;
+  color: rgb(67, 195, 199);
 }
 h4 {
   text-align: center;
@@ -74,12 +74,12 @@ h4 {
 }
 @media only screen and (min-width:1048px){
   .playerDetails {
-    border:1px solid black;
+    border:0.5px solid rgb(50, 176, 184);
     float: right;
     width: 15%;
   }
   .shipsBlock {
-    border:1px solid black;
+    border:0.5px solid ;
     float: left;
     width: 15%;
   }
@@ -92,7 +92,7 @@ h4 {
     width: 34%;
   }
   .statusBlock {
-    border:1px solid black;
+    border:0.5px solid rgb(50, 176, 184);
     float: right;
     width: 15%;
   }
@@ -135,12 +135,26 @@ h4 {
 #targetGrid {
   width: 350px;
   height:350px;
-  border: solid black;
+  border-collapse: collapse;
 }
 #oceanGrid {
   width: 350px;
   height:350px;
-  border: solid black;
+  border-collapse: collapse;
+}
+#targetGrid td {
+  border: 0.5px solid white;
+  background-color:rgba(20, 230, 231, 0.19);
+}
+#oceanGrid td {
+  border: 0.5px solid white;
+  background-color:rgba(20, 230, 231, 0.19);
+}
+.titles {
+  color: rgb(142, 145, 142);
+  padding-right: 10px;
+  padding-left: 10px;
+  background-color: white;
 }
 
 li {
@@ -159,7 +173,7 @@ li:hover {
   height: 20px;
   font-size: 13px;
   padding-top: 10px;
-  color:white;
+  color:rgb(162, 162, 162);
   background-color: rgba(0, 0, 0, 0.53);
   border-radius: 67px 67px 67px 67px;
   animation: fadeIn 2s;
@@ -167,10 +181,15 @@ li:hover {
 
 @keyframes fadeIn {
   from {opacity: 0;}
-    to {opacity:1 ;}
+  to {opacity:1 ;}
 }
 
 #ready {
   width: 100px;
   height: 40px;
+}
+
+.shipImages {
+  width: 50px;
+  height:300px;
 }

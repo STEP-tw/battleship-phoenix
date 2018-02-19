@@ -12,7 +12,7 @@ const createRow = function(row,colSize,rowIndex,prefix){
     let cell = document.createElement('td');
     cell.id = `${prefix}_${colIndex}_${rowIndex}`;
     cell.checked = false;
-    cell.style.border = "1px solid black";
+
     row.appendChild(cell);
   }
   return row;
