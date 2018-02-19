@@ -1,6 +1,11 @@
 const showOccupiedPosition = function(event){
   let cellIdList = getAllCoordsOfShip(event);
   let color = "rgba(177, 177, 177, 0.63)";
+  if(doesShipOverlap(event)){
+    showInvalidCell(event);
+    remHighlightOnShips();
+    return;
+  }
   changeCellColor(cellIdList,color);
 };
 

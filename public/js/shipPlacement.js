@@ -5,7 +5,8 @@ let shipsHeadPositions = [];
 
 
 const remHighlightOnShips = function(){
-  getPlacedShipsCells().forEach((cellId)=>{
+  let allShipCells = getPlacedShipsCells();
+  allShipCells.forEach((cellId)=>{
     document.getElementById(cellId).style["background-color"]=null;
   });
 };
@@ -31,12 +32,7 @@ const addMouseEvent=function(){
 const placeShip = function(event){
   let coords = positionSystem[direction](event.target.id,shipSize);
   let lastCoord=coords[coords.length-1];
-  if(doesShipOverlap(event)){
-    showInvalidCell(event);
-    remHighlightOnShips();
-    return;
-  }
-  if (lastCoord[1] < 10) {
+  if (lastCoord[1] < 10 && !doesShipOverlap(event)) {
     drawShip(event);
     removeHighlight(event);
     disableMouseEvents();
@@ -47,6 +43,7 @@ const placeShip = function(event){
     document.getElementById(shipName).style.display="none";
   }else {
     showInvalidCell(event);
+    remHighlightOnShips();
   }
 };
 
