@@ -6,8 +6,7 @@ const afterCancel = function(){
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  let onReq = createGetRequest(url,afterCancel);
-  onReq.send();
+  createGetRequest(url,afterCancel);
 };
 
 const addListeners = function () {
