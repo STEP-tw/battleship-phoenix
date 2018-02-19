@@ -12,7 +12,6 @@ const createRow = function(row,colSize,rowIndex,prefix){
     let cell = document.createElement('td');
     cell.id = `${prefix}_${colIndex}_${rowIndex}`;
     cell.checked = false;
-
     row.appendChild(cell);
   }
   return row;

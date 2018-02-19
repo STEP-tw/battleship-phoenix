@@ -7,7 +7,7 @@ yarn-error.log*
 # Runtime data
 
 *.todo
-
+*.DS_Store
 pids
 *.pid
 *.seed

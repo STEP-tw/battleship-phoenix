@@ -5,7 +5,7 @@ const hostGame = function(req,res){
   req.app.game = new Game();
   req.app.game.addPlayer();
   res.cookie('player','1');
-  res.redirect('/createGame.html');
+  res.end();
 };
 
 const isGameReadyToStart = function(game){
@@ -14,8 +14,8 @@ const isGameReadyToStart = function(game){
 
 const createGame = function(req,res,next) {
   let game=req.app.game;
-  if (game) {
-    if(isGameReadyToStart(game)){
+  if (req.app.game) {
+    if(isGameReadyToStart(req.app.game)){
       res.send("Game has enough players, you can't join");
       return;
     }
@@ -39,5 +39,10 @@ const hasOpponentJoined = function(req,res) {
   res.send(text);
 };
 
+const turnHandler = function(req,res){
+  let playerName = req.app.game.getTurn();
+  res.send(playerName);
+};
 exports.createGame = [createGame,addSecondPlayer];
 exports.hasOpponentJoined = hasOpponentJoined;
+exports.turnHandler = turnHandler;

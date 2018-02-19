@@ -40,8 +40,7 @@ describe('app', () => {
     it('redirects to create game page', function(done) {
       request(app)
         .get('/create-game')
-        .expect(302)
-        .expect("Location", "/createGame.html")
+        .expect(200)
         .end(done);
     });
   });
@@ -56,6 +55,19 @@ describe('app', () => {
         .get('/create-game')
         .expect(200)
         .expect(/game started/)
+        .end(done);
+    });
+  });
+  describe('GET /getTurn', function() {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+    });
+    it("gives the current player's name", function(done) {
+      request(app)
+        .get('/getTurn')
+        .expect("player1")
         .end(done);
     });
   });

@@ -1,12 +1,12 @@
 let interval;
-
 const afterCancel = function(){
-  window.location.href = '/';
+  document.querySelector(".popup").style.display = "none";
+  clearInterval(interval);
 };
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  createGetRequest(url,afterCancel);
+  sendReq('GET',url,afterCancel);
 };
 
 const addListeners = function () {
@@ -15,6 +15,18 @@ const addListeners = function () {
   let askHasOpponentJoined =
     createGetRequest('/hasOpponentJoined',showOpponentArrival);
   interval = setInterval(askHasOpponentJoined,1000);
+};
+
+const showTurnsMessage = function(){
+  let playerName = this.responseText;
+  let messageBox = document.getElementsByClassName('messageBox')[0];
+  messageBox.innerHTML = `${playerName}'s turn`;
+};
+
+const createGame = function(){
+  addListeners();
+  let url = '/create-game';
+  sendReq('GET',url,showOpponentArrival);
 };
 
 const showOpponentArrival = function() {
@@ -38,11 +50,12 @@ const createGetRequest = function(url,listener) {
   };
 };
 
-const changeLocation = function(){
-  setTimeout(()=>{
-    window.location = this.responseURL;
-  },1000);
+const sendReq = function(method,url,callback,data) {
+  let req = new XMLHttpRequest();
+  req.open(method,url);
+  if(data) {
+    req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+  }
+  req.onload = callback;
+  req.send();
 };
-
-
-window.onload = addListeners;
