@@ -4,8 +4,7 @@ const addListener = function() {
 };
 
 const areAllShipsPlaced=function(){
-  let placedShips=document.querySelectorAll(".shipsBlock ul li");
-  return placedShips.length == 0;
+  return shipsHeadPositions.length == 5;
 };
 
 const startGamePlay=function(){

@@ -3,6 +3,13 @@ let shipName = '';
 let direction = 'south';
 let shipsHeadPositions = [];
 
+
+const remHighlightOnShips = function(){
+  getPlacedShipsCells().forEach((cellId)=>{
+    document.getElementById(cellId).style["background-color"]=null;
+  });
+};
+
 const makeShipPlacable = function (size){
   shipName =event.target.id;
   shipSize = size;
@@ -24,6 +31,11 @@ const addMouseEvent=function(){
 const placeShip = function(event){
   let coords = positionSystem[direction](event.target.id,shipSize);
   let lastCoord=coords[coords.length-1];
+  if(doesShipOverlap(event)){
+    showInvalidCell(event);
+    removeHighlightOnShips();
+    return;
+  }
   if (lastCoord[1] < 10) {
     drawShip(event);
     removeHighlight(event);
@@ -32,8 +44,7 @@ const placeShip = function(event){
 
     let shipDetails = {dir:direction,headPos:event.target.id,length:shipSize};
     shipsHeadPositions.push(shipDetails);
-    let ship = document.getElementById(shipName);
-    ship.remove();
+    document.getElementById(shipName).style.display="none";
   }else {
     showInvalidCell(event);
   }
@@ -61,4 +72,20 @@ const getAllCoordsOfShip = function(event) {
   let coords = positionSystem[direction](event.target.id,shipSize);
   let cellIdList=coords.map(generateCellId);
   return cellIdList;
+};
+
+const getPlacedShipsCells=function(){
+  return shipsHeadPositions.map(function(ship){
+    let coords = positionSystem[ship.dir](ship.headPos,ship.length);
+    let cellIdList=coords.map(generateCellId);
+    return cellIdList;
+  }).join().split(',');
+};
+
+const doesShipOverlap=function(event){
+  let shipCells=getAllCoordsOfShip(event);
+  let allShipCells=getPlacedShipsCells();
+  return shipCells.some(function(shipCell){
+    return allShipCells.includes(shipCell);
+  });
 };

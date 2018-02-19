@@ -6,7 +6,6 @@ const showOccupiedPosition = function(event){
 
 const removeHighlight = function(event){
   let cellIdList = getAllCoordsOfShip(event);
-
   cellIdList.forEach((cellId)=>{
     if(!document.getElementById(cellId).checked) {
       document.getElementById(cellId).style["background-color"]=null;

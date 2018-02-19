@@ -12,6 +12,8 @@ const cancelGame = function(){
 const addListeners = function () {
   let cancelButton = document.getElementById('cancel');
   cancelButton.onclick = cancelGame;
+  let askHasOpponentJoined =
+    createGetRequest('/hasOpponentJoined',showOpponentArrival);
   interval = setInterval(askHasOpponentJoined,1000);
 };
 
@@ -21,25 +23,19 @@ const showOpponentArrival = function() {
   if (this.responseText=="true") {
     arrivalMessage.innerHTML = "Opponent Arrived !!!";
     clearInterval(interval);
-    setTimeout(startGameReq,1000);
+    setTimeout(createGetRequest('/start-game',changeLocation),1000);
     return;
   }
   arrivalMessage.innerHTML = "Hello! player 1.....Waiting For Opponent";
 };
 
 const createGetRequest = function(url,listener) {
-  let xml = new XMLHttpRequest();
-  xml.addEventListener("load",listener);
-  xml.open('GET',url);
-  xml.send();
-};
-
-const askHasOpponentJoined = function() {
-  createGetRequest('/hasOpponentJoined',showOpponentArrival);
-};
-
-const startGameReq = function(){
-  createGetRequest('/start-game',changeLocation);
+  return ()=>{
+    let xml = new XMLHttpRequest();
+    xml.addEventListener("load",listener);
+    xml.open('GET',url);
+    xml.send();
+  };
 };
 
 const changeLocation = function(){
