@@ -34,7 +34,7 @@ h1 {
   animation: fadeIn 1s;
 }
 .footer {
-  font-family: Avenir;
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
   padding: 20px;
   margin-top: 300px;
@@ -91,7 +91,7 @@ h1 {
 }
 .cancel {
   font-size: 19px;
-  font-family: Avenir;
+  font-family: 'Montserrat', sans-serif;
   color: rgb(201, 201, 200);
   width: 100%;
   margin-top: 70px;
