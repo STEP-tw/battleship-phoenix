@@ -1,5 +1,5 @@
 const showOccupiedPosition = function(event){
-  let cellIdList = getAllCoordsOfShip(event);
+  let cellIdList = getAllCoordsOfShip(event.target.id);
   let color = "rgba(177, 177, 177, 0.63)";
   if(!doesShipOverlap(event)){
     changeCellColor(cellIdList,color);
@@ -10,7 +10,7 @@ const showOccupiedPosition = function(event){
 };
 
 const removeHighlight = function(event){
-  let cellIdList = getAllCoordsOfShip(event);
+  let cellIdList = getAllCoordsOfShip(event.target.id);
   cellIdList.forEach((cellId)=>{
     if(!document.getElementById(cellId).checked) {
       document.getElementById(cellId).style["background-color"]=null;
@@ -20,7 +20,7 @@ const removeHighlight = function(event){
 
 const drawShip = function(event){
 
-  let cellIdList = getAllCoordsOfShip(event);
+  let cellIdList = getAllCoordsOfShip(event.target.id);
 
   let headCell =document.getElementById(cellIdList[0]);
   headCell.style.backgroundImage = "url('../assets/images/head.png')";
@@ -41,7 +41,7 @@ const generateCellId = function (coordinates){
 
 const showInvalidCell = function(event) {
   remHighlightOnShips();
-  let cellIdList = getAllCoordsOfShip(event);
+  let cellIdList = getAllCoordsOfShip(event.target.id);
   let overLappingCells= cellsThatOverlap(cellIdList);
   let color = "rgba(255, 9, 9, 0.3)";
   changeCellColor(overLappingCells,color);

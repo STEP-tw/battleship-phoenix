@@ -66,8 +66,8 @@ const disableMouseEvents = function(){
   });
 };
 
-const getAllCoordsOfShip = function(event) {
-  let coords = positionSystem[direction](event.target.id,shipSize);
+const getAllCoordsOfShip = function(id) {
+  let coords = positionSystem[direction](id,shipSize);
   let cellIdList=coords.map(generateCellId);
   return cellIdList;
 };
@@ -81,7 +81,7 @@ const getPlacedShipsCells=function(){
 };
 
 const doesShipOverlap=function(event){
-  let shipCells=getAllCoordsOfShip(event);
+  let shipCells=getAllCoordsOfShip(event.target.id);
   return cellsThatOverlap(shipCells).length != 0;
 };
 

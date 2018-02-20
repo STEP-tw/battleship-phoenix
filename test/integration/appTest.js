@@ -4,7 +4,7 @@ const request = require('supertest');
 const Mockfs = require('../testHelper/mockfs');
 const app = require('../../app.js');
 app.fs = new Mockfs();
-app.fs.addFile('./public/index.html','game started');
+app.fs.addFile('./public/game.html','game started');
 
 
 const Game = require('../../src/models/game.js');
@@ -25,7 +25,7 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /index.html', () => {
+  describe('GET /game.html', () => {
     it('should serve the game page', (done) => {
       request(app)
         .get('/index.html')
@@ -163,7 +163,7 @@ describe('app', () => {
       app.game = new Game();
       app.game.addPlayer();
     });
-    it('should ', (done) => {
+    it('should cancel the game', (done) => {
       request(app)
         .get('/cancel-game')
         .expect("done")
@@ -203,4 +203,5 @@ describe('app', () => {
         .end(done);
     });
   });
+
 });
