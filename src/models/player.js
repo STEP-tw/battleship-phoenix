@@ -1,7 +1,7 @@
 class Player {
-  constructor(id) {
+  constructor(id,name) {
     this._id=id;
-    this._name = `player${id}`;
+    this._name = name;
   }
   get playerId(){
     return this._id;

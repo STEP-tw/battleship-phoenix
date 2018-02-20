@@ -1,5 +1,4 @@
 const addListener = function() {
-  console.log('');
   let readyButton = document.getElementById('ready');
   readyButton.onclick = startGamePlay;
 };
@@ -11,8 +10,7 @@ const areAllShipsPlaced=function(){
 
 const startGamePlay=function(){
   if (areAllShipsPlaced()) {
-    createGame();
-    return;
+    document.getElementsByClassName('popup')[0].style.display = 'block';
   }
   document.querySelector('.messageBox').innerHTML="Please place all your ships";
 };

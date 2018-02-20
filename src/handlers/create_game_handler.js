@@ -2,8 +2,9 @@ const Game = require('../models/game');
 const Player = require('../models/player');
 
 const hostGame = function(req,res){
+  let name = req.body.username;
   req.app.game = new Game();
-  req.app.game.addPlayer();
+  req.app.game.addPlayer(name);
   res.cookie('player','1');
   res.end();
 };
@@ -17,6 +18,7 @@ const createGame = function(req,res,next) {
   if (req.app.game) {
     if(isGameReadyToStart(req.app.game)){
       res.send("Game has enough players, you can't join");
+      console.log('hello');
       return;
     }
     next();
@@ -26,12 +28,11 @@ const createGame = function(req,res,next) {
 };
 
 const addSecondPlayer = function(req,res){
-  req.app.game.addPlayer();
+  let name = req.body.username;
+  req.app.game.addPlayer(name);
   req.app.game.updateStatus("ready to start");
   res.cookie('player','2');
-  let content=req.app.fs.readFileSync('./public/index.html','utf8');
-  content=content.replace('Place your ships','game started');
-  res.send(content);
+  res.end();
 };
 
 const hasOpponentJoined = function(req,res) {

@@ -11,6 +11,7 @@ const startGame = require("./src/handlers/start_game_handler").startGame;
 const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 const turnHandler = require(gameHandlerPath).turnHandler;
+// const loginHandler = require(gameHandlerPath).loginHandler;
 
 let app = express();
 app.fs = fs;
@@ -18,8 +19,11 @@ app.fs = fs;
 let logStream = fs.createWriteStream("./log/request.log",{flags:"a"});
 
 app.use(cookieParser());
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: false
 }));
 app.use(morgan(function(tokens, req, res) {
   return [
@@ -35,12 +39,13 @@ app.use(morgan(function(tokens, req, res) {
 }));
 app.use(express.static('public'));
 
+
 app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
 app.get('/start-game',startGame);
-app.get('/create-game',createGame);
+// app.get('/create-game',createGame);
 app.get('/cancel-game',cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 app.get('/getTurn',turnHandler);
-
+app.post('/login',createGame);
 
 module.exports = app;

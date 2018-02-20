@@ -33,18 +33,18 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /create-game', function() {
+  describe('POST /login', function() {
     before(() => {
       app.game = undefined;
     });
     it('redirects to create game page', function(done) {
       request(app)
-        .get('/create-game')
+        .post('/login')
         .expect(200)
         .end(done);
     });
   });
-  describe('GET /create-game', function() {
+  describe('POST /login', function() {
     before(() => {
       app.game = new Game();
       app.game.addPlayer();
@@ -52,22 +52,21 @@ describe('app', () => {
     });
     it('redirects to home page', function(done) {
       request(app)
-        .get('/create-game')
+        .post('/login')
         .expect(200)
-        .expect(/game started/)
         .end(done);
     });
   });
   describe('GET /getTurn', function() {
     before(() => {
       app.game = new Game();
-      app.game.addPlayer();
+      app.game.addPlayer('arvind');
       app.game.addPlayer();
     });
     it("gives the current player's name", function(done) {
       request(app)
         .get('/getTurn')
-        .expect("player1")
+        .expect("arvind")
         .end(done);
     });
   });
@@ -80,7 +79,7 @@ describe('app', () => {
     });
     it('redirects to home page', function(done) {
       request(app)
-        .get('/create-game')
+        .post('/login')
         .expect("Game has enough players, you can't join")
         .end(done);
     });

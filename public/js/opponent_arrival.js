@@ -1,4 +1,3 @@
-let interval;
 const createGetRequest = function(url,listener) {
   let xml = new XMLHttpRequest();
   xml.addEventListener("load",listener);
@@ -16,40 +15,10 @@ const cancelGame = function(){
   sendReq('GET',url,afterCancel);
 };
 
-const addListeners = function () {
-  interval = setInterval(askHasOpponentJoined,1000);
-};
-
-const showTurnsMessage = function(){
-  let playerName = this.responseText;
-  let messageBox = document.getElementsByClassName('messageBox')[0];
-  messageBox.innerHTML = `${playerName}'s turn`;
-};
-
 const createGame = function(){
   addListeners();
   let url = '/create-game';
   sendReq('GET',url,showOpponentArrival);
-};
-
-const showOpponentArrival = function() {
-  document.querySelector(".popup").style.display = "block";
-  let arrivalMessage = document.querySelector('#message');
-  if (this.responseText=="true") {
-    arrivalMessage.innerHTML = "Opponent Arrived !!!";
-    clearInterval(interval);
-    document.querySelector(".popup").style.display = "none";
-    setTimeout(startGameReq,1000);
-    return;
-  }
-  arrivalMessage.innerHTML = "Hello! player 1.....Waiting For Opponent";
-};
-const askHasOpponentJoined = function() {
-  createGetRequest('/hasOpponentJoined',showOpponentArrival);
-};
-
-const startGameReq = function(){
-  createGetRequest('/getTurn',showTurnsMessage);
 };
 
 const sendReq = function(method,url,callback,data) {
@@ -59,5 +28,5 @@ const sendReq = function(method,url,callback,data) {
     req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
   }
   req.onload = callback;
-  req.send();
+  req.send(data||'');
 };

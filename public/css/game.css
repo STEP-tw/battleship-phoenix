@@ -114,12 +114,14 @@ h4 {
   }
 
   .opponent_arrival_message{
+    z-index: 1;
     animation: animatezoom 0.6s;
     background-color: rgba(255, 255, 255, 1);
     text-align: center;
     font-size: 20px;
     width: 350px;
     position: absolute;
+    overflow: auto;
     top:20%;
     left: 40%;
     height: 350px;

@@ -7,9 +7,9 @@ class Game {
     this._playerCount=0;
     this._currentPlayerIndex = 1;
   }
-  addPlayer(){
+  addPlayer(name){
     let id = ++this._playerCount;
-    this._players[id]=new Player(id);
+    this._players[id]=new Player(id,name);
   }
   get players(){
     return this._players;

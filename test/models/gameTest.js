@@ -5,7 +5,7 @@ describe('Game', () => {
   describe('addPlayer', () => {
     it('should add a new player with Id 1', () => {
       let game=new Game();
-      game.addPlayer();
+      game.addPlayer('player1');
       let actual=game.players;
       let expected={'1': {_id: 1,_name: 'player1'}};
       assert.deepEqual(actual, expected);
@@ -14,8 +14,8 @@ describe('Game', () => {
   describe('getTurn', () => {
     it('should give the name of the current player', () => {
       let game=new Game();
-      game.addPlayer();
-      game.addPlayer();
+      game.addPlayer('player1');
+      game.addPlayer('player2');
       let actual=game.getTurn();
       let expected="player1";
       assert.deepEqual(actual, expected);
