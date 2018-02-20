@@ -164,13 +164,16 @@ describe('app', () => {
     before(() => {
       app.game = new Game();
       app.game.addPlayer();
+      let playerKey = Object.keys(app.game.players);
+      app.game.players[playerKey].changeStatus();
       app.game.addPlayer();
     });
     it('should start the game with two players', (done) => {
       request(app)
         .get('/start-game')
+        .set('Cookie',['player=2'])
         .expect(200)
-        .expect(/game started/)
+        .expect('true')
         .end(done);
     });
     after(() => {
@@ -188,10 +191,17 @@ describe('app', () => {
     });
   });
   describe('GET /start-game', () => {
+    before(()=>{
+      app.game = new Game();
+      app.game.addPlayer('nitesh');
+      app.game.addPlayer('nitesh');
+    });
     it('should respond that game and players are needed', (done) => {
       request(app)
         .get('/start-game')
+        .set('Cookie',['player=1'])
         .expect(200)
+        .expect('false')
         .end(done);
     });
     after(() => {
@@ -218,6 +228,7 @@ describe('app', () => {
     });
   });
 
+
   describe('GET /start-game', () => {
     before(() => {
       app.game = new Game();
@@ -227,6 +238,7 @@ describe('app', () => {
         needed for one player`, (done) => {
       request(app)
         .get('/start-game')
+        .set('cookie','player=1')
         .expect(200)
         .end(done);
     });
@@ -249,5 +261,4 @@ describe('app', () => {
         .end(done);
     });
   });
-
 });

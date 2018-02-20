@@ -18,4 +18,20 @@ describe('Player', () => {
       assert.equal(actual, expected);
     });
   });
+  describe('getPlayerId', () => {
+    it('should give the player Id', () => {
+      let player1=new Player(1,'player1');
+      let actual=player1.playerId;
+      let expected='1';
+      assert.equal(actual, expected);
+    });
+  });
+  describe('getPlayerName', () => {
+    it('should give the player name', () => {
+      let player1=new Player(1,'player1');
+      let actual=player1.playerName;
+      let expected="player1";
+      assert.equal(actual, expected);
+    });
+  });
 });

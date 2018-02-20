@@ -11,7 +11,9 @@ const areAllShipsPlaced=function(){
 const startGamePlay=function(){
   if (areAllShipsPlaced()) {
     loadFleet();
-    interval = setInterval(askIsOpponentReady,1000);
+    interval = setInterval(()=>{
+      sendReq('GET','/arePlayersReady',showWaitingMessage);
+    },1000);
     return;
   }
   document.querySelector('.messageBox').innerHTML="Please place all your ships";
@@ -22,17 +24,16 @@ const loadFleet = function() {
   sendReq('POST','/start-game',null,fleetDetails);
 };
 
-const showOpponentArrival = function() {
-  let popupBoxDisplay=document.querySelector(".popup").style;
-  popupBoxDisplay.display = "block";
+const showWaitingMessage = function() {
+  document.querySelector('.messageBox').innerHTML=
+    "Waiting for opponent to place ships";
   if (this.responseText=="true") {
     document.querySelector('.messageBox').innerHTML="Game Started";
     clearInterval(interval);
-    setTimeout(popupBoxDisplay.display = "none",1000);
     return;
   }
 };
 
 const askIsOpponentReady = function() {
-  sendReq('get','/arePlayersReady',showOpponentArrival);
+  sendReq('GET','/arePlayersReady',showWaitingMessage);
 };

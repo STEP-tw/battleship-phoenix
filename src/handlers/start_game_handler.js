@@ -1,14 +1,9 @@
 const Fleet = require('../models/fleet.js');
 
 const startGame=function(req,res){
-  let game = req.app.game ;
-  if (game && game.hasTwoPlayers()) {
-    let content=req.app.fs.readFileSync('./public/game.html','utf8');
-    content=content.replace('Place your ships','game started');
-    res.send(content);
-    return;
-  }
-  res.end("need players");
+  let game = req.app.game;
+  game.getPlayer(req.cookies.player).changeStatus();
+  res.send(game.arePlayersReady());
 };
 
 const loadFleet = function(req,res) {
@@ -26,15 +21,11 @@ const loadFleet = function(req,res) {
   game.assignFleet(req.cookies.player,fleet);
   game.changePlayerStatus(req.cookies.player);
   res.send(shipsHeadPositions);
-  res.end();
 };
 
 const arePlayersReady = function(req,res) {
-  if(req.app.game){
-    let text = `${req.app.game.arePlayersReady()}`;
-    res.send(text);
-  }
-  res.end();
+  let text = `${ req.app.game && req.app.game.arePlayersReady()}`;
+  res.send(text);
 };
 
 exports.arePlayersReady = arePlayersReady;
