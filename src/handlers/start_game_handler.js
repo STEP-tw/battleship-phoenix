@@ -24,8 +24,8 @@ const loadFleet = function(req,res) {
 };
 
 const arePlayersReady = function(req,res) {
-  let text = `${ req.app.game && req.app.game.arePlayersReady()}`;
-  res.send(text);
+  let arePlayersReady = req.app.game && req.app.game.arePlayersReady();
+  res.send(arePlayersReady);
 };
 
 exports.arePlayersReady = arePlayersReady;

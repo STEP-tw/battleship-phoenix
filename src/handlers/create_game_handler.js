@@ -4,8 +4,6 @@ const Player = require('../models/player');
 const hostGame = function(req,res){
   req.app.game = new Game();
   req.app.game.addPlayer();
-  // hardcoded to make the first player ready to test
-  req.app.game.players[1].changeStatus();
   res.cookie('player','1');
   res.end();
 };

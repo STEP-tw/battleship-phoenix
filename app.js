@@ -1,6 +1,6 @@
 const express = require('express');
 const cookieParser = require("cookie-parser");
-const morgan = require("morgan");
+const logRequest = require('./logRequest').logRequest;
 const bodyParser = require("body-parser");
 const fs = require("fs");
 let path = './src/handlers/pos_sys_router';
@@ -17,27 +17,11 @@ const turnHandler = require(gameHandlerPath).turnHandler;
 let app = express();
 app.fs = fs;
 
-let logStream = fs.createWriteStream("./log/request.log",{flags:"a"});
-
 app.use(cookieParser());
-app.use(express.urlencoded({
-  extended: false
-}));
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(morgan(function(tokens, req, res) {
-  return [
-    tokens.method(req, res),
-    tokens.url(req, res),
-    tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), `-`,
-    tokens['response-time'](req, res), 'ms',
-    JSON.stringify(req.cookies)
-  ].join(' ');
-}, {
-  stream: logStream
-}));
+app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(logRequest);
+
 app.use(express.static('public'));
 
 

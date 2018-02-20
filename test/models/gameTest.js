@@ -8,7 +8,7 @@ describe('Game', () => {
       game.addPlayer('player1');
       let actual=game.players;
       let expected={
-        '1': {_id: 1,_fleet:undefined,_status:'notReady',_name: 'player1'}};
+        '1': {_id: 1,_fleet:undefined,_ready:false,_name: 'player1'}};
       assert.deepEqual(actual, expected);
     });
   });
@@ -56,7 +56,7 @@ describe('Game', () => {
       game.addPlayer();
       game.addPlayer();
       let actual = game.getPlayer(1);
-      let expected={_id: 1,_fleet:undefined,_status:'notReady',_name:undefined};
+      let expected={_id: 1,_fleet:undefined,_ready:false,_name:undefined};
       assert.deepEqual(actual,expected);
     });
   });
