@@ -5,18 +5,17 @@
 <head>
   <meta charset="utf-8">
   <title>Battleship</title>
-  <script src="/js/opponent_arrival.js" charset="utf-8"></script>
-  <script src="/js/login.js" charset="utf-8"></script>
   <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" href="/css/game.css">
   <link href="https://fonts.googleapis.com/css?family=Cinzel|Montserrat:100,400,500,700" rel="stylesheet">
   <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  <link rel="stylesheet" href="font-awesome.min.css">
+  <script src="/js/opponent_arrival.js" charset="utf-8"></script>
+  <script src="/js/login.js" charset="utf-8"></script>
   <script src="js/settings.js" charset="utf-8"></script>
 </head>
 
 <body>
-  <audio autoplay loop id="bgm"><source src="/audio/battleship.mp3" type="audio/mp3"></audio>
+  <audio autoplay loop id="bgm"><source src="/assets/audio/battleship.mp3" type="audio/mp3"></audio>
 
   <img src="/assets/images/ship.png" id="ship">
   <header>
@@ -24,7 +23,6 @@
   <div class="options">
     <ul>
       <li onclick="document.getElementById('playnow').style.display='block'">Play now</li>
-      <!-- <li class="inactive" >Learn how to play</li> -->
       <li onclick="document.getElementById('aboutGame').style.display='block'">About game</li>
       <li onclick="document.getElementById('settings').style.display='block'">Settings</li>
     </ul>
@@ -116,5 +114,4 @@
     </div>
   </div>
 </body>
-
 </html>

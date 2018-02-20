@@ -11,8 +11,6 @@ const startGame = require("./src/handlers/start_game_handler").startGame;
 const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 const turnHandler = require(gameHandlerPath).turnHandler;
-// const loginHandler = require(gameHandlerPath).loginHandler;
-
 let app = express();
 app.fs = fs;
 

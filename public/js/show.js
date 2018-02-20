@@ -1,12 +1,16 @@
 const showOccupiedPosition = function(event){
   let cellIdList = getAllCoordsOfShip(event);
   let color = "rgba(177, 177, 177, 0.63)";
-  changeCellColor(cellIdList,color);
+  if(!doesShipOverlap(event)){
+    changeCellColor(cellIdList,color);
+    remHighlightOnShips();
+    return;
+  }
+  showInvalidCell(event);
 };
 
 const removeHighlight = function(event){
   let cellIdList = getAllCoordsOfShip(event);
-
   cellIdList.forEach((cellId)=>{
     if(!document.getElementById(cellId).checked) {
       document.getElementById(cellId).style["background-color"]=null;
@@ -36,8 +40,11 @@ const generateCellId = function (coordinates){
 };
 
 const showInvalidCell = function(event) {
+  remHighlightOnShips();
   let cellIdList = getAllCoordsOfShip(event);
+  let overLappingCells= cellsThatOverlap(cellIdList);
   let color = "rgba(255, 9, 9, 0.3)";
+  changeCellColor(overLappingCells,color);
   changeCellColor(cellIdList,color);
 };
 
