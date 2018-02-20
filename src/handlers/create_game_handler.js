@@ -29,7 +29,7 @@ const addSecondPlayer = function(req,res){
   req.app.game.addPlayer();
   req.app.game.updateStatus("ready to start");
   res.cookie('player','2');
-  let content=req.app.fs.readFileSync('./public/index.html','utf8');
+  let content=req.app.fs.readFileSync('./public/game.html','utf8');
   content=content.replace('Place your ships','game started');
   res.send(content);
 };

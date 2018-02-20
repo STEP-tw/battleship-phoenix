@@ -11,7 +11,6 @@ const startGame = require("./src/handlers/start_game_handler").startGame;
 const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 const turnHandler = require(gameHandlerPath).turnHandler;
-
 let app = express();
 app.fs = fs;
 
@@ -34,7 +33,6 @@ app.use(morgan(function(tokens, req, res) {
   stream: logStream
 }));
 app.use(express.static('public'));
-
 app.get('/hasOpponentJoined',(req,res)=>hasOpponentJoined(req,res));
 app.get('/start-game',startGame);
 app.get('/create-game',createGame);

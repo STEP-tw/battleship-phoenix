@@ -41,6 +41,7 @@ const showOpponentArrival = function() {
   arrivalMessage.innerHTML = "Hello! player 1.....Waiting For Opponent";
 };
 
+
 const createGetRequest = function(url,listener) {
   return ()=>{
     let xml = new XMLHttpRequest();

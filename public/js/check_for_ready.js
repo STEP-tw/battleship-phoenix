@@ -1,5 +1,4 @@
 const addListener = function() {
-  console.log('');
   let readyButton = document.getElementById('ready');
   readyButton.onclick = startGamePlay;
 };
@@ -11,6 +10,7 @@ const areAllShipsPlaced=function(){
 const startGamePlay=function(){
   if (areAllShipsPlaced()) {
     createGame();
+    document.querySelector('#oceanGrid').onclick = null;
     return;
   }
   document.querySelector('.messageBox').innerHTML="Please place all your ships";
