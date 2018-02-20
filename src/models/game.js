@@ -14,6 +14,9 @@ class Game {
   get players(){
     return this._players;
   }
+  getPlayer(id){
+    return this._players[id];
+  }
   hasTwoPlayers(){
     return this._playerCount>=2;
   }
@@ -25,6 +28,12 @@ class Game {
   }
   getTurn(){
     return this._players[this._currentPlayerIndex].playerName;
+  }
+  arePlayersReady(){
+    let playerIds = Object.keys(this._players);
+    return playerIds.every((playerId)=>{
+      return this._players[playerId].isReady();
+    });
   }
 }
 module.exports = Game;

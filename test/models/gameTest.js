@@ -7,7 +7,7 @@ describe('Game', () => {
       let game=new Game();
       game.addPlayer('player1');
       let actual=game.players;
-      let expected={'1': {_id: 1,_name: 'player1'}};
+      let expected={'1': {_id: 1,_name: 'player1',_status: 'not ready'}};
       assert.deepEqual(actual, expected);
     });
   });

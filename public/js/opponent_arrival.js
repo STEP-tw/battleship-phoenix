@@ -8,6 +8,18 @@ const cancelGame = function(){
   sendReq('GET',url,afterCancel);
 };
 
+const startGame = function(){
+  if(this.responseText == 'true'){
+    let messageBox = document.querySelector('.messageBox');
+    messageBox.innerHTML = 'Game Starts';
+  }
+};
+
+const canStartGame = function(){
+  let url = '/start-game';
+  sendReq('GET',url,startGame);
+};
+
 const sendReq = function(method,url,callback,data) {
   let req = new XMLHttpRequest();
   req.open(method,url);
