@@ -193,4 +193,14 @@ describe('app', () => {
       app.game = undefined;
     });
   });
+
+  describe('POST /start-game', () => {
+    it(`should store the fleet details`, (done) => {
+      request(app)
+        .post('/start-game')
+        .send('fleetDetails=[{"dir":"south","headPos":"og_4_5","length":3}]')
+        .expect(200)
+        .end(done);
+    });
+  });
 });

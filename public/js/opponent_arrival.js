@@ -50,6 +50,7 @@ const createGetRequest = function(url,listener) {
   };
 };
 
+
 const sendReq = function(method,url,callback,data) {
   let req = new XMLHttpRequest();
   req.open(method,url);
@@ -57,5 +58,5 @@ const sendReq = function(method,url,callback,data) {
     req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
   }
   req.onload = callback;
-  req.send();
+  req.send(data);
 };
