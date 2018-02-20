@@ -1,3 +1,4 @@
+let interval;
 const addListener = function() {
   let readyButton = document.getElementById('ready');
   readyButton.onclick = startGamePlay;
@@ -10,8 +11,7 @@ const areAllShipsPlaced=function(){
 const startGamePlay=function(){
   if (areAllShipsPlaced()) {
     loadFleet();
-    createGame();
-    document.querySelector('#oceanGrid').onclick = null;
+    interval = setInterval(askIsOpponentReady,1000);
     return;
   }
   document.querySelector('.messageBox').innerHTML="Please place all your ships";
@@ -19,23 +19,20 @@ const startGamePlay=function(){
 
 const loadFleet = function() {
   let fleetDetails = `fleetDetails=${JSON.stringify(shipsHeadPositions)}`;
-  sendReq('POST','/start-game',drawShips,fleetDetails);
+  sendReq('POST','/start-game',null,fleetDetails);
 };
 
-const drawShips =function (){
-  let shipDetails = this.responseText;
-  shipDetails.forEach((shipInfo)=>{
-    let cellIdList = getAllCoordsOfShip(shipInfo.headPos);
+const showOpponentArrival = function() {
+  let popupBoxDisplay=document.querySelector(".popup").style;
+  popupBoxDisplay.display = "block";
+  if (this.responseText=="true") {
+    document.querySelector('.messageBox').innerHTML="Game Started";
+    clearInterval(interval);
+    setTimeout(popupBoxDisplay.display = "none",1000);
+    return;
+  }
+};
 
-    let headCell =document.getElementById(cellIdList[0]);
-    headCell.style.backgroundImage = "url('../assets/images/head.png')";
-
-    let tailCell =document.getElementById(cellIdList[cellIdList.length-1]);
-    tailCell.style.backgroundImage = "url('../assets/images/tail.png')";
-
-    for(let iter=1; iter < cellIdList.length-1; iter++){
-      let cell =document.getElementById(cellIdList[iter]);
-      cell.style.backgroundImage = "url('../assets/images/body.png')";
-    }
-  });
+const askIsOpponentReady = function() {
+  sendReq('get','/arePlayersReady',showOpponentArrival);
 };

@@ -33,18 +33,18 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /create-game', function() {
+  describe('POST /login', function() {
     before(() => {
       app.game = undefined;
     });
     it('redirects to create game page', function(done) {
       request(app)
-        .get('/create-game')
+        .post('/login')
         .expect(200)
         .end(done);
     });
   });
-  describe('GET /create-game', function() {
+  describe('POST /login', function() {
     before(() => {
       app.game = new Game();
       app.game.addPlayer();
@@ -52,22 +52,21 @@ describe('app', () => {
     });
     it('redirects to home page', function(done) {
       request(app)
-        .get('/create-game')
+        .post('/login')
         .expect(200)
-        .expect(/game started/)
         .end(done);
     });
   });
   describe('GET /getTurn', function() {
     before(() => {
       app.game = new Game();
-      app.game.addPlayer();
+      app.game.addPlayer('arvind');
       app.game.addPlayer();
     });
     it("gives the current player's name", function(done) {
       request(app)
         .get('/getTurn')
-        .expect("player1")
+        .expect("arvind")
         .end(done);
     });
   });
@@ -80,7 +79,7 @@ describe('app', () => {
     });
     it('redirects to home page', function(done) {
       request(app)
-        .get('/create-game')
+        .post('/login')
         .expect("Game has enough players, you can't join")
         .end(done);
     });
@@ -116,6 +115,48 @@ describe('app', () => {
     });
     after(() => {
       app.game = undefined;
+    });
+  });
+
+  describe('GET /arePlayersReady', function() {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+      app.game.changePlayerStatus(1);
+      app.game.assignFleet(1,{});
+      app.game.assignFleet(2,{});
+      app.game.changePlayerStatus(2);
+    });
+    it('responds true if opponent is ready', function(done) {
+      request(app)
+        .get('/arePlayersReady')
+        .expect(200)
+        .expect(/true/)
+        .end(done);
+    });
+    after(() => {
+      app.game = undefined;
+    });
+  });
+  describe('GET /arePlayersReady', function() {
+    it('responds false if opponent is not ready', function(done) {
+      app.game = new Game();
+      app.game.addPlayer();
+      request(app)
+        .get('/arePlayersReady')
+        .expect(200)
+        .expect(/false/)
+        .end(done);
+    });
+    after(() => {
+      app.game = undefined;
+    });
+    it('responds nothing if there is no game', function(done) {
+      request(app)
+        .get('/arePlayersReady')
+        .expect(200)
+        .end(done);
     });
   });
 
@@ -195,9 +236,14 @@ describe('app', () => {
   });
 
   describe('POST /start-game', () => {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+    });
     it(`should store the fleet details`, (done) => {
       request(app)
         .post('/start-game')
+        .set('cookie','player=1')
         .send('fleetDetails=[{"dir":"south","headPos":"og_4_5","length":3}]')
         .expect(200)
         .end(done);
