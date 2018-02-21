@@ -1,6 +1,7 @@
 const assert = require('chai').assert;
 const Game = require('./../../src/models/game.js');
 const Player = require('./../../src/models/player.js');
+const Fleet = require('./../../src/models/fleet.js');
 
 describe('Game', () => {
   describe('addPlayer', () => {
@@ -84,6 +85,32 @@ describe('Game', () => {
       game.assignFleet(playerId,fleet);
       let actual = game.getFleet(playerId);
       assert.deepEqual(actual,fleet);
+    });
+  });
+  describe('checkOpponentIsHit', function () {
+    it('should return true when the opponents ship is hit', function () {
+      let game = new Game();
+      game.addPlayer();
+      game.addPlayer();
+      let fleet = new Fleet();
+      let subShipInfo = {dir:'south',length:4,headPos:[2,3]};
+      fleet.addShip(subShipInfo);
+      game.assignFleet(1,fleet);
+      game.assignFleet(2,fleet);
+      let actual = game.checkOpponentIsHit(1,[2,3]);
+      assert.ok(actual);
+    });
+    it('should return false when the opponents ship is not hit', function () {
+      let game = new Game();
+      game.addPlayer();
+      game.addPlayer();
+      let fleet = new Fleet();
+      let subShipInfo = {dir:'south',length:4,headPos:[2,3]};
+      fleet.addShip(subShipInfo);
+      game.assignFleet(1,fleet);
+      game.assignFleet(2,fleet);
+      let actual = game.checkOpponentIsHit(1,[1,2]);
+      assert.isNotOk(actual);
     });
   });
 });

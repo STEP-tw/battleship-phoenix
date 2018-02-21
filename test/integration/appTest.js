@@ -8,6 +8,7 @@ app.fs.addFile('./public/game.html', 'game started');
 
 
 const Game = require('../../src/models/game.js');
+const Fleet = require('../../src/models/fleet.js');
 describe('app', () => {
   describe('GET /bad', () => {
     it('responds with 404', (done) => {
@@ -175,6 +176,30 @@ describe('app', () => {
         .set('cookie', 'player=1')
         .send('fleetDetails=[{"dir":"south","headPos":"og_4_5","length":3}]')
         .expect(200)
+        .end(done);
+    });
+  });
+  describe('POST /isHit', function () {
+    before(() => {
+      let shipInfo =
+      {dir:"south",length:3,headPos:[1,2]};
+      let fleet = new Fleet();
+      fleet.addShip(shipInfo);
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+      app.game.assignFleet(1,fleet);
+      app.game.assignFleet(2,fleet);
+    });
+    it('Should respond with status true if any ship is hit', function (done) {
+      request(app)
+        .post('/isHit')
+        .send({firedPosition:[1,2]})
+        .expect(200)
+        .expect({
+          firedPos:[1,2],
+          status: true
+        })
         .end(done);
     });
   });

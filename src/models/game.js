@@ -56,5 +56,20 @@ class Game {
       return this._players[playerId].isReady();
     });
   }
+  getOpponentPlayerId(currentPlayerID){
+    let playerIds = Object.keys(this._players);
+    let currentPlayerIndex = playerIds.findIndex(function(playerId) {
+      return playerId == currentPlayerID;
+    });
+    if (currentPlayerIndex == 1) {
+      return playerIds[0];
+    }
+    return playerIds[1];
+  }
+  checkOpponentIsHit(currentPlayerID,position){
+    let opponentPlayerId = this.getOpponentPlayerId(currentPlayerID);
+    let opponent = this._players[opponentPlayerId];
+    return opponent.isHit(position);
+  }
 }
 module.exports = Game;

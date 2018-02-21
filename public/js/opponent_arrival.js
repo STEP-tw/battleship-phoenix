@@ -29,3 +29,11 @@ const sendReq = function(method,url,callback,data) {
   req.onload = callback;
   req.send(data||'');
 };
+
+const sendJsonData = function(method,url,callback,data) {
+  let req = new XMLHttpRequest();
+  req.open(method,url);
+  req.setRequestHeader('Content-Type','application/json');
+  req.onload = callback;
+  req.send(data||'');
+};

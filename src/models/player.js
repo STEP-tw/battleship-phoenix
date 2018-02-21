@@ -25,6 +25,9 @@ class Player {
   isReady(){
     return this._status == true;
   }
+  isHit(position){
+    return this._fleet.isAnyShipHit(position);
+  }
 }
 
 module.exports=Player;

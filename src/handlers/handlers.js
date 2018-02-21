@@ -56,6 +56,14 @@ const arePlayersReady = function(req, res) {
   res.send(playerStatus);
 };
 
+const isHit = function(req,res) {
+  let firedPos = req.body.firedPosition;
+  let currentPlayerID = req.cookies.player;
+
+  let hitStatus =req.app.game.checkOpponentIsHit(currentPlayerID,firedPos);
+  res.send({firedPos:firedPos,status:hitStatus});
+};
+
 const logRequest = function(tokens, req, res) {
   return [
     tokens.method(req, res),
@@ -67,11 +75,13 @@ const logRequest = function(tokens, req, res) {
   ].join(' ');
 };
 
+
 module.exports = {
   cancelGame,
   createGame,
   arePlayersReady,
   loadFleet,
   hasOpponentJoined,
-  logRequest
+  logRequest,
+  isHit
 };

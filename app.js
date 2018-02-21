@@ -20,8 +20,9 @@ app.use(morgan(handlers.logRequest, {
   stream: logStream
 }));
 
-
+app.use(express.json());
 app.use(express.static('public'));
+app.post('/isHit',handlers.isHit);
 app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
 app.get('/arePlayersReady',handlers.arePlayersReady);
 app.post('/start-game',handlers.loadFleet);

@@ -5,7 +5,8 @@ let shipsHeadPositions = [];
 
 const remHighlightOnShips = function(){
   let allShipCells = getPlacedShipsCells();
-  allShipCells.forEach((cellId)=>{
+  allShipCells.forEach((cellCoord)=>{
+    let cellId = generateCellId(cellCoord);
     if(cellId){
       document.getElementById(cellId).style["background-color"]=null;
     }
@@ -39,8 +40,8 @@ const placeShip = function(event){
     removeHighlight(event);
     disableMouseEvents();
     markCellsChecked(event);
-
-    let shipDetails = {dir:direction,headPos:event.target.id,length:shipSize};
+    let shipCoord = parseCoordinates(event.target.id);
+    let shipDetails = {dir:direction,headPos:shipCoord,length:shipSize};
     shipsHeadPositions.push(shipDetails);
     document.getElementById(shipName).style.display="none";
   }else {
@@ -77,7 +78,7 @@ const getAllCoordsOfShip = function(id) {
 
 const getPlacedShipsCells=function(){
   return shipsHeadPositions.map(function(ship){
-    let headPos = parseCoordinates(ship.headPos);
+    let headPos = ship.headPos;
     let coords = getCoordinates(ship.dir,headPos,ship.length);
     let cellIdList=coords.map(generateCellId);
     return cellIdList;

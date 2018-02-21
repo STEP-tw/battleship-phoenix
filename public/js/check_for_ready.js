@@ -8,6 +8,10 @@ const areAllShipsPlaced=function(){
   return shipsHeadPositions.length == 5;
 };
 
+const getCellIdForTG = function(coordinates) {
+  let cellId=`tg_${coordinates[0]}_${coordinates[1]}`;
+  return cellId;
+};
 const startGamePlay=function(){
   if (areAllShipsPlaced()) {
     loadFleet();
@@ -30,6 +34,7 @@ const showWaitingMessage = function() {
     "Waiting for opponent to place ships";
   if (response.status) {
     document.querySelector('.messageBox').innerHTML="Game Started";
+    document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
     clearInterval(interval);
     return;
   }
@@ -41,4 +46,21 @@ const askIsOpponentReady = function() {
 
 window.onbeforeunload = ()=>{
   return 'do you want to reload this page?';
+};
+
+const displayShot = function() {
+  let shotResult = JSON.parse(this.responseText);
+  let cell = document.getElementById(getCellIdForTG(shotResult.firedPos));
+  if(!shotResult.status) {
+    cell.style.backgroundImage = "url('../assets/images/miss.png')";
+  } else {
+    cell.style.backgroundImage = "url('../assets/images/hit.png')";
+  }
+};
+
+const checkAndDisplayShot=function(event) {
+  let firedPosition=parseCoordinates(event.target.id);
+  let data = {firedPosition:firedPosition};
+  data = JSON.stringify(data);
+  sendJsonData("POST","/isHit",displayShot,data);
 };

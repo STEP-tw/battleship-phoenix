@@ -5,11 +5,16 @@ class Fleet {
     this.ships = [];
   }
   addShip(shipInfo){
-    let ship = new Ship(shipInfo.dir,shipInfo.size,shipInfo.headPos);
+    let ship = new Ship(shipInfo.dir,shipInfo.length,shipInfo.headPos);
     this.ships.push(ship);
   }
   getAllShips(){
     return this.ships;
+  }
+  isAnyShipHit(position){
+    return this.ships.some(function(ship){
+      return ship.isHit(position);
+    });
   }
 }
 
