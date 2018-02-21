@@ -16,7 +16,7 @@ const hostButtonAction = function (){
 
 const addOnclickListeners = function (){
   document.getElementById('aboutGameButton').onclick=aboutGameAction;
-  document.getElementById('playnowButton').onclick=showHostOrJoin;
+  document.getElementById('playnowButton').onclick=hostOrJoin;
   document.getElementById('settingsButton').onclick=settingsAction;
   document.getElementById('cancel').onclick=cancelGame;
   document.querySelector('.submitOnJoin').onclick=joinGame;

@@ -5,7 +5,7 @@ class Player {
     this._id=id;
     this._name = name;
     this._fleet=undefined;
-    this._status = 'notReady';
+    this._ready = false;
   }
   get playerId(){
     return this._id;
@@ -14,7 +14,7 @@ class Player {
     return this._name;
   }
   changeStatus(){
-    this._status = 'ready';
+    this._ready = !this._ready;
   }
   addFleet (fleet){
     this._fleet=fleet;
@@ -23,7 +23,7 @@ class Player {
     return this._fleet;
   }
   isReady(){
-    return this._status == 'ready';
+    return this._ready;
   }
 }
 

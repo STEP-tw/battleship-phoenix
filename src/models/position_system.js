@@ -1,72 +1,22 @@
-
-//     N
-// W <-+-> E
-//     S
-
-const getSouthCoordinates = (initialPos,length)=>{
-  let coords = parseCoordinates(initialPos);
-  let xCoord = coords[0];
-  let yCoord = coords[1];
+const getCoordinates = function(direction, initialPos, length) {
   let occupiedCoords = [];
-
+  let xCoord = initialPos[0];
+  let yCoord = initialPos[1];
   for (let iter = 0; iter < length; iter++) {
-    let pos = [];
-    pos.push(+xCoord,yCoord++);
+    let pos = [xCoord, yCoord];
     occupiedCoords.push(pos);
+    pos = getNextCoordinate[direction](xCoord, yCoord);
+    xCoord = pos[0];
+    yCoord = pos[1];
   }
   return occupiedCoords;
 };
 
-const getNorthCoordinates = (initialPos,length)=>{
-  let coords = parseCoordinates(initialPos);
-  let xCoord = coords[0];
-  let yCoord = coords[1];
-  let occupiedCoords = [];
-  for (let iter = 0; iter < length; iter++) {
-    let pos = [];
-    pos.push(+xCoord,yCoord--);
-    occupiedCoords.push(pos);
-  }
-  return occupiedCoords;
+const getNextCoordinate = {
+  'south': (xCoord, yCoord) => [xCoord, yCoord + 1],
+  'north': (xCoord, yCoord) => [xCoord, yCoord - 1],
+  'east': (xCoord, yCoord) => [xCoord + 1, yCoord],
+  'west': (xCoord, yCoord) => [xCoord - 1, yCoord]
 };
 
-const getEastCoordinates = (initialPos,length)=>{
-  let coords = parseCoordinates(initialPos);
-  let xCoord = coords[0];
-  let yCoord = coords[1];
-  let occupiedCoords = [];
-  for (let iter = 0; iter < length; iter++) {
-    let pos = [];
-    pos.push(xCoord++,+yCoord);
-    occupiedCoords.push(pos);
-  }
-  return occupiedCoords;
-};
-
-const getWestCoordinates = (initialPos,length)=>{
-  let coords = parseCoordinates(initialPos);
-  let xCoord = coords[0];
-  let yCoord = coords[1];
-  let occupiedCoords = [];
-  for (let iter = 0; iter < length; iter++) {
-    let pos = [];
-    pos.push(xCoord--,+yCoord);
-    occupiedCoords.push(pos);
-  }
-  return occupiedCoords;
-};
-
-const parseCoordinates = (cellId)=>{
-  let coords = cellId.split('_').slice(1);
-  return coords;
-};
-
-
-let positionSystem = {
-  'south': getSouthCoordinates,
-  'north': getNorthCoordinates,
-  'west': getWestCoordinates,
-  'east': getEastCoordinates
-};
-
-module.exports = positionSystem;
+module.exports = getCoordinates;

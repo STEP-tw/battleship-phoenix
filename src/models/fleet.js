@@ -4,8 +4,8 @@ class Fleet {
   constructor() {
     this.ships = [];
   }
-  addShip(direction,size,initialPos){
-    let ship = new Ship(direction,size,initialPos);
+  addShip(shipInfo){
+    let ship = new Ship(shipInfo.dir,shipInfo.size,shipInfo.headPos);
     this.ships.push(ship);
   }
   getAllShips(){

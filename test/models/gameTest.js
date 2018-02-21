@@ -1,5 +1,6 @@
 const assert = require('chai').assert;
 const Game = require('./../../src/models/game.js');
+const Player = require('./../../src/models/player.js');
 
 describe('Game', () => {
   describe('addPlayer', () => {
@@ -8,7 +9,7 @@ describe('Game', () => {
       game.addPlayer('player1');
       let actual=game.players;
       let expected={
-        '1': {_id: 1,_fleet:undefined,_status:'notReady',_name: 'player1'}};
+        '1': {_id: 1,_fleet:undefined,_ready:false,_name: 'player1'}};
       assert.deepEqual(actual, expected);
     });
   });
@@ -36,7 +37,7 @@ describe('Game', () => {
       let game=new Game();
       game.updateStatus("ready to start");
       let actual = game.status;
-      let expected = "ready to start";
+      let expected = true;
       assert.equal(actual,expected);
     });
   });
@@ -56,7 +57,7 @@ describe('Game', () => {
       game.addPlayer();
       game.addPlayer();
       let actual = game.getPlayer(1);
-      let expected={_id: 1,_fleet:undefined,_status:'notReady',_name:undefined};
+      let expected= new Player(1);
       assert.deepEqual(actual,expected);
     });
   });
@@ -69,7 +70,7 @@ describe('Game', () => {
       game.changePlayerStatus(1);
       game.changePlayerStatus(2);
       game.assignFleet(2,{});
-      assert.ok(game.arePlayersReady());
+      assert.isOk(game.arePlayersReady());
     });
   });
   describe('assignFleet', () => {
