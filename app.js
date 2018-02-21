@@ -4,16 +4,9 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 let path = './src/handlers/pos_sys_router';
-let startGameHandlerPath = "./src/handlers/start_game_handler";
 const servePosSysRoute = require(path).servePosSysRoute;
-const gameHandlerPath = "./src/handlers/create_game_handler";
-const createGame = require(gameHandlerPath).createGame;
-const startGame = require(startGameHandlerPath).startGame;
-const loadFleet = require(startGameHandlerPath).loadFleet;
-const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
-const arePlayersReady = require(startGameHandlerPath).arePlayersReady;
-const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
-const turnHandler = require(gameHandlerPath).turnHandler;
+const gameHandlerPath = "./src/handlers/handlers.js";
+const handlers = require(gameHandlerPath);
 let app = express();
 app.fs = fs;
 
@@ -23,32 +16,18 @@ app.use(cookieParser());
 app.use(express.urlencoded({
   extended: false
 }));
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(morgan(function(tokens, req, res) {
-  return [
-    tokens.method(req, res),
-    tokens.url(req, res),
-    tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), `-`,
-    tokens['response-time'](req, res), 'ms',
-    JSON.stringify(req.cookies)
-  ].join(' ');
-}, {
+app.use(morgan(handlers.logRequest, {
   stream: logStream
 }));
+
+
 app.use(express.static('public'));
-
-
-app.get('/hasOpponentJoined',hasOpponentJoined);
-app.get('/arePlayersReady',arePlayersReady);
-app.get('/start-game',startGame);
-app.post('/start-game',loadFleet);
-app.get('/create-game',createGame);
-app.get('/cancel-game',cancelGame);
+app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
+app.get('/arePlayersReady',handlers.arePlayersReady);
+app.post('/start-game',handlers.loadFleet);
+app.get('/create-game',handlers.createGame);
+app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
-app.get('/getTurn',turnHandler);
-app.post('/login',createGame);
+app.post('/login',handlers.createGame);
 
 module.exports = app;

@@ -31,7 +31,8 @@ const addMouseEvent=function(){
 };
 
 const placeShip = function(event){
-  let coords = positionSystem[direction](event.target.id,shipSize);
+  let coordinates = parseCoordinates(event.target.id);
+  let coords = getCoordinates(direction,coordinates,shipSize);
   let lastCoord=coords[coords.length-1];
   if (lastCoord[1] < 10 && !doesShipOverlap(event)) {
     drawShip(event);
@@ -49,7 +50,8 @@ const placeShip = function(event){
 };
 
 const markCellsChecked = function(){
-  let coords = positionSystem[direction](event.target.id,shipSize);
+  let coordinates = parseCoordinates(event.target.id);
+  let coords = getCoordinates(direction,coordinates,shipSize);
   let cellIdList=coords.map(generateCellId);
 
   cellIdList.forEach((cellId)=>{
@@ -67,14 +69,16 @@ const disableMouseEvents = function(){
 };
 
 const getAllCoordsOfShip = function(id) {
-  let coords = positionSystem[direction](id,shipSize);
+  let parsedCoordinates = parseCoordinates(event.target.id);
+  let coords = getCoordinates(direction,parsedCoordinates,shipSize);
   let cellIdList=coords.map(generateCellId);
   return cellIdList;
 };
 
 const getPlacedShipsCells=function(){
   return shipsHeadPositions.map(function(ship){
-    let coords = positionSystem[ship.dir](ship.headPos,ship.length);
+    let headPos = parseCoordinates(ship.headPos);
+    let coords = getCoordinates(ship.dir,headPos,ship.length);
     let cellIdList=coords.map(generateCellId);
     return cellIdList;
   }).join().split(',');
@@ -90,4 +94,13 @@ const cellsThatOverlap = function(shipCells){
   return shipCells.filter(function(shipCell){
     return allShipCells.includes(shipCell);
   });
+};
+
+const parseCoordinates = (cellId)=>{
+  let coords = cellId.split('_').slice(1).map(convertToNumber);
+  return coords;
+};
+
+const convertToNumber = function(coordAsString){
+  return +coordAsString;
 };

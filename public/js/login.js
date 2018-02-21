@@ -31,9 +31,10 @@ const startGameReq = function(){
 
 
 const showOpponentArrival = function() {
+  let response = JSON.parse(this.responseText);
   document.querySelector(".popup").style.display = "block";
   let arrivalMessage = document.querySelector('#message');
-  if (this.responseText=="true") {
+  if (response.status) {
     arrivalMessage.innerHTML = "Opponent Arrived !!!";
     clearInterval(interval);
     setTimeout(startGameReq,1000);

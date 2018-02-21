@@ -9,7 +9,7 @@ const cancelGame = function(){
 };
 
 const startGame = function(){
-  if(this.responseText == 'true'){
+  if(this.responseText){
     let messageBox = document.querySelector('.messageBox');
     messageBox.innerHTML = 'Game Starts';
   }

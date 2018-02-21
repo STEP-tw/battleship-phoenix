@@ -2,7 +2,7 @@ const Player = require('./player');
 
 class Game {
   constructor() {
-    this._status = "waiting";
+    this._status = false;
     this._players={};
     this._playerCount=0;
     this._currentPlayerIndex = 1;
@@ -29,7 +29,7 @@ class Game {
     return this._players[id];
   }
   hasTwoPlayers(){
-    return this._playerCount>=2;
+    return this._playerCount ==2;
   }
   arePlayersReady(){
     let players = Object.values(this._players);
@@ -41,8 +41,8 @@ class Game {
     let player = this._players[playerId];
     return player.changeStatus();
   }
-  updateStatus(status){
-    this._status = status;
+  updateStatus(){
+    this._status = !this._status;
   }
   get status(){
     return this._status;
