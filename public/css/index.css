@@ -50,6 +50,7 @@ b {
    height: 60px;
    border:none;
    margin: 12% 0% 0% 0%;
+   background-color: rgba(60, 117, 105, 1);
    color: rgb(111, 112, 120);
    font-size: 40px;
    animation: fadeIn 2s;
