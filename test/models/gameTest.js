@@ -10,7 +10,7 @@ describe('Game', () => {
       game.addPlayer('player1');
       let actual=game.players;
       let expected={
-        '1': {_id: 1,_fleet:undefined,_status:false,_name: 'player1'}};
+        '1': {_id: 1,_fleet:undefined,_ready:false,_name: 'player1'}};
       assert.deepEqual(actual, expected);
     });
   });
@@ -53,7 +53,7 @@ describe('Game', () => {
     });
   });
   describe('getPlayer', () => {
-    it('should change player status to ready',() => {
+    it('should give the player given its Id',() => {
       let game=new Game();
       game.addPlayer();
       game.addPlayer();
@@ -63,7 +63,7 @@ describe('Game', () => {
     });
   });
   describe('arePlayersReady', () => {
-    it('should change player status to ready',() => {
+    it('should give true if both the players are ready',() => {
       let game=new Game();
       game.addPlayer();
       game.addPlayer();
@@ -72,6 +72,14 @@ describe('Game', () => {
       game.changePlayerStatus(2);
       game.assignFleet(2,{});
       assert.isOk(game.arePlayersReady());
+    });
+    it('should give false if both the players are not ready',() => {
+      let game=new Game();
+      game.addPlayer();
+      game.addPlayer();
+      game.assignFleet(1,{});
+      game.changePlayerStatus(1);
+      assert.isNotOk(game.arePlayersReady());
     });
   });
   describe('assignFleet', () => {

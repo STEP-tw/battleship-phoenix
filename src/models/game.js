@@ -25,9 +25,6 @@ class Game {
   get players(){
     return this._players;
   }
-  getPlayer(id){
-    return this._players[id];
-  }
   hasTwoPlayers(){
     return this._playerCount ==2;
   }

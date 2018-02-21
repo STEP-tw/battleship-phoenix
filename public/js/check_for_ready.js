@@ -15,6 +15,7 @@ const getCellIdForTG = function(coordinates) {
 const startGamePlay=function(){
   if (areAllShipsPlaced()) {
     loadFleet();
+    document.getElementById('ready').style.display = 'none';
     interval = setInterval(()=>{
       sendReq('GET','/arePlayersReady',showWaitingMessage);
     },1000);

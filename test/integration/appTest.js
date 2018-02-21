@@ -6,10 +6,13 @@ const app = require('../../app.js');
 app.fs = new Mockfs();
 app.fs.addFile('./public/game.html', 'game started');
 
-
 const Game = require('../../src/models/game.js');
 const Fleet = require('../../src/models/fleet.js');
+
 describe('app', () => {
+  afterEach(() => {
+    app.game = undefined;
+  });
   describe('GET /bad', () => {
     it('responds with 404', (done) => {
       request(app)
@@ -67,9 +70,6 @@ describe('app', () => {
         .expect(/false/)
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
   describe('GET /hasOpponentJoined', function() {
     before(() => {
@@ -86,11 +86,7 @@ describe('app', () => {
         })
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
-
   describe('GET /arePlayersReady', function() {
     before(() => {
       app.game = new Game();
@@ -110,9 +106,6 @@ describe('app', () => {
         })
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
   describe('GET /arePlayersReady', function() {
     it('responds false when opponent is not ready', function(done) {
@@ -125,9 +118,6 @@ describe('app', () => {
           status: false
         })
         .end(done);
-    });
-    after(() => {
-      app.game = undefined;
     });
     it('responds nothing if there is no game', function(done) {
       request(app)
@@ -161,9 +151,6 @@ describe('app', () => {
         })
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
   describe('POST /start-game', () => {
     before(() => {
@@ -179,26 +166,71 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('POST /isHit', function () {
+  describe('POST /isHit', function() {
     before(() => {
-      let shipInfo =
-      {dir:"south",length:3,headPos:[1,2]};
+      let shipInfo = {
+        dir: "south",
+        length: 3,
+        headPos: [1, 2]
+      };
       let fleet = new Fleet();
       fleet.addShip(shipInfo);
       app.game = new Game();
       app.game.addPlayer();
       app.game.addPlayer();
-      app.game.assignFleet(1,fleet);
-      app.game.assignFleet(2,fleet);
+      app.game.assignFleet(1, fleet);
+      app.game.assignFleet(2, fleet);
     });
-    it('Should respond with status true if any ship is hit', function (done) {
+    it('Should respond with status true if any ship is hit', function(done) {
       request(app)
         .post('/isHit')
-        .send({firedPosition:[1,2]})
+        .send({
+          firedPosition: [1, 2]
+        })
         .expect(200)
         .expect({
-          firedPos:[1,2],
+          firedPos: [1, 2],
           status: true
+        })
+        .end(done);
+    });
+  });
+  describe('GET /host_or_join', function() {
+    it('gives game status', function(done) {
+      request(app)
+        .get('/host_or_join')
+        .expect(200)
+        .expect({})
+        .end(done);
+    });
+  });
+  describe('GET /host_or_join', function() {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+    });
+    it('gives game status', function(done) {
+      request(app)
+        .get('/host_or_join')
+        .expect(200)
+        .expect({
+          areTwoPlayers: false
+        })
+        .end(done);
+    });
+  });
+  describe('GET /host_or_join', function() {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+    });
+    it('gives game status', function(done) {
+      request(app)
+        .get('/host_or_join')
+        .expect(200)
+        .expect({
+          areTwoPlayers: true
         })
         .end(done);
     });
