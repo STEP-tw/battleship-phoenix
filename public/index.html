@@ -10,6 +10,8 @@
   <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script src="/js/opponent_arrival.js" charset="utf-8"></script>
   <script src="/js/login.js" charset="utf-8"></script>
+  <script src="/js/host_or_join.js" charset="utf-8"></script>
+  <script src="/js/onclickHandler.js" charset="utf-8"></script>
   <script src="js/settings.js" charset="utf-8"></script>
 </head>
 
@@ -21,35 +23,32 @@
     <h1>BATTLESHIP</h1></header>
   <div class="options">
     <ul>
-      <li onclick="document.getElementById('playnow').style.display='block'">Play now</li>
-      <li onclick="document.getElementById('aboutGame').style.display='block'">About game</li>
-      <li onclick="document.getElementById('settings').style.display='block'">Settings</li>
+      <li id="playnowButton">Play now</li>
+      <li id="aboutGameButton">About game</li>
+      <li id="settingsButton">Settings</li>
     </ul>
   </div>
   <div id="settings" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <i onclick="document.getElementById('settings').style.display='none'"></i>
       <h2>Settings</h2>
       <ul>
         <li>Sound</li>
-        <li onclick=bgmController() id="music">Music</li>
+        <li id="music">Music</li>
         <li id="translater"></li>
       </ul>
-      <button type="button" class="cancel" onclick="document.getElementById('settings').style.display='none'">Cancel</button>
+      <button id=cancelSettings class="blueLongButton" >Cancel</button>
     </div>
   </div>
   <div id="playnow" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
       <a class="close" href="index.html">X</a>
-      <i onclick="document.getElementById('settings').style.display='none'"></i>
-      <button class="hostButton" onclick="document.getElementById('login').style.display='block'">Host</button>
-      <button class="joinButton" onclick="document.getElementById('join').style.display='block'">Join</button>
+      <button class="hostButton">Host</button>
+      <button class="joinButton">Join</button>
     </div>
   </div>
   <div id="aboutGame" class="overflow-model">
     <div class="aboutGamePopup animateZoom" style="padding:32px">
-      <i onclick="document.getElementById('settings').style.display='block'"></i>
-      <a class="close" href="index.html">×</a>
+      <a class="close" href="index.html">X</a>
       <h2>What is Battleship game</h2><br>
       <p>&nbsp;Battleship is a guessing game for two players. It is played on ruled grids (paper or board) on which the players' fleets of ships (including battleships) are marked. The locations of the fleet are concealed from the other player. Players alternate
         turns calling "shots" at the other player's ships, and the objective of the game is to destroy the opposing player's fleet.</p>
@@ -85,31 +84,27 @@
   </div>
   <div id="login" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <i onclick="document.getElementById('login').style.display='none'"></i>
-      <h2>Login</h2>
+      <a class="close" href="index.html">X</a>
       <div class="field">
-        <input  type="text" class= "textField" id="username1"/><br>
-        <label for="username" class="fieldLabel" placeholder="sudhin">Username</label><br>
+        <input  type="text" class= "textField" id="username1" placeholder="Enter your name"/><br>
       </div>
-      <button type="button" class="loginButton" onclick="hostGame()" >Login</button>
+      <button type="button" class="submitOnHost blueLongButton ">Submit</button>
     </div>
   </div>
   <div id="join" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <i onclick="document.getElementById('login').style.display='none'"></i>
-      <h2>Login</h2>
+      <a class="close" href="index.html">X</a>
       <div class="field">
-        <input  type="text" class= "textField" id="username2"/><br>
-        <label for="username" class="fieldLabel" placeholder="sudhin">Username</label><br>
+        <input  type="text" class= "textField" id="username2" placeholder="Enter your name"/><br>
       </div>
-      <button type="button" class="loginButton" onclick="joinGame()" >Login</button>
+      <button type="button" class="submitOnJoin blueLongButton" >Submit</button>
     </div>
   </div>
   <div class="popup overflow-model" >
     <div class="opponent_arrival_message animateZoom">
       <h2 id="message">waiting for opponent</h2>
       <div class="spin"></div>
-      <button id="cancel" onclick="cancelGame()">Cancel</button></a>
+      <button id="cancel" class="blueLongButton">Cancel</button></a>
     </div>
   </div>
 </body>
