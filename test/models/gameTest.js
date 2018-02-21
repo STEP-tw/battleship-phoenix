@@ -52,7 +52,7 @@ describe('Game', () => {
     });
   });
   describe('getPlayer', () => {
-    it('should change player status to ready',() => {
+    it('should give the player given its Id',() => {
       let game=new Game();
       game.addPlayer();
       game.addPlayer();
@@ -62,7 +62,7 @@ describe('Game', () => {
     });
   });
   describe('arePlayersReady', () => {
-    it('should change player status to ready',() => {
+    it('should give true if both the players are ready',() => {
       let game=new Game();
       game.addPlayer();
       game.addPlayer();
@@ -71,6 +71,14 @@ describe('Game', () => {
       game.changePlayerStatus(2);
       game.assignFleet(2,{});
       assert.isOk(game.arePlayersReady());
+    });
+    it('should give false if both the players are not ready',() => {
+      let game=new Game();
+      game.addPlayer();
+      game.addPlayer();
+      game.assignFleet(1,{});
+      game.changePlayerStatus(1);
+      assert.isNotOk(game.arePlayersReady());
     });
   });
   describe('assignFleet', () => {
