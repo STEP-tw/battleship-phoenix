@@ -4,17 +4,10 @@ const logRequest = require('./src/utils/logRequest').logRequest;
 const bodyParser = require("body-parser");
 const fs = require("fs");
 let path = './src/handlers/pos_sys_router';
-let startGameHandlerPath = "./src/handlers/start_game_handler";
 const servePosSysRoute = require(path).servePosSysRoute;
-const gameHandlerPath = "./src/handlers/create_game_handler";
-const createGame = require(gameHandlerPath).createGame;
-const startGame = require(startGameHandlerPath).startGame;
-const loadFleet = require(startGameHandlerPath).loadFleet;
-const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
 const hostOrJoin = require("./src/handlers/host_or_join").hostOrJoin;
-const arePlayersReady = require(startGameHandlerPath).arePlayersReady;
-const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
-const turnHandler = require(gameHandlerPath).turnHandler;
+const gameHandlerPath = "./src/handlers/handlers.js";
+const handlers = require(gameHandlerPath);
 let app = express();
 app.fs = fs;
 
@@ -26,15 +19,14 @@ app.use(logRequest);
 app.use(express.static('public'));
 
 
-app.get('/hasOpponentJoined',hasOpponentJoined);
-app.get('/arePlayersReady',arePlayersReady);
-app.get('/start-game',startGame);
-app.post('/start-game',loadFleet);
-app.get('/create-game',createGame);
-app.get('/cancel-game',cancelGame);
+app.use(express.static('public'));
+app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
+app.get('/arePlayersReady',handlers.arePlayersReady);
+app.post('/start-game',handlers.loadFleet);
+app.get('/create-game',handlers.createGame);
+app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
-app.get('/getTurn',turnHandler);
 app.get('/host_or_join',hostOrJoin);
-app.post('/login',createGame);
+app.post('/login',handlers.createGame);
 
 module.exports = app;

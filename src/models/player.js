@@ -14,7 +14,7 @@ class Player {
     return this._name;
   }
   changeStatus(){
-    this._status = !this._status;
+    this._ready = !this._ready;
   }
   addFleet (fleet){
     this._fleet=fleet;
@@ -23,7 +23,7 @@ class Player {
     return this._fleet;
   }
   isReady(){
-    return this._status;
+    return this._ready;
   }
 }
 

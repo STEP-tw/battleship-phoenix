@@ -25,9 +25,10 @@ const loadFleet = function() {
 };
 
 const showWaitingMessage = function() {
+  let response = JSON.parse(this.responseText);
   document.querySelector('.messageBox').innerHTML=
     "Waiting for opponent to place ships";
-  if (this.responseText=="true") {
+  if (response.status) {
     document.querySelector('.messageBox').innerHTML="Game Started";
     clearInterval(interval);
     return;
@@ -36,4 +37,8 @@ const showWaitingMessage = function() {
 
 const askIsOpponentReady = function() {
   sendReq('GET','/arePlayersReady',showWaitingMessage);
+};
+
+window.onbeforeunload = ()=>{
+  return 'do you want to reload this page?';
 };
