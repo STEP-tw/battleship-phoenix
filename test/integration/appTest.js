@@ -6,9 +6,12 @@ const app = require('../../app.js');
 app.fs = new Mockfs();
 app.fs.addFile('./public/game.html','game started');
 
-
 const Game = require('../../src/models/game.js');
+
 describe('app', () => {
+  afterEach(() => {
+    app.game = undefined;
+  });
   describe('GET /bad', () => {
     it('responds with 404', (done) => {
       request(app)
@@ -96,9 +99,6 @@ describe('app', () => {
         .expect(/false/)
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
   describe('GET /hasOpponentJoined', function() {
     before(() => {
@@ -113,11 +113,7 @@ describe('app', () => {
         .expect(/true/)
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
-
   describe('GET /arePlayersReady', function() {
     before(() => {
       app.game = new Game();
@@ -135,9 +131,6 @@ describe('app', () => {
         .expect(/true/)
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
   describe('GET /arePlayersReady', function() {
     it('responds false if opponent is not ready', function(done) {
@@ -149,9 +142,6 @@ describe('app', () => {
         .expect(/false/)
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
     it('responds nothing if there is no game', function(done) {
       request(app)
         .get('/arePlayersReady')
@@ -159,7 +149,6 @@ describe('app', () => {
         .end(done);
     });
   });
-
   describe('GET /start-game', () => {
     before(() => {
       app.game = new Game();
@@ -175,9 +164,6 @@ describe('app', () => {
         .expect(200)
         .expect('true')
         .end(done);
-    });
-    after(() => {
-      app.game = undefined;
     });
   });
   describe('GET /positionSystem', function() {
@@ -204,11 +190,7 @@ describe('app', () => {
         .expect('false')
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
-
   describe('GET /cancel-game', () => {
     before(() => {
       app.game = new Game();
@@ -223,12 +205,7 @@ describe('app', () => {
         })
         .end(done);
     });
-    after(() => {
-      app.game = undefined;
-    });
   });
-
-
   describe('GET /start-game', () => {
     before(() => {
       app.game = new Game();
@@ -241,9 +218,6 @@ describe('app', () => {
         .set('cookie','player=1')
         .expect(200)
         .end(done);
-    });
-    after(() => {
-      app.game = undefined;
     });
   });
 
@@ -258,6 +232,42 @@ describe('app', () => {
         .set('cookie','player=1')
         .send('fleetDetails=[{"dir":"south","headPos":"og_4_5","length":3}]')
         .expect(200)
+        .end(done);
+    });
+  });
+  describe('GET /host_or_join', function() {
+    it('gives game status', function(done) {
+      request(app)
+        .get('/host_or_join')
+        .expect(200)
+        .expect({})
+        .end(done);
+    });
+  });
+  describe('GET /host_or_join', function() {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+    });
+    it('gives game status', function(done) {
+      request(app)
+        .get('/host_or_join')
+        .expect(200)
+        .expect({areTwoPlayers: false})
+        .end(done);
+    });
+  });
+  describe('GET /host_or_join', function() {
+    before(() => {
+      app.game = new Game();
+      app.game.addPlayer();
+      app.game.addPlayer();
+    });
+    it('gives game status', function(done) {
+      request(app)
+        .get('/host_or_join')
+        .expect(200)
+        .expect({areTwoPlayers: true})
         .end(done);
     });
   });

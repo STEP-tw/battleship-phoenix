@@ -1,6 +1,6 @@
 const express = require('express');
 const cookieParser = require("cookie-parser");
-const logRequest = require('./logRequest').logRequest;
+const logRequest = require('./src/utils/logRequest').logRequest;
 const bodyParser = require("body-parser");
 const fs = require("fs");
 let path = './src/handlers/pos_sys_router';
@@ -11,6 +11,7 @@ const createGame = require(gameHandlerPath).createGame;
 const startGame = require(startGameHandlerPath).startGame;
 const loadFleet = require(startGameHandlerPath).loadFleet;
 const cancelGame = require("./src/handlers/cancel_game_handler").cancelGame;
+const hostOrJoin = require("./src/handlers/host_or_join").hostOrJoin;
 const arePlayersReady = require(startGameHandlerPath).arePlayersReady;
 const hasOpponentJoined = require(gameHandlerPath).hasOpponentJoined;
 const turnHandler = require(gameHandlerPath).turnHandler;
@@ -33,6 +34,7 @@ app.get('/create-game',createGame);
 app.get('/cancel-game',cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 app.get('/getTurn',turnHandler);
+app.get('/host_or_join',hostOrJoin);
 app.post('/login',createGame);
 
 module.exports = app;

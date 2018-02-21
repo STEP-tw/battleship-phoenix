@@ -11,6 +11,7 @@
   <script src="/js/opponent_arrival.js" charset="utf-8"></script>
   <script src="/js/login.js" charset="utf-8"></script>
   <script src="js/settings.js" charset="utf-8"></script>
+  <script src="js/host_or_join.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -21,7 +22,7 @@
     <h1>BATTLESHIP</h1></header>
   <div class="options">
     <ul>
-      <li onclick="document.getElementById('playnow').style.display='block'">Play now</li>
+      <li onclick="hostOrJoin()">Play now</li>
       <li onclick="document.getElementById('aboutGame').style.display='block'">About game</li>
       <li onclick="document.getElementById('settings').style.display='block'">Settings</li>
     </ul>
@@ -42,8 +43,8 @@
     <div class="popupContent animateZoom" style="padding:32px">
       <a class="close" href="index.html">X</a>
       <i onclick="document.getElementById('settings').style.display='none'"></i>
-      <button class="hostButton" onclick="document.getElementById('login').style.display='block'">Host</button>
-      <button class="joinButton" onclick="document.getElementById('join').style.display='block'">Join</button>
+      <button class="hostButton" id="hostButton" onclick="document.getElementById('login').style.display='block'">Host</button>
+      <button class="joinButton" id="joinButton" onclick="document.getElementById('join').style.display='block'">Join</button>
     </div>
   </div>
   <div id="aboutGame" class="overflow-model">
@@ -88,6 +89,9 @@
       <i onclick="document.getElementById('login').style.display='none'"></i>
       <h2>Login</h2>
       <div class="field">
+        <form class="" action="" method="">
+
+        </form>
         <input  type="text" class= "textField" id="username1"/><br>
         <label for="username" class="fieldLabel" placeholder="sudhin">Username</label><br>
       </div>

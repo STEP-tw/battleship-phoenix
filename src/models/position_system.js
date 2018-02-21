@@ -61,7 +61,6 @@ const parseCoordinates = (cellId)=>{
   return coords;
 };
 
-
 let positionSystem = {
   'south': getSouthCoordinates,
   'north': getNorthCoordinates,
