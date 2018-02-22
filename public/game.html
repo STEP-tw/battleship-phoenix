@@ -24,11 +24,11 @@
   <div class="shipsBlock">
     <span id = "dockTitle" class="titles">Dock</span>
     <ul>
-      <li id="carrier" onclick="makeShipPlacable(5)">Carrier</li>
-      <li id="battleship" onclick="makeShipPlacable(4)">Battleship</li>
-      <li id="cruiser" onclick="makeShipPlacable(3)">Cruiser</li>
-      <li id="submarine" onclick="makeShipPlacable(3)">Submarine</li>
-      <li id="destroyer" onclick="makeShipPlacable(2)">Destroyer</li>
+      <li id="carrier" onclick="makeShipPlacable(5)">Carrier - 5</li>
+      <li id="battleship" onclick="makeShipPlacable(4)">Battleship - 4</li>
+      <li id="cruiser" onclick="makeShipPlacable(3)">Cruiser - 3</li>
+      <li id="submarine" onclick="makeShipPlacable(3)">Submarine - 3</li>
+      <li id="destroyer" onclick="makeShipPlacable(2)">Destroyer - 2</li>
     </ul>
   </div>
   <div class="oceanGridBlock">
@@ -46,10 +46,26 @@
       <button align="center" id="ready" onclick="addListener()">Ready</button>
   </div>
 </div>
-<div class="popup">
+<!-- <div class="popup">
   <div class="opponent_arrival_message">
     <h2 id="message">Waiting for opponent to place ships</h2>
     <div class="spin"></div>
+  </div>
+</div> -->
+<div class="victory">
+  <div class="opponent_arrival_message">
+    <h2 id=message>Victory ✌️</h2>
+    <a href="/playAgain">
+      <button id="cancel" class="greyLongButton">Home</button>
+    </a>
+  </div>
+</div>
+<div class="defeat">
+  <div class="opponent_arrival_message">
+    <h2 id=message>Defeat 😢</h2>
+    <a href="/playAgain">
+      <button id="cancel" class="greyLongButton">Home</button>
+    </a>
   </div>
 </div>
 </body>

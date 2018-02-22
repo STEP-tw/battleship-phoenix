@@ -67,11 +67,40 @@ const arePlayersReady = function(req, res) {
 const isHit = function(req,res) {
   let firedPos = req.body.firedPosition;
   let currentPlayerID = req.cookies.player;
-
   let hitStatus =req.app.game.checkOpponentIsHit(currentPlayerID,firedPos);
   res.send({firedPos:firedPos,status:hitStatus});
 };
 
+const playAgain = function(req,res){
+  if(req.app.game && req.app.game.playerCount!=1){
+    req.app.game=undefined;
+  }
+
+  res.redirect('/');
+};
+
+const hasOpponentLost = function(req,res){
+  let currentPlayerID = req.cookies.player;
+  let victoryStatus = req.app.game.hasOpponentLost(currentPlayerID);
+  res.send({status:victoryStatus});
+};
+
+const hasOpponentWon = function(req,res){
+  let currentPlayerID = req.cookies.player;
+  let victoryStatus = req.app.game.hasOpponentWon(currentPlayerID);
+  res.send({status:victoryStatus});
+};
+
+const logRequest = function(tokens, req, res) {
+  return [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), `-`,
+    tokens['response-time'](req, res), 'ms',
+    JSON.stringify(req.cookies)
+  ].join(' ');
+};
 
 module.exports = {
   cancelGame,
@@ -79,5 +108,9 @@ module.exports = {
   arePlayersReady,
   loadFleet,
   hasOpponentJoined,
-  isHit
+  logRequest,
+  isHit,
+  hasOpponentLost,
+  hasOpponentWon,
+  playAgain
 };

@@ -1,3 +1,5 @@
+let interval;
+let hasOpponentWonInterval;
 const addListener = function() {
   let readyButton = document.getElementById('ready');
   readyButton.onclick = startGamePlay;
@@ -23,9 +25,17 @@ const loadFleet = function() {
 };
 
 const handleTurn = function (myTurn) {
-  console.log(typeof(myTurn));
   let message = myTurn ? 'My turn' : 'Opponent\'s turn';
   utils.updateMessage(message);
+};
+
+const displayLost = function(){
+  let response = JSON.parse(this.responseText);
+  if(response.status){
+    clearInterval(hasOpponentWonInterval);
+    document.querySelector('#targetGrid').onclick = null;
+    document.querySelector('.defeat').style.display = "block";
+  }
 };
 
 const showWaitingMessage = function() {
@@ -37,6 +47,9 @@ const showWaitingMessage = function() {
     document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
     handleTurn(response.myTurn);
     clearInterval(interval);
+    hasOpponentWonInterval = setInterval(()=>{
+      sendReq('GET','/hasOpponentWon',displayLost);
+    },1000);
     return;
   }
 };
@@ -44,9 +57,18 @@ const showWaitingMessage = function() {
 const askIsOpponentReady = function() {
   sendReq(utils.get(),'/arePlayersReady',showWaitingMessage);
 };
+//
+// window.onbeforeunload = ()=>{
+//   return 'do you want to reload this page?';
+// };
 
-window.onbeforeunload = ()=>{
-  return 'do you want to reload this page?';
+const displayWon=function(){
+  let response = JSON.parse(this.responseText);
+  if(response.status){
+    clearInterval(hasOpponentWonInterval);
+    document.querySelector('#targetGrid').onclick = null;
+    document.querySelector('.victory').style.display = "block";
+  }
 };
 
 const displayShot = function() {
@@ -56,6 +78,7 @@ const displayShot = function() {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
+    sendReq("GET","/hasOpponentLost",displayWon);
   }
 };
 

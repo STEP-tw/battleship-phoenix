@@ -48,4 +48,22 @@ describe('Fleet', () => {
       assert.isNotOk(actual);
     });
   });
+  describe('hasAllShipSunk', () => {
+    it('should return true if all ships are sunk ', () => {
+      let fleet=new Fleet();
+      let carShipInfo = {dir:'south',length:1,headPos:[1,2]};
+      fleet.addShip(carShipInfo);
+      fleet.isAnyShipHit([1,2]);
+      assert.ok(fleet.hasAllShipsSunk());
+    });
+    it('should return false if all ships are sunk ', () => {
+      let fleet=new Fleet();
+      let carShipInfo = {dir:'south',length:3,headPos:[1,2]};
+      let subShipInfo = {dir:'south',length:4,headPos:[2,3]};
+      fleet.addShip(carShipInfo);
+      fleet.addShip(subShipInfo);
+      fleet.isAnyShipHit([3,2]);
+      assert.isNotOk(fleet.hasAllShipsSunk());
+    });
+  });
 });

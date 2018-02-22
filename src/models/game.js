@@ -48,6 +48,16 @@ class Game {
       return currentPlayerID != player._id;
     })._id;
   }
+  getOpponentPlayer(currentPlayerID) {
+    return this._players.find(function(player) {
+      return currentPlayerID != player._id;
+    });
+  }
+  getCurrentPlayer(currentPlayerID){
+    return this._players.find(function(player) {
+      return currentPlayerID == player._id;
+    });
+  }
   updateStatus(){
     this._started = !this._started;
   }
@@ -63,12 +73,17 @@ class Game {
     return this.currentPlayerIndex;
   }
   checkOpponentIsHit(currentPlayerID,position){
-    let opponentPlayerId = this.getOpponentPlayerId(currentPlayerID);
-    let opponentFleet = this.getFleet(opponentPlayerId);
-    return opponentFleet.isAnyShipHit(position);
+    let opponent = this.getOpponentPlayer(currentPlayerID);
+    return opponent.isHit(position);
+  }
+  hasOpponentLost(currentPlayerID){
+    let opponent = this.getOpponentPlayer(currentPlayerID);
+    return opponent.hasFleetDestroyed();
+  }
+  hasOpponentWon(currentPlayerID){
+    return this.getCurrentPlayer(currentPlayerID).hasFleetDestroyed();
   }
   validateId(playerIndex,id){
-    console.log('-------------',playerIndex,this.players[playerIndex]);
     return this.players[playerIndex].isItYourId(id);
   }
 }

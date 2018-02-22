@@ -6,9 +6,9 @@ let shipsHeadPositions = [];
 const remHighlightOnShips = function(){
   let allShipCells = getPlacedShipsCells();
   allShipCells.forEach((cellCoord)=>{
-    let cellId = generateCellId('og',cellCoord);
-    if(cellId){
-      document.getElementById(cellId).style["background-color"]=null;
+    let cell = document.getElementById(cellCoord);
+    if(cell){
+      cell.style["background-color"]=null;
     }
   });
 };
@@ -16,6 +16,10 @@ const remHighlightOnShips = function(){
 const makeShipPlacable = function (size){
   shipName =event.target.id;
   shipSize = size;
+  let ships=document.querySelectorAll('.shipsBlock li');
+  ships.forEach((ship)=>{
+    ship.style.color='rgb(67, 195, 199)';
+  });
   document.getElementById(shipName).style.color="rgb(96, 96, 96)";
   addMouseEvent();
 };

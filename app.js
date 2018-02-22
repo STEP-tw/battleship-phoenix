@@ -21,12 +21,16 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(logRequest);
 
+
 app.get('/arePlayersReady',handlers.arePlayersReady);
 app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
 app.get('/create-game',handlers.createGame);
 app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 app.get('/host_or_join',hostOrJoin);
+app.get('/hasOpponentLost',handlers.hasOpponentLost);
+app.get('/hasOpponentWon',handlers.hasOpponentWon);
+app.get('/playAgain',handlers.playAgain);
 
 app.post('/isHit',handlers.isHit);
 app.post('/start-game',handlers.loadFleet);

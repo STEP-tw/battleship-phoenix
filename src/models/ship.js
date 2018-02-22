@@ -10,11 +10,21 @@ class Ship {
   getShipCoords(){
     return getCoordinates(this.direction,this.initialPos,this.length);
   }
+  isSunk(){
+    return this.length == this.posOfDamage.length;
+  }
+  updateDamage(pos){
+    this.posOfDamage.push(pos);
+  }
   isHit(position){
     let shipCoords = this.getShipCoords();
-    return shipCoords.some(function(coord) {
+    let hitStatus= shipCoords.some(function(coord) {
       return coord[0] == position[0] && coord[1] == position[1];
     });
+    if(hitStatus) {
+      this.updateDamage(position);
+    }
+    return hitStatus;
   }
 }
 
