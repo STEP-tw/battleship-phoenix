@@ -9,10 +9,6 @@ const areAllShipsPlaced=function(){
   return shipsHeadPositions.length == 5;
 };
 
-const getCellIdForTG = function(coordinates) {
-  let cellId=`tg_${coordinates[0]}_${coordinates[1]}`;
-  return cellId;
-};
 const startGamePlay=function(){
   if (areAllShipsPlaced()) {
     loadFleet();
@@ -73,7 +69,7 @@ const displayWon=function(){
 
 const displayShot = function() {
   let shotResult = JSON.parse(this.responseText);
-  let cell = document.getElementById(getCellIdForTG(shotResult.firedPos));
+  let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   if(!shotResult.status) {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {

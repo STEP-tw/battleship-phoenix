@@ -17,16 +17,18 @@ const createGame = function(req, res) {
 
 const hostGame = function(req, res) {
   let name = req.body.username;
-  req.app.game.addPlayer(name);
-  res.cookie('player', 1);
+  let sessionId = req.app.generateSessionId();
+  req.app.game.addPlayer(name,sessionId);
+  res.cookie('player', sessionId);
   req.app.game.updateStatus();
   res.end();
 };
 
 const joinGame = function(req, res) {
   let name = req.body.username;
-  req.app.game.addPlayer(name);
-  res.cookie('player', 2);
+  let sessionId = req.app.generateSessionId();
+  req.app.game.addPlayer(name,sessionId);
+  res.cookie('player', sessionId);
   res.end();
 };
 
@@ -85,7 +87,6 @@ const logRequest = function(tokens, req, res) {
     JSON.stringify(req.cookies)
   ].join(' ');
 };
-
 
 module.exports = {
   cancelGame,
