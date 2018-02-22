@@ -110,4 +110,23 @@ describe('Game', () => {
       assert.isNotOk(actual);
     });
   });
+  describe('get turn', function () {
+    it('should get currentPlayerIndex', function () {
+      assert.equal(game.turn,undefined);
+    });
+  });
+  describe('assignTurn', function () {
+    it('should assign 0 to current player for nos < 0.5', function () {
+      game.assignTurn(0.4);
+      assert.equal(game.turn, 0);
+    });
+    it('should assign 1 to currentplayer for nos = 0.5', function () {
+      game.assignTurn(0.5);
+      assert.equal(game.turn, 1);
+    });
+    it('should assign 1 to currentplayer for nos > 0.5', function () {
+      game.assignTurn(0.6);
+      assert.equal(game.turn, 1);
+    });
+  });
 });

@@ -1,10 +1,11 @@
 const Player = require('./player');
+const utils = require('../utils/utils.js');
 
 class Game {
   constructor() {
     this._started = false;
     this._players={};
-    this._currentPlayerId = 1;
+    this.currentPlayerIndex = undefined;
   }
   get playerCount(){
     return Object.keys(this._players).length;
@@ -45,6 +46,13 @@ class Game {
   }
   get status(){
     return this._started;
+  }
+  assignTurn(random=Math.random()){
+    let turn = utils.generateTurn(random);
+    this.currentPlayerIndex = turn[0];
+  }
+  get turn(){
+    return this.currentPlayerIndex;
   }
   getOpponentPlayerId(currentPlayerID){
     let playerIds = Object.keys(this._players);
