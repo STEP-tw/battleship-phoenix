@@ -37,8 +37,8 @@ const drawShip = function(event){
   }
 };
 
-const generateCellId = function (coordinates){
-  let cellId=`og_${coordinates[0]}_${coordinates[1]}`;
+const generateCellId = function (gridId,coordinates){
+  let cellId=`${gridId}_${coordinates[0]}_${coordinates[1]}`;
   return cellId;
 };
 

@@ -15,17 +15,18 @@ describe('Game', () => {
   });
   describe('addPlayer', () => {
     it('should add a new player with Id 1', () => {
-      game.addPlayer('player1');
+      let game=new Game();
+      game.addPlayer('player1',1);
       let actual=game.players;
-      let expected={
-        '1': {_id: 1,_fleet:undefined,_ready:false,_name: 'player1'}};
+      let expected=[{_id: 1,_fleet:undefined,_ready:false,_name: 'player1'}];
       assert.deepEqual(actual, expected);
     });
   });
   describe('hasTwoPlayers', () => {
     it('should return true when game has two players', () => {
-      game.addPlayer();
-      game.addPlayer();
+      let game=new Game();
+      game.addPlayer('arvind',1);
+      game.addPlayer('ishu',2);
       let actual=game.hasTwoPlayers();
       assert.ok(actual);
     });
@@ -40,8 +41,9 @@ describe('Game', () => {
   });
   describe('changePlayerStatus', () => {
     it('should change player status to ready',() => {
-      game.addPlayer();
-      game.addPlayer();
+      let game=new Game();
+      game.addPlayer('arvind',1);
+      game.addPlayer('ishu',2);
       game.changePlayerStatus(1);
       game.changePlayerStatus(2);
       assert.ok(game.arePlayersReady());
@@ -49,17 +51,19 @@ describe('Game', () => {
   });
   describe('getPlayer', () => {
     it('should give the player given its Id',() => {
-      game.addPlayer();
-      game.addPlayer();
+      let game=new Game();
+      game.addPlayer('arvind',1);
+      game.addPlayer('ishu',2);
       let actual = game.getPlayer(1);
-      let expected= new Player(1);
+      let expected= new Player(1,'arvind');
       assert.deepEqual(actual,expected);
     });
   });
   describe('arePlayersReady', () => {
     it('should give true if both the players are ready',() => {
-      game.addPlayer();
-      game.addPlayer();
+      let game=new Game();
+      game.addPlayer('arvind',1);
+      game.addPlayer('ishu',2);
       game.assignFleet(1,{});
       game.changePlayerStatus(1);
       game.changePlayerStatus(2);
@@ -67,8 +71,9 @@ describe('Game', () => {
       assert.isOk(game.arePlayersReady());
     });
     it('should give false if both the players are not ready',() => {
-      game.addPlayer();
-      game.addPlayer();
+      let game=new Game();
+      game.addPlayer('arvind',1);
+      game.addPlayer('ishu',2);
       game.assignFleet(1,{});
       game.changePlayerStatus(1);
       assert.isNotOk(game.arePlayersReady());
@@ -80,7 +85,7 @@ describe('Game', () => {
       let fleet = [
         {direction:"south",size:3,initialPos:'og_1_2',posOfDamage:[]},
         {direction:"south",size:3,initialPos:'og_1_2',posOfDamage:[]}];
-      game.addPlayer();
+      game.addPlayer('arvind',1);
       game.assignFleet(playerId,fleet);
       let actual = game.getFleet(playerId);
       assert.deepEqual(actual,fleet);
@@ -88,8 +93,9 @@ describe('Game', () => {
   });
   describe('checkOpponentIsHit', function () {
     it('should return true when the opponents ship is hit', function () {
-      game.addPlayer();
-      game.addPlayer();
+      let game = new Game();
+      game.addPlayer('arvind',1);
+      game.addPlayer('ishu',2);
       let fleet = new Fleet();
       let subShipInfo = {dir:'south',length:4,headPos:[2,3]};
       fleet.addShip(subShipInfo);
@@ -99,8 +105,9 @@ describe('Game', () => {
       assert.ok(actual);
     });
     it('should return false when the opponents ship is not hit', function () {
-      game.addPlayer();
-      game.addPlayer();
+      let game = new Game();
+      game.addPlayer('arvind',1);
+      game.addPlayer('ishu',2);
       let fleet = new Fleet();
       let subShipInfo = {dir:'south',length:4,headPos:[2,3]};
       fleet.addShip(subShipInfo);
@@ -128,5 +135,17 @@ describe('Game', () => {
       game.assignTurn(0.6);
       assert.equal(game.turn, 1);
     });
+  });
+  describe('getOpponentPlayerID', function () {
+    it('should give the opponent playerID according to the current playerId',
+      function () {
+        let game=new Game();
+        game.addPlayer('ishu',1);
+        game.addPlayer('arvind',2);
+        game.assignFleet(1,{});
+        game.assignFleet(2,{});
+        assert.equal(game.getOpponentPlayerId(1),2);
+        assert.equal(game.getOpponentPlayerId(2),1);
+      });
   });
 });

@@ -17,16 +17,18 @@ const createGame = function(req, res) {
 
 const hostGame = function(req, res) {
   let name = req.body.username;
-  req.app.game.addPlayer(name);
-  res.cookie('player', 1);
+  let sessionId = req.app.generateSessionId();
+  req.app.game.addPlayer(name,sessionId);
+  res.cookie('player', sessionId);
   req.app.game.updateStatus();
   res.end();
 };
 
 const joinGame = function(req, res) {
   let name = req.body.username;
-  req.app.game.addPlayer(name);
-  res.cookie('player', 2);
+  let sessionId = req.app.generateSessionId();
+  req.app.game.addPlayer(name,sessionId);
+  res.cookie('player', sessionId);
   res.end();
 };
 
@@ -64,17 +66,6 @@ const isHit = function(req,res) {
   res.send({firedPos:firedPos,status:hitStatus});
 };
 
-const logRequest = function(tokens, req, res) {
-  return [
-    tokens.method(req, res),
-    tokens.url(req, res),
-    tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), `-`,
-    tokens['response-time'](req, res), 'ms',
-    JSON.stringify(req.cookies)
-  ].join(' ');
-};
-
 
 module.exports = {
   cancelGame,
@@ -82,6 +73,5 @@ module.exports = {
   arePlayersReady,
   loadFleet,
   hasOpponentJoined,
-  logRequest,
   isHit
 };
