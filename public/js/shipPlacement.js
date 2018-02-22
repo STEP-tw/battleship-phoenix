@@ -6,9 +6,9 @@ let shipsHeadPositions = [];
 const remHighlightOnShips = function(){
   let allShipCells = getPlacedShipsCells();
   allShipCells.forEach((cellCoord)=>{
-    let cellId = generateCellId(cellCoord);
-    if(cellId){
-      document.getElementById(cellId).style["background-color"]=null;
+    let cell = document.getElementById(cellCoord);
+    if(cell){
+      cell.style["background-color"]=null;
     }
   });
 };
@@ -54,7 +54,6 @@ const markCellsChecked = function(){
   let coordinates = parseCoordinates(event.target.id);
   let coords = getCoordinates(direction,coordinates,shipSize);
   let cellIdList=coords.map(generateCellId);
-
   cellIdList.forEach((cellId)=>{
     document.getElementById(cellId).checked=true;
   });
