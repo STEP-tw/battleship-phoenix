@@ -3,10 +3,18 @@ const Game = require('./../../src/models/game.js');
 const Player = require('./../../src/models/player.js');
 const Fleet = require('./../../src/models/fleet.js');
 
+let game;
 describe('Game', () => {
+  beforeEach(function () {
+    game = new Game;
+  });
+  describe('get playerCount',()=> {
+    it('should give no: of players',()=> {
+      assert.equal(game.playerCount,0);
+    });
+  });
   describe('addPlayer', () => {
     it('should add a new player with Id 1', () => {
-      let game=new Game();
       game.addPlayer('player1');
       let actual=game.players;
       let expected={
@@ -14,19 +22,8 @@ describe('Game', () => {
       assert.deepEqual(actual, expected);
     });
   });
-  describe('getTurn', () => {
-    it('should give the name of the current player', () => {
-      let game=new Game();
-      game.addPlayer('player1');
-      game.addPlayer('player2');
-      let actual=game.getTurn();
-      let expected="player1";
-      assert.deepEqual(actual, expected);
-    });
-  });
   describe('hasTwoPlayers', () => {
     it('should return true when game has two players', () => {
-      let game=new Game();
       game.addPlayer();
       game.addPlayer();
       let actual=game.hasTwoPlayers();
@@ -35,7 +32,6 @@ describe('Game', () => {
   });
   describe('updateStatus', () => {
     it('should update game status when second player has joined',() => {
-      let game=new Game();
       game.updateStatus("ready to start");
       let actual = game.status;
       let expected = true;
@@ -44,7 +40,6 @@ describe('Game', () => {
   });
   describe('changePlayerStatus', () => {
     it('should change player status to ready',() => {
-      let game=new Game();
       game.addPlayer();
       game.addPlayer();
       game.changePlayerStatus(1);
@@ -54,7 +49,6 @@ describe('Game', () => {
   });
   describe('getPlayer', () => {
     it('should give the player given its Id',() => {
-      let game=new Game();
       game.addPlayer();
       game.addPlayer();
       let actual = game.getPlayer(1);
@@ -64,7 +58,6 @@ describe('Game', () => {
   });
   describe('arePlayersReady', () => {
     it('should give true if both the players are ready',() => {
-      let game=new Game();
       game.addPlayer();
       game.addPlayer();
       game.assignFleet(1,{});
@@ -74,7 +67,6 @@ describe('Game', () => {
       assert.isOk(game.arePlayersReady());
     });
     it('should give false if both the players are not ready',() => {
-      let game=new Game();
       game.addPlayer();
       game.addPlayer();
       game.assignFleet(1,{});
@@ -84,7 +76,6 @@ describe('Game', () => {
   });
   describe('assignFleet', () => {
     it('should assign fleet to the player',() => {
-      let game=new Game();
       let playerId = 1;
       let fleet = [
         {direction:"south",size:3,initialPos:'og_1_2',posOfDamage:[]},
@@ -97,7 +88,6 @@ describe('Game', () => {
   });
   describe('checkOpponentIsHit', function () {
     it('should return true when the opponents ship is hit', function () {
-      let game = new Game();
       game.addPlayer();
       game.addPlayer();
       let fleet = new Fleet();
@@ -109,7 +99,6 @@ describe('Game', () => {
       assert.ok(actual);
     });
     it('should return false when the opponents ship is not hit', function () {
-      let game = new Game();
       game.addPlayer();
       game.addPlayer();
       let fleet = new Fleet();

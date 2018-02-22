@@ -2,13 +2,15 @@ const Player = require('./player');
 
 class Game {
   constructor() {
-    this._status = false;
+    this._started = false;
     this._players={};
-    this._playerCount=0;
-    this._currentPlayerIndex = 1;
+    this._currentPlayerId = 1;
+  }
+  get playerCount(){
+    return Object.keys(this._players).length;
   }
   addPlayer(name){
-    let id = ++this._playerCount;
+    let id = this.playerCount + 1;
     this._players[id]=new Player(id,name);
   }
   assignFleet(playerId,fleet){
@@ -26,7 +28,7 @@ class Game {
     return this._players;
   }
   hasTwoPlayers(){
-    return this._playerCount ==2;
+    return this.playerCount === 2;
   }
   arePlayersReady(){
     let players = Object.values(this._players);
@@ -39,19 +41,10 @@ class Game {
     return player.changeStatus();
   }
   updateStatus(){
-    this._status = !this._status;
+    this._started = !this._started;
   }
   get status(){
-    return this._status;
-  }
-  getTurn(){
-    return this._players[this._currentPlayerIndex].playerName;
-  }
-  arePlayersReady(){
-    let playerIds = Object.keys(this._players);
-    return playerIds.every((playerId)=>{
-      return this._players[playerId].isReady();
-    });
+    return this._started;
   }
   getOpponentPlayerId(currentPlayerID){
     let playerIds = Object.keys(this._players);
