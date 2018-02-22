@@ -12,21 +12,23 @@ let app = express();
 app.fs = fs;
 
 app.use(cookieParser());
-app.use(express.urlencoded({
-  extended: false
-}));
+app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(logRequest);
-app.post('/isHit',handlers.isHit);
+
 app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
 app.get('/arePlayersReady',handlers.arePlayersReady);
-app.post('/start-game',handlers.loadFleet);
 app.get('/create-game',handlers.createGame);
 app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 app.get('/host_or_join',hostOrJoin);
+app.get('/hasOpponentLost',handlers.hasOpponentLost);
+app.get('/hasOpponentWon',handlers.hasOpponentWon);
+
+app.post('/isHit',handlers.isHit);
+app.post('/start-game',handlers.loadFleet);
 app.post('/login',handlers.createGame);
 
 module.exports = app;

@@ -1,6 +1,5 @@
 const timeStamp = require("./time").timeStamp;
-const fs = require('fs');
-
+const fs=require('fs');
 const toJsonString = function(data){
   return JSON.stringify(data,null,2);
 };

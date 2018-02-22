@@ -1,4 +1,5 @@
 let interval;
+let hasOpponentWonInterval;
 const addListener = function() {
   let readyButton = document.getElementById('ready');
   readyButton.onclick = startGamePlay;
@@ -29,6 +30,15 @@ const loadFleet = function() {
   sendReq('POST','/start-game',null,fleetDetails);
 };
 
+const displayLost = function(){
+  let response = JSON.parse(this.responseText);
+  if(response.status){
+    clearInterval(hasOpponentWonInterval);
+    document.querySelector('#targetGrid').onclick = null;
+    alert('lost')
+  }
+}
+
 const showWaitingMessage = function() {
   let response = JSON.parse(this.responseText);
   document.querySelector('.messageBox').innerHTML=
@@ -37,6 +47,9 @@ const showWaitingMessage = function() {
     document.querySelector('.messageBox').innerHTML="Game Started";
     document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
     clearInterval(interval);
+    hasOpponentWonInterval = setInterval(()=>{
+      sendReq('GET','/hasOpponentWon',displayLost);
+    },1000);
     return;
   }
 };
@@ -49,6 +62,15 @@ window.onbeforeunload = ()=>{
   return 'do you want to reload this page?';
 };
 
+const displayWon=function(){
+  let response = JSON.parse(this.responseText);
+  if(response.status){
+    clearInterval(hasOpponentWonInterval);
+    document.querySelector('#targetGrid').onclick = null;
+    alert('won');
+  }
+}
+
 const displayShot = function() {
   let shotResult = JSON.parse(this.responseText);
   let cell = document.getElementById(getCellIdForTG(shotResult.firedPos));
@@ -56,6 +78,7 @@ const displayShot = function() {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
+    sendReq("GET","/hasOpponentLost",displayWon);
   }
 };
 

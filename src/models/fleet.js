@@ -11,6 +11,11 @@ class Fleet {
   getAllShips(){
     return this.ships;
   }
+  hasAllShipsSunk(){
+    return this.ships.every(function(ship){
+      return ship.isSunk();
+    })
+  }
   isAnyShipHit(position){
     return this.ships.some(function(ship){
       return ship.isHit(position);

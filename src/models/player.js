@@ -1,5 +1,3 @@
-const Fleet = require('./fleet.js');
-
 class Player {
   constructor(id,name) {
     this._id=id;
@@ -24,6 +22,9 @@ class Player {
   }
   isReady(){
     return this._ready;
+  }
+  hasFleetDestroyed(){
+    return this._fleet.hasAllShipsSunk();
   }
   isHit(position){
     return this._fleet.isAnyShipHit(position);

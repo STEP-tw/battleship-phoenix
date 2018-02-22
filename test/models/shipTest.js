@@ -23,4 +23,18 @@ describe('Ship', () => {
       assert.isNotOk(actual);
     });
   });
+  describe('isSunk', () => {
+    it('should return true if the ship  sunk', () => {
+      let ship=new Ship('south',3,[3,2]);
+      ship.updateDamage([3,2]);
+      ship.updateDamage([4,2]);
+      ship.updateDamage([5,2]);
+      assert.ok(ship.isSunk());
+    });
+    it('should return false if the ship is not sunk', () => {
+      let ship=new Ship('south',3,[1,2]);
+      ship.updateDamage([2,2]);
+      assert.isNotOk(ship.isSunk());
+    });
+  });
 });

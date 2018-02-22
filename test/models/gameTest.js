@@ -121,4 +121,56 @@ describe('Game', () => {
       assert.isNotOk(actual);
     });
   });
+  describe('hasOpponentLost',function(){
+    it('it should return true when other player lost',function(){
+      let game = new Game();
+      game.addPlayer();
+      game.addPlayer();
+      let fleet = {
+        hasAllShipsSunk:()=>{
+          return true;
+        }
+      }
+      game.assignFleet(2,fleet);
+      assert.ok(game.hasOpponentLost(1));
+    });
+    it('it should return false when other player is not lost',function(){
+      let game = new Game();
+      game.addPlayer();
+      game.addPlayer();
+      let fleet = {
+        hasAllShipsSunk:()=>{
+          return false;
+        }
+      }
+      game.assignFleet(2,fleet);
+      assert.isNotOk(game.hasOpponentLost(1));
+    });
+  });
+  describe('hasOpponentWon',function(){
+    it('it should return true when other player won',function(){
+      let game = new Game();
+      game.addPlayer();
+      game.addPlayer();
+      let fleet = {
+        hasAllShipsSunk:()=>{
+          return true;
+        }
+      }
+      game.assignFleet(1,fleet);
+      assert.ok(game.hasOpponentWon(1));
+    });
+    it('it should return false when other player is not won',function(){
+      let game = new Game();
+      game.addPlayer();
+      game.addPlayer();
+      let fleet = {
+        hasAllShipsSunk:()=>{
+          return false;
+        }
+      }
+      game.assignFleet(1,fleet);
+      assert.isNotOk(game.hasOpponentWon(1));
+    });
+  });
 });

@@ -63,10 +63,21 @@ class Game {
     }
     return playerIds[1];
   }
-  checkOpponentIsHit(currentPlayerID,position){
+  getOpponent(currentPlayerID){
     let opponentPlayerId = this.getOpponentPlayerId(currentPlayerID);
     let opponent = this._players[opponentPlayerId];
+    return opponent;
+  }
+  checkOpponentIsHit(currentPlayerID,position){
+    let opponent = this.getOpponent(currentPlayerID);
     return opponent.isHit(position);
+  }
+  hasOpponentLost(currentPlayerID){
+    let opponent = this.getOpponent(currentPlayerID);
+    return opponent.hasFleetDestroyed();
+  }
+  hasOpponentWon(currentPlayerID){
+    return this._players[currentPlayerID].hasFleetDestroyed();
   }
 }
 module.exports = Game;
