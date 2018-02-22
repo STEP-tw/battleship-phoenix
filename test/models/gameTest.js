@@ -148,4 +148,14 @@ describe('Game', () => {
         assert.equal(game.getOpponentPlayerId(2),1);
       });
   });
+  describe('validateId', function () {
+    it('should give true given matching id of player', function () {
+      game.addPlayer('sudhin',123);
+      assert.isTrue(game.validateId(0,123));
+    });
+    it('should give false given nonMatching id of player', function () {
+      game.addPlayer('sudhin',123);
+      assert.isFalse(game.validateId(0,12));
+    });
+  });
 });

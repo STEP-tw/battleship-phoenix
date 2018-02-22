@@ -23,7 +23,6 @@ class Game {
     return player.getFleet();
   }
   getPlayer(playerId) {
-    console.log('-------------',playerId);
     let player = this._players.find((player) => {
       return player._id == playerId;
     });
@@ -58,6 +57,7 @@ class Game {
   assignTurn(random=Math.random()){
     let turn = utils.generateTurn(random);
     this.currentPlayerIndex = turn[0];
+    return this.currentPlayerIndex;
   }
   get turn(){
     return this.currentPlayerIndex;
@@ -66,6 +66,10 @@ class Game {
     let opponentPlayerId = this.getOpponentPlayerId(currentPlayerID);
     let opponentFleet = this.getFleet(opponentPlayerId);
     return opponentFleet.isAnyShipHit(position);
+  }
+  validateId(playerIndex,id){
+    console.log('-------------',playerIndex,this.players[playerIndex]);
+    return this.players[playerIndex].isItYourId(id);
   }
 }
 module.exports = Game;

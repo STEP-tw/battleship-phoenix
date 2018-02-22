@@ -1,4 +1,5 @@
 let utils={};
+
 utils.changeIndex = function (randomIndex) {
   return 1 - randomIndex;
 };

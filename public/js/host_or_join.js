@@ -3,11 +3,10 @@ const disableButton = function(id){
   button.onclick=null;
   button.style.backgroundColor = 'rgb(130, 135, 130)';
   button.style.color = 'rgb(218, 219, 219)';
-  console.log('hello');
 };
 
 const showHostOrJoin = function(){
-  let response = JSON.parse(this.responseText);
+  let response = utils.parse(this.responseText);
   if(!('areTwoPlayers' in response)){
     disableButton('joinButton');
     return;
@@ -22,5 +21,5 @@ const showHostOrJoin = function(){
 const hostOrJoin = function(){
   document.getElementById('playnow').style.display='block';
   let url = '/host_or_join';
-  sendReq('GET',url,showHostOrJoin);
+  sendReq(utils.get(),url,showHostOrJoin);
 };
