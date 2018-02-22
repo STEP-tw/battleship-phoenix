@@ -21,7 +21,9 @@ class Ship {
     let hitStatus= shipCoords.some(function(coord) {
       return coord[0] == position[0] && coord[1] == position[1];
     });
-    if(hitStatus) this.updateDamage(position);
+    if(hitStatus) {
+      this.updateDamage(position);
+    }
     return hitStatus;
   }
 }

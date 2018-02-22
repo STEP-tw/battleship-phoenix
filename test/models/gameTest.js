@@ -130,7 +130,7 @@ describe('Game', () => {
         hasAllShipsSunk:()=>{
           return true;
         }
-      }
+      };
       game.assignFleet(2,fleet);
       assert.ok(game.hasOpponentLost(1));
     });
@@ -142,7 +142,7 @@ describe('Game', () => {
         hasAllShipsSunk:()=>{
           return false;
         }
-      }
+      };
       game.assignFleet(2,fleet);
       assert.isNotOk(game.hasOpponentLost(1));
     });
@@ -156,7 +156,7 @@ describe('Game', () => {
         hasAllShipsSunk:()=>{
           return true;
         }
-      }
+      };
       game.assignFleet(1,fleet);
       assert.ok(game.hasOpponentWon(1));
     });
@@ -168,7 +168,7 @@ describe('Game', () => {
         hasAllShipsSunk:()=>{
           return false;
         }
-      }
+      };
       game.assignFleet(1,fleet);
       assert.isNotOk(game.hasOpponentWon(1));
     });

@@ -35,9 +35,9 @@ const displayLost = function(){
   if(response.status){
     clearInterval(hasOpponentWonInterval);
     document.querySelector('#targetGrid').onclick = null;
-    alert('lost')
+    alert('lost');
   }
-}
+};
 
 const showWaitingMessage = function() {
   let response = JSON.parse(this.responseText);
@@ -69,7 +69,7 @@ const displayWon=function(){
     document.querySelector('#targetGrid').onclick = null;
     alert('won');
   }
-}
+};
 
 const displayShot = function() {
   let shotResult = JSON.parse(this.responseText);

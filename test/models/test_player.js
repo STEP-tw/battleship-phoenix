@@ -13,21 +13,21 @@ describe('Player', () => {
       let player = new Player(1);
       let fleet = {
         hasAllShipsSunk:()=>{
-          return true
+          return true;
         }
-      }
+      };
       player.addFleet(fleet);
-      assert.ok(player.hasFleetDestroyed())
+      assert.ok(player.hasFleetDestroyed());
     });
     it('should return false when all ship has sunk', () => {
       let player = new Player(1);
       let fleet = {
         hasAllShipsSunk:()=>{
-          return false
+          return false;
         }
-      }
+      };
       player.addFleet(fleet);
-      assert.isNotOk(player.hasFleetDestroyed())
+      assert.isNotOk(player.hasFleetDestroyed());
     });
 
   });
