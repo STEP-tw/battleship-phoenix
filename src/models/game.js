@@ -3,70 +3,58 @@ const Player = require('./player');
 class Game {
   constructor() {
     this._status = false;
-    this._players={};
-    this._playerCount=0;
+    this._players = [];
+    this._playerCount = 0;
     this._currentPlayerIndex = 1;
   }
-  addPlayer(name){
-    let id = ++this._playerCount;
-    this._players[id]=new Player(id,name);
+  addPlayer(name, id) {
+    let player = new Player(id, name);
+    this._players.push(player);
   }
-  assignFleet(playerId,fleet){
+  assignFleet(playerId, fleet) {
     let player = this.getPlayer(playerId);
     player.addFleet(fleet);
   }
-  getFleet(playerId){
+  getFleet(playerId) {
     let player = this.getPlayer(playerId);
     return player.getFleet();
   }
-  getPlayer(playerId){
-    return this._players[playerId];
+  getPlayer(playerId) {
+    let player = this._players.find((player) => {
+      return player._id == playerId;
+    });
+    return player;
   }
-  get players(){
+  get players() {
     return this._players;
   }
-  hasTwoPlayers(){
-    return this._playerCount ==2;
+  hasTwoPlayers() {
+    return this._players.length == 2;
   }
-  arePlayersReady(){
-    let players = Object.values(this._players);
-    return players.every(function(player) {
+  arePlayersReady() {
+    return this._players.every(function(player) {
       return player.isReady();
     });
   }
-  changePlayerStatus(playerId){
-    let player = this._players[playerId];
+  changePlayerStatus(playerId) {
+    let player = this.getPlayer(playerId);
     return player.changeStatus();
   }
-  updateStatus(){
+  updateStatus() {
     this._status = !this._status;
   }
-  get status(){
+  get status() {
     return this._status;
   }
-  getTurn(){
-    return this._players[this._currentPlayerIndex].playerName;
+  getOpponentPlayerId(currentPlayerID) {
+    return this._players.find(function(player) {
+      return currentPlayerID != player._id;
+    })._id;
   }
-  arePlayersReady(){
-    let playerIds = Object.keys(this._players);
-    return playerIds.every((playerId)=>{
-      return this._players[playerId].isReady();
-    });
-  }
-  getOpponentPlayerId(currentPlayerID){
-    let playerIds = Object.keys(this._players);
-    let currentPlayerIndex = playerIds.findIndex(function(playerId) {
-      return playerId == currentPlayerID;
-    });
-    if (currentPlayerIndex == 1) {
-      return playerIds[0];
-    }
-    return playerIds[1];
-  }
-  checkOpponentIsHit(currentPlayerID,position){
+  checkOpponentIsHit(currentPlayerID, position) {
     let opponentPlayerId = this.getOpponentPlayerId(currentPlayerID);
-    let opponent = this._players[opponentPlayerId];
-    return opponent.isHit(position);
+    let opponentFleet = this.getFleet(opponentPlayerId);
+    return opponentFleet.isAnyShipHit(position);
   }
 }
 module.exports = Game;

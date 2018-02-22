@@ -6,7 +6,7 @@ let shipsHeadPositions = [];
 const remHighlightOnShips = function(){
   let allShipCells = getPlacedShipsCells();
   allShipCells.forEach((cellCoord)=>{
-    let cellId = generateCellId(cellCoord);
+    let cellId = generateCellId('og',cellCoord);
     if(cellId){
       document.getElementById(cellId).style["background-color"]=null;
     }
@@ -53,7 +53,7 @@ const placeShip = function(event){
 const markCellsChecked = function(){
   let coordinates = parseCoordinates(event.target.id);
   let coords = getCoordinates(direction,coordinates,shipSize);
-  let cellIdList=coords.map(generateCellId);
+  let cellIdList=coords.map((cellId)=>generateCellId('og',cellId));
 
   cellIdList.forEach((cellId)=>{
     document.getElementById(cellId).checked=true;
@@ -72,7 +72,7 @@ const disableMouseEvents = function(){
 const getAllCoordsOfShip = function(id) {
   let parsedCoordinates = parseCoordinates(event.target.id);
   let coords = getCoordinates(direction,parsedCoordinates,shipSize);
-  let cellIdList=coords.map(generateCellId);
+  let cellIdList=coords.map((cellId)=>generateCellId('og',cellId));
   return cellIdList;
 };
 
@@ -80,7 +80,7 @@ const getPlacedShipsCells=function(){
   return shipsHeadPositions.map(function(ship){
     let headPos = ship.headPos;
     let coords = getCoordinates(ship.dir,headPos,ship.length);
-    let cellIdList=coords.map(generateCellId);
+    let cellIdList=coords.map((cellId)=>generateCellId('og',cellId));
     return cellIdList;
   }).join().split(',');
 };

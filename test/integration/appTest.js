@@ -22,60 +22,85 @@ describe('app', () => {
     });
   });
   describe('GET /', () => {
-    it('responds with page contents', function(done) {
-      request(app)
-        .get('/')
-        .expect(200)
-        .end(done);
-    });
+    it('responds with index.html page content with join or host game options',
+      function(done) {
+        request(app)
+          .get('/')
+          .expect(200)
+          .expect(/Ships can touch each other/)
+          .end(done);
+      });
   });
-  describe('GET /game.html', () => {
-    it('should serve the game page', (done) => {
+  describe('POST /', () => {
+    it('should give the waiting for opponent message', (done) => {
       request(app)
-        .get('/index.html')
-        .expect(/Battleship/)
+        .post('/')
+        .expect(404)
         .end(done);
     });
   });
   describe('POST /login', function() {
-    it('redirects to create game page', function(done) {
+    it('just stay on the page and wait for opponent', function(done) {
       request(app)
         .post('/login')
+        .send({
+          username: "arvind"
+        })
         .expect(200)
         .end(done);
     });
   });
   describe('POST /login', function() {
     before(() => {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
-      app.game.addPlayer();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('arvind',sessionId);
     });
-    it('redirects to home page', function(done) {
+    it('should add the details of the join player', function(done) {
       request(app)
         .post('/login')
+        .send({
+          username: "arvinds"
+        })
         .expect(200)
         .end(done);
     });
   });
   describe('GET /hasOpponentJoined', function() {
     before(() => {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('arvind',sessionId);
     });
-    it('responds false if opponent is not present', function(done) {
+    it('responds false when opponent is not present', function(done) {
       request(app)
         .get('/hasOpponentJoined')
         .expect(200)
-        .expect(/false/)
+        .expect({
+          status: false
+        })
         .end(done);
     });
   });
   describe('GET /hasOpponentJoined', function() {
     before(() => {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
-      app.game.addPlayer();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
+      let sessionId2 = app.generateSessionId();
+      app.game.addPlayer('arvind',sessionId2);
     });
     it('responds true if opponent is present', function(done) {
       request(app)
@@ -89,13 +114,19 @@ describe('app', () => {
   });
   describe('GET /arePlayersReady', function() {
     before(() => {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
-      app.game.addPlayer();
-      app.game.changePlayerStatus(1);
-      app.game.assignFleet(1, {});
-      app.game.assignFleet(2, {});
-      app.game.changePlayerStatus(2);
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
+      let sessionId2 = app.generateSessionId();
+      app.game.addPlayer('arvind',sessionId2);
+      app.game.changePlayerStatus(sessionId);
+      app.game.assignFleet(sessionId, {});
+      app.game.assignFleet(sessionId2, {});
+      app.game.changePlayerStatus(sessionId2);
     });
     it('responds true when opponent is ready', function(done) {
       request(app)
@@ -109,8 +140,13 @@ describe('app', () => {
   });
   describe('GET /arePlayersReady', function() {
     it('responds false when opponent is not ready', function(done) {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
       request(app)
         .get('/arePlayersReady')
         .expect(200)
@@ -137,11 +173,15 @@ describe('app', () => {
         .end(done);
     });
   });
-
   describe('GET /cancel-game', () => {
     before(() => {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
     });
     it('should cancel the game', (done) => {
       request(app)
@@ -154,8 +194,13 @@ describe('app', () => {
   });
   describe('POST /start-game', () => {
     before(() => {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
     });
     it(`should store the fleet details`, (done) => {
       request(app)
@@ -175,11 +220,17 @@ describe('app', () => {
       };
       let fleet = new Fleet();
       fleet.addShip(shipInfo);
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
-      app.game.addPlayer();
-      app.game.assignFleet(1, fleet);
-      app.game.assignFleet(2, fleet);
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
+      let sessionId2 = app.generateSessionId();
+      app.game.addPlayer('arvind',sessionId2);
+      app.game.assignFleet(sessionId, fleet);
+      app.game.assignFleet(sessionId2, fleet);
     });
     it('Should respond with status true if any ship is hit', function(done) {
       request(app)
@@ -206,8 +257,13 @@ describe('app', () => {
   });
   describe('GET /host_or_join', function() {
     before(() => {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
     });
     it('gives game status', function(done) {
       request(app)
@@ -221,9 +277,15 @@ describe('app', () => {
   });
   describe('GET /host_or_join', function() {
     before(() => {
+      let _playerId = 0;
       app.game = new Game();
-      app.game.addPlayer();
-      app.game.addPlayer();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
+      let sessionId2 = app.generateSessionId();
+      app.game.addPlayer('arvind',sessionId2);
     });
     it('gives game status', function(done) {
       request(app)
