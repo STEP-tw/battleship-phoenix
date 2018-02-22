@@ -2,14 +2,17 @@ const Player = require('./player');
 
 class Game {
   constructor() {
-    this._status = false;
     this._players = [];
+    this._started = false;
     this._playerCount = 0;
-    this._currentPlayerIndex = 1;
+    this._currentPlayerId = 1;
   }
   addPlayer(name, id) {
     let player = new Player(id, name);
     this._players.push(player);
+  }
+  get playerCount(){
+    return Object.keys(this._players).length;
   }
   assignFleet(playerId, fleet) {
     let player = this.getPlayer(playerId);
@@ -40,16 +43,16 @@ class Game {
     let player = this.getPlayer(playerId);
     return player.changeStatus();
   }
-  updateStatus() {
-    this._status = !this._status;
-  }
-  get status() {
-    return this._status;
-  }
   getOpponentPlayerId(currentPlayerID) {
     return this._players.find(function(player) {
       return currentPlayerID != player._id;
     })._id;
+  }
+  updateStatus(){
+    this._started = !this._started;
+  }
+  get status(){
+    return this._started;
   }
   checkOpponentIsHit(currentPlayerID, position) {
     let opponentPlayerId = this.getOpponentPlayerId(currentPlayerID);

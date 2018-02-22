@@ -3,7 +3,16 @@ const Game = require('./../../src/models/game.js');
 const Player = require('./../../src/models/player.js');
 const Fleet = require('./../../src/models/fleet.js');
 
+let game;
 describe('Game', () => {
+  beforeEach(function () {
+    game = new Game;
+  });
+  describe('get playerCount',()=> {
+    it('should give no: of players',()=> {
+      assert.equal(game.playerCount,0);
+    });
+  });
   describe('addPlayer', () => {
     it('should add a new player with Id 1', () => {
       let game=new Game();
@@ -24,7 +33,6 @@ describe('Game', () => {
   });
   describe('updateStatus', () => {
     it('should update game status when second player has joined',() => {
-      let game=new Game();
       game.updateStatus("ready to start");
       let actual = game.status;
       let expected = true;
@@ -73,7 +81,6 @@ describe('Game', () => {
   });
   describe('assignFleet', () => {
     it('should assign fleet to the player',() => {
-      let game=new Game();
       let playerId = 1;
       let fleet = [
         {direction:"south",size:3,initialPos:'og_1_2',posOfDamage:[]},

@@ -12,8 +12,11 @@ const showOccupiedPosition = function(event){
 const removeHighlight = function(event){
   let cellIdList = getAllCoordsOfShip(event.target.id);
   cellIdList.forEach((cellId)=>{
-    if(!document.getElementById(cellId).checked) {
-      document.getElementById(cellId).style["background-color"]=null;
+    let cell = document.getElementById(cellId);
+    if (cell) {
+      if(!cell.checked) {
+        cell.style["background-color"]=null;
+      }
     }
   });
 };
@@ -51,7 +54,9 @@ const showInvalidCell = function(event) {
 const changeCellColor = function(cellIdList,color){
   cellIdList.forEach((cellId)=>{
     let cell=document.getElementById(cellId);
-    cell.style["background-color"]=color;
-    cell.style.cursor="move";
+    if(cell){
+      cell.style["background-color"]=color;
+      cell.style.cursor="move";
+    }
   });
 };
