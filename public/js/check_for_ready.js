@@ -31,7 +31,7 @@ const displayLost = function(){
   if(response.status){
     clearInterval(hasOpponentWonInterval);
     document.querySelector('#targetGrid').onclick = null;
-    alert('lost');
+    document.querySelector('.defeat').style.display = "block";
   }
 };
 
@@ -53,17 +53,17 @@ const showWaitingMessage = function() {
 const askIsOpponentReady = function() {
   sendReq('GET','/arePlayersReady',showWaitingMessage);
 };
-
-window.onbeforeunload = ()=>{
-  return 'do you want to reload this page?';
-};
+//
+// window.onbeforeunload = ()=>{
+//   return 'do you want to reload this page?';
+// };
 
 const displayWon=function(){
   let response = JSON.parse(this.responseText);
   if(response.status){
     clearInterval(hasOpponentWonInterval);
     document.querySelector('#targetGrid').onclick = null;
-    alert('won');
+    document.querySelector('.victory').style.display = "block";
   }
 };
 

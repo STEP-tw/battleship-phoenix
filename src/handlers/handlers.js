@@ -65,6 +65,14 @@ const isHit = function(req,res) {
   res.send({firedPos:firedPos,status:hitStatus});
 };
 
+const playAgain = function(req,res){
+  if(req.app.game && req.app.game.playerCount!=1){
+    req.app.game=undefined;
+  }
+
+  res.redirect('/');
+};
+
 const hasOpponentLost = function(req,res){
   let currentPlayerID = req.cookies.player;
   let victoryStatus = req.app.game.hasOpponentLost(currentPlayerID);
@@ -97,5 +105,6 @@ module.exports = {
   logRequest,
   isHit,
   hasOpponentLost,
-  hasOpponentWon
+  hasOpponentWon,
+  playAgain
 };

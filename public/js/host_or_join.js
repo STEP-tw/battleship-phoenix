@@ -3,7 +3,6 @@ const disableButton = function(id){
   button.onclick=null;
   button.style.backgroundColor = 'rgb(130, 135, 130)';
   button.style.color = 'rgb(218, 219, 219)';
-  console.log('hello');
 };
 
 const showHostOrJoin = function(){

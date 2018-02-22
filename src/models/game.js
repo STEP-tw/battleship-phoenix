@@ -12,7 +12,7 @@ class Game {
     this._players.push(player);
   }
   get playerCount(){
-    return Object.keys(this._players).length;
+    return this._players.length;
   }
   assignFleet(playerId, fleet) {
     let player = this.getPlayer(playerId);
@@ -64,16 +64,12 @@ class Game {
   get status(){
     return this._started;
   }
-  getOpponent(currentPlayerID){
-    let opponent = this.getOpponentPlayer(currentPlayerID);
-    return opponent;
-  }
   checkOpponentIsHit(currentPlayerID,position){
-    let opponent = this.getOpponent(currentPlayerID);
+    let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.isHit(position);
   }
   hasOpponentLost(currentPlayerID){
-    let opponent = this.getOpponent(currentPlayerID);
+    let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.hasFleetDestroyed();
   }
   hasOpponentWon(currentPlayerID){
