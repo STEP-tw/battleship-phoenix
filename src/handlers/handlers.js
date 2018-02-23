@@ -91,6 +91,11 @@ const hasOpponentWon = function(req,res){
   res.send({status:victoryStatus});
 };
 
+const getGameStatus = function(req,res){
+  let fleet = req.app.game.getFleet(req.cookies.player);
+  res.json({fleet:fleet.ships});
+};
+
 module.exports = {
   cancelGame,
   createGame,
@@ -100,5 +105,6 @@ module.exports = {
   isHit,
   hasOpponentLost,
   hasOpponentWon,
-  playAgain
+  playAgain,
+  getGameStatus
 };
