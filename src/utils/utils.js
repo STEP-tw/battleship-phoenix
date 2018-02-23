@@ -10,4 +10,15 @@ utils.generateTurn = (random)=> {
   return [turns[randomIndex],turns[utils.changeIndex(randomIndex)]];
 };
 
+utils.getGame = function (req) {
+  return req.app.game;
+};
+
+utils.getPlayerId = function (req) {
+  return req.cookies.player;
+};
+
+utils.getUsername = function (req) {
+  return req.body.username;
+};
 module.exports = utils;

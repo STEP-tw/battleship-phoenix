@@ -25,15 +25,19 @@ const loadFleet = function() {
 const handleTurn = function (myTurn) {
   let message = myTurn ? 'My turn' : 'Opponent\'s turn';
   utils.updateMessage(message);
+  if (myTurn) {
+    makeTargetGridFirable(myTurn);
+    utils.clearIntervals();
+  }else {
+    deactivateTargetGrid();
+    utils.poll(utils.get(),'/hasOpponentWon',displayLost);
+  }
 };
 
-const displayLost = function(){
-  let response = JSON.parse(this.responseText);
-  if(response.status){
-    utils.clearIntervals();
-    utils.getTargetGrid().onclick = null;
-    document.querySelector('.defeat').style.display = "block";
-  }
+const deactivateTargetGrid = function () {
+  let targetGrid = utils.getTargetGrid();
+  targetGrid.onclick = null;
+  dontAllowHover('tg');
 };
 
 const gameStarts = function (response) {
@@ -41,13 +45,16 @@ const gameStarts = function (response) {
   let targetGrid = utils.getTargetGrid();
   utils.updateMessage("Game Started");
   handleTurn(myTurn);
-  utils.clearIntervals();
-  utils.poll(utils.get(),'/hasOpponentWon',displayLost);
-  if(myTurn){
-    makeTargetGridFirable(myTurn);
-    targetGrid.onclick = checkAndDisplayShot;
-    targetGrid.setAttribute('class','tg');
-  }
+  dontAllowHover('og');
+};
+
+const dontAllowHover = function(gridId){
+  let targetGridCells = document.querySelectorAll(`[id^="${gridId}"]`);
+  targetGridCells.forEach((cell)=>{
+    cell.onmouseover = function(event){
+      document.querySelector(`#${event.target.id}`).style.cursor='not-allowed';
+    };
+  });
 };
 
 const highlightCell = function(event){
@@ -67,6 +74,8 @@ const makeTargetGridFirable = function(myTurn){
     targetGridCell.onmouseover = highlightCell;
     targetGridCell.onmouseout = remCellHighlight;
   });
+  targetGrid.onclick = checkAndDisplayShot;
+  targetGrid.setAttribute('class','tg');
 };
 
 const showWaitingMessage = function() {
@@ -79,9 +88,19 @@ const handleStartGame = function () {
   response.status ? gameStarts(response) : showWaitingMessage();
 };
 
-const displayWon=function(){
-  let response = JSON.parse(this.responseText);
+const displayLost = function(){
+  let response = utils.parse(this.responseText);
   if(response.status){
+    utils.clearIntervals();
+    utils.getTargetGrid().onclick = null;
+    document.querySelector('.defeat').style.display = "block";
+  }else {
+    handleTurn(response.myTurn);
+  }
+};
+
+const displayWon=function(hasWon){
+  if(hasWon){
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
     document.querySelector('.victory').style.display = "block";
@@ -91,11 +110,12 @@ const displayWon=function(){
 const displayShot = function() {
   let shotResult = utils.parse(this.responseText);
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
+  handleTurn(shotResult.myTurn);
   if(!shotResult.status) {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
-    sendReq("GET","/hasOpponentLost",displayWon);
+    displayWon(shotResult.winStatus);
   }
 };
 
@@ -103,5 +123,5 @@ const checkAndDisplayShot=function(event) {
   let firedPosition=parseCoordinates(event.target.id);
   let data = {firedPosition:firedPosition};
   data = utils.toS(data);
-  sendJsonData(utils.post(),"/isHit",displayShot,data);
+  sendJsonData(utils.post(),"/updateFiredShot",displayShot,data);
 };

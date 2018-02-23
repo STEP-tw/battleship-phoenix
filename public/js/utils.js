@@ -25,6 +25,10 @@ utils.getTargetGrid = function () {
   return document.querySelector('#targetGrid');
 };
 
+utils.getOceanGrid = function () {
+  return document.querySelector('#oceanGrid');
+};
+
 utils.getReadyButton = function () {
   return document.querySelector('#ready');
 };

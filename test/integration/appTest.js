@@ -209,8 +209,8 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('POST /isHit', function() {
-    before(() => {
+  describe('POST /updateFiredShot', function() {
+    beforeEach(() => {
       let shipInfo = {
         dir: "south",
         length: 3,
@@ -227,19 +227,22 @@ describe('app', () => {
       app.game.addPlayer('ishu',sessionId);
       let sessionId2 = app.generateSessionId();
       app.game.addPlayer('arvind',sessionId2);
+      app.game.assignTurn(0.4);
       app.game.assignFleet(sessionId, fleet);
       app.game.assignFleet(sessionId2, fleet);
     });
     it('Should respond with status true if any ship is hit', function(done) {
       request(app)
-        .post('/isHit')
+        .post('/updateFiredShot')
         .send({
           firedPosition: [1, 2]
         })
         .expect(200)
         .expect({
           firedPos: [1, 2],
-          status: true
+          status: true,
+          winStatus: false,
+          myTurn: false
         })
         .end(done);
     });

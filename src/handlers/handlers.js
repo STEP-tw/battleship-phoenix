@@ -1,13 +1,15 @@
 const Fleet = require('../models/fleet.js');
 const Game = require('../models/game');
+const utils = require('../utils/utils.js');
 
 const cancelGame = function(req, res) {
-  req.app.game = undefined;
+  delete req.app.game;
   res.end();
 };
 
 const createGame = function(req, res) {
-  if (!req.app.game) {
+  let game = utils.getGame(req);
+  if (!game) {
     req.app.game = new Game();
     hostGame(req, res);
     return;
@@ -16,45 +18,51 @@ const createGame = function(req, res) {
 };
 
 const hostGame = function(req, res) {
-  let name = req.body.username;
+  let name = utils.getUsername(req);
   let sessionId = req.app.generateSessionId();
-  req.app.game.addPlayer(name,sessionId);
+  let game = utils.getGame(req);
+
+  game.addPlayer(name,sessionId);
   res.cookie('player', sessionId);
-  req.app.game.updateStatus();
+  game.updateStatus();
   res.end();
 };
 
 const joinGame = function(req, res) {
-  let name = req.body.username;
+  let name = utils.getUsername(req);
   let sessionId = req.app.generateSessionId();
-  req.app.game.addPlayer(name,sessionId);
+
+  utils.getGame(req).addPlayer(name,sessionId);
   res.cookie('player', sessionId);
   res.end();
 };
 
 const hasOpponentJoined = function(req, res) {
+  let game = utils.getGame(req);
   let gameStatus = {
-    status: req.app.game && req.app.game.hasTwoPlayers()
+    status: game && game.hasTwoPlayers()
   };
   res.send(gameStatus);
 };
 
 const loadFleet = function(req, res) {
-  let game = req.app.game;
+  let game = utils.getGame(req);
+  let playerId = utils.getPlayerId(req);
   let fleet = new Fleet();
   let shipsHeadPositions = JSON.parse(req.body.fleetDetails);
+
   shipsHeadPositions.forEach(function(shipInfo) {
     fleet.addShip(shipInfo);
   });
-  game.assignFleet(req.cookies.player, fleet);
-  game.changePlayerStatus(req.cookies.player);
+  game.assignFleet(playerId,fleet);
+  game.changePlayerStatus(playerId);
   res.end();
 };
 
 const arePlayersReady = function(req, res) {
-  let game = req.app.game;
+  let game = utils.getGame(req);
   let currentPlayerIndex = game.turn || game.assignTurn();
-  let sessionId = req.cookies.player;
+  let sessionId = utils.getPlayerId(req);
   let turnStatus = game.validateId(currentPlayerIndex,sessionId);
 
   let playerStatus = {
@@ -65,30 +73,41 @@ const arePlayersReady = function(req, res) {
 };
 
 const isHit = function(req,res) {
+  req.app.game.changeTurn();
+  let game = utils.getGame(req);
   let firedPos = req.body.firedPosition;
-  let currentPlayerID = req.cookies.player;
-  let hitStatus =req.app.game.checkOpponentIsHit(currentPlayerID,firedPos);
-  res.send({firedPos:firedPos,status:hitStatus});
+  let currentPlayerID = utils.getPlayerId(req);
+  let hitStatus =game.checkOpponentIsHit(currentPlayerID,firedPos);
+  let victoryStatus = hasOpponentLost(req);
+  let turnStatus = game.validateId(game.turn,currentPlayerID);
+  res.send({
+    firedPos:firedPos,
+    status:hitStatus,
+    winStatus:victoryStatus,
+    myTurn: turnStatus
+  });
 };
 
 const playAgain = function(req,res){
-  if(req.app.game && req.app.game.playerCount!=1){
-    req.app.game=undefined;
+  let game = utils.getGame(req);
+  if(game && game.playerCount!=1){
+    delete req.app.game;
   }
-
   res.redirect('/');
 };
 
 const hasOpponentLost = function(req,res){
-  let currentPlayerID = req.cookies.player;
-  let victoryStatus = req.app.game.hasOpponentLost(currentPlayerID);
-  res.send({status:victoryStatus});
+  let currentPlayerID = utils.getPlayerId(req);
+  let victoryStatus = utils.getGame(req).hasOpponentLost(currentPlayerID);
+  return victoryStatus;
 };
 
 const hasOpponentWon = function(req,res){
-  let currentPlayerID = req.cookies.player;
-  let victoryStatus = req.app.game.hasOpponentWon(currentPlayerID);
-  res.send({status:victoryStatus});
+  let game = utils.getGame(req);
+  let currentPlayerID = utils.getPlayerId(req);
+  let defeatStatus = game.hasOpponentWon(currentPlayerID);
+  let turnStatus = game.validateId(game.turn,currentPlayerID);
+  res.send({status:defeatStatus,myTurn: turnStatus});
 };
 
 module.exports = {

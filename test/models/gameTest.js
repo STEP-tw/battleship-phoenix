@@ -15,7 +15,6 @@ describe('Game', () => {
   });
   describe('addPlayer', () => {
     it('should add a new player with Id 1', () => {
-      let game=new Game();
       game.addPlayer('player1',1);
       let actual=game.players;
       let expected=[{_id: 1,_fleet:undefined,_ready:false,_name: 'player1'}];
@@ -24,7 +23,6 @@ describe('Game', () => {
   });
   describe('hasTwoPlayers', () => {
     it('should return true when game has two players', () => {
-      let game=new Game();
       game.addPlayer('arvind',1);
       game.addPlayer('ishu',2);
       let actual=game.hasTwoPlayers();
@@ -41,7 +39,6 @@ describe('Game', () => {
   });
   describe('changePlayerStatus', () => {
     it('should change player status to ready',() => {
-      let game=new Game();
       game.addPlayer('arvind',1);
       game.addPlayer('ishu',2);
       game.changePlayerStatus(1);
@@ -51,7 +48,6 @@ describe('Game', () => {
   });
   describe('getPlayer', () => {
     it('should give the player given its Id',() => {
-      let game=new Game();
       game.addPlayer('arvind',1);
       game.addPlayer('ishu',2);
       let actual = game.getPlayer(1);
@@ -61,7 +57,6 @@ describe('Game', () => {
   });
   describe('arePlayersReady', () => {
     it('should give true if both the players are ready',() => {
-      let game=new Game();
       game.addPlayer('arvind',1);
       game.addPlayer('ishu',2);
       game.assignFleet(1,{});
@@ -71,7 +66,6 @@ describe('Game', () => {
       assert.isOk(game.arePlayersReady());
     });
     it('should give false if both the players are not ready',() => {
-      let game=new Game();
       game.addPlayer('arvind',1);
       game.addPlayer('ishu',2);
       game.assignFleet(1,{});
@@ -93,7 +87,6 @@ describe('Game', () => {
   });
   describe('checkOpponentIsHit', function () {
     it('should return true when the opponents ship is hit', function () {
-      let game = new Game();
       game.addPlayer('arvind',1);
       game.addPlayer('ishu',2);
       let fleet = new Fleet();
@@ -105,7 +98,6 @@ describe('Game', () => {
       assert.ok(actual);
     });
     it('should return false when the opponents ship is not hit', function () {
-      let game = new Game();
       game.addPlayer('arvind',1);
       game.addPlayer('ishu',2);
       let fleet = new Fleet();
@@ -138,7 +130,6 @@ describe('Game', () => {
   });
   describe('hasOpponentLost',function(){
     it('it should return true when other player lost',function(){
-      let game = new Game();
       game.addPlayer('mani',1);
       game.addPlayer('Dhana',2);
       let fleet = {
@@ -150,7 +141,6 @@ describe('Game', () => {
       assert.ok(game.hasOpponentLost(1));
     });
     it('it should return false when other player is not lost',function(){
-      let game = new Game();
       game.addPlayer('mani',1);
       game.addPlayer('Dhana',2);
       let fleet = {
@@ -164,7 +154,6 @@ describe('Game', () => {
   });
   describe('hasOpponentWon',function(){
     it('it should return true when other player won',function(){
-      let game = new Game();
       game.addPlayer('mani',1);
       game.addPlayer('Dhana',2);
       let fleet = {
@@ -176,7 +165,6 @@ describe('Game', () => {
       assert.ok(game.hasOpponentWon(1));
     });
     it('it should return false when other player is not won',function(){
-      let game = new Game();
       game.addPlayer('mani',1);
       game.addPlayer('Dhana',2);
       let fleet = {
@@ -191,7 +179,6 @@ describe('Game', () => {
   describe('getOpponentPlayerID', function () {
     it('should give the opponent playerID according to the current playerId',
       function () {
-        let game=new Game();
         game.addPlayer('ishu',1);
         game.addPlayer('arvind',2);
         game.assignFleet(1,{});
@@ -208,6 +195,22 @@ describe('Game', () => {
     it('should give false given nonMatching id of player', function () {
       game.addPlayer('sudhin',123);
       assert.isFalse(game.validateId(0,12));
+    });
+  });
+  describe('changeTurn', function () {
+    beforeEach(function () {
+      game.addPlayer('sudhin',1);
+      game.addPlayer('sridev',2);
+    });
+    it('should toggle the turn from player 1 from to player 2', function () {
+      game.assignTurn(0.4);
+      game.changeTurn();
+      assert.equal(game.turn,1);
+    });
+    it('should toggle the turn from player 2 from to player 1', function () {
+      game.assignTurn(0.6);
+      game.changeTurn();
+      assert.equal(game.turn,0);
     });
   });
 });
