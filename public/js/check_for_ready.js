@@ -35,6 +35,25 @@ const displayLost = function(){
   }
 };
 
+const highlightCell = function(event){
+  let cellId = event.target.id;
+  let cell = document.getElementById(cellId);
+  cell.style["background-color"]="rgba(177, 177, 177, 0.63)";
+};
+
+const remCellHighlight = function(event){
+  let cellId = event.target.id;
+  document.getElementById(cellId).style["background-color"]=null;
+};
+
+const makeTargetGridFirable = function(){
+  let targetGridCells = document.querySelectorAll('[id^="tg"]');
+  targetGridCells.forEach((targetGridCell)=>{
+    targetGridCell.onmouseover = highlightCell;
+    targetGridCell.onmouseout = remCellHighlight;
+  });
+};
+
 const showWaitingMessage = function() {
   let response = JSON.parse(this.responseText);
   document.querySelector('.messageBox').innerHTML=
@@ -43,6 +62,8 @@ const showWaitingMessage = function() {
     document.querySelector('.messageBox').innerHTML="Game Started";
     document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
     clearInterval(interval);
+    document.getElementById('targetGrid').setAttribute('class','tg');
+    makeTargetGridFirable();
     hasOpponentWonInterval = setInterval(()=>{
       sendReq('GET','/hasOpponentWon',displayLost);
     },1000);
