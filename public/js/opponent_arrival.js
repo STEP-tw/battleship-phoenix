@@ -1,11 +1,11 @@
 const afterCancel = function(){
   document.querySelector(".popup").style.display = "none";
-  clearInterval(interval);
+  utils.clearIntervals();
 };
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  sendJsonData('GET',url,afterCancel);
+  sendJsonData(util.get(),url,afterCancel);
 };
 
 const startGame = function(){
@@ -17,7 +17,7 @@ const startGame = function(){
 
 const canStartGame = function(){
   let url = '/start-game';
-  sendJsonData('GET',url,startGame);
+  sendJsonData(utils.get(),url,startGame);
 };
 
 const sendJsonData = function(method,url,callback,data) {

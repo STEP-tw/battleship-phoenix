@@ -133,7 +133,8 @@ describe('app', () => {
         .get('/arePlayersReady')
         .expect(200)
         .expect({
-          status: true
+          status: true,
+          myTurn: false
         })
         .end(done);
     });
@@ -146,19 +147,16 @@ describe('app', () => {
         return ++_playerId;
       };
       let sessionId = app.generateSessionId();
+      let sessionId2 = app.generateSessionId();
       app.game.addPlayer('ishu',sessionId);
+      app.game.addPlayer('geniusPeople',sessionId2);
       request(app)
         .get('/arePlayersReady')
         .expect(200)
         .expect({
-          status: false
+          status: false,
+          myTurn: false
         })
-        .end(done);
-    });
-    it('responds nothing if there is no game', function(done) {
-      request(app)
-        .get('/arePlayersReady')
-        .expect(200)
         .end(done);
     });
   });

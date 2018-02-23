@@ -1,4 +1,3 @@
-let interval;
 const showMessage = function(){
   document.getElementById('login').style.display='none';
   document.getElementById('playnow').style.display='none';
@@ -24,11 +23,11 @@ const joinGame = function(){
     return;
   }
   let userDetails = JSON.stringify({username:name});
-  sendJsonData('post','/login',startgameMessage,userDetails);
+  sendJsonData(utils.post(),'/login',startgameMessage,userDetails);
 };
 
 const askForOpponent = function () {
-  interval = setInterval(askHasOpponentJoined,1000);
+  utils.poll(utils.get(),'hasOpponentJoined',showOpponentArrival);
 };
 
 const startGameReq = function(){
@@ -37,16 +36,13 @@ const startGameReq = function(){
 
 
 const showOpponentArrival = function() {
-  let response = JSON.parse(this.responseText);
+  let response = utils.parse(this.responseText);
   document.querySelector(".popup").style.display = "block";
   let arrivalMessage = document.querySelector('#message');
   if (response.status) {
     arrivalMessage.innerHTML = "Opponent Arrived !!!";
-    clearInterval(interval);
+    utils.clearIntervals();
     setTimeout(startGameReq,1000);
     return;
   }
-};
-const askHasOpponentJoined = function() {
-  sendJsonData('get','/hasOpponentJoined',showOpponentArrival);
 };

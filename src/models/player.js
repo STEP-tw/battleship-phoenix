@@ -39,6 +39,9 @@ class Player {
   updateShot(type,position){
     this._shots[type].push(position);
   }
+  isItYourId(id){
+    return this._id == id;
+  }
 }
 
 module.exports = Player;

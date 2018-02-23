@@ -72,4 +72,14 @@ describe('Player', () => {
       assert.deepEqual(actual, expected);
     });
   });
+  describe('isItYourTurn', function () {
+    let player = new Player(123);
+    it('should give true if given id is his id', function () {
+      console.log(player);
+      assert.isTrue(player.isItYourId(123));
+    });
+    it('should give false if its not his id', function () {
+      assert.isFalse(player.isItYourId(12));
+    });
+  });
 });

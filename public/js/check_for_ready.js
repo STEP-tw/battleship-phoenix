@@ -1,75 +1,116 @@
-let interval;
-let hasOpponentWonInterval;
 const addListener = function() {
-  let readyButton = document.getElementById('ready');
-  readyButton.onclick = startGamePlay;
+  let readyButton = utils.getReadyButton();
+  readyButton.onclick = handleReady;
 };
 
 const areAllShipsPlaced=function(){
   return shipsHeadPositions.length == 5;
 };
 
-const startGamePlay=function(){
+const handleReady=function(){
   if (areAllShipsPlaced()) {
     loadFleet();
-    document.getElementById('ready').style.display = 'none';
-    interval = setInterval(()=>{
-      sendJsonData('GET','/arePlayersReady',showWaitingMessage);
-    },1000);
-    return;
+    utils.getReadyButton().style.display = 'none';
+    utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
+  } else {
+    utils.updateMessage("Please place all your ships");
   }
-  document.querySelector('.messageBox').innerHTML="Please place all your ships";
 };
 
 const loadFleet = function() {
   let fleet = JSON.stringify({fleetDetails : shipsHeadPositions});
-  sendJsonData('POST','/start-game',null,fleet);
+  sendJsonData(utils.post(),'/start-game',null,fleet);
+};
+
+const handleTurn = function (myTurn) {
+  let message = myTurn ? 'My turn' : 'Opponent\'s turn';
+  utils.updateMessage(message);
 };
 
 const displayLost = function(){
   let response = JSON.parse(this.responseText);
   if(response.status){
-    clearInterval(hasOpponentWonInterval);
-    document.querySelector('#targetGrid').onclick = null;
-    alert('lost');
+    utils.clearIntervals();
+    utils.getTargetGrid().onclick = null;
+    document.querySelector('.defeat').style.display = "block";
   }
 };
 
-const showWaitingMessage = function() {
-  let response = JSON.parse(this.responseText);
-  document.querySelector('.messageBox').innerHTML=
-    "Waiting for opponent to place ships";
-  if (response.status) {
-    document.querySelector('.messageBox').innerHTML="Game Started";
-    document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
-    clearInterval(interval);
-    reqForOpponentShot();
-    hasOpponentWonInterval = setInterval(()=>{
-      sendJsonData('GET','/hasOpponentWon',displayLost);
-    },1000);
-    return;
-  }
-};
+// const showWaitingMessage = function() {
+//   let response = JSON.parse(this.responseText);
+//   document.querySelector('.messageBox').innerHTML=
+//     "Waiting for opponent to place ships";
+//   if (response.status) {
+//     document.querySelector('.messageBox').innerHTML="Game Started";
+//     document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
+//     clearInterval(interval);
+//     reqForOpponentShot();
+//     hasOpponentWonInterval = setInterval(()=>{
+//       sendJsonData('GET','/hasOpponentWon',displayLost);
+//     },1000);
+//     return;
+//   }
+// };
 
 const askIsOpponentReady = function() {
   sendJsonData('GET','/arePlayersReady',showWaitingMessage);
 };
 
-window.onbeforeunload = ()=>{
-  return 'do you want to reload this page?';
+const gameStarts = function (response) {
+  let myTurn = response.myTurn;
+  let targetGrid = utils.getTargetGrid();
+  utils.updateMessage("Game Started");
+  handleTurn(myTurn);
+  utils.clearIntervals();
+  utils.poll(utils.get(),'/hasOpponentWon',displayLost);
+  reqForOpponentShot();
+  if(myTurn){
+    makeTargetGridFirable(myTurn);
+    targetGrid.onclick = checkAndDisplayShot;
+    targetGrid.setAttribute('class','tg');
+  }
+};
+
+const highlightCell = function(event){
+  let cellId = event.target.id;
+  let cell = document.getElementById(cellId);
+  cell.style["background-color"]="rgba(177, 177, 177, 0.63)";
+};
+
+const remCellHighlight = function(event){
+  let cellId = event.target.id;
+  document.getElementById(cellId).style["background-color"]=null;
+};
+
+const makeTargetGridFirable = function(myTurn){
+  let targetGridCells = document.querySelectorAll('[id^="tg"]');
+  targetGridCells.forEach((targetGridCell)=>{
+    targetGridCell.onmouseover = highlightCell;
+    targetGridCell.onmouseout = remCellHighlight;
+  });
+};
+
+const showWaitingMessage = function() {
+  let message = "Waiting for opponent to place ships";
+  utils.updateMessage(message);
+};
+
+const handleStartGame = function () {
+  let response = utils.parse(this.responseText);
+  response.status ? gameStarts(response) : showWaitingMessage();
 };
 
 const displayWon=function(){
   let response = JSON.parse(this.responseText);
   if(response.status){
-    clearInterval(hasOpponentWonInterval);
-    document.querySelector('#targetGrid').onclick = null;
-    alert('won');
+    utils.clearIntervals();
+    utils.getTargetGrid().onclick = null;
+    document.querySelector('.victory').style.display = "block";
   }
 };
 
 const displayShot = function() {
-  let shotResult = JSON.parse(this.responseText);
+  let shotResult = utils.parse(this.responseText);
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   if(!shotResult.status) {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
@@ -82,6 +123,6 @@ const displayShot = function() {
 const checkAndDisplayShot=function(event) {
   let firedPosition=parseCoordinates(event.target.id);
   let data = {firedPosition:firedPosition};
-  data = JSON.stringify(data);
-  sendJsonData("POST","/isHit",displayShot,data);
+  data = utils.toS(data);
+  sendJsonData(utils.post(),"/isHit",displayShot,data);
 };

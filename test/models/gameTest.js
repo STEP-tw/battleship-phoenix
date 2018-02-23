@@ -270,9 +270,15 @@ describe('Game', () => {
       game.addPlayer('arvind', 2);
       game.assignFleet(1, fleet);
       game.assignFleet(2, fleet);
+      game.updatePlayerShot(2,[1,2]);
       let actual = game.getOpponentShots(1);
       let player = game.getPlayer(2);
-      let expected = player.shots;
+      let expected = {
+        hits: [],
+        misses: [
+          [1, 2]
+        ]
+      };
       assert.deepEqual(actual, expected);
     });
   });

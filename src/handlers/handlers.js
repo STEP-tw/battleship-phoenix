@@ -52,8 +52,14 @@ const loadFleet = function(req, res) {
 };
 
 const arePlayersReady = function(req, res) {
+  let game = req.app.game;
+  let currentPlayerIndex = game.turn || game.assignTurn();
+  let sessionId = req.cookies.player;
+  let turnStatus = game.validateId(currentPlayerIndex,sessionId);
+
   let playerStatus = {
-    status: req.app.game && req.app.game.arePlayersReady()
+    status: game && game.arePlayersReady(),
+    myTurn: turnStatus
   };
   res.send(playerStatus);
 };
@@ -64,6 +70,14 @@ const updateShot = function(req,res) {
   let hitStatus =req.app.game.checkOpponentIsHit(currentPlayerID,firedPos);
   req.app.game.updatePlayerShot(currentPlayerID,firedPos);
   res.send({firedPos:firedPos,status:hitStatus});
+};
+
+const playAgain = function(req,res){
+  if(req.app.game && req.app.game.playerCount!=1){
+    req.app.game=undefined;
+  }
+
+  res.redirect('/');
 };
 
 const hasOpponentLost = function(req,res){
@@ -94,5 +108,6 @@ module.exports = {
   updateShot,
   hasOpponentLost,
   hasOpponentWon,
-  getOpponentShots
+  getOpponentShots,
+  playAgain
 };

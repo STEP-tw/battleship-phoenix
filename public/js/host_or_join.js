@@ -6,7 +6,7 @@ const disableButton = function(id){
 };
 
 const showHostOrJoin = function(){
-  let response = JSON.parse(this.responseText);
+  let response = utils.parse(this.responseText);
   if(!('areTwoPlayers' in response)){
     disableButton('joinButton');
     return;
@@ -21,5 +21,5 @@ const showHostOrJoin = function(){
 const hostOrJoin = function(){
   document.getElementById('playnow').style.display='block';
   let url = '/host_or_join';
-  sendJsonData('GET',url,showHostOrJoin);
+  sendJsonData(utils.get(),url,showHostOrJoin);
 };

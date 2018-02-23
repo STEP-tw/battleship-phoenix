@@ -13,9 +13,13 @@ const remHighlightOnShips = function(){
   });
 };
 
-const makeShipPlacable = function (size){
+const makeShipPlacable = function (event,size){
   shipName =event.target.id;
   shipSize = size;
+  let ships=document.querySelectorAll('.shipsBlock li');
+  ships.forEach((ship)=>{
+    ship.style.color='rgb(67, 195, 199)';
+  });
   document.getElementById(shipName).style.color="rgb(96, 96, 96)";
   addMouseEvent();
 };
@@ -50,7 +54,7 @@ const placeShip = function(event){
   }
 };
 
-const markCellsChecked = function(){
+const markCellsChecked = function(event){
   let coordinates = parseCoordinates(event.target.id);
   let coords = getCoordinates(direction,coordinates,shipSize);
   let cellIdList=coords.map((cellId)=>generateCellId('og',cellId));
@@ -70,7 +74,7 @@ const disableMouseEvents = function(){
 };
 
 const getAllCoordsOfShip = function(id) {
-  let parsedCoordinates = parseCoordinates(event.target.id);
+  let parsedCoordinates = parseCoordinates(id);
   let coords = getCoordinates(direction,parsedCoordinates,shipSize);
   let cellIdList=coords.map((cellId)=>generateCellId('og',cellId));
   return cellIdList;
