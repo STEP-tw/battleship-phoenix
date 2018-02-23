@@ -37,12 +37,38 @@ const displayLost = function(){
 };
 
 const gameStarts = function (response) {
+  let myTurn = response.myTurn;
+  let targetGrid = utils.getTargetGrid();
   utils.updateMessage("Game Started");
-  utils.getTargetGrid().onclick = checkAndDisplayShot;
-  handleTurn(response.myTurn);
+  handleTurn(myTurn);
   utils.clearIntervals();
   utils.poll(utils.get(),'/hasOpponentWon',displayLost);
+  if(myTurn){
+    makeTargetGridFirable(myTurn);
+    targetGrid.onclick = checkAndDisplayShot;
+    targetGrid.setAttribute('class','tg');
+  }
 };
+
+const highlightCell = function(event){
+  let cellId = event.target.id;
+  let cell = document.getElementById(cellId);
+  cell.style["background-color"]="rgba(177, 177, 177, 0.63)";
+};
+
+const remCellHighlight = function(event){
+  let cellId = event.target.id;
+  document.getElementById(cellId).style["background-color"]=null;
+};
+
+const makeTargetGridFirable = function(myTurn){
+  let targetGridCells = document.querySelectorAll('[id^="tg"]');
+  targetGridCells.forEach((targetGridCell)=>{
+    targetGridCell.onmouseover = highlightCell;
+    targetGridCell.onmouseout = remCellHighlight;
+  });
+};
+
 const showWaitingMessage = function() {
   let message = "Waiting for opponent to place ships";
   utils.updateMessage(message);

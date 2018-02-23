@@ -14,6 +14,14 @@ body {
 .animateZoom{
   animation: animatezoom;
 }
+.tg {
+  cursor: url(/assets/images/target.png),auto;
+}
+
+td:hover {
+  background-color: rgba(177, 177, 177, 0.63);
+}
+
 .greyLongButton {
   line-height: 5px;
   font-size: 19px;
@@ -198,6 +206,7 @@ h4 {
   border: 0.5px solid rgb(142, 145, 142);
   background-color:rgba(20, 230, 231, 0.19);
 }
+
 #oceanGrid td {
   border: 0.5px solid rgb(142, 145, 142);
   background-color:rgba(20, 230, 231, 0.19);
