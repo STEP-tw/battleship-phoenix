@@ -1,4 +1,3 @@
-let interval;
 const showMessage = function(){
   document.getElementById('login').style.display='none';
   document.getElementById('playnow').style.display='none';
@@ -42,7 +41,7 @@ const showOpponentArrival = function() {
   let arrivalMessage = document.querySelector('#message');
   if (response.status) {
     arrivalMessage.innerHTML = "Opponent Arrived !!!";
-    clearInterval(interval);
+    utils.clearIntervals();
     setTimeout(startGameReq,1000);
     return;
   }

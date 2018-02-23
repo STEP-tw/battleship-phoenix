@@ -1,4 +1,5 @@
 let utils = {};
+let intervals=[];
 
 utils.get = function () {
   return 'GET';
@@ -19,8 +20,27 @@ utils.toS = function (content) {
 utils.updateMessage = function (content) {
   document.querySelector('.messageBox').innerHTML = content;
 };
+
+utils.getTargetGrid = function () {
+  return document.querySelector('#targetGrid');
+};
+
+utils.getReadyButton = function () {
+  return document.querySelector('#ready');
+};
 utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
-  interval = setInterval(()=>{
+  let interval = setInterval(()=>{
     sendReq(method,reqUrl,callBackFunction);
   },time);
+  intervals.push(interval);
+};
+
+utils.clearIntervals = function () {
+  intervals.forEach(function (interval) {
+    clearInterval(interval);
+  });
+};
+
+utils.clearLastInterval = function () {
+  clearInterval(intervals.pop());
 };

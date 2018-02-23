@@ -1,6 +1,6 @@
 const afterCancel = function(){
   document.querySelector(".popup").style.display = "none";
-  clearInterval(interval);
+  utils.clearIntervals();
 };
 
 const cancelGame = function(){

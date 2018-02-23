@@ -1,22 +1,20 @@
-let interval;
-let hasOpponentWonInterval;
 const addListener = function() {
-  let readyButton = document.getElementById('ready');
-  readyButton.onclick = startGamePlay;
+  let readyButton = utils.getReadyButton();
+  readyButton.onclick = handleReady;
 };
 
 const areAllShipsPlaced=function(){
   return shipsHeadPositions.length == 5;
 };
 
-const startGamePlay=function(){
+const handleReady=function(){
   if (areAllShipsPlaced()) {
     loadFleet();
-    document.getElementById('ready').style.display = 'none';
-    utils.poll(utils.get(),'/arePlayersReady',showWaitingMessage);
-    return;
+    utils.getReadyButton().style.display = 'none';
+    utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
+  }else {
+    utils.updateMessage("Please place all your ships");
   }
-  utils.updateMessage("Please place all your ships");
 };
 
 const loadFleet = function() {
@@ -32,41 +30,34 @@ const handleTurn = function (myTurn) {
 const displayLost = function(){
   let response = JSON.parse(this.responseText);
   if(response.status){
-    clearInterval(hasOpponentWonInterval);
-    document.querySelector('#targetGrid').onclick = null;
+    utils.clearIntervals();
+    utils.getTargetGrid().onclick = null;
     document.querySelector('.defeat').style.display = "block";
   }
 };
 
+const gameStarts = function (response) {
+  utils.updateMessage("Game Started");
+  utils.getTargetGrid().onclick = checkAndDisplayShot;
+  handleTurn(response.myTurn);
+  utils.clearIntervals();
+  utils.poll(utils.get(),'/hasOpponentWon',displayLost);
+};
 const showWaitingMessage = function() {
-  let response = utils.parse(this.responseText);
   let message = "Waiting for opponent to place ships";
   utils.updateMessage(message);
-  if (response.status) {
-    utils.updateMessage("Game Started");
-    document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
-    handleTurn(response.myTurn);
-    clearInterval(interval);
-    hasOpponentWonInterval = setInterval(()=>{
-      sendReq('GET','/hasOpponentWon',displayLost);
-    },1000);
-    return;
-  }
 };
 
-const askIsOpponentReady = function() {
-  sendReq(utils.get(),'/arePlayersReady',showWaitingMessage);
+const handleStartGame = function () {
+  let response = utils.parse(this.responseText);
+  response.status ? gameStarts(response) : showWaitingMessage();
 };
-//
-// window.onbeforeunload = ()=>{
-//   return 'do you want to reload this page?';
-// };
 
 const displayWon=function(){
   let response = JSON.parse(this.responseText);
   if(response.status){
-    clearInterval(hasOpponentWonInterval);
-    document.querySelector('#targetGrid').onclick = null;
+    utils.clearIntervals();
+    utils.getTargetGrid().onclick = null;
     document.querySelector('.victory').style.display = "block";
   }
 };

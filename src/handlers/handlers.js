@@ -53,7 +53,7 @@ const loadFleet = function(req, res) {
 
 const arePlayersReady = function(req, res) {
   let game = req.app.game;
-  let currentPlayerIndex = game.assignTurn();
+  let currentPlayerIndex = game.turn || game.assignTurn();
   let sessionId = req.cookies.player;
   let turnStatus = game.validateId(currentPlayerIndex,sessionId);
 
@@ -91,24 +91,12 @@ const hasOpponentWon = function(req,res){
   res.send({status:victoryStatus});
 };
 
-const logRequest = function(tokens, req, res) {
-  return [
-    tokens.method(req, res),
-    tokens.url(req, res),
-    tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), `-`,
-    tokens['response-time'](req, res), 'ms',
-    JSON.stringify(req.cookies)
-  ].join(' ');
-};
-
 module.exports = {
   cancelGame,
   createGame,
   arePlayersReady,
   loadFleet,
   hasOpponentJoined,
-  logRequest,
   isHit,
   hasOpponentLost,
   hasOpponentWon,

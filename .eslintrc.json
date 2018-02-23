@@ -27,6 +27,7 @@
     "max-lines": ["error", {
       "skipBlankLines": true
     }],
+    "no-implicit-globals": 2,
     "camelcase": 2,
     "brace-style": 2,
     "id-length": ["error", {
