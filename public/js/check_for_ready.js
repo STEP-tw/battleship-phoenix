@@ -13,14 +13,14 @@ const handleReady=function(){
     loadFleet();
     utils.getReadyButton().style.display = 'none';
     utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
-  }else {
+  } else {
     utils.updateMessage("Please place all your ships");
   }
 };
 
 const loadFleet = function() {
-  let fleetDetails = `fleetDetails=${utils.toS(shipsHeadPositions)}`;
-  sendReq(utils.post(),'/start-game',null,fleetDetails);
+  let fleet = JSON.stringify({fleetDetails : shipsHeadPositions});
+  sendJsonData(utils.post(),'/start-game',null,fleet);
 };
 
 const handleTurn = function (myTurn) {
@@ -37,6 +37,26 @@ const displayLost = function(){
   }
 };
 
+// const showWaitingMessage = function() {
+//   let response = JSON.parse(this.responseText);
+//   document.querySelector('.messageBox').innerHTML=
+//     "Waiting for opponent to place ships";
+//   if (response.status) {
+//     document.querySelector('.messageBox').innerHTML="Game Started";
+//     document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
+//     clearInterval(interval);
+//     reqForOpponentShot();
+//     hasOpponentWonInterval = setInterval(()=>{
+//       sendJsonData('GET','/hasOpponentWon',displayLost);
+//     },1000);
+//     return;
+//   }
+// };
+
+const askIsOpponentReady = function() {
+  sendJsonData('GET','/arePlayersReady',showWaitingMessage);
+};
+
 const gameStarts = function (response) {
   let myTurn = response.myTurn;
   let targetGrid = utils.getTargetGrid();
@@ -45,6 +65,7 @@ const gameStarts = function (response) {
   utils.clearIntervals();
   document.getElementsByClassName('shipsBlock')[0].style.display='none';
   utils.poll(utils.get(),'/hasOpponentWon',displayLost);
+  reqForOpponentShot();
   if(myTurn){
     makeTargetGridFirable(myTurn);
     targetGrid.onclick = checkAndDisplayShot;
@@ -97,7 +118,7 @@ const displayShot = function() {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
-    sendReq("GET","/hasOpponentLost",displayWon);
+    sendJsonData("GET","/hasOpponentLost",displayWon);
   }
 };
 

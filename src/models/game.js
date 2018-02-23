@@ -83,6 +83,16 @@ class Game {
   hasOpponentWon(currentPlayerID){
     return this.getCurrentPlayer(currentPlayerID).hasFleetDestroyed();
   }
+  updatePlayerShot(currentPlayerID,position){
+    let player = this.getPlayer(currentPlayerID);
+    let opponentPlayer = this.getOpponentPlayer(currentPlayerID);
+    let type = opponentPlayer.isHit(position)? "hits" : "misses";
+    player.updateShot(type,position);
+  }
+  getOpponentShots(currentPlayerID){
+    let opponentPlayer = this.getOpponentPlayer(currentPlayerID);
+    return opponentPlayer.shots;
+  }
   validateId(playerIndex,id){
     return this.players[playerIndex].isItYourId(id);
   }
