@@ -13,17 +13,20 @@ const startGamePlay=function(){
   if (areAllShipsPlaced()) {
     loadFleet();
     document.getElementById('ready').style.display = 'none';
-    interval = setInterval(()=>{
-      sendReq('GET','/arePlayersReady',showWaitingMessage);
-    },1000);
+    utils.poll(utils.get(),'/arePlayersReady',showWaitingMessage);
     return;
   }
-  document.querySelector('.messageBox').innerHTML="Please place all your ships";
+  utils.updateMessage("Please place all your ships");
 };
 
 const loadFleet = function() {
-  let fleetDetails = `fleetDetails=${JSON.stringify(shipsHeadPositions)}`;
-  sendReq('POST','/start-game',null,fleetDetails);
+  let fleetDetails = `fleetDetails=${utils.toS(shipsHeadPositions)}`;
+  sendReq(utils.post(),'/start-game',null,fleetDetails);
+};
+
+const handleTurn = function (myTurn) {
+  let message = myTurn ? 'My turn' : 'Opponent\'s turn';
+  utils.updateMessage(message);
 };
 
 const displayLost = function(){
@@ -55,12 +58,13 @@ const makeTargetGridFirable = function(){
 };
 
 const showWaitingMessage = function() {
-  let response = JSON.parse(this.responseText);
-  document.querySelector('.messageBox').innerHTML=
-    "Waiting for opponent to place ships";
+  let response = utils.parse(this.responseText);
+  let message = "Waiting for opponent to place ships";
+  utils.updateMessage(message);
   if (response.status) {
-    document.querySelector('.messageBox').innerHTML="Game Started";
+    utils.updateMessage("Game Started");
     document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
+    handleTurn(response.myTurn);
     clearInterval(interval);
     document.getElementById('targetGrid').setAttribute('class','tg');
     makeTargetGridFirable();
@@ -72,7 +76,7 @@ const showWaitingMessage = function() {
 };
 
 const askIsOpponentReady = function() {
-  sendReq('GET','/arePlayersReady',showWaitingMessage);
+  sendReq(utils.get(),'/arePlayersReady',showWaitingMessage);
 };
 //
 // window.onbeforeunload = ()=>{
@@ -89,7 +93,7 @@ const displayWon=function(){
 };
 
 const displayShot = function() {
-  let shotResult = JSON.parse(this.responseText);
+  let shotResult = utils.parse(this.responseText);
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   if(!shotResult.status) {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
@@ -102,6 +106,6 @@ const displayShot = function() {
 const checkAndDisplayShot=function(event) {
   let firedPosition=parseCoordinates(event.target.id);
   let data = {firedPosition:firedPosition};
-  data = JSON.stringify(data);
-  sendJsonData("POST","/isHit",displayShot,data);
+  data = utils.toS(data);
+  sendJsonData(utils.post(),"/isHit",displayShot,data);
 };

@@ -117,6 +117,25 @@ describe('Game', () => {
       assert.isNotOk(actual);
     });
   });
+  describe('get turn', function () {
+    it('should get currentPlayerIndex', function () {
+      assert.equal(game.turn,undefined);
+    });
+  });
+  describe('assignTurn', function () {
+    it('should assign 0 to current player for nos < 0.5', function () {
+      game.assignTurn(0.4);
+      assert.equal(game.turn, 0);
+    });
+    it('should assign 1 to currentplayer for nos = 0.5', function () {
+      game.assignTurn(0.5);
+      assert.equal(game.turn, 1);
+    });
+    it('should assign 1 to currentplayer for nos > 0.5', function () {
+      game.assignTurn(0.6);
+      assert.equal(game.turn, 1);
+    });
+  });
   describe('hasOpponentLost',function(){
     it('it should return true when other player lost',function(){
       let game = new Game();
@@ -180,5 +199,15 @@ describe('Game', () => {
         assert.equal(game.getOpponentPlayerId(1),2);
         assert.equal(game.getOpponentPlayerId(2),1);
       });
+  });
+  describe('validateId', function () {
+    it('should give true given matching id of player', function () {
+      game.addPlayer('sudhin',123);
+      assert.isTrue(game.validateId(0,123));
+    });
+    it('should give false given nonMatching id of player', function () {
+      game.addPlayer('sudhin',123);
+      assert.isFalse(game.validateId(0,12));
+    });
   });
 });

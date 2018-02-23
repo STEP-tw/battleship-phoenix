@@ -52,8 +52,14 @@ const loadFleet = function(req, res) {
 };
 
 const arePlayersReady = function(req, res) {
+  let game = req.app.game;
+  let currentPlayerIndex = game.assignTurn();
+  let sessionId = req.cookies.player;
+  let turnStatus = game.validateId(currentPlayerIndex,sessionId);
+
   let playerStatus = {
-    status: req.app.game && req.app.game.arePlayersReady()
+    status: game && game.arePlayersReady(),
+    myTurn: turnStatus
   };
   res.send(playerStatus);
 };

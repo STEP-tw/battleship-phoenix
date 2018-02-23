@@ -5,7 +5,7 @@ const afterCancel = function(){
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  sendReq('GET',url,afterCancel);
+  sendReq(util.get(),url,afterCancel);
 };
 
 const startGame = function(){
@@ -17,7 +17,7 @@ const startGame = function(){
 
 const canStartGame = function(){
   let url = '/start-game';
-  sendReq('GET',url,startGame);
+  sendReq(utils.get(),url,startGame);
 };
 
 const sendReq = function(method,url,callback,data) {

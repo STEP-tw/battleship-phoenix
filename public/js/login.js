@@ -10,7 +10,7 @@ const hostGame = function(){
     return;
   }
   let userDetails = `username=${name}`;
-  sendReq('post','/login',showMessage,userDetails);
+  sendReq(utils.post(),'/login',showMessage,userDetails);
   askForOpponent();
 };
 
@@ -24,11 +24,11 @@ const joinGame = function(){
     return;
   }
   let userDetails = `username=${name}`;
-  sendReq('post','/login',startgameMessage,userDetails);
+  sendReq(utils.post(),'/login',startgameMessage,userDetails);
 };
 
 const askForOpponent = function () {
-  interval = setInterval(askHasOpponentJoined,1000);
+  utils.poll(utils.get(),'hasOpponentJoined',showOpponentArrival);
 };
 
 const startGameReq = function(){
@@ -37,7 +37,7 @@ const startGameReq = function(){
 
 
 const showOpponentArrival = function() {
-  let response = JSON.parse(this.responseText);
+  let response = utils.parse(this.responseText);
   document.querySelector(".popup").style.display = "block";
   let arrivalMessage = document.querySelector('#message');
   if (response.status) {
@@ -46,7 +46,4 @@ const showOpponentArrival = function() {
     setTimeout(startGameReq,1000);
     return;
   }
-};
-const askHasOpponentJoined = function() {
-  sendReq('get','/hasOpponentJoined',showOpponentArrival);
 };

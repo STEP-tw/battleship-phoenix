@@ -29,6 +29,9 @@ class Player {
   isHit(position){
     return this._fleet.isAnyShipHit(position);
   }
+  isItYourId(id){
+    return this._id == id;
+  }
 }
 
 module.exports=Player;

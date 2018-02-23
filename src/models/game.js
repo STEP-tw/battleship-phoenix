@@ -1,11 +1,11 @@
 const Player = require('./player');
+const utils = require('../utils/utils.js');
 
 class Game {
   constructor() {
     this._players = [];
     this._started = false;
-    this._playerCount = 0;
-    this._currentPlayerId = 1;
+    this.currentPlayerIndex = undefined;
   }
   addPlayer(name, id) {
     let player = new Player(id, name);
@@ -64,6 +64,14 @@ class Game {
   get status(){
     return this._started;
   }
+  assignTurn(random=Math.random()){
+    let turn = utils.generateTurn(random);
+    this.currentPlayerIndex = turn[0];
+    return this.currentPlayerIndex;
+  }
+  get turn(){
+    return this.currentPlayerIndex;
+  }
   checkOpponentIsHit(currentPlayerID,position){
     let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.isHit(position);
@@ -74,6 +82,9 @@ class Game {
   }
   hasOpponentWon(currentPlayerID){
     return this.getCurrentPlayer(currentPlayerID).hasFleetDestroyed();
+  }
+  validateId(playerIndex,id){
+    return this.players[playerIndex].isItYourId(id);
   }
 }
 module.exports = Game;
