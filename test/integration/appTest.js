@@ -206,7 +206,7 @@ describe('app', () => {
       request(app)
         .post('/start-game')
         .set('cookie', 'player=1')
-        .send('fleetDetails=[{"dir":"south","headPos":"og_4_5","length":3}]')
+        .send({fleetDetails:[{"dir":"south","headPos":"og_4_5","length":3}]})
         .expect(200)
         .end(done);
     });
@@ -235,6 +235,7 @@ describe('app', () => {
     it('Should respond with status true if any ship is hit', function(done) {
       request(app)
         .post('/isHit')
+        .set('cookie','player=1')
         .send({
           firedPosition: [1, 2]
         })
@@ -296,5 +297,44 @@ describe('app', () => {
         })
         .end(done);
     });
+  });
+  describe('POST getOpponentShots', function () {
+    beforeEach(() => {
+      let _playerId = 0;
+      app.game = new Game();
+      let shipInfo = {
+        dir: "south",
+        length: 3,
+        headPos: [1, 2]
+      };
+      let fleet = new Fleet();
+      fleet.addShip(shipInfo);
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
+      let sessionId2 = app.generateSessionId();
+      app.game.addPlayer('arvind',sessionId2);
+      app.game.assignFleet(sessionId, fleet);
+      app.game.assignFleet(sessionId2, fleet);
+    });
+    it('should return no shots when player has not fired', function (done) {
+      request(app)
+        .get('/getOpponentShots')
+        .set('cookie','player=1')
+        .expect({shots:{hits:[],misses:[]}})
+        .end(done);
+    });
+    it('should return the all hit and miss shots of opponent player',
+      function (done) {
+        app.game.updatePlayerShot(1,[1,2]);
+        app.game.updatePlayerShot(1,[2,3]);
+        request(app)
+          .get('/getOpponentShots')
+          .set('cookie','player=2')
+          .expect({shots:{hits:[[1,2]],misses:[[2,3 ]]}})
+          .end(done);
+      });
   });
 });

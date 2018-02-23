@@ -3,7 +3,6 @@ const disableButton = function(id){
   button.onclick=null;
   button.style.backgroundColor = 'rgb(130, 135, 130)';
   button.style.color = 'rgb(218, 219, 219)';
-  console.log('hello');
 };
 
 const showHostOrJoin = function(){
@@ -22,5 +21,5 @@ const showHostOrJoin = function(){
 const hostOrJoin = function(){
   document.getElementById('playnow').style.display='block';
   let url = '/host_or_join';
-  sendReq('GET',url,showHostOrJoin);
+  sendJsonData('GET',url,showHostOrJoin);
 };

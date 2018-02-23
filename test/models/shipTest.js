@@ -11,6 +11,24 @@ describe('Ship', () => {
       assert.deepEqual(actual, expected);
     });
   });
+  describe('updateDamage', () => {
+    it('should update the damage positions of ship', () => {
+      let ship=new Ship('south',3,[1,2]);
+      ship.updateDamage([1,2]);
+      let actual=ship.posOfDamage;
+      let expected= [[1,2]];
+      assert.deepEqual(actual, expected);
+    });
+    it('should not update the damage positions when it is already present',
+      () => {
+        let ship=new Ship('south',3,[1,2]);
+        ship.updateDamage([1,2]);
+        ship.updateDamage([1,2]);
+        let actual=ship.posOfDamage;
+        let expected= [[1,2]];
+        assert.deepEqual(actual, expected);
+      });
+  });
   describe('isHit', () => {
     it('should return true if the ship is hit', () => {
       let ship=new Ship('south',3,[1,2]);
@@ -35,6 +53,20 @@ describe('Ship', () => {
       let ship=new Ship('south',3,[1,2]);
       ship.updateDamage([2,2]);
       assert.isNotOk(ship.isSunk());
+    });
+  });
+  describe('isAlreadyHit', () => {
+    it('should return true if shot was already made', () => {
+      let ship=new Ship('south',3,[3,2]);
+      ship.updateDamage([3,2]);
+      ship.updateDamage([4,2]);
+      ship.updateDamage([5,2]);
+      assert.ok(ship.isAlreadyHit([3,2]));
+    });
+    it('should return false if shot was not made', () => {
+      let ship=new Ship('south',3,[1,2]);
+      ship.updateDamage([2,2]);
+      assert.ok(ship.isAlreadyHit([2,2]));
     });
   });
 });

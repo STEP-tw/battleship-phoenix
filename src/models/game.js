@@ -64,20 +64,26 @@ class Game {
   get status(){
     return this._started;
   }
-  getOpponent(currentPlayerID){
-    let opponent = this.getOpponentPlayer(currentPlayerID);
-    return opponent;
-  }
   checkOpponentIsHit(currentPlayerID,position){
-    let opponent = this.getOpponent(currentPlayerID);
+    let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.isHit(position);
   }
   hasOpponentLost(currentPlayerID){
-    let opponent = this.getOpponent(currentPlayerID);
+    let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.hasFleetDestroyed();
   }
   hasOpponentWon(currentPlayerID){
     return this.getCurrentPlayer(currentPlayerID).hasFleetDestroyed();
+  }
+  updatePlayerShot(currentPlayerID,position){
+    let player = this.getPlayer(currentPlayerID);
+    let opponentPlayer = this.getOpponentPlayer(currentPlayerID);
+    let type = opponentPlayer.isHit(position)? "hits" : "misses";
+    player.updateShot(type,position);
+  }
+  getOpponentShots(currentPlayerID){
+    let opponentPlayer = this.getOpponentPlayer(currentPlayerID);
+    return opponentPlayer.shots;
   }
 }
 module.exports = Game;

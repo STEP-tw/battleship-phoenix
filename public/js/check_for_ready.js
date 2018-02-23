@@ -14,7 +14,7 @@ const startGamePlay=function(){
     loadFleet();
     document.getElementById('ready').style.display = 'none';
     interval = setInterval(()=>{
-      sendReq('GET','/arePlayersReady',showWaitingMessage);
+      sendJsonData('GET','/arePlayersReady',showWaitingMessage);
     },1000);
     return;
   }
@@ -22,8 +22,8 @@ const startGamePlay=function(){
 };
 
 const loadFleet = function() {
-  let fleetDetails = `fleetDetails=${JSON.stringify(shipsHeadPositions)}`;
-  sendReq('POST','/start-game',null,fleetDetails);
+  let fleet = JSON.stringify({fleetDetails : shipsHeadPositions});
+  sendJsonData('POST','/start-game',null,fleet);
 };
 
 const displayLost = function(){
@@ -43,15 +43,16 @@ const showWaitingMessage = function() {
     document.querySelector('.messageBox').innerHTML="Game Started";
     document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
     clearInterval(interval);
+    reqForOpponentShot();
     hasOpponentWonInterval = setInterval(()=>{
-      sendReq('GET','/hasOpponentWon',displayLost);
+      sendJsonData('GET','/hasOpponentWon',displayLost);
     },1000);
     return;
   }
 };
 
 const askIsOpponentReady = function() {
-  sendReq('GET','/arePlayersReady',showWaitingMessage);
+  sendJsonData('GET','/arePlayersReady',showWaitingMessage);
 };
 
 window.onbeforeunload = ()=>{
@@ -74,7 +75,7 @@ const displayShot = function() {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
-    sendReq("GET","/hasOpponentLost",displayWon);
+    sendJsonData("GET","/hasOpponentLost",displayWon);
   }
 };
 

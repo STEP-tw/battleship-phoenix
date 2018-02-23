@@ -55,4 +55,21 @@ describe('Player', () => {
       assert.isNotOk(actual);
     });
   });
+  describe('shots', () => {
+    it('should give all the shots of player', () => {
+      let player=new Player(1,'player');
+      let actual=player.shots;
+      let expected={hits:[],misses:[]};
+      assert.deepEqual(actual, expected);
+    });
+  });
+  describe('updateShot', () => {
+    it('should update the hit and miss shots of player', () => {
+      let player=new Player(1,'player');
+      player.updateShot('hits',[1,2]);
+      let actual = player.shots;
+      let expected={hits:[[1,2]],misses:[]};
+      assert.deepEqual(actual, expected);
+    });
+  });
 });

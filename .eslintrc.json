@@ -25,6 +25,7 @@
     }],
     "max-depth": 2,
     "max-lines": ["error", {
+      "max": 350,
       "skipBlankLines": true
     }],
     "no-implicit-globals": 2,

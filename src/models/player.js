@@ -1,34 +1,44 @@
 class Player {
-  constructor(id,name) {
-    this._id=id;
+  constructor(id, name) {
+    this._id = id;
     this._name = name;
-    this._fleet=undefined;
+    this._fleet = undefined;
     this._ready = false;
+    this._shots = {
+      hits: [],
+      misses: []
+    };
   }
-  get playerId(){
+  get playerId() {
     return this._id;
   }
-  get playerName(){
+  get playerName() {
     return this._name;
   }
-  changeStatus(){
+  changeStatus() {
     this._ready = !this._ready;
   }
-  addFleet (fleet){
-    this._fleet=fleet;
+  addFleet(fleet) {
+    this._fleet = fleet;
   }
-  getFleet(){
+  getFleet() {
     return this._fleet;
   }
-  isReady(){
+  isReady() {
     return this._ready;
   }
-  hasFleetDestroyed(){
+  hasFleetDestroyed() {
     return this._fleet.hasAllShipsSunk();
   }
-  isHit(position){
+  isHit(position) {
     return this._fleet.isAnyShipHit(position);
+  }
+  get shots() {
+    return this._shots;
+  }
+  updateShot(type,position){
+    this._shots[type].push(position);
   }
 }
 
-module.exports=Player;
+module.exports = Player;

@@ -42,7 +42,7 @@ const hasOpponentJoined = function(req, res) {
 const loadFleet = function(req, res) {
   let game = req.app.game;
   let fleet = new Fleet();
-  let shipsHeadPositions = JSON.parse(req.body.fleetDetails);
+  let shipsHeadPositions = req.body.fleetDetails;
   shipsHeadPositions.forEach(function(shipInfo) {
     fleet.addShip(shipInfo);
   });
@@ -58,10 +58,11 @@ const arePlayersReady = function(req, res) {
   res.send(playerStatus);
 };
 
-const isHit = function(req,res) {
+const updateShot = function(req,res) {
   let firedPos = req.body.firedPosition;
   let currentPlayerID = req.cookies.player;
   let hitStatus =req.app.game.checkOpponentIsHit(currentPlayerID,firedPos);
+  req.app.game.updatePlayerShot(currentPlayerID,firedPos);
   res.send({firedPos:firedPos,status:hitStatus});
 };
 
@@ -77,15 +78,11 @@ const hasOpponentWon = function(req,res){
   res.send({status:victoryStatus});
 };
 
-const logRequest = function(tokens, req, res) {
-  return [
-    tokens.method(req, res),
-    tokens.url(req, res),
-    tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), `-`,
-    tokens['response-time'](req, res), 'ms',
-    JSON.stringify(req.cookies)
-  ].join(' ');
+const getOpponentShots = function(req,res) {
+  let game = req.app.game;
+  let currentPlayerID = req.cookies.player;
+  let opponentShots = game.getOpponentShots(currentPlayerID);
+  res.json({shots:opponentShots});
 };
 
 module.exports = {
@@ -94,8 +91,8 @@ module.exports = {
   arePlayersReady,
   loadFleet,
   hasOpponentJoined,
-  logRequest,
-  isHit,
+  updateShot,
   hasOpponentLost,
-  hasOpponentWon
+  hasOpponentWon,
+  getOpponentShots
 };

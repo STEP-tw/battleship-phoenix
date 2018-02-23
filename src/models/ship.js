@@ -13,8 +13,15 @@ class Ship {
   isSunk(){
     return this.length == this.posOfDamage.length;
   }
+  isAlreadyHit(pos){
+    return this.posOfDamage.some(function(damagePos) {
+      return damagePos[0] == pos[0] && damagePos[1] == pos[1];
+    });
+  }
   updateDamage(pos){
-    this.posOfDamage.push(pos);
+    if (!this.isAlreadyHit(pos)) {
+      this.posOfDamage.push(pos);
+    }
   }
   isHit(position){
     let shipCoords = this.getShipCoords();
