@@ -18,7 +18,6 @@ app.generateSessionId = generateSessionId;
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(logRequest);
 
 
@@ -31,8 +30,9 @@ app.get('/host_or_join',hostOrJoin);
 app.get('/hasOpponentLost',handlers.hasOpponentLost);
 app.get('/hasOpponentWon',handlers.hasOpponentWon);
 app.get('/playAgain',handlers.playAgain);
+app.get('/gameStatus',handlers.getGameStatus);
 
-app.post('/updateFiredShot',handlers.isHit);
+app.post('/updateFiredShot',handlers.updateShot);
 app.post('/start-game',handlers.loadFleet);
 app.post('/login',handlers.createGame);
 

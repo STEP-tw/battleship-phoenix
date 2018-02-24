@@ -5,7 +5,7 @@ const afterCancel = function(){
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  sendReq(util.get(),url,afterCancel);
+  sendJsonData(util.get(),url,afterCancel);
 };
 
 const startGame = function(){
@@ -17,17 +17,7 @@ const startGame = function(){
 
 const canStartGame = function(){
   let url = '/start-game';
-  sendReq(utils.get(),url,startGame);
-};
-
-const sendReq = function(method,url,callback,data) {
-  let req = new XMLHttpRequest();
-  req.open(method,url);
-  if(data) {
-    req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-  }
-  req.onload = callback;
-  req.send(data||'');
+  sendJsonData(utils.get(),url,startGame);
 };
 
 const sendJsonData = function(method,url,callback,data) {
@@ -35,5 +25,16 @@ const sendJsonData = function(method,url,callback,data) {
   req.open(method,url);
   req.setRequestHeader('Content-Type','application/json');
   req.onload = callback;
-  req.send(data||'');
+  req.send(data||"{}");
+};
+
+const getShipPartUrl = function(url){
+  if(url.includes('head.')){
+    url = url.replace('head','headHit');
+  } else if (url.includes('tail.')) {
+    url = url.replace('tail','tailHit');
+  } else if(url.includes('body.')){
+    url = url.replace('body','bodyHit');
+  }
+  return url;
 };

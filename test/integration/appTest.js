@@ -204,7 +204,7 @@ describe('app', () => {
       request(app)
         .post('/start-game')
         .set('cookie', 'player=1')
-        .send('fleetDetails=[{"dir":"south","headPos":"og_4_5","length":3}]')
+        .send({fleetDetails:[{"dir":"south","headPos":"og_4_5","length":3}]})
         .expect(200)
         .end(done);
     });
@@ -234,6 +234,7 @@ describe('app', () => {
     it('Should respond with status true if any ship is hit', function(done) {
       request(app)
         .post('/updateFiredShot')
+        .set('cookie','player=1')
         .send({
           firedPosition: [1, 2]
         })

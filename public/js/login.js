@@ -8,8 +8,8 @@ const hostGame = function(){
   if(name == ""){
     return;
   }
-  let userDetails = `username=${name}`;
-  sendReq(utils.post(),'/login',showMessage,userDetails);
+  let userDetails = JSON.stringify({username:name});
+  sendJsonData('post','/login',showMessage,userDetails);
   askForOpponent();
 };
 
@@ -22,8 +22,8 @@ const joinGame = function(){
   if(name == ""){
     return;
   }
-  let userDetails = `username=${name}`;
-  sendReq(utils.post(),'/login',startgameMessage,userDetails);
+  let userDetails = JSON.stringify({username:name});
+  sendJsonData(utils.post(),'/login',startgameMessage,userDetails);
 };
 
 const askForOpponent = function () {

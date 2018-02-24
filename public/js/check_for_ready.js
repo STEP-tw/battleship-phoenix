@@ -9,30 +9,60 @@ const areAllShipsPlaced=function(){
 
 const handleReady=function(){
   if (areAllShipsPlaced()) {
+    document.getElementsByClassName('shipsBlock')[0].style.display='none';
     loadFleet();
     utils.getReadyButton().style.display = 'none';
     utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
-  }else {
+  } else {
     utils.updateMessage("Please place all your ships");
   }
 };
 
-const loadFleet = function() {
-  let fleetDetails = `fleetDetails=${utils.toS(shipsHeadPositions)}`;
-  sendReq(utils.post(),'/start-game',null,fleetDetails);
+const handleStartGame = function () {
+  let response = utils.parse(this.responseText);
+  response.status ? gameStarts(response) : showWaitingMessage();
+};
+
+const gameStarts = function (response) {
+  utils.clearIntervals();
+  let myTurn = response.myTurn;
+  let targetGrid = utils.getTargetGrid();
+  utils.updateMessage("Game Started");
+  handleTurn(myTurn);
+  dontAllowHover('og',myTurn);
 };
 
 const handleTurn = function (myTurn) {
   let message = myTurn ? 'My turn' : 'Opponent\'s turn';
   utils.updateMessage(message);
   if (myTurn) {
-    makeTargetGridFirable(myTurn);
     utils.clearIntervals();
+    makeTargetGridFirable(myTurn);
   }else {
     deactivateTargetGrid();
-    utils.poll(utils.get(),'/hasOpponentWon',displayLost);
+    utils.clearIntervals();
+    sendJsonData(utils.get(),'/hasOpponentWon',displayLost);
   }
 };
+
+const displayLost = function(){
+  let response = utils.parse(this.responseText);
+  if(response.status){
+    utils.clearIntervals();
+    utils.getTargetGrid().onclick = null;
+    document.querySelector('.defeat').style.display = "block";
+  }else {
+    utils.setInterval(()=>{
+      handleTurn(response.myTurn);
+    });
+  }
+};
+
+const loadFleet = function() {
+  let fleet = utils.toS({fleetDetails : shipsHeadPositions});
+  sendJsonData(utils.post(),'/start-game',null,fleet);
+};
+
 
 const deactivateTargetGrid = function () {
   let targetGrid = utils.getTargetGrid();
@@ -40,20 +70,28 @@ const deactivateTargetGrid = function () {
   dontAllowHover('tg');
 };
 
-const gameStarts = function (response) {
-  let myTurn = response.myTurn;
-  let targetGrid = utils.getTargetGrid();
-  utils.updateMessage("Game Started");
-  handleTurn(myTurn);
-  dontAllowHover('og');
-};
-
-const dontAllowHover = function(gridId){
+const dontAllowHover = function(gridId,myTurn){
   let targetGridCells = document.querySelectorAll(`[id^="${gridId}"]`);
   targetGridCells.forEach((cell)=>{
     cell.onmouseover = function(event){
       document.querySelector(`#${event.target.id}`).style.cursor='not-allowed';
     };
+  });
+  document.getElementsByClassName('shipsBlock')[0].style.display='none';
+};
+
+const updateOceanGrid = function(){
+  let opponentShots = utils.parse(this.responseText);
+  opponentShots.shots.hits.forEach((hitCoord)=>{
+    let cellId = generateCellId('og',hitCoord);
+    let cell = document.getElementById(cellId);
+    let imageUrl = cell.style.backgroundImage;
+    cell.style.backgroundImage = getShipPartUrl(imageUrl);
+  });
+  opponentShots.shots.misses.forEach((missCoord)=>{
+    let cellId = generateCellId('og',missCoord);
+    let cell = document.getElementById(cellId);
+    cell.style.backgroundImage = "url('../assets/images/miss.png')";
   });
 };
 
@@ -83,21 +121,6 @@ const showWaitingMessage = function() {
   utils.updateMessage(message);
 };
 
-const handleStartGame = function () {
-  let response = utils.parse(this.responseText);
-  response.status ? gameStarts(response) : showWaitingMessage();
-};
-
-const displayLost = function(){
-  let response = utils.parse(this.responseText);
-  if(response.status){
-    utils.clearIntervals();
-    utils.getTargetGrid().onclick = null;
-    document.querySelector('.defeat').style.display = "block";
-  }else {
-    handleTurn(response.myTurn);
-  }
-};
 
 const displayWon=function(hasWon){
   if(hasWon){
@@ -105,6 +128,13 @@ const displayWon=function(hasWon){
     utils.getTargetGrid().onclick = null;
     document.querySelector('.victory').style.display = "block";
   }
+};
+
+const checkAndDisplayShot=function(event) {
+  let firedPosition=parseCoordinates(event.target.id);
+  let data = {firedPosition:firedPosition};
+  data = utils.toS(data);
+  sendJsonData(utils.post(),"/updateFiredShot",displayShot,data);
 };
 
 const displayShot = function() {
@@ -117,11 +147,4 @@ const displayShot = function() {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
     displayWon(shotResult.winStatus);
   }
-};
-
-const checkAndDisplayShot=function(event) {
-  let firedPosition=parseCoordinates(event.target.id);
-  let data = {firedPosition:firedPosition};
-  data = utils.toS(data);
-  sendJsonData(utils.post(),"/updateFiredShot",displayShot,data);
 };

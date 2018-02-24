@@ -32,12 +32,18 @@ utils.getOceanGrid = function () {
 utils.getReadyButton = function () {
   return document.querySelector('#ready');
 };
-utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
-  let interval = setInterval(()=>{
-    sendReq(method,reqUrl,callBackFunction);
-  },time);
+
+utils.setInterval = function (callback,time=1000) {
+  let interval = setInterval(callback,time);
   intervals.push(interval);
 };
+
+utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
+  utils.setInterval(()=>{
+    sendJsonData(method,reqUrl,callBackFunction);
+  },time);
+};
+
 
 utils.clearIntervals = function () {
   intervals.forEach(function (interval) {
