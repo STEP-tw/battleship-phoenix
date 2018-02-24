@@ -53,6 +53,7 @@ const updateOceanGrid = function(){
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   });
 };
+
 const getOpponentShot = function(){
   sendJsonData('get','/getOpponentShots',updateOceanGrid);
 };

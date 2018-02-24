@@ -267,3 +267,11 @@ li:hover {
   width: 50px;
   height:300px;
 }
+
+#victory {
+  left: 35.5%;
+}
+
+#defeat {
+  left: 35.5%
+}
