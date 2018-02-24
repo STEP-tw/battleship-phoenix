@@ -30,6 +30,7 @@ app.get('/host_or_join',hostOrJoin);
 app.get('/hasOpponentLost',handlers.hasOpponentLost);
 app.get('/hasOpponentWon',handlers.hasOpponentWon);
 app.get('/playAgain',handlers.playAgain);
+app.get('/gameStatus',handlers.getGameStatus);
 
 app.post('/isHit',handlers.updateShot);
 app.post('/start-game',handlers.loadFleet);
