@@ -107,12 +107,20 @@ const hasOpponentWon = function(req,res){
   let currentPlayerID = utils.getPlayerId(req);
   let defeatStatus = game.hasOpponentWon(currentPlayerID);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
-  res.send({status:defeatStatus,myTurn: turnStatus});
+  let opponentShots = game.getOpponentShots(currentPlayerID);
+  res.send(
+    {'status':defeatStatus,'myTurn': turnStatus,'opponentShots':opponentShots}
+  );
 };
 
 const getGameStatus = function(req,res){
-  let fleet = req.app.game.getFleet(req.cookies.player) || {};
-  res.json({fleet:fleet.ships});
+  let fleet = req.app.game.getFleet(req.cookies.player);
+  if(!fleet) {
+    fleet = {ships:[]};
+  }
+  let shots = req.app.game.getCurrentPlayerShots(req.cookies.player);
+  let oppMisses = req.app.game.getOpponentShots(req.cookies.player).misses;
+  res.json({fleet:fleet.ships,playerShots:shots,opponentMisses:oppMisses});
 };
 
 module.exports = {

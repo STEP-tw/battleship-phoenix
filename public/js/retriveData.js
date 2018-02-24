@@ -53,16 +53,38 @@ const displayShip = function(ship){
   displayBody(shipCoords,damagedPositions);
 };
 
+const updateShotsOnTargetGrid = function(shots){
+  shots.hits.forEach((hit)=>{
+    let cellId = generateCellId('tg',hit);
+    let cell = document.getElementById(cellId);
+    cell.style.backgroundImage = "url('../assets/images/hit.png')";
+  });
+  shots.misses.forEach((miss)=>{
+    let cellId = generateCellId('tg',miss);
+    let cell = document.getElementById(cellId);
+    cell.style.backgroundImage = "url('../assets/images/miss.png')";
+  });
+};
+
+const updateMissesOnOceanGrid = function(misses){
+  misses.forEach((missCoord)=>{
+    let cellId = generateCellId('og',missCoord);
+    let cell = document.getElementById(cellId);
+    cell.style.backgroundImage = "url('../assets/images/miss.png')";
+  });
+};
+
 const updateDisplay = function(){
-  let fleet = utils.parse(this.responseText).fleet;
-  if (fleet) {
-    if(fleet.length!=0){
-      document.getElementsByClassName('shipsBlock')[0].style.display='none';
-      document.getElementsByClassName('buttonBlock')[0].style.display='none';
-      utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
-    }
-    fleet.map(displayShip);
+  let response = utils.parse(this.responseText);
+  let fleet = response.fleet;
+  if(fleet.length!=0){
+    document.getElementsByClassName('shipsBlock')[0].style.display='none';
+    document.getElementsByClassName('buttonBlock')[0].style.display='none';
+    sendAjax(utils.get(),'/arePlayersReady',handleStartGame);
   }
+  fleet.map(displayShip);
+  updateShotsOnTargetGrid(response.playerShots);
+  updateMissesOnOceanGrid(response.opponentMisses);
 };
 
 const getAndUpdateGameStatus = function(){

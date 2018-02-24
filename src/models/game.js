@@ -99,5 +99,8 @@ class Game {
   validateId(playerIndex,id){
     return this._players[playerIndex].isItYourId(id);
   }
+  getCurrentPlayerShots(currentPlayerID){
+    return this.getPlayer(currentPlayerID).shots;
+  }
 }
 module.exports = Game;
