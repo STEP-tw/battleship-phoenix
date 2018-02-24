@@ -52,6 +52,7 @@ const handleTurn = function (myTurn) {
 
 const displayLost = function(){
   let response = utils.parse(this.responseText);
+  updateOceanGrid(response);
   if(response.status){
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
@@ -59,7 +60,7 @@ const displayLost = function(){
   }else {
     utils.setInterval(()=>{
       handleTurn(response.myTurn);
-    });
+    },750);
   }
 };
 
@@ -79,15 +80,15 @@ const dontAllowHover = function(gridId,myTurn){
   document.getElementsByClassName('shipsBlock')[0].style.display='none';
 };
 
-const updateOceanGrid = function(){
-  let opponentShots = utils.parse(this.responseText);
-  opponentShots.shots.hits.forEach((hitCoord)=>{
+const updateOceanGrid = function(response){
+  let opponentShots = response.opponentShots;
+  opponentShots.hits.forEach((hitCoord)=>{
     let cellId = generateCellId('og',hitCoord);
     let cell = document.getElementById(cellId);
     let imageUrl = cell.style.backgroundImage;
     cell.style.backgroundImage = getShipPartUrl(imageUrl);
   });
-  opponentShots.shots.misses.forEach((missCoord)=>{
+  opponentShots.misses.forEach((missCoord)=>{
     let cellId = generateCellId('og',missCoord);
     let cell = document.getElementById(cellId);
     cell.style.backgroundImage = "url('../assets/images/miss.png')";

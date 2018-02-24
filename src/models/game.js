@@ -102,5 +102,8 @@ class Game {
   isAlreadFired(playerId,firedPos){
     return this.getPlayer(playerId).isAlreadFired(firedPos);
   }
+  getCurrentPlayerShots(currentPlayerID){
+    return this.getPlayer(currentPlayerID).shots;
+  }
 }
 module.exports = Game;
