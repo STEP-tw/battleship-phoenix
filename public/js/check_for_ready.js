@@ -20,7 +20,7 @@ const handleReady=function(){
 
 const loadFleet = function() {
   let fleet = JSON.stringify({fleetDetails : shipsHeadPositions});
-  sendJsonData(utils.post(),'/start-game',null,fleet);
+  sendAjax(utils.post(),'/start-game',null,fleet);
 };
 
 const handleTurn = function (myTurn) {
@@ -37,24 +37,8 @@ const displayLost = function(){
   }
 };
 
-// const showWaitingMessage = function() {
-//   let response = JSON.parse(this.responseText);
-//   document.querySelector('.messageBox').innerHTML=
-//     "Waiting for opponent to place ships";
-//   if (response.status) {
-//     document.querySelector('.messageBox').innerHTML="Game Started";
-//     document.querySelector('#targetGrid').onclick = checkAndDisplayShot;
-//     clearInterval(interval);
-//     reqForOpponentShot();
-//     hasOpponentWonInterval = setInterval(()=>{
-//       sendJsonData('GET','/hasOpponentWon',displayLost);
-//     },1000);
-//     return;
-//   }
-// };
-
 const askIsOpponentReady = function() {
-  sendJsonData('GET','/arePlayersReady',showWaitingMessage);
+  sendAjax('GET','/arePlayersReady',showWaitingMessage);
 };
 
 const gameStarts = function (response) {
@@ -118,7 +102,7 @@ const displayShot = function() {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
-    sendJsonData("GET","/hasOpponentLost",displayWon);
+    sendAjax("GET","/hasOpponentLost",displayWon);
   }
 };
 
@@ -126,5 +110,5 @@ const checkAndDisplayShot=function(event) {
   let firedPosition=parseCoordinates(event.target.id);
   let data = {firedPosition:firedPosition};
   data = utils.toS(data);
-  sendJsonData(utils.post(),"/isHit",displayShot,data);
+  sendAjax(utils.post(),"/isHit",displayShot,data);
 };

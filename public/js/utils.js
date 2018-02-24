@@ -30,7 +30,7 @@ utils.getReadyButton = function () {
 };
 utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
   let interval = setInterval(()=>{
-    sendJsonData(method,reqUrl,callBackFunction);
+    sendAjax(method,reqUrl,callBackFunction);
   },time);
   intervals.push(interval);
 };

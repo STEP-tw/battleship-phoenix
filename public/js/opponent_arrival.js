@@ -5,7 +5,7 @@ const afterCancel = function(){
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  sendJsonData(util.get(),url,afterCancel);
+  sendAjax(util.get(),url,afterCancel);
 };
 
 const startGame = function(){
@@ -17,10 +17,10 @@ const startGame = function(){
 
 const canStartGame = function(){
   let url = '/start-game';
-  sendJsonData(utils.get(),url,startGame);
+  sendAjax(utils.get(),url,startGame);
 };
 
-const sendJsonData = function(method,url,callback,data) {
+const sendAjax = function(method,url,callback,data) {
   let req = new XMLHttpRequest();
   req.open(method,url);
   req.setRequestHeader('Content-Type','application/json');
@@ -55,7 +55,7 @@ const updateOceanGrid = function(){
 };
 
 const getOpponentShot = function(){
-  sendJsonData('get','/getOpponentShots',updateOceanGrid);
+  sendAjax('get','/getOpponentShots',updateOceanGrid);
 };
 
 const reqForOpponentShot = function(){

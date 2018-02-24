@@ -5,12 +5,12 @@ const showMessage = function(){
 };
 const hostGame = function(){
   let name = document.querySelector('#username1').value;
-  if(name == ""){
-    return;
+  if(name){
+    let userDetails = JSON.stringify({username:name});
+    sendAjax('post','/login',showMessage,userDetails);
+    askForOpponent();
   }
-  let userDetails = JSON.stringify({username:name});
-  sendJsonData('post','/login',showMessage,userDetails);
-  askForOpponent();
+  return;
 };
 
 const startgameMessage = function(){
@@ -19,11 +19,11 @@ const startgameMessage = function(){
 
 const joinGame = function(){
   let name = document.querySelector('#username2').value;
-  if(name == ""){
-    return;
+  if(name){
+    let userDetails = JSON.stringify({username:name});
+    sendAjax(utils.post(),'/login',startgameMessage,userDetails);
   }
-  let userDetails = JSON.stringify({username:name});
-  sendJsonData(utils.post(),'/login',startgameMessage,userDetails);
+  return;
 };
 
 const askForOpponent = function () {
