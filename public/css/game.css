@@ -1,4 +1,5 @@
 body {
+  overflow-y:hidden;
   background-image: url("../assets/images/battleshipBg3.jpg");
   background-size: 100%;
   font-family: 'Coda', cursive;

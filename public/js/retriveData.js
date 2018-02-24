@@ -64,5 +64,5 @@ const updateDisplay = function(){
 };
 
 const getAndUpdateGameStatus = function(){
-  sendJsonData(utils.get(),'/gameStatus',updateDisplay);
+  sendAjax(utils.get(),'/gameStatus',updateDisplay);
 };
