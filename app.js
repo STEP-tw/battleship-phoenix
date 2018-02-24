@@ -32,10 +32,9 @@ app.get('/hasOpponentWon',handlers.hasOpponentWon);
 app.get('/playAgain',handlers.playAgain);
 app.get('/gameStatus',handlers.getGameStatus);
 
-app.post('/isHit',handlers.updateShot);
+app.post('/updateFiredShot',handlers.updateShot);
 app.post('/start-game',handlers.loadFleet);
 app.post('/login',handlers.createGame);
-app.get('/getOpponentShots',handlers.getOpponentShots);
 
 app.use(express.static('public'));
 

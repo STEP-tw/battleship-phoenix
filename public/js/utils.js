@@ -25,15 +25,25 @@ utils.getTargetGrid = function () {
   return document.querySelector('#targetGrid');
 };
 
+utils.getOceanGrid = function () {
+  return document.querySelector('#oceanGrid');
+};
+
 utils.getReadyButton = function () {
   return document.querySelector('#ready');
 };
-utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
-  let interval = setInterval(()=>{
-    sendAjax(method,reqUrl,callBackFunction);
-  },time);
+
+utils.setInterval = function (callback,time=1000) {
+  let interval = setInterval(callback,time);
   intervals.push(interval);
 };
+
+utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
+  utils.setInterval(()=>{
+    sendAjax(method,reqUrl,callBackFunction);
+  },time);
+};
+
 
 utils.clearIntervals = function () {
   intervals.forEach(function (interval) {

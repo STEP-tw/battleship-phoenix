@@ -54,13 +54,15 @@ const displayShip = function(ship){
 };
 
 const updateDisplay = function(){
-  let fleet = JSON.parse(this.responseText).fleet;
-  if(fleet.length!=0){
-    document.getElementsByClassName('shipsBlock')[0].style.display='none';
-    document.getElementsByClassName('buttonBlock')[0].style.display='none';
-    utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
+  let fleet = utils.parse(this.responseText).fleet;
+  if (fleet) {
+    if(fleet.length!=0){
+      document.getElementsByClassName('shipsBlock')[0].style.display='none';
+      document.getElementsByClassName('buttonBlock')[0].style.display='none';
+      utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
+    }
+    fleet.map(displayShip);
   }
-  fleet.map(displayShip);
 };
 
 const getAndUpdateGameStatus = function(){

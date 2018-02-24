@@ -69,6 +69,9 @@ class Game {
     this.currentPlayerIndex = turn[0];
     return this.currentPlayerIndex;
   }
+  changeTurn(){
+    this.currentPlayerIndex = 1 - this.currentPlayerIndex;
+  }
   get turn(){
     return this.currentPlayerIndex;
   }
@@ -94,7 +97,7 @@ class Game {
     return opponentPlayer.shots;
   }
   validateId(playerIndex,id){
-    return this.players[playerIndex].isItYourId(id);
+    return this._players[playerIndex].isItYourId(id);
   }
 }
 module.exports = Game;
