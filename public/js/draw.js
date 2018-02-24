@@ -21,7 +21,7 @@ let setupGrid = function(){
   createGrid('targetGrid','tg',10,10);
   createGrid('oceanGrid','og',10,10);
   addListener();
-  // getAndUpdateGameStatus();
+  getAndUpdateGameStatus();
 };
 
 window.onload = setupGrid;

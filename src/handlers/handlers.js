@@ -111,7 +111,7 @@ const hasOpponentWon = function(req,res){
 };
 
 const getGameStatus = function(req,res){
-  let fleet = req.app.game.getFleet(req.cookies.player);
+  let fleet = req.app.game.getFleet(req.cookies.player) || {};
   res.json({fleet:fleet.ships});
 };
 

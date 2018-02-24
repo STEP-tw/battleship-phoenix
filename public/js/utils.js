@@ -40,7 +40,7 @@ utils.setInterval = function (callback,time=1000) {
 
 utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
   utils.setInterval(()=>{
-    sendJsonData(method,reqUrl,callBackFunction);
+    sendAjax(method,reqUrl,callBackFunction);
   },time);
 };
 

@@ -32,6 +32,11 @@ const gameStarts = function (response) {
   dontAllowHover('og',myTurn);
 };
 
+const loadFleet = function() {
+  let fleet = utils.toS({fleetDetails : shipsHeadPositions});
+  sendAjax(utils.post(),'/start-game',null,fleet);
+};
+
 const handleTurn = function (myTurn) {
   let message = myTurn ? 'My turn' : 'Opponent\'s turn';
   utils.updateMessage(message);
@@ -41,7 +46,7 @@ const handleTurn = function (myTurn) {
   }else {
     deactivateTargetGrid();
     utils.clearIntervals();
-    sendJsonData(utils.get(),'/hasOpponentWon',displayLost);
+    sendAjax(utils.get(),'/hasOpponentWon',displayLost);
   }
 };
 
@@ -57,12 +62,6 @@ const displayLost = function(){
     });
   }
 };
-
-const loadFleet = function() {
-  let fleet = utils.toS({fleetDetails : shipsHeadPositions});
-  sendJsonData(utils.post(),'/start-game',null,fleet);
-};
-
 
 const deactivateTargetGrid = function () {
   let targetGrid = utils.getTargetGrid();
@@ -134,7 +133,7 @@ const checkAndDisplayShot=function(event) {
   let firedPosition=parseCoordinates(event.target.id);
   let data = {firedPosition:firedPosition};
   data = utils.toS(data);
-  sendJsonData(utils.post(),"/updateFiredShot",displayShot,data);
+  sendAjax(utils.post(),"/updateFiredShot",displayShot,data);
 };
 
 const displayShot = function() {

@@ -299,4 +299,26 @@ describe('app', () => {
         .end(done);
     });
   });
+
+  describe('playAgain', function () {
+    beforeEach(function () {
+      let _playerId = 0;
+      app.game = new Game();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('ishu',sessionId);
+      let sessionId2 = app.generateSessionId();
+      app.game.addPlayer('arvind',sessionId2);
+    });
+    it('should changed game to undefined and redirect to index page',
+      function (done) {
+        request(app)
+          .get('/playAgain')
+          .expect(302)
+          .expect('location','/')
+          .end(done);
+      });
+  });
 });
