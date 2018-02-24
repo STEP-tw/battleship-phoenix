@@ -5,7 +5,7 @@ const afterCancel = function(){
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  sendAjax(util.get(),url,afterCancel);
+  sendAjax(utils.get(),url,afterCancel);
 };
 
 const startGame = function(){
