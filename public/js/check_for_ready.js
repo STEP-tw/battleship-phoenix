@@ -9,6 +9,7 @@ const areAllShipsPlaced=function(){
 
 const handleReady=function(){
   if (areAllShipsPlaced()) {
+    document.getElementsByClassName('shipsBlock')[0].style.display='none';
     loadFleet();
     utils.getReadyButton().style.display = 'none';
     utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
@@ -46,6 +47,7 @@ const gameStarts = function (response) {
   utils.updateMessage("Game Started");
   handleTurn(myTurn);
   utils.clearIntervals();
+  document.getElementsByClassName('shipsBlock')[0].style.display='none';
   utils.poll(utils.get(),'/hasOpponentWon',displayLost);
   reqForOpponentShot();
   if(myTurn){

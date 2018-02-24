@@ -28,12 +28,24 @@ const sendAjax = function(method,url,callback,data) {
   req.send(data||"{}");
 };
 
+const getShipPartUrl = function(url){
+  if(url.includes('head.')){
+    url = url.replace('head','headHit');
+  } else if (url.includes('tail.')) {
+    url = url.replace('tail','tailHit');
+  } else if(url.includes('body.')){
+    url = url.replace('body','bodyHit');
+  }
+  return url;
+};
+
 const updateOceanGrid = function(){
   let opponentShots = JSON.parse(this.responseText);
   opponentShots.shots.hits.forEach((hitCoord)=>{
     let cellId = generateCellId('og',hitCoord);
     let cell = document.getElementById(cellId);
-    cell.style.backgroundImage = "url('../assets/images/hit.png')";
+    let imageUrl = cell.style.backgroundImage;
+    cell.style.backgroundImage = getShipPartUrl(imageUrl);
   });
   opponentShots.shots.misses.forEach((missCoord)=>{
     let cellId = generateCellId('og',missCoord);
@@ -46,5 +58,5 @@ const getOpponentShot = function(){
 };
 
 const reqForOpponentShot = function(){
-  let interval = setInterval(getOpponentShot,3000);
+  let interval = setInterval(getOpponentShot,1000);
 };

@@ -348,12 +348,12 @@ describe('app', () => {
       app.game.addPlayer('arvind',sessionId2);
     });
     it('should changed game to undefined and redirect to index page',
-    function (done) {
-      request(app)
-        .get('/playAgain')
-        .expect(302)
-        .expect('location','/')
-        .end(done);
-    });
+      function (done) {
+        request(app)
+          .get('/playAgain')
+          .expect(302)
+          .expect('location','/')
+          .end(done);
+      });
   });
 });

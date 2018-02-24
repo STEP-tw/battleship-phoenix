@@ -92,6 +92,11 @@ const hasOpponentWon = function(req,res){
   res.send({status:victoryStatus});
 };
 
+const getGameStatus = function(req,res){
+  let fleet = req.app.game.getFleet(req.cookies.player);
+  res.json({fleet:fleet.ships});
+};
+
 const getOpponentShots = function(req,res) {
   let game = req.app.game;
   let currentPlayerID = req.cookies.player;
@@ -108,6 +113,7 @@ module.exports = {
   updateShot,
   hasOpponentLost,
   hasOpponentWon,
+  getGameStatus,
   getOpponentShots,
   playAgain
 };
