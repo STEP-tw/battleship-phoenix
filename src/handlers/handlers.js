@@ -72,15 +72,20 @@ const arePlayersReady = function(req, res) {
 };
 
 const updateShot = function(req,res) {
-  req.app.game.changeTurn();
   let game = utils.getGame(req);
-  let firedPos = req.body.firedPosition;
   let currentPlayerID = utils.getPlayerId(req);
+  let firedPos = req.body.firedPosition;
+  if(game.isAlreadFired(currentPlayerID,firedPos)){
+    res.statusCode = 406;
+    res.end();
+    return;
+  }
+  req.app.game.changeTurn();
   let hitStatus =game.checkOpponentIsHit(currentPlayerID,firedPos);
   let victoryStatus = hasOpponentLost(req);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   req.app.game.updatePlayerShot(currentPlayerID,firedPos);
-  res.send({
+  res.json({
     firedPos:firedPos,
     status:hitStatus,
     winStatus:victoryStatus,

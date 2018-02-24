@@ -137,6 +137,9 @@ const checkAndDisplayShot=function(event) {
 };
 
 const displayShot = function() {
+  if(this.responseText.statusCode== 406) {
+    return;
+  }
   let shotResult = utils.parse(this.responseText);
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   handleTurn(shotResult.myTurn);
