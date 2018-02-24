@@ -1,4 +1,5 @@
 const showMessage = function(){
+  console.log(this.responseText,'$$$$$$$$$$$$$');
   document.getElementById('login').style.display='none';
   document.getElementById('playnow').style.display='none';
   document.getElementsByClassName('popup')[0].style.display = "block";

@@ -10,7 +10,10 @@ const cancelGame = function(){
 
 const startGame = function(){
   if(this.responseText){
+    console.log(this.responseText);
+    let playerDetails = document.querySelector('.playerDetails');
     let messageBox = document.querySelector('.messageBox');
+    // playerDetails.innerHTML = playername;
     messageBox.innerHTML = 'Game Starts';
   }
 };

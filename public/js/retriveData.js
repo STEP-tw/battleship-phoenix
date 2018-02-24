@@ -55,6 +55,11 @@ const displayShip = function(ship){
 
 const updateDisplay = function(){
   let fleet = utils.parse(this.responseText).fleet;
+  let playerName = utils.parse(this.responseText).playerName;
+  let playerDetails = document.querySelector('.playerDetails');
+  playerDetails.innerText = playerName;
+  playerDetails.style.color = 'grey';
+  playerDetails.style.fontSize = '20px';
   if (fleet) {
     if(fleet.length!=0){
       document.getElementsByClassName('shipsBlock')[0].style.display='none';
