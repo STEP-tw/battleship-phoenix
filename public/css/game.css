@@ -60,7 +60,7 @@ td:hover {
 }
 
 .shipsBlock {
-  margin-top: 87px;
+  margin-top: 174px;
   width: 100%;
   height: 350px;
   color: rgb(67, 195, 199);
@@ -69,14 +69,14 @@ h4 {
   text-align: center;
 }
 .oceanGridBlock {
-  padding-top: 70px;
+  padding-top: 150px;
   text-align: center;
   width: 100%;
   height: 400px;
 }
 
 .targetGridBlock {
-  padding-top: 70px;
+  padding-top: 150px;
   text-align: center;
   width: 100%;
   height: 400px;
@@ -188,10 +188,6 @@ h4 {
   height: 100px;
 }
 
-#dockTitle {
-  margin-left: 32%;
-}
-
 #targetGrid {
   width: 350px;
   height:350px;
@@ -205,17 +201,25 @@ h4 {
 #targetGrid td {
   border: 0.5px solid rgb(142, 145, 142);
   background-color:rgba(20, 230, 231, 0.19);
+  background-size: 32px;
+  background-repeat: round;
 }
 
 #oceanGrid td {
   border: 0.5px solid rgb(142, 145, 142);
   background-color:rgba(20, 230, 231, 0.19);
+  /* background-size: 30px; */
 }
 .titles {
-  color: rgb(142, 145, 142);
+  color: rgb(178, 217, 229) ;
+  background-color: rgba(53,62,77,0.46);
   padding-right: 10px;
   padding-left: 10px;
-  background-color: white;
+  /* background-color:#404855; */
+}
+
+#dockTitle {
+  margin-left: 32%;
 }
 
 li {
@@ -230,13 +234,14 @@ li:hover {
 }
 
 .messageBox {
-  width: 300px;
+  width: 600px;
   height: 30px;
   overflow: auto;
-  font-size: 16px;
+  font-size: 25px;
   padding-top: 10px;
-  color:rgb(100, 101, 102);
-  background-color: rgba(0, 0, 0, 0.33);
+  margin-top: 30px;
+  color:rgb(124, 143, 155);
+  background-color: rgba(53,62,77,0.46);
   border-radius: 67px 67px 67px 67px;
   line-height:15px;
   animation: fadeIn 2s;
@@ -250,7 +255,8 @@ li:hover {
 #ready {
   font-family: 'Coda', cursive;
   font-size: 17px;
-  color:rgb(109, 110, 109);
+  color:rgb(33,54,60);
+  background-color: #9d9eac;
   width: 100px;
   height: 40px;
   border-radius: 7px;

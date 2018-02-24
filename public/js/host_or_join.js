@@ -21,5 +21,5 @@ const showHostOrJoin = function(){
 const hostOrJoin = function(){
   document.getElementById('playnow').style.display='block';
   let url = '/host_or_join';
-  sendJsonData(utils.get(),url,showHostOrJoin);
+  sendAjax(utils.get(),url,showHostOrJoin);
 };
