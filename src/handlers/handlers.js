@@ -72,15 +72,15 @@ const arePlayersReady = function(req, res) {
 };
 
 const updateShot = function(req,res) {
-  req.app.game.changeTurn();
   let game = utils.getGame(req);
-  let firedPos = req.body.firedPosition;
   let currentPlayerID = utils.getPlayerId(req);
+  let firedPos = req.body.firedPosition;
+  utils.getGame(req).changeTurn();
   let hitStatus =game.checkOpponentIsHit(currentPlayerID,firedPos);
   let victoryStatus = hasOpponentLost(req);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
-  req.app.game.updatePlayerShot(currentPlayerID,firedPos);
-  res.send({
+  utils.getGame(req).updatePlayerShot(currentPlayerID,firedPos);
+  res.json({
     firedPos:firedPos,
     status:hitStatus,
     winStatus:victoryStatus,
@@ -114,12 +114,13 @@ const hasOpponentWon = function(req,res){
 };
 
 const getGameStatus = function(req,res){
-  let fleet = req.app.game.getFleet(req.cookies.player);
+  let fleet = utils.getGame(req).getFleet(req.cookies.player);
   if(!fleet) {
     fleet = {ships:[]};
   }
-  let shots = req.app.game.getCurrentPlayerShots(req.cookies.player);
-  let oppMisses = req.app.game.getOpponentShots(req.cookies.player).misses;
+  let shots = utils.getGame(req).getCurrentPlayerShots(req.cookies.player);
+  let oppShots = utils.getGame(req).getOpponentShots(req.cookies.player);
+  let oppMisses = oppShots.misses;
   res.json({fleet:fleet.ships,playerShots:shots,opponentMisses:oppMisses});
 };
 
