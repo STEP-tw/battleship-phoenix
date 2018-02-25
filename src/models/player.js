@@ -36,11 +36,20 @@ class Player {
   get shots() {
     return this._shots;
   }
-  updateShot(type,position){
+  updateShot(type, position) {
     this._shots[type].push(position);
   }
-  isItYourId(id){
+  isItYourId(id) {
     return this._id == id;
+  }
+  isPosIncludesInShots(firedPos, shotType) {
+    return this._shots[shotType].some((pos) => {
+      return firedPos[0] == pos[0] && firedPos[1] == pos[1];
+    });
+  }
+  isAlreadFired(pos) {
+    return this.isPosIncludesInShots(pos, "hits")
+    || this.isPosIncludesInShots(pos, "misses");
   }
 }
 

@@ -99,6 +99,9 @@ class Game {
   validateId(playerIndex,id){
     return this._players[playerIndex].isItYourId(id);
   }
+  isAlreadFired(playerId,firedPos){
+    return this.getPlayer(playerId).isAlreadFired(firedPos);
+  }
   getCurrentPlayerShots(currentPlayerID){
     return this.getPlayer(currentPlayerID).shots;
   }
