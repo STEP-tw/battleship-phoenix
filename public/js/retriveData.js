@@ -74,14 +74,34 @@ const updateMissesOnOceanGrid = function(misses){
   });
 };
 
+const displayPlayersName = function(response){
+  let playerName = response.playerName;
+  let opponentName = response.enemyName;
+  let playerDetails = document.querySelector('#playername');
+  let enemyDetails = document.querySelector('#enemyName');
+  playerDetails.innerText = playerName;
+  enemyDetails.innerText = opponentName;
+};
+
+const updateHealths = function(response){
+  let myHealth = document.querySelector('#myHealth');
+  myHealth.value = 17 - response.opponentHits.length;
+  if(myHealth.value<=5){
+    myHealth.setAttribute('class','lowHealth');
+  }
+  let enemyHealth = document.querySelector('.enemyHealth');
+  enemyHealth.value = 17-(response.playerShots.hits.length);
+  if(enemyHealth.value <= 5){
+    enemyHealth.setAttribute('class','lowHealth');
+  }
+};
+
 const updateDisplay = function() {
   let response = utils.parse(this.responseText);
-  let fleet = utils.parse(this.responseText).fleet;
-  let playerName = utils.parse(this.responseText).playerName;
-  let playerDetails = document.querySelector('#playername');
-  playerDetails.innerText = playerName;
-  playerDetails.style.color = 'grey';
-  playerDetails.style.fontSize = '20px';
+  let fleet = response.fleet;
+  displayPlayersName(response);
+  updateHealths(response);
+  updateSankShips(response.destroyedShips);
   if (fleet) {
     if (fleet.length != 0) {
       document.getElementsByClassName('shipsBlock')[0].style.display = 'none';

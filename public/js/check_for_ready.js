@@ -50,8 +50,21 @@ const handleTurn = function (myTurn) {
   }
 };
 
+const updateSankShips = function(fleet){
+  let index = 0;
+  fleet.forEach((ship)=>{
+    let sunkShip = document.getElementById(ship.length);
+    if(ship.length == 3 && index == 0){
+      sunkShip = document.getElementsByName('cruiser')[0];
+      index++;
+    }
+    sunkShip.setAttribute('class','sunk');
+  });
+};
+
 const displayLost = function(){
   let response = utils.parse(this.responseText);
+  updateSankShips(response.destroyedShips);
   updateOceanGrid(response);
   updatePlayerDetails(response);
   if(response.status){
@@ -140,6 +153,14 @@ const checkAndDisplayShot=function(event) {
   sendAjax(utils.post(),"/updateFiredShot",displayShot,data);
 };
 
+const reduceOpponentHealth = function(){
+  let enemyHealth = document.querySelector('#enemyHealth');
+  if(enemyHealth.value <= 5){
+    enemyHealth.setAttribute('class','lowHealth');
+  }
+  enemyHealth.value--;
+};
+
 const displayShot = function() {
   if(this.responseText.statusCode== 406) {
     return;
@@ -151,6 +172,7 @@ const displayShot = function() {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
+    reduceOpponentHealth();
     displayWon(winStatus);
   }
   if(!winStatus){
@@ -161,7 +183,10 @@ const displayShot = function() {
 const updatePlayerDetails = function(response) {
   let opponentShots = response.opponentShots;
   let hits = opponentShots.hits.length;
-  let health = 1 - hits/17;
+  let health = 17-hits;
   let myHealth = document.querySelector('#myHealth');
+  if(health<=5){
+    myHealth.setAttribute('class','lowHealth');
+  }
   myHealth.value = health;
 };

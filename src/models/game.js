@@ -105,5 +105,9 @@ class Game {
   getCurrentPlayerShots(currentPlayerID){
     return this.getPlayer(currentPlayerID).shots;
   }
+  getSankOpponentShips(currentPlayerID){
+    let opponent = this.getOpponentPlayer(currentPlayerID);
+    return opponent.getDestroyedShips();
+  }
 }
 module.exports = Game;

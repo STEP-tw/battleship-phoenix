@@ -1,5 +1,4 @@
 body {
-  overflow-y:hidden;
   background-image: url("../assets/images/battleshipBg3.jpg");
   background-size: 100%;
   font-family: 'Coda', cursive;
@@ -41,6 +40,7 @@ td:hover {
 }
 
 .playerDetails {
+  margin-top: 2.5%;
   text-align: center;
   color: rgb(108, 117, 128);
   width: 100%;
@@ -85,13 +85,13 @@ h4 {
 }
 
 .statusBlock {
-  text-align: center;
   width: 100%;
-  height: 213px;
+  height: 260px;
   margin-top: 20px;
 }
 .buttonBlock {
-  margin-top: 41%;
+  position: absolute;
+  margin-top: 45%;
   width: 100%;
   height: 100px;
 }
@@ -120,10 +120,11 @@ h4 {
     margin-left: 50%;
   }
   .statusBlock {
-    display: none;
+    text-align: center;
     border:0.5px solid rgb(50, 176, 184);
     float: right;
     width: 15%;
+    margin: 25% -15% 50% 0;
   }
   .buttonBlock {
     text-align: center;
@@ -175,7 +176,6 @@ h4 {
   z-index: 1;
   color:rgb(19, 236, 250);
   animation: animatezoom 0.6s;
-  /* background-color: rgba(35, 80, 87, 0.83); */
   background-color: rgba(16, 17, 15, 0.48);
   border: 0.5px solid rgb(19, 236, 250);
   text-align: center;
@@ -192,8 +192,16 @@ h4 {
   width: 100%;
 }
 .buttonBlock {
+  margin-left: -0.85%;
   width: 100%;
   height: 100px;
+}
+
+.enemyData {
+  padding-left: 10%;
+  color: rgb(122, 125, 122);
+  font-size: 14px;
+  text-align: left;
 }
 
 #targetGrid {
@@ -216,14 +224,12 @@ h4 {
 #oceanGrid td {
   border: 0.5px solid rgb(142, 145, 142);
   background-color:rgba(20, 230, 231, 0.19);
-  /* background-size: 30px; */
 }
 .titles {
   color:rgb(124, 143, 155);
   background-color: rgba(53,62,77,0.46);
   padding-right: 10px;
   padding-left: 10px;
-  /* background-color:#404855; */
 }
 
 #dockTitle {
@@ -275,19 +281,45 @@ li:hover {
   height:300px;
 }
 
-#victory {
-  left: 35.5%;
-}
-
-#defeat {
-  left: 35.5%
-}
-
 .healthBlock {
-  margin-top: 10%;
-  margin-bottom:20%;
+  margin-top: 4%;
+  margin-bottom:7%;
 }
 
 #enemyHealth,#myHealth {
   width: 90%;
+}
+
+.enemyHealth::-webkit-meter-optimum-value {
+  background: -webkit-linear-gradient(top, #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%);
+}
+
+.lowHealth::-webkit-meter-optimum-value {
+  background: linear-gradient(to bottom, #f85032 0%,#f16f5c 50%,#f6290c 51%,#f02f17 71%,#e73827 100%);
+}
+
+.enemyFleet table td {
+  background-color: rgba(83, 149, 167, 0.48);
+  width: 10px;
+  height: 10px;
+  border: 0.5px solid rgb(46, 119, 116);
+}
+
+.enemyFleet table {
+  margin-bottom: 3px;
+}
+
+#enemyName,#playername {
+  color: rgb(50, 176, 184);
+  font-size: 20px;
+}
+
+.playerData {
+  margin-left: 23px;
+  text-align: left;
+}
+
+.sunk tr td{
+  background-color: rgba(255, 34, 34, 0.33);
+  border: 0.5px solid rgb(107, 32, 32);
 }

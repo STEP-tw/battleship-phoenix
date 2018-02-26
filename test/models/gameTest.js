@@ -305,4 +305,46 @@ describe('Game', () => {
       assert.equal(game.turn,0);
     });
   });
+  describe('getCurrentPlayerShots', function () {
+    it('should give details of shots made by current player', function () {
+      let fleet = new Fleet();
+      let subShipInfo = {
+        dir: 'south',
+        length: 4,
+        headPos: [2, 3]
+      };
+      fleet.addShip(subShipInfo);
+      game.addPlayer('unknown',1);
+      game.addPlayer('unknown',2);
+      game.assignFleet(1, fleet);
+      game.assignFleet(2, fleet);
+      game.updatePlayerShot(1,[0,0]);
+      let expected = {hits: [], misses: [ [ 0, 0 ] ]};
+      assert.deepEqual(game.getCurrentPlayerShots(1),expected);
+    });
+  });
+  describe('getSankOpponentShips', function () {
+    it('should give details of sank ships of opponent', function () {
+      let fleet = new Fleet();
+      let subShipInfo = {
+        dir: 'south',
+        length: 2,
+        headPos: [0,0]
+      };
+      fleet.addShip(subShipInfo);
+      game.addPlayer('unknown',1);
+      game.addPlayer('unknown',2);
+      game.assignFleet(1, fleet);
+      game.assignFleet(2, fleet);
+      game.updatePlayerShot(1,[0,0]);
+      game.updatePlayerShot(1,[0,1]);
+      let expected = [{
+        "direction": "south",
+        "initialPos": [0,0],
+        "length": 2,
+        "posOfDamage": [[0,0],[0,1]]
+      }];
+      assert.deepEqual(game.getSankOpponentShips(1),expected);
+    });
+  });
 });

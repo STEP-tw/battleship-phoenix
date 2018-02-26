@@ -16,6 +16,11 @@ class Fleet {
       return ship.isSunk();
     });
   }
+  getDestroyedShips(){
+    return this.ships.filter((ship)=>{
+      return ship.isSunk();
+    });
+  }
   isAnyShipHit(position){
     return this.ships.some(function(ship){
       return ship.isHit(position);

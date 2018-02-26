@@ -99,26 +99,43 @@ const hasOpponentWon = function(req,res){
   let defeatStatus = game.hasOpponentWon(currentPlayerID);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   let opponentShots = game.getOpponentShots(currentPlayerID);
-  res.send(
-    {'status':defeatStatus,'myTurn': turnStatus,'opponentShots':opponentShots}
-  );
-};
-const getGameStatus = function(req,res){
-  let fleet = utils.getGame(req).getFleet(req.cookies.player);
-  if(!fleet) {
-    fleet = {ships:[]};
-  }
-  let shots = utils.getGame(req).getCurrentPlayerShots(req.cookies.player);
-  let oppShots = utils.getGame(req).getOpponentShots(req.cookies.player);
-  let player= utils.getGame(req).getPlayer(req.cookies.player);
-  let playerName = player.playerName;
-  let oppMisses = oppShots.misses;
-  res.json({fleet:fleet.ships,
-    playerShots:shots,
-    opponentMisses:oppMisses,
-    playerName:playerName
+  let destroyedShips = game.getSankOpponentShips(currentPlayerID);
+  res.send({
+    'status':defeatStatus,
+    'myTurn': turnStatus,
+    'opponentShots':opponentShots,
+    'destroyedShips':destroyedShips
   });
 };
+const getGameStatus = function(req,res){
+  let game = utils.getGame(req);
+  let currentPlayerID = req.cookies.player;
+  let fleet = game.getFleet(currentPlayerID);
+  let destroyedShips = [];
+  if(!fleet) {
+    fleet = {ships:[]};
+  } else {
+    destroyedShips = game.getSankOpponentShips(currentPlayerID);
+  }
+  let shots = game.getCurrentPlayerShots(currentPlayerID);
+  let oppShots = game.getOpponentShots(currentPlayerID);
+  let player= game.getPlayer(currentPlayerID);
+  let playerName = player.playerName;
+  let opponent= game.getOpponentPlayer(currentPlayerID);
+  let opponentName = opponent.playerName;
+  let oppMisses = oppShots.misses;
+  let hits = oppShots.hits;
+  res.json({
+    fleet:fleet.ships,
+    opponentHits:hits,
+    playerShots:shots,
+    opponentMisses:oppMisses,
+    playerName:playerName,
+    enemyName:opponentName,
+    destroyedShips:destroyedShips
+  });
+};
+
 module.exports = {
   cancelGame,
   createGame,
