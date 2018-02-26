@@ -24,7 +24,6 @@ app.use(logRequest);
 
 app.get('/arePlayersReady',handlers.arePlayersReady);
 app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
-app.get('/create-game',handlers.createGame);
 app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 app.get('/host_or_join',hostOrJoin);

@@ -1,12 +1,10 @@
 const Fleet = require('../models/fleet.js');
 const Game = require('../models/game');
 const utils = require('../utils/utils.js');
-
 const cancelGame = function(req, res) {
   delete req.app.game;
   res.end();
 };
-
 const createGame = function(req, res) {
   let game = utils.getGame(req);
   if (!game) {
@@ -16,27 +14,22 @@ const createGame = function(req, res) {
   }
   joinGame(req, res);
 };
-
 const hostGame = function(req, res) {
   let name = utils.getUsername(req);
   let sessionId = req.app.generateSessionId();
   let game = utils.getGame(req);
-
   game.addPlayer(name,sessionId);
   res.cookie('player', sessionId);
   game.changeStartedStatus();
   res.end();
 };
-
 const joinGame = function(req, res) {
   let name = utils.getUsername(req);
   let sessionId = req.app.generateSessionId();
-
   utils.getGame(req).addPlayer(name,sessionId);
   res.cookie('player', sessionId);
   res.end();
 };
-
 const hasOpponentJoined = function(req, res) {
   let game = utils.getGame(req);
   let gameStatus = {
@@ -44,7 +37,6 @@ const hasOpponentJoined = function(req, res) {
   };
   res.send(gameStatus);
 };
-
 const loadFleet = function(req, res) {
   let game = utils.getGame(req);
   let playerId = utils.getPlayerId(req);
@@ -57,20 +49,17 @@ const loadFleet = function(req, res) {
   game.changePlayerStatus(playerId);
   res.end();
 };
-
 const arePlayersReady = function(req, res) {
   let game = utils.getGame(req);
   let currentPlayerIndex = game.turn || game.assignTurn();
   let sessionId = utils.getPlayerId(req);
   let turnStatus = game.validateId(currentPlayerIndex,sessionId);
-
   let playerStatus = {
     status: game && game.arePlayersReady(),
     myTurn: turnStatus
   };
   res.send(playerStatus);
 };
-
 const updateShot = function(req,res) {
   let game = utils.getGame(req);
   let currentPlayerID = utils.getPlayerId(req);
@@ -92,7 +81,6 @@ const updateShot = function(req,res) {
     myTurn: turnStatus
   });
 };
-
 const playAgain = function(req,res){
   let game = utils.getGame(req);
   if(game && game.playerCount!=1){
@@ -100,13 +88,11 @@ const playAgain = function(req,res){
   }
   res.redirect('/');
 };
-
 const hasOpponentLost = function(req,res){
   let currentPlayerID = utils.getPlayerId(req);
   let victoryStatus = utils.getGame(req).hasOpponentLost(currentPlayerID);
   return victoryStatus;
 };
-
 const hasOpponentWon = function(req,res){
   let game = utils.getGame(req);
   let currentPlayerID = utils.getPlayerId(req);
@@ -117,7 +103,6 @@ const hasOpponentWon = function(req,res){
     {'status':defeatStatus,'myTurn': turnStatus,'opponentShots':opponentShots}
   );
 };
-
 const getGameStatus = function(req,res){
   let fleet = utils.getGame(req).getFleet(req.cookies.player);
   if(!fleet) {
@@ -125,10 +110,15 @@ const getGameStatus = function(req,res){
   }
   let shots = utils.getGame(req).getCurrentPlayerShots(req.cookies.player);
   let oppShots = utils.getGame(req).getOpponentShots(req.cookies.player);
+  let player= utils.getGame(req).getPlayer(req.cookies.player);
+  let playerName = player.playerName;
   let oppMisses = oppShots.misses;
-  res.json({fleet:fleet.ships,playerShots:shots,opponentMisses:oppMisses});
+  res.json({fleet:fleet.ships,
+    playerShots:shots,
+    opponentMisses:oppMisses,
+    playerName:playerName
+  });
 };
-
 module.exports = {
   cancelGame,
   createGame,

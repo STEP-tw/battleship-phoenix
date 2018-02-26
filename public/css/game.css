@@ -42,6 +42,7 @@ td:hover {
 
 .playerDetails {
   text-align: center;
+  color: rgb(108, 117, 128);
   width: 100%;
   height: 200px;
 }
@@ -96,7 +97,6 @@ h4 {
 }
 @media only screen and (min-width:1048px){
   .playerDetails {
-    display: none;
     border:0.5px solid rgb(50, 176, 184);
     float: right;
     width: 15%;
@@ -282,4 +282,13 @@ li:hover {
 
 #defeat {
   left: 35.5%
+}
+
+.healthBlock {
+  margin-top: 10%;
+  margin-bottom:20%;
+}
+
+#enemyHealth,#myHealth {
+  width: 90%;
 }

@@ -53,6 +53,7 @@ const handleTurn = function (myTurn) {
 const displayLost = function(){
   let response = utils.getResponse(this);
   updateOceanGrid(response);
+  updatePlayerDetails(response);
   if(response.status){
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
@@ -155,4 +156,12 @@ const displayShot = function() {
   if(!winStatus){
     handleTurn(shotResult.myTurn);
   }
+};
+
+const updatePlayerDetails = function(response) {
+  let opponentShots = response.opponentShots;
+  let hits = opponentShots.hits.length;
+  let health = 1 - hits/17;
+  let myHealth = document.querySelector('#myHealth');
+  myHealth.value = health;
 };
