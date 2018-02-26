@@ -6,7 +6,7 @@ const disableButton = function(id){
 };
 
 const showHostOrJoin = function(){
-  let response = utils.parse(this.responseText);
+  let response = utils.getResponse(this);
   if(!('areTwoPlayers' in response)){
     disableButton('joinButton');
     return;

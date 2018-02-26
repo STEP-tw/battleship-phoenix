@@ -97,7 +97,7 @@ const updateHealths = function(response){
 };
 
 const updateDisplay = function() {
-  let response = utils.parse(this.responseText);
+  let response = utils.getResponse(this);
   let fleet = response.fleet;
   displayPlayersName(response);
   updateHealths(response);

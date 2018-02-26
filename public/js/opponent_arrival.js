@@ -1,5 +1,5 @@
 const afterCancel = function(){
-  document.querySelector(".popup").style.display = "none";
+  utils.getPopupBox().style.display = "none";
   utils.clearIntervals();
 };
 
@@ -10,8 +10,7 @@ const cancelGame = function(){
 
 const startGame = function(){
   if(this.responseText){
-    let playerDetails = document.querySelector('.playerDetails');
-    let messageBox = document.querySelector('.messageBox');
+    let messageBox = utils.getMessageBox();
     messageBox.innerHTML = 'Game Starts';
   }
 };
@@ -39,22 +38,3 @@ const getShipPartUrl = function(url){
   }
   return url;
 };
-// const updateOceanGrid = function(){
-//   let opponentShots = JSON.parse(this.responseText);
-//   opponentShots.shots.hits.forEach((hitCoord)=>{
-//     let cellId = generateCellId('og',hitCoord);
-//     let cell = document.getElementById(cellId);
-//     let imageUrl = cell.style.backgroundImage;
-//     cell.style.backgroundImage = getShipPartUrl(imageUrl);
-//   });
-//   opponentShots.shots.misses.forEach((missCoord)=>{
-//     let cellId = generateCellId('og',missCoord);
-//     let cell = document.getElementById(cellId);
-//     cell.style.backgroundImage = "url('../assets/images/miss.png')";
-//   });
-// };
-//
-// const getOpponentShot = function(){
-//   sendAjax('get','/getOpponentShots',updateOceanGrid);
-// };
-//

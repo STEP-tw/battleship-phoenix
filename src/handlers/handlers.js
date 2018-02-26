@@ -20,7 +20,7 @@ const hostGame = function(req, res) {
   let game = utils.getGame(req);
   game.addPlayer(name,sessionId);
   res.cookie('player', sessionId);
-  game.updateStatus();
+  game.changeStartedStatus();
   res.end();
 };
 const joinGame = function(req, res) {

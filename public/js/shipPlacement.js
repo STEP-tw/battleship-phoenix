@@ -13,6 +13,9 @@ const remHighlightOnShips = function(){
   });
 };
 
+const isAllShipsPlaced = function(){
+  return shipsHeadPositions.length == 5;
+};
 const makeShipPlacable = function (event,size){
   shipName =event.target.id;
   shipSize = size;
@@ -47,6 +50,9 @@ const placeShip = function(event){
     let shipCoord = parseCoordinates(event.target.id);
     let shipDetails = {dir:direction,headPos:shipCoord,length:shipSize};
     shipsHeadPositions.push(shipDetails);
+    if(isAllShipsPlaced()){
+      document.getElementById("ready").style.display = "inline-block";
+    }
     document.getElementById(shipName).style.display="none";
   }else {
     showInvalidCell(event);
