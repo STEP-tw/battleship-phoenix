@@ -1,5 +1,4 @@
 body {
-  overflow-y:hidden;
   background-image: url("../assets/images/battleshipBg3.jpg");
   background-size: 100%;
   font-family: 'Coda', cursive;
@@ -194,6 +193,7 @@ h4 {
 .buttonBlock {
   width: 100%;
   height: 100px;
+  margin-left: -0.85%;
 }
 
 #targetGrid {
