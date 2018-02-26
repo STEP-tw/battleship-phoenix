@@ -57,12 +57,14 @@ const displayLost = function(){
   if(response.status){
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
-    document.querySelector('.defeat').style.display = "block";
-  }else {
-    utils.setInterval(()=>{
-      handleTurn(response.myTurn);
-    },750);
+    setTimeout(()=>{
+      document.querySelector('.defeat').style.display = "block";
+    },500);
+    return;
   }
+  setTimeout(()=>{
+    handleTurn(response.myTurn);
+  },1000);
 };
 
 const deactivateTargetGrid = function () {
@@ -143,13 +145,16 @@ const displayShot = function() {
     return;
   }
   let shotResult = utils.parse(this.responseText);
+  let winStatus = shotResult.winStatus;
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
-  handleTurn(shotResult.myTurn);
   if(!shotResult.status) {
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
-    displayWon(shotResult.winStatus);
+    displayWon(winStatus);
+  }
+  if(!winStatus){
+    handleTurn(shotResult.myTurn);
   }
 };
 

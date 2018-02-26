@@ -53,24 +53,22 @@ const displayShip = function(ship) {
   displayBody(shipCoords, damagedPositions);
 };
 
-const updateShotsOnTargetGrid = function(shots) {
-  shots.hits.forEach((hit) => {
-    // let powerMeter = document.querySelector('.powerMeter');
-    // powerMeter.style.value = powerMeter.style.value - 0.1;
-    let cellId = generateCellId('tg', hit);
+const updateShotsOnTargetGrid = function(shots){
+  shots.hits.forEach((hit)=>{
+    let cellId = generateCellId('tg',hit);
     let cell = document.getElementById(cellId);
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
   });
-  shots.misses.forEach((miss) => {
-    let cellId = generateCellId('tg', miss);
+  shots.misses.forEach((miss)=>{
+    let cellId = generateCellId('tg',miss);
     let cell = document.getElementById(cellId);
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   });
 };
 
-const updateMissesOnOceanGrid = function(misses) {
-  misses.forEach((missCoord) => {
-    let cellId = generateCellId('og', missCoord);
+const updateMissesOnOceanGrid = function(misses){
+  misses.forEach((missCoord)=>{
+    let cellId = generateCellId('og',missCoord);
     let cell = document.getElementById(cellId);
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   });
