@@ -24,7 +24,7 @@ const hostGame = function(req, res) {
 
   game.addPlayer(name,sessionId);
   res.cookie('player', sessionId);
-  game.updateStatus();
+  game.changeStartedStatus();
   res.end();
 };
 

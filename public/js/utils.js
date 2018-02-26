@@ -9,8 +9,8 @@ utils.post = function () {
   return 'POST';
 };
 
-utils.parse = function (content) {
-  return JSON.parse(content);
+utils.getResponse = function (xhr) {
+  return JSON.parse(xhr.responseText);
 };
 
 utils.toS = function (content) {
@@ -18,7 +18,7 @@ utils.toS = function (content) {
 };
 
 utils.updateMessage = function (content) {
-  document.querySelector('.messageBox').innerHTML = content;
+  utils.getMessageBox().innerHTML = content;
 };
 
 utils.getTargetGrid = function () {
@@ -31,6 +31,14 @@ utils.getOceanGrid = function () {
 
 utils.getReadyButton = function () {
   return document.querySelector('#ready');
+};
+
+utils.getPopupBox = function () {
+  return document.querySelector(".popup");
+};
+
+utils.getMessageBox = function () {
+  return document.querySelector('.messageBox');
 };
 
 utils.setInterval = function (callback,time=1000) {

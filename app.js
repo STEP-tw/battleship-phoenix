@@ -15,6 +15,7 @@ const logRequest = require('./src/utils/logRequest').logRequest;
 let app = express();
 app.fs = fs;
 app.generateSessionId = generateSessionId;
+app.games = [];
 
 app.use(cookieParser());
 app.use(express.json());

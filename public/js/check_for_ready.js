@@ -19,7 +19,7 @@ const handleReady=function(){
 };
 
 const handleStartGame = function () {
-  let response = utils.parse(this.responseText);
+  let response = utils.getResponse(this);
   response.status ? gameStarts(response) : showWaitingMessage();
 };
 
@@ -51,7 +51,7 @@ const handleTurn = function (myTurn) {
 };
 
 const displayLost = function(){
-  let response = utils.parse(this.responseText);
+  let response = utils.getResponse(this);
   updateOceanGrid(response);
   if(response.status){
     utils.clearIntervals();
@@ -143,7 +143,7 @@ const displayShot = function() {
   if(this.responseText.statusCode== 406) {
     return;
   }
-  let shotResult = utils.parse(this.responseText);
+  let shotResult = utils.getResponse(this);
   let winStatus = shotResult.winStatus;
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   if(!shotResult.status) {

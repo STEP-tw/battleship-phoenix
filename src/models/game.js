@@ -58,7 +58,7 @@ class Game {
       return currentPlayerID == player._id;
     });
   }
-  updateStatus(){
+  changeStartedStatus(){
     this._started = !this._started;
   }
   get status(){

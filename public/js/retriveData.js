@@ -75,7 +75,7 @@ const updateMissesOnOceanGrid = function(misses){
 };
 
 const updateDisplay = function(){
-  let response = utils.parse(this.responseText);
+  let response = utils.getResponse(this);
   let fleet = response.fleet;
   if(fleet.length!=0){
     document.getElementsByClassName('shipsBlock')[0].style.display='none';
