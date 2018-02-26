@@ -10,10 +10,8 @@ const cancelGame = function(){
 
 const startGame = function(){
   if(this.responseText){
-    console.log(this.responseText);
     let playerDetails = document.querySelector('.playerDetails');
     let messageBox = document.querySelector('.messageBox');
-    // playerDetails.innerHTML = playername;
     messageBox.innerHTML = 'Game Starts';
   }
 };
@@ -23,12 +21,12 @@ const canStartGame = function(){
   sendAjax(utils.get(),url,startGame);
 };
 
-const sendAjax = function(method,url,callback,data) {
+const sendAjax = function(method,url,callback,data="{}") {
   let req = new XMLHttpRequest();
   req.open(method,url);
   req.setRequestHeader('Content-Type','application/json');
   req.onload = callback;
-  req.send(data||"{}");
+  req.send(data);
 };
 
 const getShipPartUrl = function(url){

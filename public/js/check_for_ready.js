@@ -52,6 +52,8 @@ const handleTurn = function (myTurn) {
 
 const displayLost = function(){
   let response = utils.parse(this.responseText);
+  updateOceanGrid(response);
+  updatePlayerDetails(response);
   if(response.status){
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
@@ -59,7 +61,7 @@ const displayLost = function(){
   }else {
     utils.setInterval(()=>{
       handleTurn(response.myTurn);
-    });
+    },750);
   }
 };
 
@@ -79,15 +81,15 @@ const dontAllowHover = function(gridId,myTurn){
   document.getElementsByClassName('shipsBlock')[0].style.display='none';
 };
 
-const updateOceanGrid = function(){
-  let opponentShots = utils.parse(this.responseText);
-  opponentShots.shots.hits.forEach((hitCoord)=>{
+const updateOceanGrid = function(response){
+  let opponentShots = response.opponentShots;
+  opponentShots.hits.forEach((hitCoord)=>{
     let cellId = generateCellId('og',hitCoord);
     let cell = document.getElementById(cellId);
     let imageUrl = cell.style.backgroundImage;
     cell.style.backgroundImage = getShipPartUrl(imageUrl);
   });
-  opponentShots.shots.misses.forEach((missCoord)=>{
+  opponentShots.misses.forEach((missCoord)=>{
     let cellId = generateCellId('og',missCoord);
     let cell = document.getElementById(cellId);
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
@@ -137,6 +139,9 @@ const checkAndDisplayShot=function(event) {
 };
 
 const displayShot = function() {
+  if(this.responseText.statusCode== 406) {
+    return;
+  }
   let shotResult = utils.parse(this.responseText);
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   handleTurn(shotResult.myTurn);
@@ -146,4 +151,12 @@ const displayShot = function() {
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
     displayWon(shotResult.winStatus);
   }
+};
+
+const updatePlayerDetails = function(response) {
+  let opponentShots = response.opponentShots;
+  let hits = opponentShots.hits.length;
+  let health = 1 - hits/17;
+  let myHealth = document.querySelector('#myHealth');
+  myHealth.value = health;
 };

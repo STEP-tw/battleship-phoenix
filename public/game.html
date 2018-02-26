@@ -20,7 +20,14 @@
     <div class="messageBox">Place your ships</div>
   </div>
   <div class="playerDetails">
-    <span class="titles">Player details</span>
+    <span class="titles">Player details</span><br>
+    <span id="playername"></span>
+    <div class="healthBlock">
+      <label>Your Health</label>
+      <meter id="myHealth" value="1"></meter><br>
+      <label>Enemy Health</label><br>
+      <meter id="enemyHealth" value="10"></meter>
+    </div>
   </div>
   <div class="shipsBlock">
     <span id = "dockTitle" class="titles">Dock</span>
@@ -33,11 +40,11 @@
     </ul>
   </div>
   <div class="oceanGridBlock">
-    <span class="titles">My Grid</span>
+    <span class="titles">My Base</span>
     <table align="center" id="oceanGrid" cellspacing="0" cellpadding="0"></table>
   </div>
   <div class="targetGridBlock">
-    <span class="titles">Opponent's Grid</span>
+    <span class="titles">Enemy's Base</span>
     <table align="center" id="targetGrid"></table>
   </div>
   <div class="statusBlock">
@@ -48,7 +55,7 @@
   </div>
 </div>
 <div class="victory">
-  <div class="opponent_arrival_message">
+  <div id="victory" class="opponent_arrival_message">
     <h2 id=message>Victory ✌️</h2>
     <a href="/playAgain">
       <button id="cancel" class="greyLongButton">Home</button>
@@ -56,7 +63,7 @@
   </div>
 </div>
 <div class="defeat">
-  <div class="opponent_arrival_message">
+  <div id="defeat" class="opponent_arrival_message">
     <h2 id=message>Defeat 😢</h2>
     <a href="/playAgain">
       <button id="cancel" class="greyLongButton">Home</button>
