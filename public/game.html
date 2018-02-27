@@ -20,13 +20,13 @@
     <div class="messageBox">Place your ships</div>
   </div>
   <div class="playerDetails">
-      <span class="titles">Player details</span><br>
+      <span class="titles">You</span><br>
       <div class="playerData">
       Name <br>
       <span id="playername"></span>
       <div class="healthBlock">
-        <label>Your Health</label>
-        <meter id="myHealth" min="0" max="17" value="17"></meter><br>
+        <label>Fleet Status</label>
+        <meter class="myHealth" id="myHealth" min="0" max="17" value="17"></meter><br>
       </div>
     </div>
   </div>
@@ -50,30 +50,18 @@
     <table align="center" id="targetGrid"></table>
   </div>
   <div class="statusBlock">
-    <span class="titles">Enemy Details</span><br>
+    <span class="titles">Enemy</span><br>
     <div class="enemyData">
       Name <br>
       <span id="enemyName"></span>
       <div class="healthBlock">
-        <label>Enemy Health</label><br>
+        <label>Fleet Status</label><br>
         <meter class="enemyHealth" id="enemyHealth" min="0" max="17" value="17"></meter>
       </div>
-      Fleet Details
+      Destroyed Ships
       <div class="enemyFleet">
-        <table id="5" name="carrier">
+        <table class="fleetDetails">
           <tr><td></td><td></td><td></td><td></td><td></td></tr>
-        </table>
-        <table id="4" name="battleShip">
-          <tr><td></td><td></td><td></td><td></td></tr>
-        </table>
-        <table id="3" name="submarine">
-          <tr><td></td><td></td><td></td></tr>
-        </table>
-        <table id="3" name="cruiser">
-          <tr><td></td><td></td><td></td></tr>
-        </table>
-        <table id="2" name="destroyer">
-          <tr><td></td><td></td></tr>
         </table>
       </div>
     </div>
@@ -94,7 +82,7 @@
   <div id="defeat" class="opponent_arrival_message">
     <h2 id=message>You lost 😢</h2>
     <a href="/playAgain">
-      <button id="cancel" class="greyLongButton">Play again</button>
+      <button id="cancel" class="greyLongButton playAgain">Play again</button>
     </a>
   </div>
 </div>

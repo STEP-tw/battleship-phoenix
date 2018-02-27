@@ -86,11 +86,17 @@ const displayPlayersName = function(response){
 const updateHealths = function(response){
   let myHealth = document.querySelector('#myHealth');
   myHealth.value = 17 - response.opponentHits.length;
+  if(myHealth.value<=10 && myHealth.value>10){
+    myHealth.setAttribute('class','mediumHealth');
+  }
   if(myHealth.value<=5){
     myHealth.setAttribute('class','lowHealth');
   }
   let enemyHealth = document.querySelector('.enemyHealth');
   enemyHealth.value = 17-(response.playerShots.hits.length);
+  if(enemyHealth.value <= 10 && enemyHealth.value > 10){
+    enemyHealth.setAttribute('class','mediumHealth');
+  }
   if(enemyHealth.value <= 5){
     enemyHealth.setAttribute('class','lowHealth');
   }

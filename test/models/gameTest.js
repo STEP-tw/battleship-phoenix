@@ -323,7 +323,7 @@ describe('Game', () => {
       assert.deepEqual(game.getCurrentPlayerShots(1),expected);
     });
   });
-  describe('getSankOpponentShips', function () {
+  describe('getSankOpponentShipsCount', function () {
     it('should give details of sank ships of opponent', function () {
       let fleet = new Fleet();
       let subShipInfo = {
@@ -338,13 +338,7 @@ describe('Game', () => {
       game.assignFleet(2, fleet);
       game.updatePlayerShot(1,[0,0]);
       game.updatePlayerShot(1,[0,1]);
-      let expected = [{
-        "direction": "south",
-        "initialPos": [0,0],
-        "length": 2,
-        "posOfDamage": [[0,0],[0,1]]
-      }];
-      assert.deepEqual(game.getSankOpponentShips(1),expected);
+      assert.equal(game.getSankOpponentShipsCount(1),1);
     });
   });
 });

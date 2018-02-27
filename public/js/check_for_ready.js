@@ -51,15 +51,11 @@ const handleTurn = function (myTurn) {
 };
 
 const updateSankShips = function(fleet){
-  let index = 0;
-  fleet.forEach((ship)=>{
-    let sunkShip = document.getElementById(ship.length);
-    if(ship.length == 3 && index == 0){
-      sunkShip = document.getElementsByName('cruiser')[0];
-      index++;
-    }
-    sunkShip.setAttribute('class','sunk');
-  });
+  let shipsSunk = document.querySelectorAll('.fleetDetails tr td');
+  for (let index = 0; index < fleet; index++) {
+    shipsSunk[index].style.backgroundColor = 'rgba(255, 34, 34, 0.33)';
+    shipsSunk[index].style.border = '0.5px solid rgb(107, 32, 32)';
+  }
 };
 
 const displayLost = function(){
@@ -162,6 +158,9 @@ const checkAndDisplayShot=function(event) {
 
 const reduceOpponentHealth = function(){
   let enemyHealth = document.querySelector('#enemyHealth');
+  if(enemyHealth.value <= 10 && enemyHealth.value > 5){
+    enemyHealth.setAttribute('class','mediumHealth');
+  }
   if(enemyHealth.value <= 5){
     enemyHealth.setAttribute('class','lowHealth');
   }
@@ -192,6 +191,9 @@ const updatePlayerDetails = function(response) {
   let hits = opponentShots.hits.length;
   let health = 17-hits;
   let myHealth = document.querySelector('#myHealth');
+  if(health<=10 && health > 5){
+    myHealth.setAttribute('class','mediumHealth');
+  }
   if(health<=5){
     myHealth.setAttribute('class','lowHealth');
   }

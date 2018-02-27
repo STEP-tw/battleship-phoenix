@@ -99,7 +99,7 @@ const hasOpponentWon = function(req,res){
   let defeatStatus = game.hasOpponentWon(currentPlayerID);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   let opponentShots = game.getOpponentShots(currentPlayerID);
-  let destroyedShips = game.getSankOpponentShips(currentPlayerID);
+  let destroyedShips = game.getSankOpponentShipsCount(currentPlayerID);
   res.send({
     'status':defeatStatus,
     'myTurn': turnStatus,
@@ -115,7 +115,7 @@ const getGameStatus = function(req,res){
   if(!fleet) {
     fleet = {ships:[]};
   } else {
-    destroyedShips = game.getSankOpponentShips(currentPlayerID);
+    destroyedShips = game.getSankOpponentShipsCount(currentPlayerID);
   }
   let shots = game.getCurrentPlayerShots(currentPlayerID);
   let oppShots = game.getOpponentShots(currentPlayerID);
