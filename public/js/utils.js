@@ -52,7 +52,6 @@ utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
   },time);
 };
 
-
 utils.clearIntervals = function () {
   intervals.forEach(function (interval) {
     clearInterval(interval);

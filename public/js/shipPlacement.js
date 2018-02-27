@@ -16,6 +16,7 @@ const remHighlightOnShips = function(){
 const isAllShipsPlaced = function(){
   return shipsHeadPositions.length == 5;
 };
+
 const makeShipPlacable = function (event,size){
   shipName =event.target.id;
   shipSize = size;

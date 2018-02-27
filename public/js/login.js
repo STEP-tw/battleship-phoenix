@@ -3,6 +3,7 @@ const showMessage = function(){
   document.getElementById('playnow').style.display='none';
   document.getElementsByClassName('popup')[0].style.display = "block";
 };
+
 const hostGame = function(){
   let name = document.querySelector('#username1').value;
   if(name){
@@ -33,7 +34,6 @@ const askForOpponent = function () {
 const startGameReq = function(){
   location.href = "game.html";
 };
-
 
 const showOpponentArrival = function() {
   let response = utils.getResponse(this);

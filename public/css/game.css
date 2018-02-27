@@ -14,9 +14,6 @@ body {
 .animateZoom{
   animation: animatezoom;
 }
-.tg {
-  cursor: url(/assets/images/target.png),auto;
-}
 
 td:hover {
   background-color: rgba(177, 177, 177, 0.63);
