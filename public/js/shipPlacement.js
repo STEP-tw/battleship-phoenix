@@ -22,12 +22,13 @@ const makeShipPlacable = function (event,size){
   shipName =event.target.id;
   shipSize = size;
 
-  document.getElementById(shipName).style.color="rgb(96, 96, 96)";
   let ships=document.querySelectorAll('.shipsBlock li');
 
   ships.forEach((ship)=>{
     ship.style.color='rgb(67, 195, 199)';
   });
+
+  document.getElementById(shipName).style.color="rgb(96, 96, 96)";
 
   addMouseEvent();
   isPlaced = false;
@@ -44,22 +45,17 @@ const addMouseEvent=function(){
   });
 };
 
-const parseIdToCoords = function(id){
-  let parsed = id.split('_');
-  parsed.shift();
-  parsed = parsed.map((element)=>{
-    return +element;
-  });
-  return parsed;
-};
-
 const replaceShip = function(event,cellIdList){
+  let tableCells = document.querySelectorAll('[id^="og"]');
+  tableCells.forEach(id => {
+    id.onclick=null;
+  });
   if(isPlaced){
     shipsHeadPositions = shipsHeadPositions.filter((ship)=>{
-      return !areEqual(ship.headPos,parseIdToCoords(cellIdList[0]));
+      return !areEqual(ship.headPos,cellIdList[0]);
     });
     cellIdList.forEach((cell)=>{
-      let occupiedCell = document.querySelector(`#${cell}`);
+      let occupiedCell=document.querySelector(`#${generateCellId('og',cell)}`);
       occupiedCell.style.backgroundImage = null;
       occupiedCell.style.backgroundColor = "rgba(177, 177, 177, 0.63)";
       occupiedCell.checked = false;
@@ -68,10 +64,25 @@ const replaceShip = function(event,cellIdList){
   }
 };
 
-const addClickForReposition = function(event){
-  let cellIdList = getAllCoordsOfShip(event.target.id);
+const getHeadPositionOf = function(id){
+  let selectedShip = shipsHeadPositions.filter((ship)=>{
+    let shipCoords = getCoordinates(ship.dir,ship.headPos,ship.length);
+    return shipCoords.some((coord)=>{
+      return areEqual(coord,id);
+    });
+  });
+  return selectedShip[0].headPos||[];
+};
+
+const addClickForReposition = function(event,headPosition){
+  let parsedCoordinate = parseCoordinates(event.target.id);
+  let headPos = headPosition || getHeadPositionOf(parsedCoordinate);
+  let ship = shipsHeadPositions.find((shipHead)=>{
+    return areEqual(headPos,shipHead.headPos);
+  });
+  let cellIdList = getCoordinates(ship.dir,headPos,ship.length);
   cellIdList.forEach((cell)=>{
-    let occupiedCell = document.querySelector(`#${cell}`);
+    let occupiedCell = document.querySelector(`#${generateCellId('og',cell)}`);
     occupiedCell.ondblclick = ()=>{
       replaceShip(event,cellIdList);
     };
@@ -86,7 +97,7 @@ const placeShip = function(event){
   if (lastCoord[1] < 10 && !doesShipOverlap(event)) {
     drawShip(event);
     removeHighlight();
-    disableMouseEvents();
+    handleMouseEvents();
 
     markCellsChecked(event);
     storePlacedShips(event);
@@ -123,7 +134,7 @@ const markCellsChecked = function(event){
   });
 };
 
-const disableMouseEvents = function(){
+const handleMouseEvents = function(){
   let tableCells = document.querySelectorAll('[id^="og"]');
   tableCells.forEach(id => {
     if(!id.checked){

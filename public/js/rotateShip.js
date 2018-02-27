@@ -47,6 +47,7 @@ const rotateShip = function (event) {
   }
   removeShip(oldshipCoords);
   ship.dir = dir;
+  addClickForReposition(event,ship.headPos);
   drawRotatedShip(newShipCoords, ship.dir);
 };
 
