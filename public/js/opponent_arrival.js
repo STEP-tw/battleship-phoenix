@@ -35,6 +35,12 @@ const getShipPartUrl = function(url){
     url = url.replace('tail','tailHit');
   } else if(url.includes('body.')){
     url = url.replace('body','bodyHit');
+  }else if(url.includes('head_rotated')){
+    url = url.replace('head','headHit');
+  } else if (url.includes('tail_rotated.')) {
+    url = url.replace('tail','tailHit');
+  } else if(url.includes('body_rotated.')){
+    url = url.replace('body','bodyHit');
   }
   return url;
 };

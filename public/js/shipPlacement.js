@@ -132,6 +132,7 @@ const disableMouseEvents = function(){
     }
     id.onmouseout=null;
     id.onmouseover=null;
+    id.onclick=rotateShip;
   });
 };
 
