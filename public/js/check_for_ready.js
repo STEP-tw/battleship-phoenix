@@ -93,6 +93,7 @@ const dontAllowHover = function(gridId,myTurn){
 };
 
 const updateOceanGrid = function(response){
+  console.log(response);
   let opponentShots = response.opponentShots;
   opponentShots.hits.forEach((hitCoord)=>{
     let cellId = generateCellId('og',hitCoord);

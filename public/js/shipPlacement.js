@@ -76,7 +76,7 @@ const disableMouseEvents = function(){
   tableCells.forEach(id => {
     id.onmouseover=null;
     id.onmouseout=null;
-    id.onclick=null;
+    id.onclick=rotateShip;
   });
 };
 
