@@ -83,7 +83,7 @@ b {
   color: rgba(60, 117, 105, 0.71);
   animation: animatezoom 0.6s;
   background-color:rgba(0, 0, 0, 0.85) ;
-  border: 0.5px solid rgba(60, 117, 105, 0.71);
+  border: 1px solid rgba(60, 117, 105, 0.71);
   position:relative;
   padding:0;
   outline:0;

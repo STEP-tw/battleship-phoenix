@@ -2,6 +2,7 @@ let shipSize = undefined;
 let shipName = '';
 let direction = 'south';
 let shipsHeadPositions = [];
+let isPlaced = false;
 
 const remHighlightOnShips = function(){
   let allShipCells = getPlacedShipsCells();
@@ -20,12 +21,16 @@ const isAllShipsPlaced = function(){
 const makeShipPlacable = function (event,size){
   shipName =event.target.id;
   shipSize = size;
+
+  document.getElementById(shipName).style.color="rgb(96, 96, 96)";
   let ships=document.querySelectorAll('.shipsBlock li');
+
   ships.forEach((ship)=>{
     ship.style.color='rgb(67, 195, 199)';
   });
-  document.getElementById(shipName).style.color="rgb(96, 96, 96)";
+
   addMouseEvent();
+  isPlaced = false;
 };
 
 const addMouseEvent=function(){
@@ -39,26 +44,73 @@ const addMouseEvent=function(){
   });
 };
 
+const parseIdToCoords = function(id){
+  let parsed = id.split('_');
+  parsed.shift();
+  parsed = parsed.map((element)=>{
+    return +element;
+  });
+  return parsed;
+};
+
+const replaceShip = function(event,cellIdList){
+  if(isPlaced){
+    shipsHeadPositions = shipsHeadPositions.filter((ship)=>{
+      return !areEqual(ship.headPos,parseIdToCoords(cellIdList[0]));
+    });
+    cellIdList.forEach((cell)=>{
+      let occupiedCell = document.querySelector(`#${cell}`);
+      occupiedCell.style.backgroundImage = null;
+      occupiedCell.style.backgroundColor = "rgba(177, 177, 177, 0.63)";
+      occupiedCell.checked = false;
+    });
+    document.getElementsByClassName(cellIdList.length)[0].click();
+  }
+};
+
+const addClickForReposition = function(event){
+  let cellIdList = getAllCoordsOfShip(event.target.id);
+  cellIdList.forEach((cell)=>{
+    let occupiedCell = document.querySelector(`#${cell}`);
+    occupiedCell.ondblclick = ()=>{
+      replaceShip(event,cellIdList);
+    };
+  });
+};
+
 const placeShip = function(event){
   let coordinates = parseCoordinates(event.target.id);
   let coords = getCoordinates(direction,coordinates,shipSize);
   let lastCoord=coords[coords.length-1];
+
   if (lastCoord[1] < 10 && !doesShipOverlap(event)) {
     drawShip(event);
-    removeHighlight(event);
+    removeHighlight();
     disableMouseEvents();
+
     markCellsChecked(event);
-    let shipCoord = parseCoordinates(event.target.id);
-    let shipDetails = {dir:direction,headPos:shipCoord,length:shipSize};
-    shipsHeadPositions.push(shipDetails);
-    if(isAllShipsPlaced()){
-      document.getElementById("ready").style.display = "inline-block";
-    }
-    document.getElementById(shipName).style.display="none";
+    storePlacedShips(event);
+    displayReadyButton();
+
+    addClickForReposition(event);
+    isPlaced = true;
   }else {
     showInvalidCell(event);
     remHighlightOnShips();
   }
+};
+
+const displayReadyButton = function(){
+  if(isAllShipsPlaced()){
+    document.getElementById("ready").style.display = "inline-block";
+  }
+};
+
+const storePlacedShips = function(event){
+  let shipCoord = parseCoordinates(event.target.id);
+  let shipDetails = {dir:direction,headPos:shipCoord,length:shipSize};
+  shipsHeadPositions.push(shipDetails);
+  document.getElementById(shipName).style.display="none";
 };
 
 const markCellsChecked = function(event){
@@ -74,9 +126,12 @@ const markCellsChecked = function(event){
 const disableMouseEvents = function(){
   let tableCells = document.querySelectorAll('[id^="og"]');
   tableCells.forEach(id => {
-    id.onmouseover=null;
+    if(!id.checked){
+      id.ondblclick=null;
+      id.onclick=null;
+    }
     id.onmouseout=null;
-    id.onclick=null;
+    id.onmouseover=null;
   });
 };
 

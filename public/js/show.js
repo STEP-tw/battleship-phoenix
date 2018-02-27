@@ -9,10 +9,9 @@ const showOccupiedPosition = function(event){
   showInvalidCell(event);
 };
 
-const removeHighlight = function(event){
-  let cellIdList = getAllCoordsOfShip(event.target.id);
-  cellIdList.forEach((cellId)=>{
-    let cell = document.getElementById(cellId);
+const removeHighlight = function(){
+  let tableCells = document.querySelectorAll('[id^="og"]');
+  tableCells.forEach((cell)=>{
     if (cell) {
       if(!cell.checked) {
         cell.style["background-color"]=null;

@@ -71,9 +71,7 @@ const displayLost = function(){
     },500);
     return;
   }
-  setTimeout(()=>{
-    handleTurn(response.myTurn);
-  },1000);
+  handleTurn(response.myTurn);
 };
 
 const deactivateTargetGrid = function () {
