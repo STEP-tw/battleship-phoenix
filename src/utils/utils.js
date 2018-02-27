@@ -21,4 +21,20 @@ utils.getPlayerId = function (req) {
 utils.getUsername = function (req) {
   return req.body.username;
 };
+
+utils.getAuthorizedUrls = function () {
+  return ['/game.html'];
+};
+
+utils.isItPrivilegedData = function (url) {
+  return utils.getAuthorizedUrls().includes(url);
+};
+
+utils.isUserTresspassing=function (req) {
+  let userName = utils.getPlayerId(req);
+  let url = req.url;
+  let validUrls = utils.getAuthorizedUrls();
+  return !userName && utils.isItPrivilegedData(url);
+};
+
 module.exports = utils;

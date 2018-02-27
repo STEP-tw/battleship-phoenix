@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(logRequest);
 
-
+app.use(handlers.handleTresspassing);
 app.get('/arePlayersReady',handlers.arePlayersReady);
 app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
 app.get('/cancel-game',handlers.cancelGame);

@@ -281,12 +281,11 @@ describe('Game', () => {
       game.addPlayer('sudhin', 1);
       game.addPlayer('arvind', 2);
     });
-    it('should return true when playerId matches with given index player',()=>{
+    it('should return true given validId', function() {
       assert.ok(game.validateId(0, 1));
       assert.ok(game.validateId(1, 2));
     });
-    it('should return false when playerId does not match with given \
-    index player', function() {
+    it('should return false given invalidID', function() {
       assert.isNotOk(game.validateId(0, 34));
       assert.isNotOk(game.validateId(1, 43));
     });
@@ -305,11 +304,11 @@ describe('Game', () => {
       game.assignFleet(1, fleet);
       game.assignFleet(2, fleet);
     });
-    it('should return true if position is already fired by given player',()=>{
+    it('should return true if refires at same pos', function() {
       game.updatePlayerShot(1, [1, 2]);
       assert.ok(game.isAlreadFired(1, [1, 2]));
     });
-    it('should return false if position is not fired by given player',()=>{
+    it('should return false when fired once', function() {
       game.updatePlayerShot(1, [1, 2]);
       assert.isNotOk(game.isAlreadFired(1, [3, 2]));
     });

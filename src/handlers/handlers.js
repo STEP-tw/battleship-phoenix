@@ -1,10 +1,20 @@
 const Fleet = require('../models/fleet.js');
 const Game = require('../models/game');
 const utils = require('../utils/utils.js');
+
+const handleTresspassing = function(req, res, next) {
+  if (utils.isUserTresspassing(req)) {
+    console.log('tresspassing');
+    res.redirect('index.html');
+  }
+  next();
+};
+
 const cancelGame = function(req, res) {
   delete req.app.game;
   res.end();
 };
+
 const createGame = function(req, res) {
   let game = utils.getGame(req);
   if (!game) {
@@ -146,5 +156,6 @@ module.exports = {
   hasOpponentLost,
   hasOpponentWon,
   getGameStatus,
-  playAgain
+  playAgain,
+  handleTresspassing
 };

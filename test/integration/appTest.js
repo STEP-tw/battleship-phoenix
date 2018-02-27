@@ -31,6 +31,15 @@ describe('app', () => {
           .end(done);
       });
   });
+  describe('GET /unpermitted content',()=>{
+    it('should redirect to index page',function(done){
+      request(app)
+        .get('/game.html')
+        .expect('location','index.html')
+        .expect(302)
+        .end(done);
+    });
+  });
   describe('POST /', () => {
     it('should give the waiting for opponent message', (done) => {
       request(app)
