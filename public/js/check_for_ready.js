@@ -42,7 +42,7 @@ const handleTurn = function (myTurn) {
   utils.updateMessage(message);
   if (myTurn) {
     utils.clearIntervals();
-    makeTargetGridFirable(myTurn);
+    makeTargetGridFirable();
   }else {
     deactivateTargetGrid();
     utils.clearIntervals();
@@ -122,21 +122,28 @@ const remCellHighlight = function(event){
   document.getElementById(cellId).style["background-color"]=null;
 };
 
-const makeTargetGridFirable = function(myTurn){
+const dontAllowRefire = function(cell){
+  if(cell.style.backgroundImage){
+    cell.style.cursor='not-allowed';
+  }
+};
+
+const makeTargetGridFirable = function(){
   let targetGridCells = document.querySelectorAll('[id^="tg"]');
   targetGridCells.forEach((targetGridCell)=>{
+    targetGridCell.style.cursor = 'url("/assets/images/target.png"),auto';
+    dontAllowRefire(targetGridCell);
     targetGridCell.onmouseover = highlightCell;
     targetGridCell.onmouseout = remCellHighlight;
   });
+  let targetGrid = utils.getTargetGrid();
   targetGrid.onclick = checkAndDisplayShot;
-  targetGrid.setAttribute('class','tg');
 };
 
 const showWaitingMessage = function() {
   let message = "Waiting for opponent to place ships";
   utils.updateMessage(message);
 };
-
 
 const displayWon=function(hasWon){
   if(hasWon){
