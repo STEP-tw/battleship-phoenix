@@ -98,16 +98,19 @@ b {
   border:none;
 }
 .aboutGamePopup{
+  text-indent: 50px;
+  border: 0.5px solid rgba(60, 117, 105, 0.71);
+  color: rgb(156, 153, 145);
   position: fixed;
   margin:0 auto;
-  background-color:#fff;
+  background-color:rgba(0, 0, 0, 0.85);
   position:relative;
   padding:0;
   outline:0;
   width:900px;
   height:500px;
   overflow: scroll;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Cinzel', serif;
   border-radius: 7px;
 }
 .blueLongButton {
@@ -259,4 +262,18 @@ margin: auto;
     font-size: 40px;
     animation: fadeIn 2s;
   }
+}
+
+.sideHeadings {
+  text-indent: 0;
+  font-family: 'Cinzel', serif;
+  color: rgba(60, 117, 105, 0.81);
+}
+
+ul li {
+  text-indent: 0;
+}
+
+ol li {
+  text-indent: 5px;
 }
