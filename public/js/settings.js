@@ -8,3 +8,7 @@ const bgmController = function() {
     listItemColor.backgroundColor = "grey";
   }
 };
+
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage :'en'},'translater');
+}
