@@ -114,7 +114,11 @@ const updateOceanGrid = function(response){
 const highlightCell = function(event){
   let cellId = event.target.id;
   let cell = document.getElementById(cellId);
-  cell.style.backgroundImage='url("/assets/images/target.png")';
+  if(cell.style.backgroundImage){
+    cell.style.cursor='not-allowed';
+  } else {
+    cell.style.backgroundImage='url("/assets/images/target.png")';
+  }
 };
 
 const remCellHighlight = function(event){
@@ -126,17 +130,10 @@ const remCellHighlight = function(event){
   }
 };
 
-const dontAllowRefire = function(cell){
-  if(cell.style.backgroundImage){
-    cell.style.cursor='not-allowed';
-  }
-};
-
 const makeTargetGridFirable = function(){
   let targetGridCells = document.querySelectorAll('[id^="tg"]');
   targetGridCells.forEach((targetGridCell)=>{
     targetGridCell.style.cursor = 'none';
-    dontAllowRefire(targetGridCell);
     targetGridCell.onmouseover = highlightCell;
     targetGridCell.onmouseout = remCellHighlight;
   });
