@@ -30,17 +30,17 @@ const sendAjax = function(method,url,callback,data="{}") {
 
 const getShipPartUrl = function(url){
   if(url.includes('head.')){
-    url = url.replace('head','headHit');
+    url = url.replace('head',`head_hit`);
   } else if (url.includes('tail.')) {
-    url = url.replace('tail','tailHit');
+    url = url.replace('tail',`tail_hit`);
   } else if(url.includes('body.')){
-    url = url.replace('body','bodyHit');
+    url = url.replace('body',`body_hit`);
   }else if(url.includes('head_rotated')){
-    url = url.replace('head','headHit');
+    url = url.replace('head',`head_hit`);
   } else if (url.includes('tail_rotated.')) {
-    url = url.replace('tail','tailHit');
+    url = url.replace('tail',`tail_hit`);
   } else if(url.includes('body_rotated.')){
-    url = url.replace('body','bodyHit');
+    url = url.replace('body',`body_hit`);
   }
   return url;
 };

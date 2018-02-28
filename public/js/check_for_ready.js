@@ -13,6 +13,7 @@ const handleReady=function(){
     loadFleet();
     utils.getReadyButton().style.display = 'none';
     utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
+    disableOceanGrid();
   } else {
     utils.updateMessage("Please place all your ships");
   }
@@ -91,7 +92,6 @@ const dontAllowHover = function(gridId,myTurn){
 };
 
 const updateOceanGrid = function(response){
-  console.log(response);
   let opponentShots = response.opponentShots;
   opponentShots.hits.forEach((hitCoord)=>{
     let cellId = generateCellId('og',hitCoord);

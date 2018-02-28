@@ -18,10 +18,10 @@ const displayHead = function(head, damagedPositions, dir) {
   let shipImages = getShipImageByDir(dir);
   if (!includes(damagedPositions, head)) {
     headCell.style.backgroundImage
-    = `url('../assets/images/${shipImages.head}')`;
+    = `url('../assets/images/${shipImages.initial.head}')`;
   } else {
     headCell.style.backgroundImage
-    = `url('../assets/images/${getRotatedHitImages("head",dir)}')`;
+    = `url('../assets/images/${shipImages.hit.head}')`;
   }
 };
 
@@ -30,10 +30,10 @@ const displayTail = function(tail, damagedPositions, dir) {
   let shipImages = getShipImageByDir(dir);
   if (!includes(damagedPositions, tail)) {
     tailCell.style.backgroundImage
-    = `url('../assets/images/${shipImages.tail}')`;
+    = `url('../assets/images/${shipImages.initial.tail}')`;
   } else {
     tailCell.style.backgroundImage
-    = `url('../assets/images/${getRotatedHitImages("tail",dir)}')`;
+    = `url('../assets/images/${shipImages.hit.tail}')`;
   }
 };
 
@@ -44,10 +44,10 @@ const displayBody = function(shipCoords, damagedPositions, dir) {
     let shipImages = getShipImageByDir(dir);
     if (!includes(damagedPositions, shipCoords[index])) {
       bodyCell.style.backgroundImage
-      = `url('../assets/images/${shipImages.body}')`;
+      = `url('../assets/images/${shipImages.initial.body}')`;
     } else {
       bodyCell.style.backgroundImage
-      = `url('../assets/images/${getRotatedHitImages("body",dir)}')`;
+      = `url('../assets/images/${shipImages.hit.body}')`;
     }
   }
 };

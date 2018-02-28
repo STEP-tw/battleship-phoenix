@@ -95,10 +95,9 @@ const placeShip = function(event){
   let lastCoord=coords[coords.length-1];
 
   if (lastCoord[1] < 10 && !doesShipOverlap(event)) {
-    drawShip(event);
-    removeHighlight();
+    drawShip(coordinates);
+    removeHighlight(event);
     handleMouseEvents();
-
     markCellsChecked(event);
     storePlacedShips(event);
     displayReadyButton();
@@ -147,9 +146,8 @@ const handleMouseEvents = function(){
   });
 };
 
-const getAllCoordsOfShip = function(id) {
-  let parsedCoordinates = parseCoordinates(id);
-  let coords = getCoordinates(direction,parsedCoordinates,shipSize);
+const getAllCoordsOfShip = function(coord,direction="south",size=shipSize) {
+  let coords = getCoordinates(direction,coord,size);
   let cellIdList=coords.map((cellId)=>generateCellId('og',cellId));
   return cellIdList;
 };
@@ -164,7 +162,8 @@ const getPlacedShipsCells=function(){
 };
 
 const doesShipOverlap=function(event){
-  let shipCells=getAllCoordsOfShip(event.target.id);
+  let coord = parseCoordinates(event.target.id);
+  let shipCells=getAllCoordsOfShip(coord);
   return cellsThatOverlap(shipCells).length != 0;
 };
 

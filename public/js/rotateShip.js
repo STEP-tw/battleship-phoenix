@@ -31,6 +31,7 @@ const getShipByCellPos = function (coord) {
   return ship;
 };
 
+let dir;
 const rotateShip = function (event) {
   let coord = parseCoordinates(event.target.id);
   let ship = getShipByCellPos(coord);
@@ -38,17 +39,21 @@ const rotateShip = function (event) {
     return;
   }
   let oldshipCoords = getCoordinates(ship.dir, ship.headPos, ship.length);
-  let dir = changeDirection(ship.dir);
+  dir = changeDirection(dir || ship.dir);
   let newShipCoords = getCoordinates(dir, ship.headPos, ship.length);
   let isValidCoord = validateShipAllPos(newShipCoords[ship.length - 1]);
+  let oldShipDir = ship.dir;
   let hasAnyCellOccupyShip = newShipCoords.filter(getShipByCellPos);
+  ship.dir = oldShipDir;
   if (!isValidCoord || hasAnyCellOccupyShip.length > 1) {
+    rotateShip(event);
     return;
   }
   removeShip(oldshipCoords);
   ship.dir = dir;
   addClickForReposition(event,ship.headPos);
-  drawRotatedShip(newShipCoords, ship.dir);
+  drawShip(ship.headPos, ship.dir,ship.length);
+  handleMouseEvents();
 };
 
 const removeShip = function (shipCoords) {
@@ -56,49 +61,35 @@ const removeShip = function (shipCoords) {
     let cellId = document.getElementById(generateCellId("og", coord));
     cellId.style.backgroundImage = null;
     cellId.checked = false;
+    cellId.onmouseover=showOccupiedPosition;
+    cellId.onmouseout=removeHighlight;
+    cellId.onclick=placeShip;
   });
 };
 
 
 const getShipImageByDir = function (direction) {
   let shipImages = {
-    west: {
-      head: "head_rotated.png",
-      tail: "tail_rotated.png",
-      body: "body_rotated.png"
+    hit:{
+      head: `${direction}_head_hit.png`,
+      tail: `${direction}_tail_hit.png`,
+      body: `${direction}_body_hit.png`
     },
-    south: {
-      head: "head.png",
-      tail: "tail.png",
-      body: "body.png"
-    },
-    north: {
-      head: "tail.png",
-      tail: "head.png",
-      body: "body.png"
-    },
-    east: {
-      head: "tail_rotated.png",
-      tail: "head_rotated.png",
-      body: "body_rotated.png"
-    },
+    initial:{
+      head: `${direction}_head.png`,
+      tail: `${direction}_tail.png`,
+      body: `${direction}_body.png`
+    }
   };
-  return shipImages[direction];
+  return shipImages;
 };
 
-const drawRotatedShip = function (cellIdList, dir) {
-  cellIdList = cellIdList.map((cellId)=>{
-    return generateCellId('og',cellId);
+
+const disableOceanGrid = function(){
+  let tableCells = document.querySelectorAll('[id^="og"]');
+  tableCells.forEach(id => {
+    id.onmouseover=null;
+    id.onmouseout=null;
+    id.onclick=null;
   });
-  let shipImages = getShipImageByDir(dir);
-  let headCell = document.getElementById(cellIdList[0]);
-  headCell.style.backgroundImage = `url('../assets/images/${shipImages.head}')`;
-
-  let tailCell = document.getElementById(cellIdList[cellIdList.length - 1]);
-  tailCell.style.backgroundImage = `url('../assets/images/${shipImages.tail}')`;
-
-  for (let iter = 1; iter < cellIdList.length - 1; iter++) {
-    let cell = document.getElementById(cellIdList[iter]);
-    cell.style.backgroundImage = `url('../assets/images/${shipImages.body}')`;
-  }
 };
