@@ -111,6 +111,7 @@ b {
   height:500px;
   overflow: scroll;
   font-family: 'Cinzel', serif;
+  font-size: 20px;
   border-radius: 7px;
 }
 .blueLongButton {
