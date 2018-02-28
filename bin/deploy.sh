@@ -1,4 +1,4 @@
-nyc mocha --recursive
+mocha --recursive
 if [ $? == 1 ]; then
   exit 1
 fi

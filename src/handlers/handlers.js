@@ -5,8 +5,9 @@ const utils = require('../utils/utils.js');
 const handleTresspassing = function(req, res, next) {
   if (utils.isUserTresspassing(req)) {
     res.redirect('index.html');
+  }else{
+    next();
   }
-  next();
 };
 
 const cancelGame = function(req, res) {
@@ -60,7 +61,8 @@ const loadFleet = function(req, res) {
 };
 const arePlayersReady = function(req, res) {
   let game = utils.getGame(req);
-  let currentPlayerIndex = game.turn || game.assignTurn();
+
+  let currentPlayerIndex = game.turn >= 0 ? game.turn : game.assignTurn();
   let sessionId = utils.getPlayerId(req);
   let turnStatus = game.validateId(currentPlayerIndex,sessionId);
   let playerStatus = {
@@ -109,6 +111,9 @@ const hasOpponentWon = function(req,res){
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   let opponentShots = game.getOpponentShots(currentPlayerID);
   let destroyedShips = game.getSankOpponentShipsCount(currentPlayerID);
+  if(defeatStatus){
+    delete req.app.game;
+  }
   res.send({
     'status':defeatStatus,
     'myTurn': turnStatus,
