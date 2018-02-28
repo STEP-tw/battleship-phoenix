@@ -60,7 +60,7 @@ const handleTurn = function (myTurn) {
 const updateSankShips = function(fleet){
   let shipsSunk = document.querySelectorAll('.fleetDetails tr td');
   for (let index = 0; index < fleet; index++) {
-    shipsSunk[index].style.backgroundColor = 'rgba(255, 34, 34, 0.33)';
+    shipsSunk[index].style.backgroundColor = 'rgba(255, 34, 34, 0.52)';
     shipsSunk[index].style.border = '0.5px solid rgb(107, 32, 32)';
   }
 };

@@ -316,9 +316,9 @@ li:hover {
 
 .enemyFleet table td {
   border-radius: 50%;
-  background-color: rgba(83, 149, 167, 0.48);
-  width: 10px;
-  height: 10px;
+  background-color: rgba(83, 149, 167, 0.52);
+  width: 15px;
+  height: 15px;
   border: 0.5px solid rgb(46, 119, 116);
 }
 
