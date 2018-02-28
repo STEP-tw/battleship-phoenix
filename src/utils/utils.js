@@ -31,10 +31,17 @@ utils.isItPrivilegedData = function (url) {
 };
 
 utils.isUserTresspassing=function (req) {
-  let userName = utils.getPlayerId(req);
+  let userID = utils.getPlayerId(req);
+  let game = utils.getGame(req);
   let url = req.url;
-  let validUrls = utils.getAuthorizedUrls();
-  return !userName && utils.isItPrivilegedData(url);
+  let player;
+  if(game){
+    player = game.getPlayer(userID);
+  }
+  if(!game || !player){
+    let validUrls = utils.getAuthorizedUrls();
+    return utils.isItPrivilegedData(url);
+  }
 };
 
 module.exports = utils;
