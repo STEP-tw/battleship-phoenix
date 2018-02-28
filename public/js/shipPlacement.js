@@ -4,6 +4,7 @@ let direction = 'south';
 let shipsHeadPositions = [];
 let isPlaced = false;
 
+
 const remHighlightOnShips = function(){
   let allShipCells = getPlacedShipsCells();
   allShipCells.forEach((cellCoord)=>{

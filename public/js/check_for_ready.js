@@ -35,6 +35,7 @@ const gameStarts = function (response) {
   document.querySelectorAll('.healthBlock').forEach((elem)=>{
     elem.style.display = 'block';
   });
+  document.querySelector('#targetGridBox').style.display = 'block';
   document.querySelector('.enemyFleet').style.display = 'block';
 };
 
@@ -44,7 +45,7 @@ const loadFleet = function() {
 };
 
 const handleTurn = function (myTurn) {
-  let message = myTurn ? 'My turn' : 'Opponent\'s turn';
+  let message = myTurn ? 'Your turn' : 'Opponent\'s turn';
   utils.updateMessage(message);
   if (myTurn) {
     utils.clearIntervals();
