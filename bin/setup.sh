@@ -3,6 +3,7 @@ npm install -g mocha
 npm install -g nyc
 npm install -g nodemon
 npm install -g eslint
+brew install heroku
 apm install
 
 git config --local commit.template .github/commit.txt
