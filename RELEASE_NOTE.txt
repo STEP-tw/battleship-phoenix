@@ -1,0 +1,68 @@
+                             BATTLESHIP  (v1.0.0)(28th Feb 2018)
+
+ Introduction
+
+    Battleship is a guessing game for two players.
+    It is played on ruled grids on which the
+    players' fleets of ships are marked. The
+    locations of the fleet are concealed from
+    the other player.
+
+ Features
+
+     Views Home page with following options:
+          1. Play now
+          2. Settings
+
+     Host and Join Game:
+          1. Host a game.
+          2. Join existing game.
+
+     Positioning of fleet on ocean grid.
+          1. Rotating of Ship.
+          2. Repositioning of Ships.
+
+     Game Play:
+
+          1. Assign Turn.
+          2. Change Turn.
+          3. Firing on target grid.
+          4. Displaying fired shot as hit or miss.
+
+     Updating Game Status:
+
+          1. Updating player's fleet health.
+          2. Updating enemy's fleet health.
+          3. Updating Number of ships sunk.
+          4. Updating ocean grid on every shot.
+
+     End Game:
+
+          1. Displaying Won when Opponent's all Ship are sunk.
+          2. Displaying Lost when User's all Ship are sunk.
+
+     Settings (Beta feature):
+
+          1. Music controls.
+          2. Change Language.
+
+Dropped Features
+
+    1. Multiple Games running at a time.
+    2. View all Hosted Games.
+
+Fixed Issues
+
+    1. Ready button should be shown after all the ships are placed.
+    2. Hit and Miss dots  should be of same size.
+    3. Remove alphabet  (‘x’) from  close button.
+    4. About game background theme should match the game theme.
+    5. Consistent theme for titles and buttons.
+
+Known Issues, Limitations & Restrictions
+
+    *  If two users hit the home page at a time
+       both are seeing host game option.
+
+    *  On double clicking the ships for repositioning
+       the ship becomes both rotatable and repositionable.
