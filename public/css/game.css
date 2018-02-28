@@ -1,5 +1,9 @@
+html {
+  width: 100%;
+  height:auto;
+}
 body {
-  background-image: url("../assets/images/battleshipBg3.jpg");
+  background-image: url("../assets/images/cover2.jpg");
   background-size: 100%;
   font-family: 'Coda', cursive;
 }
@@ -338,4 +342,7 @@ li:hover {
 
 .playAgain {
   width: 80%;
+}
+#targetGridBox {
+  display: none;
 }

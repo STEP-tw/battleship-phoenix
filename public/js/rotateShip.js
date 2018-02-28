@@ -44,8 +44,9 @@ const rotateShip = function (event) {
   let isValidCoord = validateShipAllPos(newShipCoords[ship.length - 1]);
   let oldShipDir = ship.dir;
   let hasAnyCellOccupyShip = newShipCoords.filter(getShipByCellPos);
+  let overlapsOnItself = hasAnyCellOccupyShip.length > 1 && ship.dir != dir;
   ship.dir = oldShipDir;
-  if (!isValidCoord || hasAnyCellOccupyShip.length > 1) {
+  if (!isValidCoord || overlapsOnItself ) {
     rotateShip(event);
     return;
   }

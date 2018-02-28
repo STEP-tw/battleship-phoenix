@@ -5,7 +5,7 @@ html {
 body {
   overflow:hidden;
   background-image: url('../assets/images/cover.jpg');
-  background-size: 100% 100%;;
+  background-size: 100% 100%;
   font-family: 'Cinzel', serif
 }
 header {
@@ -111,7 +111,6 @@ b {
   height:500px;
   overflow: scroll;
   font-family: 'Cinzel', serif;
-  font-size: 20px;
   border-radius: 7px;
 }
 .blueLongButton {
