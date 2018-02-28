@@ -18,10 +18,21 @@ const isAllShipsPlaced = function(){
   return shipsHeadPositions.length == 5;
 };
 
+const disableCheckedCells = function(){
+  let tableCells = document.querySelectorAll('[id^="og"]');
+  tableCells.forEach(id => {
+    if(id.checked){
+      id.ondblclick=null;
+      id.onclick=null;
+    }
+  });
+};
+
 const makeShipPlacable = function (event,size){
   shipName =event.target.id;
   shipSize = size;
-
+  disableCheckedCells();
+  document.getElementById(shipName).style.display='block';
   let ships=document.querySelectorAll('.shipsBlock li');
 
   ships.forEach((ship)=>{
@@ -142,8 +153,24 @@ const handleMouseEvents = function(){
     }
     id.onmouseout=null;
     id.onmouseover=null;
-    id.onclick=rotateShip;
+    id.onclick=handleSingleAndDblClick;
   });
+};
+
+const handleSingleAndDblClick = function(event){
+  let singleClickTimer;
+  let clickCount = 0;
+  clickCount++;
+
+  if(clickCount === 1){
+    singleClickTimer = setTimeout(()=>{
+      clickCount = 0;
+      rotateShip(event);
+    },300);
+  }else if(clickCount === 2){
+    clearTimeout(singleClickTimer);
+    clickCount = 0;
+  }
 };
 
 const getAllCoordsOfShip = function(coord,direction="south",size=shipSize) {

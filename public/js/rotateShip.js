@@ -51,9 +51,9 @@ const rotateShip = function (event) {
   }
   removeShip(oldshipCoords);
   ship.dir = dir;
-  addClickForReposition(event,ship.headPos);
   drawShip(ship.headPos, ship.dir,ship.length);
   handleMouseEvents();
+  addClickForReposition(event,ship.headPos);
 };
 
 const removeShip = function (shipCoords) {
@@ -91,5 +91,6 @@ const disableOceanGrid = function(){
     id.onmouseover=null;
     id.onmouseout=null;
     id.onclick=null;
+    id.ondblclick=null;
   });
 };

@@ -4,7 +4,6 @@ const utils = require('../utils/utils.js');
 
 const handleTresspassing = function(req, res, next) {
   if (utils.isUserTresspassing(req)) {
-    console.log('tresspassing');
     res.redirect('index.html');
   }
   next();

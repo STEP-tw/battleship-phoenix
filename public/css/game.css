@@ -42,6 +42,7 @@ td:hover {
   color: rgb(108, 117, 128);
   width: 100%;
   height: 200px;
+  background-color:rgba(0, 0, 0, 0.19);
 }
 
 .spin{
@@ -63,6 +64,7 @@ td:hover {
   width: 100%;
   height: 350px;
   color: rgb(67, 195, 199);
+  background-color:rgba(0, 0, 0, 0.19);
 }
 h4 {
   text-align: center;
@@ -85,6 +87,7 @@ h4 {
   width: 100%;
   height: 260px;
   margin-top: 20px;
+  background-color:rgba(0, 0, 0, 0.19);
 }
 .buttonBlock {
   position: absolute;
@@ -213,15 +216,16 @@ h4 {
   border-collapse: collapse;
 }
 #targetGrid td {
-  border: 0.5px solid rgb(142, 145, 142);
-  background-color:rgba(20, 230, 231, 0.19);
+  border: 0.5px solid rgba(20, 230, 231, 0.39);
+  background-color:rgba(0, 0, 0, 0.39);
+
   background-size: 32px;
   background-repeat: round;
 }
 
 #oceanGrid td {
-  border: 0.5px solid rgb(142, 145, 142);
-  background-color:rgba(20, 230, 231, 0.19);
+  border: 0.5px solid rgba(20, 230, 231, 0.39);
+  background-color:rgba(0, 0, 0, 0.39);
 }
 .titles {
   color:rgb(124, 143, 155);
@@ -281,6 +285,7 @@ li:hover {
 }
 
 .healthBlock {
+  display: none;
   margin-top: 4%;
   margin-bottom:7%;
 }
@@ -315,6 +320,10 @@ li:hover {
 
 .enemyFleet table {
   margin-bottom: 3px;
+}
+
+.enemyFleet {
+  display: none;
 }
 
 #enemyName,#playername {

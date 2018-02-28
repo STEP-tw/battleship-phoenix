@@ -31,6 +31,11 @@ const gameStarts = function (response) {
   utils.updateMessage("Game Started");
   handleTurn(myTurn);
   dontAllowHover('og',myTurn);
+
+  document.querySelectorAll('.healthBlock').forEach((elem)=>{
+    elem.style.display = 'block';
+  });
+  document.querySelector('.enemyFleet').style.display = 'block';
 };
 
 const loadFleet = function() {
@@ -109,12 +114,16 @@ const updateOceanGrid = function(response){
 const highlightCell = function(event){
   let cellId = event.target.id;
   let cell = document.getElementById(cellId);
-  cell.style["background-color"]="rgba(177, 177, 177, 0.63)";
+  cell.style.backgroundImage='url("/assets/images/target.png")';
 };
 
 const remCellHighlight = function(event){
   let cellId = event.target.id;
-  document.getElementById(cellId).style["background-color"]=null;
+  let cell = document.getElementById(cellId);
+  let expected = 'url("/assets/images/target.png")';
+  if(cell.style.backgroundImage==expected) {
+    cell.style.backgroundImage=null;
+  }
 };
 
 const dontAllowRefire = function(cell){
@@ -126,7 +135,7 @@ const dontAllowRefire = function(cell){
 const makeTargetGridFirable = function(){
   let targetGridCells = document.querySelectorAll('[id^="tg"]');
   targetGridCells.forEach((targetGridCell)=>{
-    targetGridCell.style.cursor = 'url("/assets/images/target.png"),auto';
+    targetGridCell.style.cursor = 'none';
     dontAllowRefire(targetGridCell);
     targetGridCell.onmouseover = highlightCell;
     targetGridCell.onmouseout = remCellHighlight;
