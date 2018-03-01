@@ -119,15 +119,17 @@ const hasOpponentWon = function(req,res){
   let defeatStatus = game.hasOpponentWon(currentPlayerID);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   let opponentShots = game.getOpponentShots(currentPlayerID);
-  let destroyedShips = game.getSankOpponentShipsCount(currentPlayerID);
+  let destroyedShipsCount = game.getSankOpponentShipsCount(currentPlayerID);
+  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
   if(defeatStatus){
     delete req.app.game;
   }
   res.send({
-    'status':defeatStatus,
+    'status': defeatStatus,
     'myTurn': turnStatus,
-    'opponentShots':opponentShots,
-    'destroyedShips':destroyedShips
+    'opponentShots': opponentShots,
+    'destroyedShipsCount': destroyedShipsCount,
+    'destroyedShipsCoords': destroyedShipsCoords
   });
 };
 
@@ -135,13 +137,15 @@ const getGameStatus = function(req,res){
   let game = utils.getGame(req);
   let currentPlayerID = req.cookies.player;
   let fleet = game.getFleet(currentPlayerID);
-  let destroyedShips = [];
   let ships;
+  let destroyedShipsCount = [];
+  let destroyedShipsCoords = [];
   if(!fleet) {
     ships = [];
   } else {
-    destroyedShips = game.getSankOpponentShipsCount(currentPlayerID);
     ships = fleet.getAllShips();
+    destroyedShipsCount = game.getSankOpponentShipsCount(currentPlayerID);
+    destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
   }
   let shots = game.getCurrentPlayerShots(currentPlayerID);
   let oppShots = game.getOpponentShots(currentPlayerID);
@@ -158,7 +162,8 @@ const getGameStatus = function(req,res){
     opponentMisses:oppMisses,
     playerName:playerName,
     enemyName:opponentName,
-    destroyedShips:destroyedShips
+    destroyedShipsCount:destroyedShipsCount,
+    destroyedShipsCoords: destroyedShipsCoords
   });
 };
 

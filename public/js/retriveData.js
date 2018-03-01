@@ -116,7 +116,8 @@ const updateDisplay = function() {
   let fleet = response.fleet;
   displayPlayersName(response);
   updateHealths(response);
-  updateSankShips(response.destroyedShips);
+  console.log(response);
+  updateSankShips(response.destroyedShipsCount,response.destroyedShipsCoords);
   if (fleet) {
     if (fleet.length != 0) {
       document.getElementsByClassName('shipsBlock')[0].style.display = 'none';

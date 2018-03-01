@@ -57,17 +57,37 @@ const handleTurn = function (myTurn) {
   }
 };
 
-const updateSankShips = function(destroyedShips){
+const getCellIds = function(shipCoords){
+  return shipCoords.map((coord)=>{
+    let cellId = generateCellId('tg',coord);
+    return cellId;
+  });
+};
+
+const highlightSunkShips = function(sunkShipsCellIds){
+  sunkShipsCellIds.forEach((sunkShipCellIds)=>{
+    sunkShipCellIds.forEach((cellId)=>{
+      let cell = document.querySelector(`#${cellId}`);
+      cell.style.backgroundColor = 'rgba(71, 141, 134, 0.11)';
+    });
+  });
+};
+
+const updateSankShips = function(shipCount,sunkShipsCoords){
   let shipsSunk = document.querySelectorAll('.fleetDetails tr td');
-  for (let index = 0; index < destroyedShips; index++) {
+  for (let index = 0; index < shipCount; index++) {
     shipsSunk[index].style.backgroundColor = 'rgba(255, 34, 34, 0.52)';
     shipsSunk[index].style.border = '0.5px solid rgb(107, 32, 32)';
+  }
+  if(sunkShipsCoords && sunkShipsCoords.length>0){
+    let sunkShipsCellIds = sunkShipsCoords.map(getCellIds);
+    highlightSunkShips(sunkShipsCellIds);
   }
 };
 
 const displayLost = function(){
   let response = utils.getResponse(this);
-  updateSankShips(response.destroyedShips);
+  updateSankShips(response.destroyedShipsCount,response.destroyedShipsCoords);
   updateOceanGrid(response);
   updatePlayerDetails(response);
   if(response.status){
@@ -147,7 +167,7 @@ const showWaitingMessage = function() {
   utils.updateMessage(message);
 };
 
-const displayWon=function(hasWon){
+const displayWon=function(hasWon,){
   if(hasWon){
     updateSankShips(5);
     utils.clearIntervals();

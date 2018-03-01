@@ -484,7 +484,8 @@ describe('app', () => {
             "opponentHits": [],
             playerName: 'arvind',
             enemyName: 'ishu',
-            destroyedShips:0
+            destroyedShipsCount:0,
+            destroyedShipsCoords: []
           })
           .end(done);
       });

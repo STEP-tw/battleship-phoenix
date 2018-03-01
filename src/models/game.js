@@ -101,5 +101,9 @@ class Game {
     let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.getDestroyedShipsCount();
   }
+  getOpponentSunkShipsCoords(currentPlayerID){
+    let opponent = this.getOpponentPlayer(currentPlayerID);
+    return opponent.getDestroyedShipsCoords();
+  }
 }
 module.exports = Game;

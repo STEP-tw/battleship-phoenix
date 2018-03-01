@@ -54,6 +54,14 @@ class Player {
   getDestroyedShipsCount(){
     return this._fleet.getDestroyedShipsCount();
   }
+  getDestroyedShipsCoords(){
+    let allShips = this._fleet.getAllSunkShips();
+    let shipsCoords = [];
+    allShips.forEach((ship)=>{
+      shipsCoords.push(ship.getShipCoords());
+    });
+    return shipsCoords;
+  }
 }
 
 module.exports = Player;
