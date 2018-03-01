@@ -44,25 +44,13 @@
      Settings (Beta feature):
 
           1. Music controls.
-          2. Change Language.
 
 Dropped Features
 
-    1. Multiple Games running at a time.
-    2. View all Hosted Games.
-
-Fixed Issues
-
-    1. Ready button should be shown after all the ships are placed.
-    2. Hit and Miss dots  should be of same size.
-    3. Remove alphabet  (‘x’) from  close button.
-    4. About game background theme should match the game theme.
-    5. Consistent theme for titles and buttons.
+          * Multiple Languages
 
 Known Issues, Limitations & Restrictions
 
-    *  If two users hit the home page at a time
-       both are seeing host game option.
+    *  If two users hit the home page at a time both are seeing host game option.
 
-    *  On double clicking the ships for repositioning
-       the ship becomes both rotatable and repositionable.
+    *  On double clicking the ships for repositioning the ship becomes both rotatable and repositionable.

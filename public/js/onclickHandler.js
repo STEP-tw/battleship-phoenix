@@ -2,10 +2,6 @@ const aboutGameAction = function (){
   document.getElementById('aboutGame').style.display='block';
 };
 
-const aboutUsAction = function (){
-  document.getElementById('aboutUs').style.display='block';
-};
-
 const settingsAction = function (){
   document.getElementById('settings').style.display='block';
 };
@@ -21,7 +17,6 @@ const hostButtonAction = function (){
 
 const addOnclickListeners = function (){
   document.getElementById('aboutGameButton').onclick=aboutGameAction;
-  document.getElementById('aboutUsButton').onclick=aboutUsAction;
   document.getElementById('playnowButton').onclick=hostOrJoin;
   document.getElementById('settingsButton').onclick=settingsAction;
   document.getElementById('cancel').onclick=cancelGame;

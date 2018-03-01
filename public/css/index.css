@@ -11,7 +11,6 @@ body {
 header {
   color: rgb(65, 64, 65);
   font-size: 2.65em;
-  text-align: center;
   animation: fadeIn 5s;
   text-shadow: 0px 1px 1px #ddd,
                0px 0px 20px rgba(0, 0, 0, 0.6),
@@ -245,9 +244,8 @@ margin: auto;
 
 @media only screen and (min-width:980px){
   header {
-    text-align: right;
+    margin-top: 13%;
     width: 65%;
-    float: left;
   }
   .shipImage {
     text-align: left;
@@ -255,9 +253,8 @@ margin: auto;
     float: right;
   }
   .options {
-    text-align: left;
-    width: 30%;
-    margin: 10% 50% 5% 40%;
+    width: auto;
+    margin: 1% auto 5% auto;
     color: rgb(111, 112, 120);
     font-size: 40px;
     animation: fadeIn 2s;
