@@ -24,29 +24,33 @@ const createGame = function(req, res) {
   }
   joinGame(req, res);
 };
+
 const hostGame = function(req, res) {
   let name = utils.getUsername(req);
   let sessionId = req.app.generateSessionId();
   let game = utils.getGame(req);
   game.addPlayer(name,sessionId);
   res.cookie('player', sessionId);
-  game.changeStartedStatus();
   res.end();
 };
+
 const joinGame = function(req, res) {
   let name = utils.getUsername(req);
   let sessionId = req.app.generateSessionId();
   utils.getGame(req).addPlayer(name,sessionId);
+  utils.getGame(req).changeStartedStatus();
   res.cookie('player', sessionId);
   res.end();
 };
+
 const hasOpponentJoined = function(req, res) {
   let game = utils.getGame(req);
   let gameStatus = {
-    status: game && game.hasTwoPlayers()
+    status: game && game.status
   };
   res.send(gameStatus);
 };
+
 const loadFleet = function(req, res) {
   let game = utils.getGame(req);
   let playerId = utils.getPlayerId(req);
@@ -59,6 +63,7 @@ const loadFleet = function(req, res) {
   game.changePlayerStatus(playerId);
   res.end();
 };
+
 const arePlayersReady = function(req, res) {
   let game = utils.getGame(req);
 
@@ -71,6 +76,7 @@ const arePlayersReady = function(req, res) {
   };
   res.send(playerStatus);
 };
+
 const updateShot = function(req,res) {
   let game = utils.getGame(req);
   let currentPlayerID = utils.getPlayerId(req);
@@ -92,6 +98,7 @@ const updateShot = function(req,res) {
     myTurn: turnStatus
   });
 };
+
 const playAgain = function(req,res){
   let game = utils.getGame(req);
   if(game && game.playerCount!=1){
@@ -99,11 +106,13 @@ const playAgain = function(req,res){
   }
   res.redirect('/');
 };
+
 const hasOpponentLost = function(req,res){
   let currentPlayerID = utils.getPlayerId(req);
   let victoryStatus = utils.getGame(req).hasOpponentLost(currentPlayerID);
   return victoryStatus;
 };
+
 const hasOpponentWon = function(req,res){
   let game = utils.getGame(req);
   let currentPlayerID = utils.getPlayerId(req);
@@ -121,15 +130,18 @@ const hasOpponentWon = function(req,res){
     'destroyedShips':destroyedShips
   });
 };
+
 const getGameStatus = function(req,res){
   let game = utils.getGame(req);
   let currentPlayerID = req.cookies.player;
   let fleet = game.getFleet(currentPlayerID);
   let destroyedShips = [];
+  let ships;
   if(!fleet) {
-    fleet = {ships:[]};
+    ships = [];
   } else {
     destroyedShips = game.getSankOpponentShipsCount(currentPlayerID);
+    ships = fleet.getAllShips();
   }
   let shots = game.getCurrentPlayerShots(currentPlayerID);
   let oppShots = game.getOpponentShots(currentPlayerID);
@@ -140,7 +152,7 @@ const getGameStatus = function(req,res){
   let oppMisses = oppShots.misses;
   let hits = oppShots.hits;
   res.json({
-    fleet:fleet.ships,
+    fleet:ships,
     opponentHits:hits,
     playerShots:shots,
     opponentMisses:oppMisses,

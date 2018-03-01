@@ -24,15 +24,12 @@ class Game {
   }
   getPlayer(playerId) {
     let player = this._players.find((player) => {
-      return player._id == playerId;
+      return player.playerId == playerId;
     });
     return player;
   }
   get players() {
     return this._players;
-  }
-  hasTwoPlayers() {
-    return this._players.length == 2;
   }
   arePlayersReady() {
     return this._players.every(function(player) {
@@ -43,19 +40,14 @@ class Game {
     let player = this.getPlayer(playerId);
     return player.changeStatus();
   }
-  getOpponentPlayerId(currentPlayerID) {
-    return this._players.find(function(player) {
-      return currentPlayerID != player._id;
-    })._id;
-  }
   getOpponentPlayer(currentPlayerID) {
     return this._players.find(function(player) {
-      return currentPlayerID != player._id;
+      return currentPlayerID != player.playerId;
     });
   }
   getCurrentPlayer(currentPlayerID){
     return this._players.find(function(player) {
-      return currentPlayerID == player._id;
+      return currentPlayerID == player.playerId;
     });
   }
   changeStartedStatus(){

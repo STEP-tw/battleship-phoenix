@@ -30,14 +30,6 @@ describe('Game', () => {
       assert.deepEqual(actual, expected);
     });
   });
-  describe('hasTwoPlayers', () => {
-    it('should return true when game has two players', () => {
-      game.addPlayer('arvind', 1);
-      game.addPlayer('ishu', 2);
-      let actual = game.hasTwoPlayers();
-      assert.ok(actual);
-    });
-  });
   describe('changePlayerStatus', () => {
     it('should change player status to ready', () => {
       game.addPlayer('arvind', 1);
@@ -184,17 +176,6 @@ describe('Game', () => {
       game.assignFleet(1, fleet);
       assert.isNotOk(game.hasOpponentWon(1));
     });
-  });
-  describe('getOpponentPlayerID', function() {
-    it('should give the opponent playerID according to the current playerId',
-      function() {
-        game.addPlayer('ishu', 1);
-        game.addPlayer('arvind', 2);
-        game.assignFleet(1, {});
-        game.assignFleet(2, {});
-        assert.equal(game.getOpponentPlayerId(1), 2);
-        assert.equal(game.getOpponentPlayerId(2), 1);
-      });
   });
   describe('updatePlayerShot', function() {
     beforeEach(function() {

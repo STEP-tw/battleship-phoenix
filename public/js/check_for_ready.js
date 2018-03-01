@@ -57,9 +57,9 @@ const handleTurn = function (myTurn) {
   }
 };
 
-const updateSankShips = function(fleet){
+const updateSankShips = function(destroyedShips){
   let shipsSunk = document.querySelectorAll('.fleetDetails tr td');
-  for (let index = 0; index < fleet; index++) {
+  for (let index = 0; index < destroyedShips; index++) {
     shipsSunk[index].style.backgroundColor = 'rgba(255, 34, 34, 0.52)';
     shipsSunk[index].style.border = '0.5px solid rgb(107, 32, 32)';
   }
@@ -149,9 +149,12 @@ const showWaitingMessage = function() {
 
 const displayWon=function(hasWon){
   if(hasWon){
+    updateSankShips(5);
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
-    document.querySelector('.victory').style.display = "block";
+    setTimeout(()=>{
+      document.querySelector('.victory').style.display = "block";
+    },500);
   }
 };
 

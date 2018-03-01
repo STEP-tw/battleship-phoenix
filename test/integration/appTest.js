@@ -110,6 +110,7 @@ describe('app', () => {
       app.game.addPlayer('ishu', sessionId);
       let sessionId2 = app.generateSessionId();
       app.game.addPlayer('arvind', sessionId2);
+      app.game.changeStartedStatus();
     });
     it('responds true if opponent is present', function(done) {
       request(app)
@@ -303,6 +304,7 @@ describe('app', () => {
       app.game.addPlayer('ishu', sessionId);
       let sessionId2 = app.generateSessionId();
       app.game.addPlayer('arvind', sessionId2);
+      app.game.changeStartedStatus();
     });
     it('gives game status', function(done) {
       request(app)
