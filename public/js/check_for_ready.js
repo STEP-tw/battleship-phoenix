@@ -173,6 +173,16 @@ const reduceOpponentHealth = function(){
   enemyHealth.value--;
 };
 
+const playMissSound = function(){
+  let audio = new Audio('../assets/audio/miss.mp3');
+  audio.play();
+};
+
+const playHitSound = function(){
+  let audio = new Audio('../assets/audio/hit.mp3');
+  audio.play();
+};
+
 const displayShot = function() {
   if(this.responseText.statusCode== 406) {
     return;
@@ -181,8 +191,10 @@ const displayShot = function() {
   let winStatus = shotResult.winStatus;
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   if(!shotResult.status) {
+    playMissSound();
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
+    playHitSound();
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
     reduceOpponentHealth();
     displayWon(winStatus);
