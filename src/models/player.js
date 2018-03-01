@@ -1,10 +1,11 @@
+const Fleet = require('./fleet');
 class Player {
-  constructor(id, name) {
+  constructor(id, name,ships,ready,shots) {
     this._id = id;
     this._name = name;
-    this._fleet = undefined;
-    this._ready = false;
-    this._shots = {
+    this._fleet = ships || new Fleet();
+    this._ready = ready || false;
+    this._shots = shots || {
       hits: [],
       misses: []
     };
@@ -47,7 +48,7 @@ class Player {
       return firedPos[0] == pos[0] && firedPos[1] == pos[1];
     });
   }
-  isAlreadFired(pos) {
+  isAlreadyFired(pos) {
     return this.isPosIncludesInShots(pos, "hits")
     || this.isPosIncludesInShots(pos, "misses");
   }

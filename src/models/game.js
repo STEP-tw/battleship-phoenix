@@ -1,11 +1,12 @@
 const Player = require('./player');
-const utils = require('../utils/utils.js');
+const generateTurn = require('../utils/turnGenerator.js').generateTurn;
 
 class Game {
-  constructor() {
-    this._players = [];
-    this._started = false;
-    this.currentPlayerIndex = undefined;
+  constructor(id,players,started,cpi) {
+    this.id = id;
+    this._players = players || [];
+    this._started = started || false;
+    this.currentPlayerIndex = cpi;
   }
   addPlayer(name, id) {
     let player = new Player(id, name);
@@ -57,7 +58,7 @@ class Game {
     return this._started;
   }
   assignTurn(random=Math.random()){
-    let turn = utils.generateTurn(random);
+    let turn = generateTurn(random);
     this.currentPlayerIndex = turn[0];
     return this.currentPlayerIndex;
   }
@@ -91,8 +92,8 @@ class Game {
   validateId(playerIndex,id){
     return this._players[playerIndex].isItYourId(id);
   }
-  isAlreadFired(playerId,firedPos){
-    return this.getPlayer(playerId).isAlreadFired(firedPos);
+  isAlreadyFired(playerId,firedPos){
+    return this.getPlayer(playerId).isAlreadyFired(firedPos);
   }
   getCurrentPlayerShots(currentPlayerID){
     return this.getPlayer(currentPlayerID).shots;

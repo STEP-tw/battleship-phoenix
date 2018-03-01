@@ -16,7 +16,7 @@ const remHighlightOnShips = function(){
 };
 
 const isAllShipsPlaced = function(){
-  return shipsHeadPositions.length == 5;
+  return shipsHeadPositions.length == 1;
 };
 
 const disableCheckedCells = function(){

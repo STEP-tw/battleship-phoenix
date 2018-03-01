@@ -1,3 +1,10 @@
+const getNextCoordinate = {
+  'south': (xCoord, yCoord) => [xCoord, yCoord + 1],
+  'north': (xCoord, yCoord) => [xCoord, yCoord - 1],
+  'east': (xCoord, yCoord) => [xCoord + 1, yCoord],
+  'west': (xCoord, yCoord) => [xCoord - 1, yCoord]
+};
+
 const getCoordinates = function(direction, initialPos, length) {
   let occupiedCoords = [];
   let xCoord = initialPos[0];
@@ -10,13 +17,6 @@ const getCoordinates = function(direction, initialPos, length) {
     yCoord = pos[1];
   }
   return occupiedCoords;
-};
-
-const getNextCoordinate = {
-  'south': (xCoord, yCoord) => [xCoord, yCoord + 1],
-  'north': (xCoord, yCoord) => [xCoord, yCoord - 1],
-  'east': (xCoord, yCoord) => [xCoord + 1, yCoord],
-  'west': (xCoord, yCoord) => [xCoord - 1, yCoord]
 };
 
 module.exports = getCoordinates;

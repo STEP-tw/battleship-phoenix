@@ -4,7 +4,7 @@ const addListener = function() {
 };
 
 const areAllShipsPlaced=function(){
-  return shipsHeadPositions.length == 5;
+  return shipsHeadPositions.length == 1;
 };
 
 const handleReady=function(){
@@ -207,8 +207,7 @@ const playHitSound = function(){
 };
 
 const displayShot = function() {
-  let shotResult = utils.getResponse(this);
-  if(shotResult.alreadyFired) {
+  if(this.responseText.isAlreadyFired) {
     return;
   }
   let winStatus = shotResult.winStatus;

@@ -19,7 +19,7 @@ describe('Game', () => {
       let actual = game.getCurrentPlayer(1);
       let expected = {
         _id: 1,
-        _fleet: undefined,
+        _fleet: {ships:[]},
         _ready: false,
         _shots: {
           hits: [],
@@ -271,7 +271,7 @@ describe('Game', () => {
       assert.isNotOk(game.validateId(1, 43));
     });
   });
-  describe('isAlreadFired', function() {
+  describe('isAlreadyFired', function() {
     beforeEach(function() {
       let fleet = new Fleet();
       let subShipInfo = {
@@ -287,11 +287,11 @@ describe('Game', () => {
     });
     it('should return true if refires at same pos', function() {
       game.updatePlayerShot(1, [1, 2]);
-      assert.ok(game.isAlreadFired(1, [1, 2]));
+      assert.ok(game.isAlreadyFired(1, [1, 2]));
     });
     it('should return false when fired once', function() {
       game.updatePlayerShot(1, [1, 2]);
-      assert.isNotOk(game.isAlreadFired(1, [3, 2]));
+      assert.isNotOk(game.isAlreadyFired(1, [3, 2]));
     });
   });
   describe('getCurrentPlayerShots', function() {

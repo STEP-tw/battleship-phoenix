@@ -1,8 +1,8 @@
 const Ship = require('./ship.js');
 
 class Fleet {
-  constructor() {
-    this.ships = [];
+  constructor(ships) {
+    this.ships = ships || [];
   }
   addShip(shipInfo){
     let ship = new Ship(shipInfo.dir,shipInfo.length,shipInfo.headPos);

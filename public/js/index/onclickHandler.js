@@ -17,6 +17,10 @@ const hostButtonAction = function (){
 
 const closePopup = function(id) {
   document.getElementById(id).style.display = 'none';
+
+const hostOrJoin = function(){
+  document.getElementById('playnow').style.display='block';
+
 };
 
 const addOnclickListeners = function (){

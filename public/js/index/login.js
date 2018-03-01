@@ -10,7 +10,7 @@ const hostGame = function(){
   if(name){
     console.log('hello');
     let userDetails = utils.toS({username:name});
-    sendAjax('post','/login',showMessage,userDetails);
+    sendAjax('post','/host',showMessage,userDetails);
     askForOpponent();
   }
   return;
@@ -24,7 +24,7 @@ const joinGame = function(){
   let name = document.querySelector('#username2').value;
   if(name){
     let userDetails = utils.toS({username:name});
-    sendAjax(utils.post(),'/login',startgameMessage,userDetails);
+    sendAjax(utils.post(),'/join',startgameMessage,userDetails);
   }
   return;
 };

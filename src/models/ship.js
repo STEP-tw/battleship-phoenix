@@ -1,11 +1,11 @@
 const getCoordinates = require('./position_system.js');
 
 class Ship {
-  constructor(direction,length,initialPos) {
+  constructor(direction,length,initialPos,damages) {
     this.direction = direction;
     this.length = length;
     this.initialPos = initialPos;
-    this.posOfDamage = [];
+    this.posOfDamage = damages || [];
   }
   getShipCoords(){
     return getCoordinates(this.direction,this.initialPos,this.length);

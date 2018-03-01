@@ -1,20 +1,6 @@
 const assert = require('chai').assert;
 const utils = require('./../../src/utils/utils.js');
 
-describe('changeIndex', function() {
-  it('should changeIndex from 1 to 0 and vice versa', function() {
-    assert.deepEqual(utils.changeIndex(0), 1);
-    assert.deepEqual(utils.changeIndex(1), 0);
-  });
-});
-
-describe('generateTurn', function() {
-  it('should give 1 or 2 in random', function() {
-    assert.deepEqual(utils.generateTurn(0.4), [0, 1]);
-    assert.deepEqual(utils.generateTurn(0.6), [1, 0]);
-  });
-});
-
 describe('getPlayerId', function() {
   it('should returns the player cookie', function() {
     let req = {
@@ -57,30 +43,39 @@ describe('isItPrivilegedData', function() {
   });
 });
 describe('isUserTresspassing()', function() {
+  let req;
+  beforeEach(function () {
+    let game = {
+      id:2,
+      getPlayer: () => {
+        return 'teja';
+      }
+    };
+    req = {
+      url: '/game.html',
+      body: {gameId:2},
+      cookies: {
+        player: 'teja'
+      },
+      app: {
+        gamesHandler: {
+          _hostedGame: [game],
+          fetchHostedGame: ()=>{
+            return game;
+          }
+        }
+      }
+    };
+  });
   it('should return true if user trying to access unpermitted data'
     , function() {
-      let req = {
-        url: '/game.html',
-        cookies: {},
-        app: {}
+      req.app.gamesHandler.fetchHostedGame = ()=>{
+        return false;
       };
       assert.isTrue(utils.isUserTresspassing(req));
     });
   it('should return false if user trying to access permitted data'
     , function() {
-      let req = {
-        url: '/game.html',
-        cookies: {
-          player: 'teja'
-        },
-        app: {
-          game: {
-            getPlayer: () => {
-              return "teja";
-            }
-          }
-        }
-      };
       assert.isUndefined(utils.isUserTresspassing(req));
       req.url = '/index.html';
       assert.isNotOk(utils.isUserTresspassing(req));

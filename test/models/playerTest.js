@@ -87,14 +87,14 @@ describe('Player', () => {
       assert.isNotOk(player.isPosIncludesInShots([1,2],'misses'));
     });
   });
-  describe('isAlreadFired', function () {
+  describe('isAlreadyFired', function () {
     it('should return true when position already fired', function () {
       player.updateShot('hits',[1,2]);
-      assert.ok(player.isAlreadFired([1,2]));
+      assert.ok(player.isAlreadyFired([1,2]));
     });
     it('should return false when position is not fired', function () {
       player.updateShot('hits',[1,2]);
-      assert.isNotOk(player.isAlreadFired([2,2]));
+      assert.isNotOk(player.isAlreadyFired([2,2]));
     });
   });
   describe('getDestroyedShipsCoords', () => {
