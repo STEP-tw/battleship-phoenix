@@ -3,6 +3,7 @@ const Player = require('./../../src/models/player.js');
 const Fleet = require('./../../src/models/fleet.js');
 
 describe('Player', () => {
+  let player;
   beforeEach(function () {
     player=new Player(1,'player');
   });
@@ -94,6 +95,26 @@ describe('Player', () => {
     it('should return false when position is not fired', function () {
       player.updateShot('hits',[1,2]);
       assert.isNotOk(player.isAlreadFired([2,2]));
+    });
+  });
+  describe('getDestroyedShipsCoords', () => {
+    beforeEach(() => {
+      let fleet = new Fleet();
+      let subShipInfo = {dir:'south',length:2,headPos:[0,0]};
+      fleet.addShip(subShipInfo);
+      player.addFleet(fleet);
+    });
+    it('should give coordinates of destroyed ships', () => {
+      let actual = player.getDestroyedShipsCoords();
+      let expected=[];
+      assert.deepEqual(actual, expected);
+    });
+    it('should give coordinates of destroyed ships', () => {
+      player.isHit([0,0]);
+      player.isHit([0,1]);
+      let actual = player.getDestroyedShipsCoords();
+      let expected=[ [ [ 0, 0 ], [ 0, 1 ] ] ];
+      assert.deepEqual(actual, expected);
     });
   });
 });

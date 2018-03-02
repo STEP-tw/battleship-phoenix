@@ -29,6 +29,5 @@ describe('Player', () => {
       player.addFleet(fleet);
       assert.isNotOk(player.hasFleetDestroyed());
     });
-
   });
 });

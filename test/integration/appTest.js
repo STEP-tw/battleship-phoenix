@@ -259,7 +259,8 @@ describe('app', () => {
           firedPos: [1, 2],
           status: true,
           winStatus: false,
-          myTurn: false
+          myTurn: false,
+          destroyedShipsCoords: []
         })
         .end(done);
     });
@@ -484,7 +485,6 @@ describe('app', () => {
             "opponentHits": [],
             playerName: 'arvind',
             enemyName: 'ishu',
-            destroyedShipsCount:0,
             destroyedShipsCoords: []
           })
           .end(done);

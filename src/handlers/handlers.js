@@ -91,11 +91,13 @@ const updateShot = function(req,res) {
   let victoryStatus = hasOpponentLost(req);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   req.app.game.updatePlayerShot(currentPlayerID,firedPos);
+  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
   res.json({
-    firedPos:firedPos,
-    status:hitStatus,
-    winStatus:victoryStatus,
-    myTurn: turnStatus
+    firedPos: firedPos,
+    status: hitStatus,
+    winStatus: victoryStatus,
+    myTurn: turnStatus,
+    destroyedShipsCoords: destroyedShipsCoords
   });
 };
 
@@ -119,17 +121,13 @@ const hasOpponentWon = function(req,res){
   let defeatStatus = game.hasOpponentWon(currentPlayerID);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   let opponentShots = game.getOpponentShots(currentPlayerID);
-  let destroyedShipsCount = game.getSankOpponentShipsCount(currentPlayerID);
-  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
   if(defeatStatus){
     delete req.app.game;
   }
   res.send({
     'status': defeatStatus,
     'myTurn': turnStatus,
-    'opponentShots': opponentShots,
-    'destroyedShipsCount': destroyedShipsCount,
-    'destroyedShipsCoords': destroyedShipsCoords
+    'opponentShots': opponentShots
   });
 };
 
@@ -138,13 +136,11 @@ const getGameStatus = function(req,res){
   let currentPlayerID = req.cookies.player;
   let fleet = game.getFleet(currentPlayerID);
   let ships;
-  let destroyedShipsCount = [];
   let destroyedShipsCoords = [];
   if(!fleet) {
     ships = [];
   } else {
     ships = fleet.getAllShips();
-    destroyedShipsCount = game.getSankOpponentShipsCount(currentPlayerID);
     destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
   }
   let shots = game.getCurrentPlayerShots(currentPlayerID);
@@ -162,7 +158,6 @@ const getGameStatus = function(req,res){
     opponentMisses:oppMisses,
     playerName:playerName,
     enemyName:opponentName,
-    destroyedShipsCount:destroyedShipsCount,
     destroyedShipsCoords: destroyedShipsCoords
   });
 };

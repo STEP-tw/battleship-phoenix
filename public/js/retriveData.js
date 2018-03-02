@@ -114,10 +114,11 @@ const updateHealths = function(response) {
 const updateDisplay = function() {
   let response = utils.getResponse(this);
   let fleet = response.fleet;
+  let destroyedShipsCoords = response.destroyedShipsCoords;
+  let destroyedShipsCount = destroyedShipsCoords.length;
   displayPlayersName(response);
   updateHealths(response);
-  console.log(response);
-  updateSankShips(response.destroyedShipsCount,response.destroyedShipsCoords);
+  updateSankShips(destroyedShipsCount,destroyedShipsCoords);
   if (fleet) {
     if (fleet.length != 0) {
       document.getElementsByClassName('shipsBlock')[0].style.display = 'none';

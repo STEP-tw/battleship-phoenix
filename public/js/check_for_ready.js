@@ -87,7 +87,6 @@ const updateSankShips = function(shipCount,sunkShipsCoords){
 
 const displayLost = function(){
   let response = utils.getResponse(this);
-  updateSankShips(response.destroyedShipsCount,response.destroyedShipsCoords);
   updateOceanGrid(response);
   updatePlayerDetails(response);
   if(response.status){
@@ -167,9 +166,8 @@ const showWaitingMessage = function() {
   utils.updateMessage(message);
 };
 
-const displayWon=function(hasWon,){
+const displayWon=function(hasWon){
   if(hasWon){
-    updateSankShips(5);
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
     setTimeout(()=>{
@@ -213,6 +211,8 @@ const displayShot = function() {
   let shotResult = utils.getResponse(this);
   let winStatus = shotResult.winStatus;
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
+  let destroyedShipsCount = shotResult.destroyedShipsCoords.length;
+  let destroyedShipsCoords = shotResult.destroyedShipsCoords;
   if(!shotResult.status) {
     playMissSound();
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
@@ -220,6 +220,7 @@ const displayShot = function() {
     playHitSound();
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
     reduceOpponentHealth();
+    updateSankShips(destroyedShipsCount,destroyedShipsCoords);
     displayWon(winStatus);
   }
   if(!winStatus){

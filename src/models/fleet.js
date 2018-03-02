@@ -17,9 +17,10 @@ class Fleet {
     });
   }
   getAllSunkShips(){
-    return this.ships.filter((ship)=>{
-      return ship.isSunk();
+    let allSunkShips = this.ships.filter((ship)=>{
+      return ship.isSunk() ;
     });
+    return allSunkShips;
   }
   getDestroyedShipsCount(){
     return this.getAllSunkShips().length;
