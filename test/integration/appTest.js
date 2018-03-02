@@ -379,7 +379,8 @@ describe('app', () => {
           .send({
             firedPosition: [1, 2]
           })
-          .expect(406)
+          .expect(200)
+          .expect('{"alreadyFired":true}')
           .end(done);
       });
     it('should return response 200 for fired at a position', function(done) {

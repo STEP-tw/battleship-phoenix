@@ -53,7 +53,9 @@ const handleTurn = function (myTurn) {
   }else {
     deactivateTargetGrid();
     utils.clearIntervals();
-    sendAjax(utils.get(),'/hasOpponentWon',displayLost);
+    setTimeout(()=>{
+      sendAjax(utils.get(),'/hasOpponentWon',displayLost);
+    },1000);
   }
 };
 
@@ -205,10 +207,10 @@ const playHitSound = function(){
 };
 
 const displayShot = function() {
-  if(this.responseText.statusCode== 406) {
+  let shotResult = utils.getResponse(this);
+  if(shotResult.alreadyFired) {
     return;
   }
-  let shotResult = utils.getResponse(this);
   let winStatus = shotResult.winStatus;
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   let destroyedShipsCount = shotResult.destroyedShipsCoords.length;
@@ -240,4 +242,30 @@ const updatePlayerDetails = function(response) {
     myHealth.setAttribute('class','lowHealth');
   }
   myHealth.value = health;
+};
+
+const isPlayerWillingToLeave = function(){
+  return document.getElementById('quit').style.display == 'block';
+};
+
+const displayOpponentLeft = function(status) {
+  if (status.hasOpponentLeft) {
+    document.getElementById('opponentLeft').style.display = 'block';
+    return;
+  }
+  hasOpponentLeft();
+};
+
+const handleStatus = function() {
+  let status = JSON.parse(this.responseText);
+  if(isPlayerWillingToLeave()||this.responseText=='{}'){
+    return;
+  }
+  displayOpponentLeft(status);
+};
+
+const hasOpponentLeft = function() {
+  setTimeout(()=>{
+    sendAjax(utils.get(),'/hasOpponentLeft',handleStatus);
+  },1000);
 };

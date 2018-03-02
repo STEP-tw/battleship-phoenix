@@ -105,5 +105,10 @@ class Game {
     let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.getDestroyedShipsCoords();
   }
+  removePlayer(currentPlayerID){
+    this._players = this._players.filter( (player) => {
+      return player.playerId != currentPlayerID;
+    });
+  }
 }
 module.exports = Game;

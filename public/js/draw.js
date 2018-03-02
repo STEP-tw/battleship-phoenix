@@ -17,11 +17,31 @@ const createRow = function(row,colSize,rowIndex,prefix){
   return row;
 };
 
-let setupGrid = function(){
+const quitGameOption = function (){
+  document.getElementById('quit').style.display='block';
+};
+
+const initializeQuit = function() {
+  let quitButton = document.getElementById('quitGame');
+  quitButton.onclick=quitGameOption;
+};
+
+const cancelQuit = function() {
+  let cancelButton = document.getElementById('No');
+  cancelButton.onclick = ()=>{
+    document.getElementById('quit').style.display='none';
+    hasOpponentLeft();
+  };
+};
+
+let setupGame = function(){
   createGrid('targetGrid','tg',10,10);
   createGrid('oceanGrid','og',10,10);
   addListener();
+  initializeQuit();
+  cancelQuit();
   getAndUpdateGameStatus();
+  hasOpponentLeft();
 };
 
-window.onload = setupGrid;
+window.onload = setupGame;

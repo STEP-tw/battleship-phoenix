@@ -27,10 +27,11 @@ app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
 app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 app.get('/host_or_join',hostOrJoin);
-app.get('/hasOpponentLost',handlers.hasOpponentLost);
 app.get('/hasOpponentWon',handlers.hasOpponentWon);
 app.get('/playAgain',handlers.playAgain);
 app.get('/gameStatus',handlers.getGameStatus);
+app.get('/quit',handlers.quitGame);
+app.get('/hasOpponentLeft',handlers.hasOpponentLeft);
 
 app.post('/updateFiredShot',handlers.updateShot);
 app.post('/start-game',handlers.loadFleet);

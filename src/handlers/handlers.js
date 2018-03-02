@@ -66,7 +66,6 @@ const loadFleet = function(req, res) {
 
 const arePlayersReady = function(req, res) {
   let game = utils.getGame(req);
-
   let currentPlayerIndex = game.turn >= 0 ? game.turn : game.assignTurn();
   let sessionId = utils.getPlayerId(req);
   let turnStatus = game.validateId(currentPlayerIndex,sessionId);
@@ -82,8 +81,7 @@ const updateShot = function(req,res) {
   let currentPlayerID = utils.getPlayerId(req);
   let firedPos = req.body.firedPosition;
   if(game.isAlreadFired(currentPlayerID,firedPos)){
-    res.statusCode = 406;
-    res.end();
+    res.json({alreadyFired:true});
     return;
   }
   req.app.game.changeTurn();
@@ -127,7 +125,7 @@ const hasOpponentWon = function(req,res){
   res.send({
     'status': defeatStatus,
     'myTurn': turnStatus,
-    'opponentShots': opponentShots
+    'opponentShots':opponentShots,
   });
 };
 
@@ -146,20 +144,40 @@ const getGameStatus = function(req,res){
   let shots = game.getCurrentPlayerShots(currentPlayerID);
   let oppShots = game.getOpponentShots(currentPlayerID);
   let player= game.getPlayer(currentPlayerID);
-  let playerName = player.playerName;
   let opponent= game.getOpponentPlayer(currentPlayerID);
-  let opponentName = opponent.playerName;
-  let oppMisses = oppShots.misses;
-  let hits = oppShots.hits;
   res.json({
     fleet:ships,
-    opponentHits:hits,
+    opponentHits:oppShots.hits,
     playerShots:shots,
-    opponentMisses:oppMisses,
-    playerName:playerName,
-    enemyName:opponentName,
+    opponentMisses:oppShots.misses,
+    playerName:player.playerName,
+    enemyName:opponent.playerName,
     destroyedShipsCoords: destroyedShipsCoords
   });
+};
+
+const quitGame = function(req,res) {
+  utils.getGame(req).removePlayer(req.cookies.player);
+  res.redirect('/');
+};
+
+const sendOpponentStatus = function(req,res) {
+  let game = utils.getGame(req);
+  if (game.playerCount==1) {
+    res.json({hasOpponentLeft:true});
+    delete req.app.game;
+    return;
+  }
+  res.json({hasOpponentLeft:false});
+};
+
+const hasOpponentLeft = function(req,res) {
+  let game = utils.getGame(req);
+  if(!game){
+    res.json({});
+    return;
+  }
+  sendOpponentStatus(req,res);
 };
 
 module.exports = {
@@ -173,5 +191,7 @@ module.exports = {
   hasOpponentWon,
   getGameStatus,
   playAgain,
-  handleTresspassing
+  handleTresspassing,
+  quitGame,
+  hasOpponentLeft
 };
