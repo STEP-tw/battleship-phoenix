@@ -42,6 +42,7 @@ let setupGame = function(){
   cancelQuit();
   getAndUpdateGameStatus();
   hasOpponentLeft();
+  showShipDetailsOnHover();
 };
 
 window.onload = setupGame;

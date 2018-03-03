@@ -405,3 +405,15 @@ li:hover {
   font-family: 'Cinzel', serif;
   border:none;
 }
+.shipDetails{
+  display: none;
+  width: 300px;
+  height: 350px;
+  background-color: rgba(0,0,0,0.39);
+  color: rgb(21, 196, 185);
+  border: 0.5px solid rgb(21, 196, 185);
+  margin: 12% 0 0 54%;
+  z-index: 1;
+  position: absolute;
+  text-align: center;
+}

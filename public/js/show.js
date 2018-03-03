@@ -62,3 +62,41 @@ const changeCellColor = function(cellIdList,color){
     }
   });
 };
+
+const getShipDetails = function(shipName){
+  let shipDetails = {
+    carrier: '5 HITS TO SINK CARRIER',
+    battleship: '4 HITS TO SINK BATTLESHIP',
+    cruiser: '3 HITS TO SINK CRUISER',
+    submarine: '3 HITS TO SINK SUBMARINE',
+    destroyer: '2 HITS TO SINK DESTROYER'
+  };
+  return shipDetails[shipName];
+};
+
+const toHtml = function(shipDetails,shipName){
+  let imageUrl = `<img src = ../assets/images/${shipName}.png>`;
+  let shipDetailsHtml = `<h2>${(shipName).toUpperCase()}</h2><br>${imageUrl}`;
+  shipDetailsHtml += `<br>${getShipDetails(shipName)}`;
+  return shipDetailsHtml;
+};
+
+const showDetails = function(event){
+  let shipName = event.target.id;
+  let shipDetails = document.querySelector('.shipDetails');
+  shipDetails.innerHTML = toHtml(shipDetails,shipName);
+  shipDetails.style.display = 'block';
+};
+
+const hideDetails = function(event){
+  let shipDetails = document.querySelector('.shipDetails');
+  shipDetails.style.display = 'none';
+};
+
+const showShipDetailsOnHover = function(){
+  let shipNames = document.querySelectorAll('li');
+  shipNames.forEach((ship)=>{
+    ship.onmouseover = showDetails;
+    ship.onmouseout = hideDetails;
+  });
+};
