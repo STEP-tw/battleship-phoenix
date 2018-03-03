@@ -51,9 +51,6 @@ class Player {
     return this.isPosIncludesInShots(pos, "hits")
     || this.isPosIncludesInShots(pos, "misses");
   }
-  getDestroyedShipsCount(){
-    return this._fleet.getDestroyedShipsCount();
-  }
   getDestroyedShipsCoords(){
     let allShips = this._fleet.getAllSunkShips();
     let shipsCoords = [];

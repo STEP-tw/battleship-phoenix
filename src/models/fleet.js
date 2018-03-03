@@ -22,9 +22,6 @@ class Fleet {
     });
     return allSunkShips;
   }
-  getDestroyedShipsCount(){
-    return this.getAllSunkShips().length;
-  }
   isAnyShipHit(position){
     return this.ships.some(function(ship){
       return ship.isHit(position);

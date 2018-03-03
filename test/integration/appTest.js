@@ -1,3 +1,4 @@
+/*eslint-disable max-lines*/
 const chai = require('chai');
 const assert = chai.assert;
 const request = require('supertest');
@@ -490,5 +491,101 @@ describe('app', () => {
           })
           .end(done);
       });
+    it('should return player details fleet hit and miss shot of players'
+      , function(done) {
+        app.game.assignFleet(sessionId, fleet);
+        app.game.assignFleet(sessionId2, fleet);
+        app.game.updatePlayerShot(1,[1, 2]);
+        request(app)
+          .get('/gameStatus')
+          .set('cookie', 'player=2')
+          .expect(200)
+          .expect({
+            "fleet": [{
+              "direction": "south",
+              "length": 1,
+              "initialPos": [1, 2],
+              "posOfDamage": [[1,2]]
+            }],
+            "playerShots": {
+              "hits": [],
+              "misses": []
+            },
+            "opponentMisses": [],
+            "opponentHits": [[1,2]],
+            playerName: 'arvind',
+            enemyName: 'ishu',
+            destroyedShipsCoords: [[[1,2]]]
+          })
+          .end(done);
+      });
+  });
+  describe('GET /quit', function() {
+    before(() => {
+      let _playerId = 0;
+      app.game = new Game();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('manindra', sessionId);
+      app.game.addPlayer('ishu', sessionId);
+    });
+    it('should add the details of the join player', function(done) {
+      request(app)
+        .get('/quit')
+        .set('cookie','player=1')
+        .expect(302)
+        .expect('Location','/')
+        .end(done);
+    });
+  });
+  describe('GET /hasOpponentLeft', function() {
+    before(() => {
+      let _playerId = 0;
+      app.game = new Game();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('manindra', sessionId);
+    });
+    it('should return true if player count is 1', function(done) {
+      request(app)
+        .get('/hasOpponentLeft')
+        .set('cookie','player=1')
+        .expect(200)
+        .expect('{"hasOpponentLeft":true}')
+        .end(done);
+    });
+  });
+  describe('GET /hasOpponentLeft', function() {
+    before(() => {
+      let _playerId = 0;
+      app.game = new Game();
+      app.generateSessionId = function() {
+        return ++_playerId;
+      };
+      let sessionId = app.generateSessionId();
+      app.game.addPlayer('manindra', sessionId);
+      app.game.addPlayer('ishu', sessionId);
+    });
+    it('should return false if player count is 2', function(done) {
+      request(app)
+        .get('/hasOpponentLeft')
+        .set('cookie','player=1')
+        .expect(200)
+        .expect('{"hasOpponentLeft":false}')
+        .end(done);
+    });
+  });
+  describe('GET /hasOpponentLeft', function() {
+    it('should return empty object if there is no game', function(done) {
+      request(app)
+        .get('/hasOpponentLeft')
+        .expect(200)
+        .expect('{}')
+        .end(done);
+    });
   });
 });

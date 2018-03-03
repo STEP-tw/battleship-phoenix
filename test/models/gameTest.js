@@ -16,8 +16,8 @@ describe('Game', () => {
   describe('addPlayer', () => {
     it('should add a new player with Id 1', () => {
       game.addPlayer('player1', 1);
-      let actual = game.players;
-      let expected = [{
+      let actual = game.getCurrentPlayer(1);
+      let expected = {
         _id: 1,
         _fleet: undefined,
         _ready: false,
@@ -26,7 +26,7 @@ describe('Game', () => {
           misses: []
         },
         _name: 'player1'
-      }];
+      };
       assert.deepEqual(actual, expected);
     });
   });
@@ -294,24 +294,6 @@ describe('Game', () => {
       assert.isNotOk(game.isAlreadFired(1, [3, 2]));
     });
   });
-  describe('getSankOpponentShipsCount', function() {
-    it('should give details of sank ships of opponent', function() {
-      let fleet = new Fleet();
-      let subShipInfo = {
-        dir: 'south',
-        length: 2,
-        headPos: [0, 0]
-      };
-      fleet.addShip(subShipInfo);
-      game.addPlayer('ishu', 1);
-      game.addPlayer('arvind', 2);
-      game.assignFleet(1, fleet);
-      game.assignFleet(2, fleet);
-      game.updatePlayerShot(1, [0, 0]);
-      game.updatePlayerShot(1, [0, 1]);
-      assert.equal(game.getSankOpponentShipsCount(1), 1);
-    });
-  });
   describe('getCurrentPlayerShots', function() {
     beforeEach(function() {
       let fleet = new Fleet();
@@ -333,6 +315,18 @@ describe('Game', () => {
         misses: []
       };
       assert.deepEqual(shots, expected);
+    });
+  });
+  describe('removePlayer', () => {
+    beforeEach(function() {
+      game.addPlayer('arvind', 1);
+      game.addPlayer('ishu', 2);
+      game.assignFleet(1, {});
+      game.assignFleet(2, {});
+    });
+    it('should remove player from player list', () => {
+      game.removePlayer(1);
+      assert.equal(game.playerCount,1);
     });
   });
 });

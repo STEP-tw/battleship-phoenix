@@ -28,9 +28,9 @@ class Game {
     });
     return player;
   }
-  get players() {
-    return this._players;
-  }
+  // get players() {
+  //   return this._players;
+  // }
   arePlayersReady() {
     return this._players.every(function(player) {
       return player.isReady();
@@ -96,10 +96,6 @@ class Game {
   }
   getCurrentPlayerShots(currentPlayerID){
     return this.getPlayer(currentPlayerID).shots;
-  }
-  getSankOpponentShipsCount(currentPlayerID){
-    let opponent = this.getOpponentPlayer(currentPlayerID);
-    return opponent.getDestroyedShipsCount();
   }
   getOpponentSunkShipsCoords(currentPlayerID){
     let opponent = this.getOpponentPlayer(currentPlayerID);
