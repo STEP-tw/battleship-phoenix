@@ -6,7 +6,9 @@ const showMessage = function(){
 
 const hostGame = function(){
   let name = document.querySelector('#username1').value;
+  console.log(name);
   if(name){
+    console.log('hello');
     let userDetails = utils.toS({username:name});
     sendAjax('post','/login',showMessage,userDetails);
     askForOpponent();

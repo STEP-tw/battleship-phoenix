@@ -178,12 +178,6 @@ margin: auto;
  animation-iteration-count: infinite;
  animation-timing-function: linear;
 }
-/*.popup {
-  display: none;
-  width: 300px;
-  height: 100px;
-  background-color: rgba(16, 17, 15, 0.48);
-}*/
 .popup{
   display: none;
   width: 100%;
@@ -223,15 +217,15 @@ margin: auto;
   margin-top: 20%;
   text-align: center;
 }
-.field input:focus {
+.field .textField:focus {
   border-color: grey;
   border-bottom: 1px solid rgb(36, 140, 137);
 }
-.field input:hover {
+.field .textField:hover {
   border-color: grey;
   border-bottom: 1px solid rgb(36, 140, 137);
 }
-.field input {
+.field .textField {
   border: none;
   border-color: grey;
   background-color:rgba(0, 0, 0, 0.85) ;
@@ -273,4 +267,11 @@ ul li {
 
 ol li {
   text-indent: 5px;
+}
+
+.submitOnJoin,.submitOnHost{
+  background-color: rgba(60, 117, 105, 1);
+  border: none;
+  font-family: inherit;
+  width: 85%;
 }
