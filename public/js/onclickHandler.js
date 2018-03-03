@@ -15,6 +15,10 @@ const hostButtonAction = function (){
   document.getElementById('login').style.display='block';
 };
 
+const closePopup = function(id) {
+  document.getElementById(id).style.display = 'none';
+};
+
 const addOnclickListeners = function (){
   document.getElementById('aboutGameButton').onclick=aboutGameAction;
   document.getElementById('playnowButton').onclick=hostOrJoin;
@@ -25,6 +29,7 @@ const addOnclickListeners = function (){
   document.querySelector('.joinButton').onclick=joinButtonAction;
   document.querySelector('.hostButton').onclick=hostButtonAction;
   document.getElementById('music').onclick=bgmController;
+  document.getElementById('cancelSettings').onclick=cancelSettingsAction;
   document.getElementById('cancelSettings').onclick=cancelSettingsAction;
 };
 

@@ -43,14 +43,14 @@
   </div>
   <div id="playnow" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <a class="close"href="index.html"><i class="fa fa-times"></i></a>
+      <span class="close" onclick="closePopup('playnow')"><i class="fa fa-times"></i></span>
       <button class="hostButton" id="hostButton">Host</button>
       <button class="joinButton" id="joinButton">Join</button>
     </div>
   </div>
   <div id="aboutGame" class="overflow-model">
     <div class="aboutGamePopup animateZoom" style="padding:32px">
-      <a class="close"href="index.html"><i class="fa fa-times"></i></a>
+      <span class="close" onclick="closePopup('aboutGame')"><i class="fa fa-times"></i></span>
       <h2 class="sideHeadings">What is Battleship game</h2><br>
       <p>Battleship is a guessing game for two players. It is played on ruled grids (paper or board) on which the players' fleets of ships (including battleships) are marked. The locations of the fleet are concealed from the other player. Players alternate
         turns calling "shots" at the other player's ships, and the objective of the game is to destroy the opposing player's fleet.</p>
@@ -86,7 +86,7 @@
   </div>
   <div id="login" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <a class="close"href="index.html"><i class="fa fa-times"></i></a>
+      <span class="close" onclick="closePopup('login')"><i class="fa fa-times"></i></span>
       <div class="field">
         <input autofocus type="text" class= "textField" id="username1" placeholder="Enter your name" /><br>
       </div>
@@ -95,7 +95,7 @@
   </div>
   <div id="join" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <a class="close"href="index.html"><i class="fa fa-times"></i></a>
+      <span class="close" onclick="closePopup('join')"><i class="fa fa-times"></i></span>
       <div class="field">
         <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name"/><br>
       </div>
@@ -106,7 +106,7 @@
     <div class="opponent_arrival_message animateZoom">
       <h2 id="message">waiting for opponent</h2>
       <div class="spin"></div>
-      <button id="cancel" class="blueLongButton">Cancel</button></a>
+      <button id="cancel" class="blueLongButton">Cancel</button>
     </div>
   </div>
 </body>
