@@ -5,7 +5,7 @@ const afterCancel = function(){
 
 const cancelGame = function(){
   let url = '/cancel-game';
-  sendAjax(utils.get(),url,afterCancel);
+  utils.sendAjax(utils.get(),url,afterCancel);
 };
 
 const startGame = function(){
@@ -17,15 +17,7 @@ const startGame = function(){
 
 const canStartGame = function(){
   let url = '/start-game';
-  sendAjax(utils.get(),url,startGame);
-};
-
-const sendAjax = function(method,url,callback,data="{}") {
-  let req = new XMLHttpRequest();
-  req.open(method,url);
-  req.setRequestHeader('Content-Type','application/json');
-  req.onload = callback;
-  req.send(data);
+  utils.sendAjax(utils.get(),url,startGame);
 };
 
 const getShipPartUrl = function(url){

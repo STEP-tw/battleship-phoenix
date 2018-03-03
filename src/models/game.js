@@ -29,9 +29,12 @@ class Game {
     });
     return player;
   }
-  // get players() {
-  //   return this._players;
-  // }
+  get players() {
+    return this._players;
+  }
+  get hostName() {
+    return this.players[0].playerName;
+  }
   arePlayersReady() {
     return this._players.every(function(player) {
       return player.isReady();
@@ -107,5 +110,5 @@ class Game {
       return player.playerId != currentPlayerID;
     });
   }
-}
+}  
 module.exports = Game;

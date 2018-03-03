@@ -48,7 +48,7 @@ utils.setInterval = function (callback,time=1000) {
 
 utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
   utils.setInterval(()=>{
-    sendAjax(method,reqUrl,callBackFunction);
+    utils.sendAjax(method,reqUrl,callBackFunction);
   },time);
 };
 
@@ -60,4 +60,45 @@ utils.clearIntervals = function () {
 
 utils.clearLastInterval = function () {
   clearInterval(intervals.pop());
+};
+
+utils.getHostedGamesList = function () {
+  return document.querySelector('#hostedGames');
+};
+
+utils.createButton = function (name) {
+  let button = document.createElement('button');
+  button.innerText = name;
+  return button;
+};
+
+utils.createList = function (name) {
+  let list = document.createElement('list');
+  list.innerText = name;
+  return list;
+};
+
+utils.createDiv = function (id) {
+  let div = document.createElement('div');
+  div.id = id;
+  return div;
+};
+
+utils.sendAjax = function(method,url,callback,data="{}") {
+  let req = new XMLHttpRequest();
+  req.open(method,url);
+  req.setRequestHeader('Content-Type','application/json');
+  req.onload = callback;
+  req.send(data);
+};
+
+utils.appendGame = function (hostedGamesList,game) {
+  let button = utils.createButton('join');
+  button.onclick = openJoinBlock;
+  let gameName = utils.createList(`${game.hostName}'s game`);
+  let gameDiv = utils.createDiv(game.gameId);
+  gameDiv.appendChild(button);
+  gameDiv.appendChild(gameName);
+  hostedGamesList.appendChild(gameDiv);
+  return hostedGamesList;
 };

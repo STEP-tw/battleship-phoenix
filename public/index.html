@@ -12,7 +12,6 @@
   <script src="/js/common/utils.js" charset="utf-8"></script>
   <script src="/js/common/opponent_arrival.js" charset="utf-8"></script>
   <script src="/js/index/login.js" charset="utf-8"></script>
-  <script src="/js/index/host_or_join.js" charset="utf-8"></script>
   <script src="/js/index/onclickHandler.js" charset="utf-8"></script>
   <script src="js/index/settings.js" charset="utf-8"></script>
 </head>
@@ -88,9 +87,9 @@
     <div class="popupContent animateZoom" style="padding:32px">
       <span class="close" onclick="closePopup('login')"><i class="fa fa-times"></i></span>
       <div class="field">
-        <form class="username_form" onsubmit="hostGame(); return false" action="" autocomplete="off">
+        <form class="username_form"  action="" autocomplete="off">
           <input autofocus type="text" class= "textField" id="username1" placeholder="Enter your name" pattern="[a-zA-Z0-9]+" title="Spaces and special characters are not allowed!" required/><br>
-          <input type="submit" class="submitOnHost blueLongButton " value="Submit"/>
+          <input type="button" class="submitOnHost blueLongButton " value="Submit"/>
         </form>
       </div>
     </div>
@@ -99,7 +98,7 @@
     <div class="popupContent animateZoom" style="padding:32px">
       <span class="close" onclick="closePopup('join')"><i class="fa fa-times"></i></span>
       <div class="field">
-        <form class="username_form" onsubmit="joinGame(); return false" action="" autocomplete="off">
+        <form class="username_form"  action="" autocomplete="off">
           <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name" pattern="[a-zA-Z0-9]+" title="Spaces and special characters are not allowed!" required/><br>
           <input type="submit" class="submitOnJoin blueLongButton" value="Submit"/>
        </form>

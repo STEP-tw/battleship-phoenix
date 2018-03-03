@@ -123,7 +123,7 @@ const updateDisplay = function() {
     if (fleet.length != 0) {
       document.getElementsByClassName('shipsBlock')[0].style.display = 'none';
       document.getElementsByClassName('buttonBlock')[0].style.display = 'none';
-      sendAjax(utils.get(), '/arePlayersReady', handleStartGame);
+      utils.sendAjax(utils.get(), '/arePlayersReady', handleStartGame);
     }
   }
   let hits = response.playerShots.hits.length;
@@ -133,7 +133,7 @@ const updateDisplay = function() {
 };
 
 const getAndUpdateGameStatus = function() {
-  sendAjax(utils.get(), '/gameStatus', updateDisplay);
+  utils.sendAjax(utils.get(), '/gameStatus', updateDisplay);
 };
 
 const getRotatedHitImages = function(type, dir) {

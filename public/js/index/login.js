@@ -6,25 +6,10 @@ const showMessage = function(){
 
 const hostGame = function(){
   let name = document.querySelector('#username1').value;
-  console.log(name);
   if(name){
-    console.log('hello');
     let userDetails = utils.toS({username:name});
-    sendAjax('post','/host',showMessage,userDetails);
+    utils.sendAjax('post','/host',showMessage,userDetails);
     askForOpponent();
-  }
-  return;
-};
-
-const startgameMessage = function(){
-  location.href = "game.html";
-};
-
-const joinGame = function(){
-  let name = document.querySelector('#username2').value;
-  if(name){
-    let userDetails = utils.toS({username:name});
-    sendAjax(utils.post(),'/join',startgameMessage,userDetails);
   }
   return;
 };

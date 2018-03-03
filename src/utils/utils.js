@@ -21,18 +21,23 @@ utils.getFiredPosition = function (req) {
   return req.body.firedPosition;
 };
 
-utils.getGameHandler = function (req) {
+utils.getGamesHandler = function (req) {
   return req.app.gamesHandler;
 };
 
 utils.getHostedGame = function (req) {
   let gameId = utils.getGameId(req);
-  return utils.getGameHandler(req).fetchHostedGame(gameId);
+  return utils.getGamesHandler(req).fetchHostedGame(gameId);
+};
+
+utils.getHostedGamesDetails = function (req) {
+  let gamesHandler = utils.getGamesHandler(req);
+  return gamesHandler.hostedGamesDetails;
 };
 
 utils.getRunningGame = function (req) {
   let gameId = utils.getGameId(req);
-  return utils.getGameHandler(req).fetchRunningGame(gameId);
+  return utils.getGamesHandler(req).fetchRunningGame(gameId);
 };
 
 utils.getPlayerId = function (req) {
@@ -52,16 +57,9 @@ utils.isItPrivilegedData = function (url) {
 };
 
 utils.isUserTresspassing=function (req) {
-  let userID = utils.getPlayerId(req);
-  let game = utils.getHostedGame(req);
-  let url = req.url;
-  let player;
-  if(game){
-    player = game.getPlayer(userID);
-  }
-  if(!game || !player){
-    let validUrls = utils.getAuthorizedUrls();
-    return utils.isItPrivilegedData(url);
+  let game = utils.getRunningGame(req);
+  if(!game) {
+    return utils.isItPrivilegedData(req.url);
   }
 };
 
@@ -83,20 +81,20 @@ utils.getCurrentPlayerIndex = function (game) {
 };
 
 utils.addGame = function (req,game) {
-  utils.getGameHandler(req).addGame(game);
+  utils.getGamesHandler(req).addGame(game);
 };
 
 utils.startGame = function (req,game) {
-  utils.getGameHandler(req).startGame(game);
+  utils.getGamesHandler(req).startGame(game);
 };
 
 utils.cancelGame = function (req) {
   let game = utils.getHostedGame(req);
-  utils.getGameHandler(req).cancelGame(game);
+  utils.getGamesHandler(req).cancelGame(game);
 };
 
 utils.endGame = function (req, game) {
-  utils.getGameHandler(req).endGame(game);
+  utils.getGamesHandler(req).endGame(game);
 };
 
 utils.newSessionId = function (req) {

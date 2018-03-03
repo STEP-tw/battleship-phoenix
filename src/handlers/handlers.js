@@ -29,6 +29,11 @@ const joinGame = function(req,res) {
   res.end();
 };
 
+const getHostedGames = function (req,res) {
+  let hostedGames = utils.getHostedGamesDetails(req);
+  res.send(hostedGames);
+};
+
 const hasOpponentJoined = function(req, res) {
   let game = utils.getRunningGame(req);
   let gameStatus = utils.setGameStatus(game);
@@ -74,18 +79,16 @@ const updateShot = function(req,res) {
   let hitStatus =game.checkOpponentIsHit(currentPlayerID,firedPos);
   let victoryStatus = utils.hasOpponentLost(req);
   let turnStatus = utils.getChangedTurnStatus(game,currentPlayerID);
+  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
   game.updatePlayerShot(currentPlayerID,firedPos);
   let shotStatus = {
     firedPos:firedPos,
     status:hitStatus,
     winStatus:victoryStatus,
-    myTurn: turnStatus
+    myTurn: turnStatus,
+    destroyedShipsCoords: destroyedShipsCoords
   };
   res.json(shotStatus);
-};
-
-const playAgain = function(req,res){
-  res.redirect('/');
 };
 
 const hasOpponentWon = function(req,res){
@@ -94,18 +97,15 @@ const hasOpponentWon = function(req,res){
   let defeatStatus = game.hasOpponentWon(currentPlayerID);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   let opponentShots = game.getOpponentShots(currentPlayerID);
-  let destroyedShips = game.getSankOpponentShipsCount(currentPlayerID);
   utils.handleEndgame(req,game,defeatStatus);
   res.send({
     status:defeatStatus,
     myTurn: turnStatus,
-    opponentShots:opponentShots,
-    destroyedShips:destroyedShips
+    opponentShots:opponentShots
   });
 };
 
 const getGameStatus = function(req,res){
-  let destroyedShips = [];
   let playerId = utils.getPlayerId(req);
   let game = utils.getRunningGame(req);
   let fleet = game.getFleet(playerId);
@@ -121,49 +121,49 @@ const getGameStatus = function(req,res){
   if(!fleet) {
     ships = [];
   } else {
-    destroyedShips = game.getSankOpponentShipsCount(playerId);
     ships = fleet.getAllShips();
-    destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
+    destroyedShipsCoords = game.getOpponentSunkShipsCoords(playerId);
   }
   res.json({
     fleet:ships,
     opponentHits:oppShots.hits,
     playerShots:shots,
     opponentMisses:oppShots.misses,
-    playerName:player.playerName,
+    playerName:playerName,
     enemyName:opponent.playerName,
     destroyedShipsCoords: destroyedShipsCoords
   });
 };
 
-const quitGame = function(req,res) {
-  utils.getGame(req).removePlayer(req.cookies.player);
-  res.redirect('/');
-};
-
-const sendOpponentStatus = function(req,res) {
-  let game = utils.getGame(req);
-  if (game.playerCount==1) {
-    res.json({hasOpponentLeft:true});
-    delete req.app.game;
-    return;
-  }
-  res.json({hasOpponentLeft:false});
-};
-
-const hasOpponentLeft = function(req,res) {
-  let game = utils.getGame(req);
-  if(!game){
-    res.json({});
-    return;
-  }
-  sendOpponentStatus(req,res);
-};
+// const quitGame = function(req,res) {
+//   utils.getGame(req).removePlayer(req.cookies.player);
+//   res.redirect('/');
+// };
+//
+// const sendOpponentStatus = function(req,res) {
+//   let game = utils.getGame(req);
+//   if (game.playerCount==1) {
+//     res.json({hasOpponentLeft:true});
+//     delete req.app.game;
+//     return;
+//   }
+//   res.json({hasOpponentLeft:false});
+// };
+//
+// const hasOpponentLeft = function(req,res) {
+//   let game = utils.getGame(req);
+//   if(!game){
+//     res.json({});
+//     return;
+//   }
+//   sendOpponentStatus(req,res);
+// };
 
 module.exports = {
   cancelGame,
   hostGame,
   joinGame,
+  getHostedGames,
   arePlayersReady,
   loadFleet,
   hasOpponentJoined,
@@ -171,8 +171,7 @@ module.exports = {
   updateShot,
   hasOpponentWon,
   getGameStatus,
-  playAgain,
-  handleTresspassing,
-  quitGame,
-  hasOpponentLeft
+  // quitGame,
+  // hasOpponentLeft,
+  handleTresspassing
 };

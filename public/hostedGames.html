@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hosted Games</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="./js/joinGame.js" charset="utf-8" defer></script>
+    <script src="./js/common/utils.js" charset="utf-8" defer></script>
+  </head>
+  <body>
+    <h2>Games you can join</h2>
+    <div id="joinBlock" class="overflow-model">
+      <div class="popupContent animateZoom" style="padding:32px">
+        <a class="close"href="index.html"><i class="fa fa-times"></i></a>
+        <div class="field">
+          <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name"/><br>
+        </div>
+        <button type="button" class="submitOnJoin blueLongButton"  onclick="joinGame()">Submit</button>
+      </div>
+    </div>
+    <div class="">
+      <ul id="hostedGames">
+      </ul>
+    </div>
+  </body>
+</html>

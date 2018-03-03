@@ -4,7 +4,7 @@ const addListener = function() {
 };
 
 const areAllShipsPlaced=function(){
-  return shipsHeadPositions.length == 1;
+  return shipsHeadPositions.length == 5;
 };
 
 const handleReady=function(){
@@ -41,7 +41,7 @@ const gameStarts = function (response) {
 
 const loadFleet = function() {
   let fleet = utils.toS({fleetDetails : shipsHeadPositions});
-  sendAjax(utils.post(),'/start-game',null,fleet);
+  utils.sendAjax(utils.post(),'/start-game',null,fleet);
 };
 
 const handleTurn = function (myTurn) {
@@ -53,9 +53,7 @@ const handleTurn = function (myTurn) {
   }else {
     deactivateTargetGrid();
     utils.clearIntervals();
-    setTimeout(()=>{
-      sendAjax(utils.get(),'/hasOpponentWon',displayLost);
-    },1000);
+    utils.sendAjax(utils.get(),'/hasOpponentWon',displayLost);
   }
 };
 
@@ -182,7 +180,7 @@ const checkAndDisplayShot=function(event) {
   let firedPosition=parseCoordinates(event.target.id);
   let data = {firedPosition:firedPosition};
   data = utils.toS(data);
-  sendAjax(utils.post(),"/updateFiredShot",displayShot,data);
+  utils.sendAjax(utils.post(),"/updateFiredShot",displayShot,data);
 };
 
 const reduceOpponentHealth = function(){
@@ -207,9 +205,11 @@ const playHitSound = function(){
 };
 
 const displayShot = function() {
-  if(this.responseText.isAlreadyFired) {
+  let shotResult = utils.getResponse(this);
+  if(shotResult.isAlreadyFired) {
     return;
   }
+
   let winStatus = shotResult.winStatus;
   let cell = document.getElementById(generateCellId('tg',shotResult.firedPos));
   let destroyedShipsCount = shotResult.destroyedShipsCoords.length;
@@ -265,6 +265,6 @@ const handleStatus = function() {
 
 const hasOpponentLeft = function() {
   setTimeout(()=>{
-    sendAjax(utils.get(),'/hasOpponentLeft',handleStatus);
+    utils.sendAjax(utils.get(),'/hasOpponentLeft',handleStatus);
   },1000);
 };

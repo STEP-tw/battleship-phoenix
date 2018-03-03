@@ -59,8 +59,8 @@ describe('isUserTresspassing()', function() {
       },
       app: {
         gamesHandler: {
-          _hostedGame: [game],
-          fetchHostedGame: ()=>{
+          _runningame: [game],
+          fetchRunningGame: ()=>{
             return game;
           }
         }
@@ -69,7 +69,7 @@ describe('isUserTresspassing()', function() {
   });
   it('should return true if user trying to access unpermitted data'
     , function() {
-      req.app.gamesHandler.fetchHostedGame = ()=>{
+      req.app.gamesHandler.fetchRunningGame = ()=>{
         return false;
       };
       assert.isTrue(utils.isUserTresspassing(req));

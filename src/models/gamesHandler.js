@@ -54,6 +54,12 @@ class GamesHandler {
     removeGame(this._hostedGames,game);
     return this._cancelledGames.push(game);
   }
+
+  get hostedGamesDetails(){
+    return this._hostedGames.map(function (game) {
+      return {gameId: game.id, hostName: game.hostName};
+    });
+  }
 }
 
 module.exports = GamesHandler;

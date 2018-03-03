@@ -10,6 +10,7 @@ describe('GamesHandler', function () {
   beforeEach(function () {
     gamesHandler = new GamesHandler();
     game = new Game(1);
+    game.addPlayer('arjun',3);
     gamesHandler.addGame(game);
   });
   describe('addGame()', function () {
@@ -80,6 +81,13 @@ describe('GamesHandler', function () {
 
     it('should add that game in _cancelledGames', function () {
       assert.include(gamesHandler._cancelledGames,game);
+    });
+  });
+  describe('getHostedGamesDetails', function () {
+    it('should get all hosted game\'s id with playerName', function () {
+      let expected = [{gameId: 1, hostName: 'arjun'}];
+      let actual = gamesHandler.hostedGamesDetails;
+      assert.deepEqual(expected,actual);
     });
   });
 });

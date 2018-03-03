@@ -8,6 +8,12 @@ describe('Game', () => {
   beforeEach(function() {
     game = new Game();
   });
+  describe('hostName', function () {
+    it('should return the host\'s name', function () {
+      game.addPlayer('arjun',1);
+      assert.equal(game.hostName,'arjun');
+    });
+  });
   describe('get playerCount', () => {
     it('should give no: of players', () => {
       assert.equal(game.playerCount, 0);

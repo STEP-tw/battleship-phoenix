@@ -360,6 +360,7 @@ li:hover {
    font-family: 'Coda', cursive;
    font-size: 17px;
    border-radius: 7px;
+   display :none;
 }
 .overflow-model {
   display:none;
