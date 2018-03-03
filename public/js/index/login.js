@@ -42,6 +42,7 @@ const showOpponentArrival = function() {
   utils.getPopupBox().style.display = "block";
   let arrivalMessage = document.querySelector('#message');
   if (response.status) {
+    document.getElementById('cancel').style.display = 'none';
     arrivalMessage.innerHTML = "Opponent Arrived !!!";
     utils.clearIntervals();
     setTimeout(startGameReq,1000);
