@@ -1,7 +1,6 @@
 const aboutGameAction = function (){
   document.getElementById('aboutGame').style.display='block';
 };
-
 const settingsAction = function (){
   document.getElementById('settings').style.display='block';
 };
@@ -13,10 +12,6 @@ const joinButtonAction = function (){
 };
 const hostButtonAction = function (){
   document.getElementById('login').style.display='block';
-};
-
-const closePopup = function(id) {
-  document.getElementById(id).style.display = 'none';
 };
 const hostOrJoin = function(){
   document.getElementById('playnow').style.display='block';

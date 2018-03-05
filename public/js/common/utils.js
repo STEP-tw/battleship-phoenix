@@ -102,3 +102,7 @@ utils.appendGame = function (hostedGamesList,game) {
   hostedGamesList.appendChild(gameDiv);
   return hostedGamesList;
 };
+
+utils.closePopup = function(id) {
+  document.getElementById(id).style.display = 'none';
+};

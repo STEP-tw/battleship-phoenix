@@ -57,6 +57,16 @@ const addMouseEvent=function(){
   });
 };
 
+const repositionShip = function(sizeOfShip){
+  let ships = document.getElementsByClassName(sizeOfShip);
+  for (let index = 0; index < ships.length; index++) {
+    if (ships[index].style.display == 'none') {
+      ships[index].click();
+      return;
+    }
+  }
+};
+
 const replaceShip = function(event,cellIdList){
   let tableCells = document.querySelectorAll('[id^="og"]');
   tableCells.forEach(id => {
@@ -72,7 +82,7 @@ const replaceShip = function(event,cellIdList){
       occupiedCell.style.backgroundColor = "rgba(177, 177, 177, 0.63)";
       occupiedCell.checked = false;
     });
-    document.getElementsByClassName(cellIdList.length)[0].click();
+    repositionShip(cellIdList.length);
   }
 };
 

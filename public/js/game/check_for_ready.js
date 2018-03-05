@@ -247,24 +247,24 @@ const isPlayerWillingToLeave = function(){
   return document.getElementById('quit').style.display == 'block';
 };
 
-const displayOpponentLeft = function(status) {
-  if (status.hasOpponentLeft) {
-    document.getElementById('opponentLeft').style.display = 'block';
-    return;
-  }
-  hasOpponentLeft();
-};
-
-const handleStatus = function() {
-  let status = JSON.parse(this.responseText);
-  if(isPlayerWillingToLeave()||this.responseText=='{}'){
-    return;
-  }
-  displayOpponentLeft(status);
-};
-
-const hasOpponentLeft = function() {
-  setTimeout(()=>{
-    utils.sendAjax(utils.get(),'/hasOpponentLeft',handleStatus);
-  },1000);
-};
+// const displayOpponentLeft = function(status) {
+//   if (status.hasOpponentLeft) {
+//     document.getElementById('opponentLeft').style.display = 'block';
+//     return;
+//   }
+//   hasOpponentLeft();
+// };
+//
+// const handleStatus = function() {
+//   let status = JSON.parse(this.responseText);
+//   if(isPlayerWillingToLeave()||this.responseText=='{}'){
+//     return;
+//   }
+//   displayOpponentLeft(status);
+// };
+//
+// const hasOpponentLeft = function() {
+//   setTimeout(()=>{
+//     utils.sendAjax(utils.get(),'/hasOpponentLeft',handleStatus);
+//   },1000);
+// };

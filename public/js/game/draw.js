@@ -41,7 +41,7 @@ let setupGame = function(){
   initializeQuit();
   cancelQuit();
   getAndUpdateGameStatus();
-  hasOpponentLeft();
+  // hasOpponentLeft();
   showShipDetailsOnHover();
 };
 

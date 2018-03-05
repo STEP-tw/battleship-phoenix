@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Hosted Games</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/index.css">
     <script src="./js/joinGame.js" charset="utf-8" defer></script>
     <script src="./js/common/utils.js" charset="utf-8" defer></script>
@@ -11,7 +12,7 @@
     <h2>Games you can join</h2>
     <div id="joinBlock" class="overflow-model">
       <div class="popupContent animateZoom" style="padding:32px">
-        <a class="close"href="index.html"><i class="fa fa-times"></i></a>
+        <span class="close" onclick="utils.closePopup('joinBlock')"><i class="fa fa-times"></i></span>
         <div class="field">
           <form action="" class="joinForm" onsubmit="joinGame()" autocomplete="off">
           <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name" pattern="^[a-zA-Z0-9]{1,10}$" title="Spaces,special characters are not allowed and max 10 characters allowed!" required/><br>
