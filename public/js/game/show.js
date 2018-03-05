@@ -21,20 +21,20 @@ const removeHighlight = function(event){
   });
 };
 
-const drawShip = function(coord,direction="south",size=shipSize,type="initial"){
-  let cellIdList = getAllCoordsOfShip(coord,direction,size);
+const drawShip = function(coord,dir=direction,size=shipSize,type="initial"){
+  let cellIdList = getAllCoordsOfShip(coord,dir,size);
   let headCell =document.getElementById(cellIdList[0]);
   headCell.style.backgroundImage
-  = `url('../assets/images/${getShipImageByDir(direction)[type]["head"]}')`;
+  = `url('../assets/images/${getShipImageByDir(dir)[type]["head"]}')`;
 
   let tailCell =document.getElementById(cellIdList[cellIdList.length-1]);
   tailCell.style.backgroundImage
-  = `url('../assets/images/${getShipImageByDir(direction)[type]["tail"]}')`;
+  = `url('../assets/images/${getShipImageByDir(dir)[type]["tail"]}')`;
 
   for(let iter=1; iter < cellIdList.length-1; iter++){
     let cell =document.getElementById(cellIdList[iter]);
     cell.style.backgroundImage
-     = `url('../assets/images/${getShipImageByDir(direction)[type]["body"]}')`;
+     = `url('../assets/images/${getShipImageByDir(dir)[type]["body"]}')`;
   }
 };
 

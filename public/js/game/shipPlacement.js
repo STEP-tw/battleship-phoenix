@@ -93,6 +93,7 @@ const addClickForReposition = function(event,headPosition){
     return areEqual(headPos,shipHead.headPos);
   });
   let cellIdList = getCoordinates(ship.dir,headPos,ship.length);
+  direction = ship.dir;
   cellIdList.forEach((cell)=>{
     let occupiedCell = document.querySelector(`#${generateCellId('og',cell)}`);
     occupiedCell.ondblclick = ()=>{
@@ -106,7 +107,7 @@ const placeShip = function(event){
   let coords = getCoordinates(direction,coordinates,shipSize);
   let lastCoord=coords[coords.length-1];
 
-  if (lastCoord[1] < 10 && !doesShipOverlap(event)) {
+  if (isShipInRange(lastCoord,0,10) && !doesShipOverlap(event)) {
     drawShip(coordinates);
     removeHighlight(event);
     handleMouseEvents();
@@ -174,8 +175,8 @@ const handleSingleAndDblClick = function(event){
   }
 };
 
-const getAllCoordsOfShip = function(coord,direction="south",size=shipSize) {
-  let coords = getCoordinates(direction,coord,size);
+const getAllCoordsOfShip = function(coord,dir=direction,size=shipSize) {
+  let coords = getCoordinates(dir,coord,size);
   let cellIdList=coords.map((cellId)=>generateCellId('og',cellId));
   return cellIdList;
 };
@@ -209,4 +210,9 @@ const parseCoordinates = (cellId)=>{
 
 const convertToNumber = function(coordAsString){
   return +coordAsString;
+};
+
+const isShipInRange = function(lastCoord,lowerBoundary,upperBoundary) {
+  return lastCoord[1] < upperBoundary && lastCoord[1] >= lowerBoundary
+  && lastCoord[0] >= lowerBoundary && lastCoord[0] < upperBoundary;
 };
