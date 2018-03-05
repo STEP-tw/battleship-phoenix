@@ -1,4 +1,5 @@
 const getHostedGames = function () {
+  document.querySelector('#loader-wrapper').style.display = 'none';
   utils.poll(utils.get(),'/getHostedGames',showHostedGames);
 };
 

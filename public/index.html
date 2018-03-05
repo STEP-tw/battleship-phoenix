@@ -6,8 +6,9 @@
   <meta charset="utf-8">
   <title>Battleship</title>
   <link rel="stylesheet" href="/css/index.css">
-  <link href="https://fonts.googleapis.com/css?family=Cinzel|Montserrat:100,400,500,700" rel="stylesheet">
-  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <link rel="stylesheet" href="/css/common.css">
+  <link defer href="https://fonts.googleapis.com/css?family=Cinzel|Montserrat:100,400,500,700" rel="stylesheet">
+  <script defer src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="/js/common/utils.js" charset="utf-8"></script>
   <script src="/js/common/opponent_arrival.js" charset="utf-8"></script>
@@ -16,7 +17,11 @@
   <script src="js/index/settings.js" charset="utf-8"></script>
 </head>
 
-<body  oncontextmenu="return false;">
+<body oncontextmenu="return false;">
+  <div id="loader-wrapper">
+    <div id="loader"></div>
+    <div id="loaderText">Loading</div>
+  </div>
   <audio autoplay loop id="bgm"><source src="/assets/audio/battleship.mp3" type="audio/mp3"></audio>
   <center>
   <header>

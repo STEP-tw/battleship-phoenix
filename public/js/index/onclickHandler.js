@@ -27,6 +27,7 @@ const addOnclickListeners = function (){
   document.getElementById('music').onclick=bgmController;
   document.getElementById('cancelSettings').onclick=cancelSettingsAction;
   document.getElementById('cancelSettings').onclick=cancelSettingsAction;
+  document.querySelector('#loader-wrapper').style.display = 'none';
 };
 
 window.onload = addOnclickListeners;

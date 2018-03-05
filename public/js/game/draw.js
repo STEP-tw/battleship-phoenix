@@ -43,6 +43,7 @@ let setupGame = function(){
   getAndUpdateGameStatus();
   // hasOpponentLeft();
   showShipDetailsOnHover();
+  document.querySelector('#loader-wrapper').style.display = 'none';
 };
 
 window.onload = setupGame;
