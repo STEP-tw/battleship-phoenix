@@ -2,6 +2,7 @@ html {
   height: 100%;
   width: 100%;
 }
+
 body {
   overflow:hidden;
   background-image: url('../assets/images/cover.jpg');
@@ -133,6 +134,49 @@ b {
 .animateZoom {
   animation:animatezoom 0.6s;
 }
+.titles {
+  text-align:center;
+  font-family: 'Coda', cursive;
+}
+#gameJoinHeading{
+  color:rgb(124, 143, 155);
+  background-color: rgba(53,62,77,0.46);
+  font-size: 30px;
+}
+#joinHostedGameButton:hover{
+  color: rgb(38,211,217);
+}
+#joinHostedGameButton{
+  margin-right: 4%;
+  color:rgba(20, 230, 231, 0.39);
+  font-family: 'Coda', cursive;
+  border:none;
+  height: 35px;
+  align-content: center;
+  cursor: pointer;
+  border-radius:1px;
+  font-size: 17px;
+
+}
+.hostedTable{
+  margin: auto;
+  border-collapse: collapse;
+
+}
+td{
+  font-family: 'Coda', cursive;
+  border: 0.5px solid rgba(20, 230, 231, 0.39);
+  width: 20px;
+}
+.hostedGame{
+  color: rgba(17,145,130,.87);
+  text-align: center;
+  font-size: 19px;
+  margin: auto;
+  height:40px;
+  width: 580px;
+}
+
 #settings li {
   list-style-type: none;
   font-size: 18px;

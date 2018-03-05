@@ -26,9 +26,9 @@ const openJoinBlock = function () {
 
 const showHostedGames = function () {
   let hostedGames = utils.getResponse(this);
-  let hostedGamesList = utils.getHostedGamesList();
-  hostedGamesList.innerHTML = '';
-  hostedGames.reduce(utils.appendGame,hostedGamesList);
+  let getHostedGamesTable = utils.getHostedGamesTable();
+  getHostedGamesTable.innerHTML = '';
+  hostedGames.reduce(utils.appendGame,getHostedGamesTable);
 };
 
 window.onload = getHostedGames;

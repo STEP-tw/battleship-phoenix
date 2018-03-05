@@ -98,6 +98,7 @@ const getHeadPositionOf = function(id){
 
 const addClickForReposition = function(event,headPosition){
   let parsedCoordinate = parseCoordinates(event.target.id);
+  console.log(parsedCoordinate);
   let headPos = headPosition || getHeadPositionOf(parsedCoordinate);
   let ship = shipsHeadPositions.find((shipHead)=>{
     return areEqual(headPos,shipHead.headPos);

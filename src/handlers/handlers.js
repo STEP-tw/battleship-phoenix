@@ -104,7 +104,7 @@ const updateShot = function(req,res) {
     firedPos:firedPos,
     status:hitStatus,
     winStatus:victoryStatus,
-    myTurn: turnStatus,
+    myTurn:turnStatus,
     destroyedShipsCoords: destroyedShipsCoords
   };
   res.json(shotStatus);
@@ -119,7 +119,7 @@ const hasOpponentWon = function(req,res){
   utils.handleEndgame(req,game,defeatStatus);
   res.send({
     status:defeatStatus,
-    myTurn: turnStatus,
+    myTurn:turnStatus,
     opponentShots:opponentShots
   });
 };
