@@ -14,7 +14,20 @@ const cancelGame = function(req, res) {
   res.end();
 };
 
+const getErrorIfAny = function(req){
+  req.check('username','Name can not be empty').trim().isLength({min:1});
+  req.check('username','Invalid username').matches("^[a-zA-Z0-9]{1,10}$");
+  let error = req.validationErrors();
+  return error;
+};
+
 const hostGame = function(req, res) {
+  let error = getErrorIfAny(req);
+  if(error){
+    let errorMsg = error[0].msg;
+    res.send({error: errorMsg});
+    return;
+  }
   let game = utils.createGame(req);
   utils.addPlayerDetails(req,res,game);
   utils.addGame(req,game);
@@ -22,6 +35,12 @@ const hostGame = function(req, res) {
 };
 
 const joinGame = function(req,res) {
+  let error = getErrorIfAny(req);
+  if(error){
+    let errorMsg = error[0].msg;
+    res.send({error: errorMsg});
+    return;
+  }
   let game = utils.getHostedGame(req);
   utils.addPlayerDetails(req,res,game);
   game.changeStartedStatus();

@@ -21,13 +21,12 @@ const closePopup = function(id) {
 const hostOrJoin = function(){
   document.getElementById('playnow').style.display='block';
 };
-//
+
 const addOnclickListeners = function (){
   document.getElementById('aboutGameButton').onclick=aboutGameAction;
   document.getElementById('playnowButton').onclick=hostOrJoin;
   document.getElementById('settingsButton').onclick=settingsAction;
   document.getElementById('cancel').onclick=cancelGame;
-  document.querySelector('.submitOnHost').onclick=hostGame;
   document.querySelector('.joinButton').onclick=joinButtonAction;
   document.querySelector('.hostButton').onclick=hostButtonAction;
   document.getElementById('music').onclick=bgmController;

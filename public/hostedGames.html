@@ -13,9 +13,11 @@
       <div class="popupContent animateZoom" style="padding:32px">
         <a class="close"href="index.html"><i class="fa fa-times"></i></a>
         <div class="field">
-          <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name"/><br>
+          <form action="" class="joinForm" onsubmit="joinGame()" autocomplete="off">
+          <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name" pattern="^[a-zA-Z0-9]{1,10}$" title="Spaces,special characters are not allowed and max 10 characters allowed!" required/><br>
+          <input type="submit" class="submitOnJoin blueLongButton" value="Submit"/>
+          </form>
         </div>
-        <button type="button" class="submitOnJoin blueLongButton"  onclick="joinGame()">Submit</button>
       </div>
     </div>
     <div class="">

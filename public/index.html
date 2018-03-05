@@ -87,21 +87,10 @@
     <div class="popupContent animateZoom" style="padding:32px">
       <span class="close" onclick="closePopup('login')"><i class="fa fa-times"></i></span>
       <div class="field">
-        <form class="username_form"  action="" autocomplete="off">
-          <input autofocus type="text" class= "textField" id="username1" placeholder="Enter your name" pattern="[a-zA-Z0-9]+" title="Spaces and special characters are not allowed!" required/><br>
-          <input type="button" class="submitOnHost blueLongButton " value="Submit"/>
+        <form class="username_form"  action="" onsubmit="hostGame(); return false" autocomplete="off">
+          <input autofocus type="text" class= "textField" id="username1" placeholder="Enter your name" pattern="^[a-zA-Z0-9]{1,10}$" title="Spaces,special characters are not allowed and max 10 characters allowed!" required/><br>
+          <input type="submit" class="submitOnHost blueLongButton " value="Submit"/>
         </form>
-      </div>
-    </div>
-  </div>
-  <div id="join" class="overflow-model">
-    <div class="popupContent animateZoom" style="padding:32px">
-      <span class="close" onclick="closePopup('join')"><i class="fa fa-times"></i></span>
-      <div class="field">
-        <form class="username_form"  action="" autocomplete="off">
-          <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name" pattern="[a-zA-Z0-9]+" title="Spaces and special characters are not allowed!" required/><br>
-          <input type="submit" class="submitOnJoin blueLongButton" value="Submit"/>
-       </form>
       </div>
     </div>
   </div>

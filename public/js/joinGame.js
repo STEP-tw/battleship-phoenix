@@ -18,8 +18,8 @@ const startgameMessage = function(){
 
 const openJoinBlock = function () {
   let gameId = event.target.parentNode.id;
-  let submitButton = document.querySelector('.submitOnJoin');
-  submitButton.id = gameId;
+  let joinForm = document.querySelector('.joinForm');
+  joinForm.id = gameId;
   document.getElementById('joinBlock').style.display='block';
 };
 
@@ -28,7 +28,6 @@ const showHostedGames = function () {
   let hostedGamesList = utils.getHostedGamesList();
   hostedGamesList.innerHTML = '';
   hostedGames.reduce(utils.appendGame,hostedGamesList);
-  console.log(hostedGames);
 };
 
 window.onload = getHostedGames;

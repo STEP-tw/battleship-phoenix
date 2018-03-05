@@ -1,7 +1,7 @@
 const fs = require("fs");
 const express = require('express');
 const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
+const validator = require("express-validator");
 
 const path = './src/handlers/pos_sys_router';
 const gameHandlerPath = "./src/handlers/handlers.js";
@@ -19,6 +19,8 @@ app.gamesHandler = new GamesHandler();
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(validator());
+
 app.use(logRequest);
 
 app.use(handlers.handleTresspassing);
