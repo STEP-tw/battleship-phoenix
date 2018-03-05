@@ -13,10 +13,7 @@ const joinButtonAction = function (){
 const hostButtonAction = function (){
   document.getElementById('login').style.display='block';
 };
-<<<<<<< HEAD
-=======
 
->>>>>>> [#8] [teja/dhanashri] - added UI to view all hosted games
 const hostOrJoin = function(){
   document.getElementById('playnow').style.display='block';
 };

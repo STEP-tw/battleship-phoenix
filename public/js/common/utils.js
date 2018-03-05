@@ -74,7 +74,6 @@ utils.createButton = function (name) {
 
 utils.createList = function (name) {
   let list = document.createElement('li');
-  console.log(list);
   list.innerText = name;
   return list;
 };
@@ -142,10 +141,6 @@ utils.appendGameInTable=function(hostedGamesTable,game){
   gameRow.appendChild(columnForGameName);
   hostedGamesTable.appendChild(gameRow);
   return hostedGamesTable;
-};
-
-utils.closePopup = function(id) {
-  document.getElementById(id).style.display = 'none';
 };
 
 utils.closePopup = function(id) {
