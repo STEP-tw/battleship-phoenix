@@ -4,24 +4,26 @@ const assert = chai.assert;
 const request = require('supertest');
 const Mockfs = require('../testHelper/mockfs');
 const app = require('../../app.js');
+const Game = require('../../src/models/game.js');
+const Fleet = require('../../src/models/fleet.js');
+const GamesHandler = require('../../src/models/gamesHandler.js');
 app.fs = new Mockfs();
 app.fs.addFile('./public/game.html', 'game started');
 
-const Game = require('../../src/models/game.js');
-const Fleet = require('../../src/models/fleet.js');
 
 describe('app', () => {
-  let gamesHandler,game,sessionId;
+  let gamesHandler,game,sessionId,sessionId2;
   beforeEach(function () {
     let _playerId = 0;
+    if(app.gamesHandler instanceof GamesHandler){
+      app.gamesHandler = new GamesHandler();
+    }
     gamesHandler = app.gamesHandler;
     app.generateSessionId = function() {
       return ++_playerId;
     };
     sessionId = app.generateSessionId();
     game = new Game(sessionId);
-    gamesHandler._hostedGames = [];
-    gamesHandler._runningGames = [];
   });
   describe('GET /bad', () => {
     it('responds with 404', (done) => {
@@ -90,7 +92,6 @@ describe('app', () => {
       gamesHandler.addGame(game);
       request(app)
         .get('/getHostedGames')
-        // .set('cookie', `gameId=${sessionId}`)
         .expect(200)
         .expect([{"gameId":`${sessionId}`,"hostName":"arvind"}])
         .end(done);
@@ -249,7 +250,6 @@ describe('app', () => {
   });
 
   describe('updateShot', function() {
-    let sessionId, sessionId2, gamesHandler, game;
     beforeEach(function() {
       let shipInfo = {
         dir: "south",
@@ -259,19 +259,13 @@ describe('app', () => {
       gamesHandler = app.gamesHandler;
       let fleet = new Fleet();
       fleet.addShip(shipInfo);
-      let _playerId = 9;
-      app.generateSessionId = function() {
-        return ++_playerId;
-      };
-      sessionId = app.generateSessionId();
-      game = new Game(sessionId);
       game.addPlayer('ishu', sessionId);
       sessionId2 = app.generateSessionId();
       game.addPlayer('arvind', sessionId2);
       game.assignFleet(sessionId, fleet);
       game.assignFleet(sessionId2, fleet);
       game.assignTurn();
-      game.updatePlayerShot(10, [1, 2]);
+      game.updatePlayerShot(1, [1, 2]);
       gamesHandler.addGame(game);
       gamesHandler.startGame(game);
     });
@@ -296,7 +290,6 @@ describe('app', () => {
     });
   });
   describe('hasOpponentWon', function() {
-    let game,gamesHandler,sessionId;
     beforeEach(function() {
       let shipInfo = {
         dir: "south",
@@ -306,14 +299,8 @@ describe('app', () => {
       gamesHandler = app.gamesHandler;
       let fleet = new Fleet();
       fleet.addShip(shipInfo);
-      let _playerId =30;
-      app.generateSessionId = function() {
-        return ++_playerId;
-      };
-      sessionId = app.generateSessionId();
-      game = new Game(sessionId);
       game.addPlayer('ishu', sessionId);
-      let sessionId2 = app.generateSessionId();
+      sessionId2 = app.generateSessionId();
       game.addPlayer('arvind', sessionId2);
       game.assignFleet(sessionId, fleet);
       game.assignFleet(sessionId2, fleet);
@@ -324,7 +311,7 @@ describe('app', () => {
 
 
     it('should return true if my all ships has sank', function(done) {
-      game.updatePlayerShot(31, [3,4]);
+      game.updatePlayerShot(1, [3,4]);
       request(app)
         .get('/hasOpponentWon')
         .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
