@@ -110,5 +110,5 @@ class Game {
       return player.playerId != currentPlayerID;
     });
   }
-}  
+}
 module.exports = Game;
