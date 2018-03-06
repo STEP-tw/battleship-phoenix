@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  overflow:hidden;
+  overflow: hidden;
   background-image: url('../assets/images/cover.jpg');
   background-size: 100% 100%;
   font-family: 'Cinzel', serif
@@ -143,12 +143,17 @@ b {
   background-color: rgba(53,62,77,0.46);
   font-size: 30px;
 }
+tr:hover{
+  background-color: rgba(37, 193, 214, 0.35);
+}
 #joinHostedGameButton:hover{
-  color: rgb(38,211,217);
+  color: white;
+  animation: fadeIn 1s;
 }
 #joinHostedGameButton{
   margin-right: 4%;
-  color:rgba(20, 230, 231, 0.39);
+  color:rgb(94, 199, 198);
+  background-color: rgba(255,255,255,0);
   font-family: 'Coda', cursive;
   border:none;
   height: 35px;
@@ -159,9 +164,10 @@ b {
 
 }
 .hostedTable{
+  overflow: scroll;
   margin: auto;
   border-collapse: collapse;
-
+  background-color: rgba(255, 255, 255, 0);
 }
 td{
   font-family: 'Coda', cursive;
@@ -169,9 +175,9 @@ td{
   width: 20px;
 }
 .hostedGame{
-  color: rgba(17,145,130,.87);
+  color: rgb(94, 199, 198);
   text-align: center;
-  font-size: 19px;
+  font-size: 21px;
   margin: auto;
   height:40px;
   width: 580px;
@@ -318,4 +324,11 @@ ol li {
   border: none;
   font-family: inherit;
   width: 85%;
+}
+
+.tableContainer {
+  text-align: center;
+  width: 100%;
+  height: 730px;
+  overflow: scroll;
 }

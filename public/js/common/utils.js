@@ -98,15 +98,14 @@ utils.createJoinButton=function(id,onclickFun){
   button.onclick = onclickFun;
   return button;
 };
-utils.getBackgroundColor=function(rows,columnForGame,columnForButton,button){
+utils.setBackgroundColor=function(rows,columnForGame,columnForButton,button){
   if (rows%2 == 1) {
-    columnForGame.style.backgroundColor = "rgba(0,0,0,0.75)";
-    columnForButton.style.backgroundColor = "rgba(1,1,1,0.75)";
-    button.style.backgroundColor = "rgba(255,255,255,0)";
+    columnForGame.style.backgroundColor = "rgba(43, 63, 80, 0.58)";
+    columnForButton.style.backgroundColor = "rgba(43, 63, 80, 0.58)";
+
   }else {
-    columnForGame.style.backgroundColor = "rgba(1,1,1,0.96)";
-    columnForButton.style.backgroundColor = "rgba(0,0,0,0.96)";
-    button.style.backgroundColor = "rgba(255,255,255,0)";
+    columnForGame.style.backgroundColor = "rgba(1,1,1,0.4)";
+    columnForButton.style.backgroundColor = "rgba(1,1,1,0.4)";
   }
 };
 
@@ -127,16 +126,10 @@ utils.getColumnForGameName=function(gameName){
 utils.appendGameInTable=function(hostedGamesTable,game){
   let rowsCount = hostedGamesTable.getElementsByTagName("tr").length;
   let button =utils.createJoinButton('joinHostedGameButton',openJoinBlock);
-  button.onmouseover = ()=>{
-    columnForGameName.style.color = 'rgb(38,211,217)';
-  };
-  button.onmouseout = ()=>{
-    columnForGameName.style.color = 'rgba(20, 230, 231, 0.39)';
-  };
   let columnForButton=utils.getColumnForButton(button,game.gameId);
   let gameRow=document.createElement('tr');
   let columnForGameName=utils.getColumnForGameName(game.hostName);
-  utils.getBackgroundColor(rowsCount,columnForGameName,columnForButton,button);
+  utils.setBackgroundColor(rowsCount,columnForGameName,columnForButton,button);
   gameRow.appendChild(columnForButton);
   gameRow.appendChild(columnForGameName);
   hostedGamesTable.appendChild(gameRow);
