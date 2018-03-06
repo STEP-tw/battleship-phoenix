@@ -72,7 +72,7 @@ const replaceShip = function(event,cellIdList){
       return areEqual(ship.headPos,cellIdList[0]);
     });
     shipsHeadPositions = shipsHeadPositions.filter((ship)=>{
-      return !areEqual(ship.headPos,cellIdList[0]);
+      return !utils.areEqual(ship.headPos,cellIdList[0]);
     });
 
     cellIdList.forEach((cell)=>{
@@ -89,7 +89,7 @@ const getHeadPositionOf = function(id){
   let selectedShip = shipsHeadPositions.filter((ship)=>{
     let shipCoords = getCoordinates(ship.dir,ship.headPos,ship.length);
     return shipCoords.some((coord)=>{
-      return areEqual(coord,id);
+      return utils.areEqual(coord,id);
     });
   });
   return selectedShip[0].headPos||[];
@@ -99,7 +99,7 @@ const addClickForReposition = function(event,headPosition){
   let parsedCoordinate = parseCoordinates(event.target.id);
   let headPos = headPosition || getHeadPositionOf(parsedCoordinate);
   let ship = shipsHeadPositions.find((shipHead)=>{
-    return areEqual(headPos,shipHead.headPos);
+    return utils.areEqual(headPos,shipHead.headPos);
   });
   let cellIdList = getCoordinates(ship.dir,headPos,ship.length);
   direction = ship.dir;

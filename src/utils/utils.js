@@ -49,7 +49,8 @@ utils.getUsername = function (req) {
 };
 
 utils.getAuthorizedUrls = function () {
-  return ['/game.html'];
+  return ["/game.html", "/arePlayerReady", "/hasOpponentWon", "/start-game"
+    , "/updateFiredShot","/cancel-game","/positionSystem"];
 };
 
 utils.isItPrivilegedData = function (url) {
@@ -57,7 +58,7 @@ utils.isItPrivilegedData = function (url) {
 };
 
 utils.isUserTresspassing=function (req) {
-  let game = utils.getRunningGame(req);
+  let game = utils.getRunningGame(req) || utils.getHostedGame(req);
   if(!game) {
     return utils.isItPrivilegedData(req.url);
   }

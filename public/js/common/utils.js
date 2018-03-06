@@ -1,100 +1,100 @@
 let utils = {};
-let intervals=[];
+let intervals = [];
 
-utils.get = function () {
+utils.get = function() {
   return 'GET';
 };
 
-utils.post = function () {
+utils.post = function() {
   return 'POST';
 };
 
-utils.getResponse = function (xhr) {
+utils.getResponse = function(xhr) {
   return JSON.parse(xhr.responseText);
 };
 
-utils.toS = function (content) {
+utils.toS = function(content) {
   return JSON.stringify(content);
 };
 
-utils.updateMessage = function (content) {
+utils.updateMessage = function(content) {
   utils.getMessageBox().innerHTML = content;
 };
 
-utils.getTargetGrid = function () {
+utils.getTargetGrid = function() {
   return document.querySelector('#targetGrid');
 };
 
-utils.getOceanGrid = function () {
+utils.getOceanGrid = function() {
   return document.querySelector('#oceanGrid');
 };
 
-utils.getReadyButton = function () {
+utils.getReadyButton = function() {
   return document.querySelector('#ready');
 };
 
-utils.getPopupBox = function () {
+utils.getPopupBox = function() {
   return document.querySelector(".popup");
 };
 
-utils.getMessageBox = function () {
+utils.getMessageBox = function() {
   return document.querySelector('.messageBox');
 };
 
-utils.setInterval = function (callback,time=1000) {
-  let interval = setInterval(callback,time);
+utils.setInterval = function(callback, time = 1000) {
+  let interval = setInterval(callback, time);
   intervals.push(interval);
 };
 
-utils.poll = function (method,reqUrl,callBackFunction,time=1000) {
-  utils.setInterval(()=>{
-    utils.sendAjax(method,reqUrl,callBackFunction);
-  },time);
+utils.poll = function(method, reqUrl, callBackFunction, time = 1000) {
+  utils.setInterval(() => {
+    utils.sendAjax(method, reqUrl, callBackFunction);
+  }, time);
 };
 
-utils.clearIntervals = function () {
-  intervals.forEach(function (interval) {
+utils.clearIntervals = function() {
+  intervals.forEach(function(interval) {
     clearInterval(interval);
   });
 };
 
-utils.clearLastInterval = function () {
+utils.clearLastInterval = function() {
   clearInterval(intervals.pop());
 };
 
-utils.getHostedGamesTable = function () {
+utils.getHostedGamesTable = function() {
   return document.querySelector('.hostedTable');
 };
 
-utils.createButton = function (name) {
+utils.createButton = function(name) {
   let button = document.createElement('button');
   button.innerText = name;
   return button;
 };
 
-utils.createList = function (name) {
+utils.createList = function(name) {
   let list = document.createElement('li');
   list.innerText = name;
   return list;
 };
 
-utils.createDiv = function (id) {
+utils.createDiv = function(id) {
   let div = document.createElement('div');
   div.id = id;
   return div;
 };
 
-utils.sendAjax = function(method,url,callback,data="{}") {
+utils.sendAjax = function(method, url, callback, data = "{}") {
   let req = new XMLHttpRequest();
-  req.open(method,url);
-  req.setRequestHeader('Content-Type','application/json');
+  req.open(method, url);
+  req.setRequestHeader('Content-Type', 'application/json');
   req.onload = callback;
   req.send(data);
 };
 
-utils.createJoinButton=function(id,onclickFun){
+utils.createJoinButton = function(id, onclickFun) {
   let button = utils.createButton('JOIN');
-  button.id=id;
+  button.id = id;
   button.onclick = onclickFun;
   return button;
 };
@@ -109,21 +109,21 @@ utils.setBackgroundColor=function(rows,columnForGame,columnForButton,button){
   }
 };
 
-utils.getColumnForButton=function(button,id){
-  let columnForButton=document.createElement('td');
+utils.getColumnForButton = function(button, id) {
+  let columnForButton = document.createElement('td');
   columnForButton.id = id;
   columnForButton.appendChild(button);
   return columnForButton;
 };
 
-utils.getColumnForGameName=function(gameName){
-  let columnForGameName=document.createElement('td');
-  columnForGameName.innerHTML =`${gameName}'s game`;
-  columnForGameName.className="hostedGame";
+utils.getColumnForGameName = function(gameName) {
+  let columnForGameName = document.createElement('td');
+  columnForGameName.innerHTML = `${gameName}'s game`;
+  columnForGameName.className = "hostedGame";
   return columnForGameName;
 };
 
-utils.appendGameInTable=function(hostedGamesTable,game){
+utils.appendGameInTable = function(hostedGamesTable, game) {
   let rowsCount = hostedGamesTable.getElementsByTagName("tr").length;
   let button =utils.createJoinButton('joinHostedGameButton',openJoinBlock);
   let columnForButton=utils.getColumnForButton(button,game.gameId);
@@ -138,4 +138,13 @@ utils.appendGameInTable=function(hostedGamesTable,game){
 
 utils.closePopup = function(id) {
   document.getElementById(id).style.display = 'none';
+};
+
+utils.areEqual = function(firstList, secondList) {
+  for (let index = 0; index < firstList.length; index++) {
+    if (firstList[index] != secondList[index]) {
+      return false;
+    }
+  }
+  return firstList.length == secondList.length;
 };

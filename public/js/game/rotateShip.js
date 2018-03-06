@@ -12,6 +12,7 @@ const isBetweenZeroAndTen = function (number) {
   return number >= 0 && number < 10;
 };
 
+
 const validateShipAllPos = function (coord) {
   return isBetweenZeroAndTen(coord[0]) &&
     isBetweenZeroAndTen(coord[1]);
@@ -19,7 +20,7 @@ const validateShipAllPos = function (coord) {
 
 const isShipCell = function (position, listOfPos) {
   return listOfPos.some((pos) => {
-    return position[0] == pos[0] && position[1] == pos[1];
+    return utils.areEqual(pos,position);
   });
 };
 

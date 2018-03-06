@@ -172,10 +172,14 @@ describe('app', () => {
   });
   describe('GET /positionSystem', function() {
     it('should response with content of position_system file', function(done) {
+      game.addPlayer('arvind', sessionId);
+      gamesHandler.addGame(game);
+      gamesHandler.startGame(game);
       app.fs.addFile('./src/models/position_system.js',
         'positionSystemContent\n\n');
       request(app)
         .get('/positionSystem')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
         .expect(200)
         .expect(/positionSystemContent/)
         .end(done);
@@ -187,7 +191,7 @@ describe('app', () => {
       gamesHandler.addGame(game);
       request(app)
         .get('/cancel-game')
-        .set('cookie', `gameId=${sessionId}`)
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
         .expect((res) => {
           assert.deepEqual(gamesHandler._cancelledGames[0], game);
         })

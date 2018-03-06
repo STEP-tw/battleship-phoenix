@@ -20,19 +20,12 @@ const canStartGame = function(){
   utils.sendAjax(utils.get(),url,startGame);
 };
 
-const getShipPartUrl = function(url){
-  if(url.includes('head.')){
-    url = url.replace('head',`head_hit`);
-  } else if (url.includes('tail.')) {
-    url = url.replace('tail',`tail_hit`);
-  } else if(url.includes('body.')){
-    url = url.replace('body',`body_hit`);
-  }else if(url.includes('head_rotated')){
-    url = url.replace('head',`head_hit`);
-  } else if (url.includes('tail_rotated.')) {
-    url = url.replace('tail',`tail_hit`);
-  } else if(url.includes('body_rotated.')){
-    url = url.replace('body',`body_hit`);
+const getShipPartUrl = function(type,url){
+  if(!url.includes('hit.png')&& type == 'hits'){
+    url = url.replace('.png',`_hit.png`);
+  }
+  if(type=='misses'){
+    url = "url('../assets/images/miss.png')";
   }
   return url;
 };
