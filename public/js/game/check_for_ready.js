@@ -3,20 +3,12 @@ const addListener = function() {
   readyButton.onclick = handleReady;
 };
 
-const areAllShipsPlaced=function(){
-  return shipsHeadPositions.length == 5;
-};
-
 const handleReady=function(){
-  if (areAllShipsPlaced()) {
-    document.getElementsByClassName('shipsBlock')[0].style.display='none';
-    loadFleet();
-    utils.getReadyButton().style.display = 'none';
-    utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
-    disableOceanGrid();
-  } else {
-    utils.updateMessage("Please place all your ships");
-  }
+  document.getElementsByClassName('shipsBlock')[0].style.display='none';
+  loadFleet();
+  utils.getReadyButton().style.display = 'none';
+  utils.poll(utils.get(),'/arePlayersReady',handleStartGame);
+  disableOceanGrid();
 };
 
 const handleStartGame = function () {

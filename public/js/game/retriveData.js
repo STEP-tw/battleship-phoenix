@@ -135,11 +135,3 @@ const updateDisplay = function() {
 const getAndUpdateGameStatus = function() {
   utils.sendAjax(utils.get(), '/gameStatus', updateDisplay);
 };
-
-const getRotatedHitImages = function(type, dir) {
-  if (dir == "north" || dir == "south") {
-    return `${type}hit.png`;
-  }
-  return `${type}Hit_rotated.png`;
-
-};

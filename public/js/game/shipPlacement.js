@@ -57,14 +57,9 @@ const addMouseEvent=function(){
   });
 };
 
-const repositionShip = function(sizeOfShip){
-  let ships = document.getElementsByClassName(sizeOfShip);
-  for (let index = 0; index < ships.length; index++) {
-    if (ships[index].style.display == 'none') {
-      ships[index].click();
-      return;
-    }
-  }
+const repositionShip = function(shipName){
+  let ship = document.getElementById(shipName);
+  ship.click();
 };
 
 const replaceShip = function(event,cellIdList){
@@ -73,16 +68,20 @@ const replaceShip = function(event,cellIdList){
     id.onclick=null;
   });
   if(isPlaced){
+    let ship = shipsHeadPositions.filter((ship)=>{
+      return areEqual(ship.headPos,cellIdList[0]);
+    });
     shipsHeadPositions = shipsHeadPositions.filter((ship)=>{
       return !areEqual(ship.headPos,cellIdList[0]);
     });
+
     cellIdList.forEach((cell)=>{
       let occupiedCell=document.querySelector(`#${generateCellId('og',cell)}`);
       occupiedCell.style.backgroundImage = null;
       occupiedCell.style.backgroundColor = "rgba(177, 177, 177, 0.63)";
       occupiedCell.checked = false;
     });
-    repositionShip(cellIdList.length);
+    repositionShip(ship[0].name);
   }
 };
 
@@ -98,7 +97,6 @@ const getHeadPositionOf = function(id){
 
 const addClickForReposition = function(event,headPosition){
   let parsedCoordinate = parseCoordinates(event.target.id);
-  console.log(parsedCoordinate);
   let headPos = headPosition || getHeadPositionOf(parsedCoordinate);
   let ship = shipsHeadPositions.find((shipHead)=>{
     return areEqual(headPos,shipHead.headPos);
@@ -142,7 +140,8 @@ const displayReadyButton = function(){
 
 const storePlacedShips = function(event){
   let shipCoord = parseCoordinates(event.target.id);
-  let shipDetails = {dir:direction,headPos:shipCoord,length:shipSize};
+  let shipDetails = {dir:direction,headPos:shipCoord,length:shipSize,
+    name:shipName};
   shipsHeadPositions.push(shipDetails);
   document.getElementById(shipName).style.display="none";
 };
