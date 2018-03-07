@@ -104,6 +104,7 @@ const updateShot = function(req,res) {
   let turnStatus = utils.getChangedTurnStatus(game,currentPlayerID);
   let destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
   game.updatePlayerShot(currentPlayerID,firedPos);
+  game.updateLastShot(currentPlayerID,firedPos,hitStatus);
   let shotStatus = {
     firedPos:firedPos,
     status:hitStatus,
@@ -121,10 +122,11 @@ const hasOpponentWon = function(req,res){
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   let opponentShots = game.getOpponentShots(currentPlayerID);
   utils.handleEndgame(req,game,defeatStatus);
-  res.send({
+  res.json({
     status:defeatStatus,
     myTurn:turnStatus,
-    opponentShots:opponentShots
+    opponentShots:opponentShots,
+    lastShot:game.getOpponentLastShot(currentPlayerID)
   });
 };
 

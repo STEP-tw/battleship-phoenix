@@ -20,6 +20,18 @@ const displayPlayersName = function(response) {
   enemyDetails.innerText = opponentName;
 };
 
+const updateHealth = function(hits,healthBlock= '#myHealth') {
+  let healthMeter = document.querySelector(healthBlock);
+  let health = healthMeter.value - hits.length;
+  if(health<=10 && health > 5){
+    healthMeter.setAttribute('class','mediumHealth');
+  }
+  if (health <= 5) {
+    healthMeter.setAttribute('class', 'lowHealth');
+  }
+  healthMeter.value = health;
+};
+
 
 const updateDisplay = function() {
   let response = utils.getResponse(this);
@@ -28,7 +40,7 @@ const updateDisplay = function() {
   let destroyedShipsCount = destroyedShipsCoords.length;
   displayPlayersName(response);
   updateHealth(response.opponentHits);
-  updateHealth(response.playerShots.hits, '.enemyHealth');
+  updateHealth(response.playerShots.hits, '#enemyHealth');
   updateSankShips(destroyedShipsCount, destroyedShipsCoords);
   if (fleet && fleet.length != 0) {
     document.getElementsByClassName('shipsBlock')[0].style.display = 'none';

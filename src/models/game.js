@@ -110,5 +110,13 @@ class Game {
       return player.playerId != currentPlayerID;
     });
   }
+  getOpponentLastShot(currentPlayerID){
+    let opponent = this.getOpponentPlayer(currentPlayerID);
+    return opponent.getLastShot();
+  }
+  updateLastShot(currentPlayerID,shot,status){
+    let player = this.getPlayer(currentPlayerID);
+    player.updateLastShot(shot,status);
+  }
 }
 module.exports = Game;

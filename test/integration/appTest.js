@@ -424,7 +424,6 @@ describe('app', () => {
         .end(done);
     });
   });
-
   describe.skip('GET /quit', function() {
     before(() => {
       let _playerId = 0;

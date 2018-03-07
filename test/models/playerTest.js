@@ -117,4 +117,29 @@ describe('Player', () => {
       assert.deepEqual(actual, expected);
     });
   });
+  describe('updateLastShot', () => {
+    beforeEach(() => {
+      player.updateLastShot([1,2],true);
+    });
+    it('should update the last shot details of player', () =>{
+      let actual = player.getLastShot();
+      let expected = {shot : [1,2], status :true};
+      assert.deepEqual(actual,expected);
+    });
+  });
+  describe('getLastShot', () => {
+    beforeEach(() => {
+      player.updateLastShot([1,2],true);
+    });
+    it('should return last shot when shot is made', () =>{
+      let actual = player.getLastShot();
+      let expected = {shot : [1,2], status :true};
+      assert.deepEqual(actual,expected);
+      assert.deepEqual(player.getLastShot(),undefined);
+    });
+    it('should return undefined when last shot is already been taken once',()=>{
+      let actual = player.getLastShot();
+      assert.deepEqual(player.getLastShot(),undefined);
+    });
+  });
 });

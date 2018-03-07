@@ -337,4 +337,57 @@ describe('Game', () => {
       assert.equal(game.playerCount,1);
     });
   });
+  describe('updateLastShot', function() {
+    beforeEach(function() {
+      game.addPlayer('ishu', 1);
+      game.addPlayer('arvind', 2);
+      game.updateLastShot(1,[1,2],true);
+    });
+    it('should update the last shot of the current player', function() {
+      let player = game.getPlayer(1);
+      let actual = player.getLastShot();
+      let expected = {shot:[1,2],status:true};
+      assert.deepEqual(actual , expected);
+    });
+  });
+  describe('getOpponentLastShot', function() {
+    beforeEach(function() {
+      game.addPlayer('ishu', 1);
+      game.addPlayer('arvind', 2);
+      game.updateLastShot(1,[1,2],true);
+    });
+    it('should return last shot of opponent', function() {
+      let actual = game.getOpponentLastShot(2);
+      let expected = {shot:[1,2],status:true};
+      assert.deepEqual(actual , expected);
+    });
+  });
+  describe('getOpponentSunkShipsCoords', function() {
+    it('should update the shots of the player', function() {
+      let fleet = new Fleet();
+      let subShipInfo = {
+        dir: 'south',
+        length: 1,
+        headPos: [2, 3]
+      };
+      fleet.addShip(subShipInfo);
+      game.addPlayer('ishu', 1);
+      game.addPlayer('arvind', 2);
+      game.assignFleet(1, fleet);
+      game.assignFleet(2, fleet);
+      game.updatePlayerShot(2, [2, 3]);
+      let actual = game.getOpponentSunkShipsCoords(2);
+      let expected=[[[ 2,3]]];
+      assert.deepEqual(actual, expected);
+    });
+  });
+  describe('changeStartedStatus', function() {
+    beforeEach(function() {
+      game.changeStartedStatus();
+    });
+    it('should change the start status of game', function() {
+      let actual = game.status;
+      assert.ok(actual);
+    });
+  });
 });

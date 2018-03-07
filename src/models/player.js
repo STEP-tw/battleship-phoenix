@@ -60,6 +60,18 @@ class Player {
     });
     return shipsCoords;
   }
+  getLastShot(){
+    let lastShot = this._lastShot;
+    if(lastShot){
+      delete this._lastShot;
+    }
+    return lastShot;
+  }
+  updateLastShot(shot,status){
+    this._lastShot = {};
+    this._lastShot.shot = shot;
+    this._lastShot.status = status;
+  }
 }
 
 module.exports = Player;

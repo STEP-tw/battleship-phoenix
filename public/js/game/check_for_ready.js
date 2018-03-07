@@ -54,7 +54,10 @@ const handleTurn = function(myTurn) {
     makeTargetGridFirable();
   } else {
     deactivateTargetGrid();
-    utils.poll(utils.get(), '/hasOpponentWon', displayLost,3000);
+    utils.clearIntervals();
+    setTimeout(()=>{
+      utils.sendAjax(utils.get(),'/hasOpponentWon',displayLost);
+    },1000);
   }
 };
 
@@ -88,9 +91,9 @@ const updateSankShips = function(shipsCount, sunkShipsCoords) {
 
 const displayLost = function() {
   let response = utils.getResponse(this);
+  playHitOrMissSound(response);
   updateOceanGrid(response);
-  updateHealth(response.opponentShots.hits);
-  if (response.status) {
+  if(response.status){
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
     setTimeout(() => {
@@ -117,19 +120,29 @@ const dontAllowHover = function(gridId, myTurn) {
   });
 };
 
-const updateOceanGrid = function(response) {
-  let opponentShots = response.opponentShots;
-  updateShotsOnOceanGrid(opponentShots.hits,'hits');
-  updateShotsOnOceanGrid(opponentShots.misses,'misses');
+const updateCellOfOceanGrid = function(coord,type) {
+  let cellId = generateCellId('og', coord);
+  let cell = document.getElementById(cellId);
+  let imageUrl = cell.style.backgroundImage;
+  cell.style.backgroundImage = getShipPartUrl(type,imageUrl);
 };
 
 const updateShotsOnOceanGrid = function(hitPositions,type){
   hitPositions.forEach((coord) => {
-    let cellId = generateCellId('og', coord);
-    let cell = document.getElementById(cellId);
-    let imageUrl = cell.style.backgroundImage;
-    cell.style.backgroundImage = getShipPartUrl(type,imageUrl);
+    updateCellOfOceanGrid(coord,type);
   });
+};
+
+const updateOceanGrid = function(response){
+  if ("lastShot" in response) {
+    let firedPos = response.lastShot.shot;
+    if (response.lastShot.status) {
+      updateCellOfOceanGrid(firedPos,'hits');
+      updatePlayerDetails();
+      return;
+    }
+    updateCellOfOceanGrid(firedPos,'misses');
+  }
 };
 
 const highlightCell = function(event) {
@@ -231,11 +244,11 @@ const displayShot = function() {
   }
 };
 
-const updateHealth = function(hits,healthBlock='#myHealth') {
-  let health = 17 - hits.length;
-  let myHealth = document.querySelector(healthBlock);
-  if (health <= 10 && health > 5) {
-    myHealth.setAttribute('class', 'mediumHealth');
+const updatePlayerDetails = function() {
+  let myHealth = document.querySelector('#myHealth');
+  let health = myHealth.value- 1;
+  if(health<=10 && health > 5){
+    myHealth.setAttribute('class','mediumHealth');
   }
   if (health <= 5) {
     myHealth.setAttribute('class', 'lowHealth');
@@ -247,6 +260,11 @@ const isPlayerWillingToLeave = function() {
   return document.getElementById('quit').style.display == 'block';
 };
 
+const playHitOrMissSound = function (response) {
+  if ('lastShot' in response) {
+    response.lastShot.status ? playHitSound() : playMissSound();
+  }
+};
 // const displayOpponentLeft = function(status) {
 //   if (status.hasOpponentLeft) {
 //     document.getElementById('opponentLeft').style.display = 'block';
