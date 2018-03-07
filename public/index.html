@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>Battleship</title>
@@ -16,13 +14,14 @@
   <script src="/js/index/onclickHandler.js" charset="utf-8"></script>
   <script src="js/index/settings.js" charset="utf-8"></script>
 </head>
-
 <body oncontextmenu="return false;">
   <div id="loader-wrapper">
     <div id="loader"></div>
     <div id="loaderText">Loading</div>
   </div>
-  <audio autoplay loop id="bgm"><source src="/assets/audio/battleship.mp3" type="audio/mp3"></audio>
+  <audio autoplay loop id="bgm">
+    <source src="/assets/audio/battleship.mp3" type="audio/mp3">
+  </audio>
   <center>
   <header>
     <h1>BATTLESHIP</h1></header>
@@ -47,50 +46,100 @@
   </div>
   <div id="playnow" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <span class="close" onclick="utils.closePopup('playnow')"><i class="fa fa-times"></i></span>
+      <span class="close" onclick="utils.closePopup('playnow')">
+        <i class="fa fa-times"></i>
+      </span>
       <button class="hostButton" id="hostButton">Host</button>
       <button class="joinButton" id="joinButton">Join</button>
     </div>
   </div>
   <div id="aboutGame" class="overflow-model">
     <div class="aboutGamePopup animateZoom" style="padding:32px">
-      <span class="close" onclick="utils.closePopup('aboutGame')"><i class="fa fa-times"></i></span>
+      <span class="close" onclick="utils.closePopup('aboutGame')">
+        <i class="fa fa-times"></i>
+      </span>
       <h2 class="sideHeadings">What is Battleship game</h2><br>
-      <p>Battleship is a guessing game for two players. It is played on ruled grids (paper or board) on which the players' fleets of ships (including battleships) are marked. The locations of the fleet are concealed from the other player. Players alternate
-        turns calling "shots" at the other player's ships, and the objective of the game is to destroy the opposing player's fleet.</p>
+      <p>Battleship is a guessing game for two players. It is played on ruled
+        grids (paper or board) on which the players' fleets of ships (including
+        battleships) are marked. The locations of the fleet are concealed from
+        the other player. Players alternate turns calling "shots" at the other
+        player's ships, and the objective of the game is to destroy the opposing
+        player's fleet.</p>
       <h2 class="sideHeadings">How to play</h2>
       <h3 class="sideHeadings">Objective</h3>
       <b>Be the first to sink all five of your opponent's ships.</b>
       <h3 class="sideHeadings">Contents</h3>
-      <ul>
-        <li>Ocean grid</li>
-        <li>Target grid</li>
-        <li>Ships</li>
-        <ol>
-          <li>carrier, with five holes</li>
-          <li>Battleship, with four holes</li>
-          <li>Cruiser, with three holes</li>
-          <li>Submarine, with three holes</li>
-          <li>Destroyer, with two holes</li>
-        </ol>
-      </ul>
-      <h3 class="sideHeadings">Setting Up the Board Game</h3>
-      <p>Each player receives a game board with two grids, one of each type of ship.Each opponent secretly positions his own five ships on the ocean grid.</p>
+      <img src="/assets/images/instruction1.jpg" width="900px">
+      <ol>
+        <li>Dock</li>
+        <li>Your base</li>
+        <li>Ship description</li>
+        <li>Your details</li>
+        <li>Enemy details</li>
+        <li>Message box</li>
       </ol>
-      <li>Each ship must be placed horizontally or vertically—not diagonally—across grid spaces.</li>
-      <li>The ships can't hang off the grid.</li>
-      <li>Ships can touch each other, but they can't occupy the same grid space.</li>
-      <li>You cannot change the position of the ships after the game begins.</li>
+      <ol>
+        <li><h4 class="sideHeadings" >Dock</h4></li>
+        <p>Dock is a place where all your ships get prepared for battle.
+          You can select and place any ship on your base by clicking on it.
+          These are the ships you will get for your battle.</p>
+        <ul>
+          <li>carrier - 5 hits destroy</li>
+          <li>Battleship - 4 hits destroy</li>
+          <li>Cruiser - 3 hits destroy</li>
+          <li>Submarine - 3 hits destroy</li>
+          <li>Destroyer - 2 hits destroy</li>
+        </ul>
+        <li><h4 class="sideHeadings" >Your base</h4></li>
+        <p>Here you can place all your ships for battle. Once you ready for
+          battle  after placing all ships you can announce yourself ready.</p>
+        <li><h4 class="sideHeadings" >Ship description</h4></li>
+        <p>Here you can see the details of every ships. When you hover on the
+          ship in dock it will show details of that ship. </p>
+        <li><h4 class="sideHeadings" >Your details</h4></li>
+        <p>Here you can see your profile and fleet status.</p>
+        <li><h4 class="sideHeadings" >Enemy details</h4></li>
+        <p>Here you can see profile and fleet status of your enemy. </p>
+        <li><h4 class="sideHeadings" >Message box</h4></li>
+        <p>Instructions and turn details will be shown here</p>
       </ol>
+      <h3 class="sideHeadings">Setting Up the Game</h3>
+        <ul>
+          <li><u>Placing ship</u></li>
+          <p>
+            You can place ships in your base by clicking on ships in dock.
+            When you are placing a ship in your base, you could see the
+            possible positions where ship could be placed.<br>
+            The ships can't hang off the grid.<br>
+            You can place your ships beside each other but can't overlap.
+          </p>
+          <li><u>Rotating ship</u></li>
+          <p>
+            You can rotate your ships 90˚clock-wise by clicking on
+            placed ships.
+          </p>
+          <li><u>Replacing ship</u></li>
+          <p>
+            You can change the location of already placed ship by
+            double-clicking on any ship.You cannot replace your ships after
+            clicking ready.
+          </p>
+        </ul><br>
       <h2 class="sideHeadings">Basic Game Play</h2>
-      <p>Players take turns to attack enemy ships. On your turn, Hit on a position of your opponent's target grid where you suspect the ship. If there will be a ship that position will be marked as hit and if there is no ship on that position
-        it will be marked as miss. After every shot turn will change. When it is your opponent's turn to fire shots at you, each time one of your ships receives a hit, that position will be marked as red.
+      <p>Players take turns to attack enemy ships. On your turn, Hit on a
+        position at your enemy's base where you suspect the ship.
+        If there will be a ship that position will be marked as hit and
+        if there is no ship on that position it will be marked as miss.
+        After every shot turn will change. When it is your opponent's turn to
+        fire shots at you, each time one of your ships receives a hit,
+        that position will be marked as red.
       </p>
     </div>
   </div>
   <div id="login" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <span class="close" onclick="utils.closePopup('login')"><i class="fa fa-times"></i></span>
+      <span class="close" onclick="utils.closePopup('login')">
+        <i class="fa fa-times"></i></span>
       <div class="field">
         <form class="username_form"  action="" onsubmit="hostGame(); return false" autocomplete="off">
           <input autofocus type="text" class= "textField" id="username1" placeholder="Enter your name" pattern="^[a-zA-Z0-9]{1,10}$" title="Spaces,special characters are not allowed and max 10 characters allowed!" required/><br>

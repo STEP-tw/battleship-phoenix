@@ -39,7 +39,7 @@ describe('app', () => {
         request(app)
           .get('/')
           .expect(200)
-          .expect(/Ships can touch each other/)
+          .expect(/You can place ships in your base/)
           .end(done);
       });
   });
