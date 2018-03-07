@@ -46,18 +46,22 @@
   </div>
   <div id="playnow" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <span class="close" onclick="utils.closePopup('playnow')">
-        <i class="fa fa-times"></i>
-      </span>
+      <div class="closeContainer">
+        <span class="close" onclick="utils.closePopup('playnow')">
+          <i class="fa fa-times"></i>
+        </span>
+      </div>
       <button class="hostButton" id="hostButton">Host</button>
       <button class="joinButton" id="joinButton">Join</button>
     </div>
   </div>
   <div id="aboutGame" class="overflow-model">
     <div class="aboutGamePopup animateZoom" style="padding:32px">
-      <span class="close" onclick="utils.closePopup('aboutGame')">
-        <i class="fa fa-times"></i>
-      </span>
+      <div class="closeContainer">
+        <span class="close" onclick="utils.closePopup('aboutGame')">
+          <i class="fa fa-times"></i>
+        </span>
+      </div>
       <h2 class="sideHeadings">What is Battleship game</h2><br>
       <p>Battleship is a guessing game for two players. It is played on ruled
         grids (paper or board) on which the players' fleets of ships (including
@@ -138,8 +142,9 @@
   </div>
   <div id="login" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <span class="close" onclick="utils.closePopup('login')">
-        <i class="fa fa-times"></i></span>
+      <div class="closeContainer">
+        <span class="close" onclick="utils.closePopup('login')"><i class="fa fa-times"></i></span>
+      </div>
       <div class="field">
         <form class="username_form"  action="" onsubmit="hostGame(); return false" autocomplete="off">
           <input autofocus type="text" class= "textField" id="username1" placeholder="Enter your name" pattern="^[a-zA-Z0-9]{1,10}$" title="Spaces,special characters are not allowed and max 10 characters allowed!" required/><br>
@@ -150,7 +155,9 @@
   </div>
   <div id="join" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <span class="close" onclick="utils.closePopup('join')"><i class="fa fa-times"></i></span>
+      <div class="closeContainer">
+        <span class="close" onclick="utils.closePopup('join')"><i class="fa fa-times"></i></span>
+      </div>
       <div class="field">
         <form class="username_form"  action="" autocomplete="off">
           <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name" pattern="[a-zA-Z0-9]+" title="Spaces and special characters are not allowed!" required/><br>

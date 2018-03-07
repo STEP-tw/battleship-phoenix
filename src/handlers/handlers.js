@@ -10,7 +10,6 @@ const handleTresspassing = function(req, res, next) {
 };
 
 const cancelGame = function(req, res) {
-  console.log(req);
   utils.cancelGame(req);
   res.end();
 };

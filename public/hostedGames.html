@@ -21,7 +21,11 @@
 
     <div id="joinBlock" class="overflow-model">
       <div class="popupContent animateZoom" style="padding:32px">
-        <span class="close" onclick="utils.closePopup('joinBlock')"><i class="fa fa-times"></i></span>
+        <div class="closeContainer">
+          <span class="close" onclick="utils.closePopup('joinBlock')">
+            <i class="fa fa-times"></i>
+          </span>
+        </div>
         <div class="field">
           <form action="" class="joinForm" onsubmit="joinGame()" autocomplete="off">
           <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name" pattern="^[a-zA-Z0-9]{1,10}$" title="Spaces,special characters are not allowed and max 10 characters allowed!" required/><br>
