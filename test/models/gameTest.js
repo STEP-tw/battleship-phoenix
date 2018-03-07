@@ -25,7 +25,9 @@ describe('Game', () => {
       let actual = game.getCurrentPlayer(1);
       let expected = {
         _id: 1,
-        _fleet: {ships:[]},
+        _fleet: {
+          _requiredShipsCount:5,
+          _ships:[]},
         _ready: false,
         _shots: {
           hits: [],

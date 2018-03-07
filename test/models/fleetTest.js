@@ -66,4 +66,42 @@ describe('Fleet', () => {
       assert.isNotOk(fleet.hasAllShipsSunk());
     });
   });
+  describe('shipsCount', () => {
+    it('should return count of all ships', () => {
+      let fleet=new Fleet();
+      let carShipInfo = {dir:'south',length:1,headPos:[1,2]};
+      let subShipInfo = {dir:'south',length:4,headPos:[2,3]};
+      fleet.addShip(carShipInfo);
+      fleet.addShip(subShipInfo);
+      assert.equal(fleet.shipsCount,2);
+    });
+  });
+  describe('requiredShipsCount', () => {
+    it('should return count of all required ships to make fleet', () => {
+      let fleet=new Fleet([],4);
+      assert.equal(fleet.requiredShipsCount,4);
+      let otherFleet=new Fleet();
+      assert.equal(otherFleet.requiredShipsCount,5);
+    });
+  });
+  describe('hasRequiredShips', () => {
+    it('should return true if shipsCount is equal to required ships', () => {
+      let fleet=new Fleet([],1);
+      let carrierInfo = {dir:'south',length:3,headPos:[1,2]};
+      fleet.addShip(carrierInfo);
+      let actual = fleet.hasRequiredShips();
+      assert.ok(actual);
+    });
+    it('should return true if shipsCount is equal to required ships', () => {
+      let fleet=new Fleet([],2);
+      let carrierInfo = {dir:'south',length:3,headPos:[1,2]};
+      let SubmarineInfo = {dir:'south',length:4,headPos:[2,3]};
+      let battleInfo = {dir:'south',length:3,headPos:[1,2]};
+      fleet.addShip(carrierInfo);
+      fleet.addShip(SubmarineInfo);
+      fleet.addShip(battleInfo);
+      let actual = fleet.hasRequiredShips();
+      assert.isNotOk(actual);
+    });
+  });
 });

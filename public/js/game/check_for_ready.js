@@ -4,11 +4,7 @@ const addListener = function() {
 };
 
 const handleReady = function() {
-  document.getElementsByClassName('shipsBlock')[0].style.display = 'none';
   loadFleet();
-  utils.getReadyButton().style.display = 'none';
-  utils.poll(utils.get(), '/arePlayersReady', handleStartGame);
-  disableOceanGrid();
 };
 
 const handleStartGame = function() {
@@ -33,12 +29,21 @@ const viewFleetAndPlayerDetails = function(){
   document.querySelector('#targetGridBox').style.display = 'block';
   document.querySelector('.enemyFleet').style.display = 'block';
 };
-
+const checkFleetStatus=function(){
+  let response=utils.getResponse(this);
+  if (response.status) {
+    document.querySelector('.shipsBlock').style.display = 'none';
+    utils.getReadyButton().style.display = 'none';
+    utils.poll(utils.get(), '/arePlayersReady', handleStartGame);
+    disableOceanGrid();
+  }
+  utils.updateMessage('please place all of your ships');
+};
 const loadFleet = function() {
   let fleet = utils.toS({
     fleetDetails: shipsHeadPositions
   });
-  utils.sendAjax(utils.post(), '/start-game', null, fleet);
+  utils.sendAjax(utils.post(), '/start-game', checkFleetStatus, fleet);
 };
 
 const handleTurn = function(myTurn) {
@@ -69,9 +74,9 @@ const highlightSunkShips = function(sunkShipsCellIds) {
   });
 };
 
-const updateSankShips = function(shipCount, sunkShipsCoords) {
+const updateSankShips = function(shipsCount, sunkShipsCoords) {
   let shipsSunk = document.querySelectorAll('.fleetDetails tr td');
-  for (let index = 0; index < shipCount; index++) {
+  for (let index = 0; index < shipsCount; index++) {
     shipsSunk[index].style.backgroundColor = 'rgba(255, 34, 34, 0.52)';
     shipsSunk[index].style.border = '0.5px solid rgb(107, 32, 32)';
   }

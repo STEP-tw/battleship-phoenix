@@ -1,29 +1,39 @@
 const Ship = require('./ship.js');
 
 class Fleet {
-  constructor(ships) {
-    this.ships = ships || [];
+  constructor(ships, shipsCount=5) {
+    this._ships = ships || [];
+    this._requiredShipsCount=shipsCount;
   }
   addShip(shipInfo){
     let ship = new Ship(shipInfo.dir,shipInfo.length,shipInfo.headPos);
-    this.ships.push(ship);
+    this._ships.push(ship);
+  }
+  get shipsCount(){
+    return this._ships.length;
   }
   getAllShips(){
-    return this.ships;
+    return this._ships;
   }
   hasAllShipsSunk(){
-    return this.ships.every(function(ship){
+    return this._ships.every(function(ship){
       return ship.isSunk();
     });
   }
   getAllSunkShips(){
-    let allSunkShips = this.ships.filter((ship)=>{
+    let allSunkShips = this._ships.filter((ship)=>{
       return ship.isSunk() ;
     });
     return allSunkShips;
   }
+  hasRequiredShips(){
+    return this.shipsCount==this.requiredShipsCount;
+  }
+  get requiredShipsCount(){
+    return this._requiredShipsCount;
+  }
   isAnyShipHit(position){
-    return this.ships.some(function(ship){
+    return this._ships.some(function(ship){
       return ship.isHit(position);
     });
   }

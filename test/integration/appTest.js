@@ -199,7 +199,7 @@ describe('app', () => {
     });
   });
   describe('POST /start-game', () => {
-    it(`should store the fleet details`, (done) => {
+    it(`should send false when fleet does not have required ships`, (done) => {
       game.addPlayer('arvind', sessionId);
       delete game.currentPlayerIndex;
       gamesHandler.addGame(game);
@@ -215,9 +215,47 @@ describe('app', () => {
           }]
         })
         .expect(200)
+        .expect({status:false})
+        .end(done);
+    });
+    it(`should send true when fleet has required ships`, (done) => {
+      game.addPlayer('arvind', sessionId);
+      delete game.currentPlayerIndex;
+      gamesHandler.addGame(game);
+      gamesHandler.startGame(game);
+      let fleetsInfo=[{
+        "dir": "south",
+        "headPos": "og_4_5",
+        "length": 3
+      },{
+        "dir": "south",
+        "headPos": "og_4_5",
+        "length": 3
+      },{
+        "dir": "south",
+        "headPos": "og_4_5",
+        "length": 3
+      },{
+        "dir": "south",
+        "headPos": "og_4_5",
+        "length": 3
+      },{
+        "dir": "south",
+        "headPos": "og_4_5",
+        "length": 3
+      }];
+      request(app)
+        .post('/start-game')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .send({
+          fleetDetails:fleetsInfo
+        })
+        .expect(200)
+        .expect({status:true})
         .end(done);
     });
   });
+
   describe('POST /updateFiredShot', function() {
     it('Should respond with status true if any ship is hit', function(done) {
       let shipInfo = {

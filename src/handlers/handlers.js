@@ -64,8 +64,12 @@ const loadFleet = function(req, res) {
   let playerId = utils.getPlayerId(req);
   let fleet = utils.getFleet(req);
   game.assignFleet(playerId,fleet);
-  game.changePlayerStatus(playerId);
-  res.end();
+  if (fleet.hasRequiredShips()) {
+    game.changePlayerStatus(playerId);
+    res.json({status:true});
+    return;
+  }
+  res.json({status:false});
 };
 
 const arePlayersReady = function(req, res) {
