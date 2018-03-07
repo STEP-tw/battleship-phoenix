@@ -28,7 +28,9 @@ describe('getUserName', function() {
 describe('getAuthorizedUrls', function() {
   it('should returns the all authorised urls', function() {
     let authorisedUrls = utils.getAuthorizedUrls();
-    assert.include(authorisedUrls, '/game.html');
+    assert.deepEqual(authorisedUrls,["/game.html", "/areplayersready"
+      ,"/hasopponentwon", "/start-game", "/updatefiredshot","/cancel-game"
+      ,"/positionsystem","/gamestatus","/hasopponentjoined"]);
   });
 });
 

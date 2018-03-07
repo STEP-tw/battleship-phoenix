@@ -12,7 +12,7 @@ const logRequest = function(req,res,next){
     `COOKIES=> ${toJsonString(req.cookies)}`,
     `BODY=> ${toJsonString(req.body)}`,""].join("\n");
   fs.appendFile("./log/request.log",text,() => {/*do nothing*/});
-  console.log(`${req.method} ${req.url}${new Date().getSeconds()}`);
+  console.log(`${req.method} ${req.url}`);
   next();
 };
 

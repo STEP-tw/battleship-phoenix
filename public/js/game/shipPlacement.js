@@ -69,7 +69,7 @@ const replaceShip = function(event,cellIdList){
   });
   if(isPlaced){
     let ship = shipsHeadPositions.filter((ship)=>{
-      return areEqual(ship.headPos,cellIdList[0]);
+      return utils.areEqual(ship.headPos,cellIdList[0]);
     });
     shipsHeadPositions = shipsHeadPositions.filter((ship)=>{
       return !utils.areEqual(ship.headPos,cellIdList[0]);

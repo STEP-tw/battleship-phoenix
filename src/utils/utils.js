@@ -49,11 +49,13 @@ utils.getUsername = function (req) {
 };
 
 utils.getAuthorizedUrls = function () {
-  return ["/game.html", "/arePlayerReady", "/hasOpponentWon", "/start-game"
-    , "/updateFiredShot","/cancel-game","/positionSystem"];
+  return ["/game.html", "/areplayersready", "/hasopponentwon", "/start-game"
+    , "/updatefiredshot","/cancel-game","/positionsystem"
+    ,"/gamestatus","/hasopponentjoined"];
 };
 
 utils.isItPrivilegedData = function (url) {
+  url=url.toLowerCase();
   return utils.getAuthorizedUrls().includes(url);
 };
 
