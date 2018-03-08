@@ -34,6 +34,14 @@ const cancelQuit = function() {
   };
 };
 
+const handleAudios = function(){
+  let backgroundMusic = document.querySelector('#bgm');
+  let response = utils.getResponse(this);
+  response.music = utils.parse(response.music);
+  backgroundMusic.play();
+  backgroundMusic.muted = !response.music;
+};
+
 let setupGame = function(){
   createGrid('targetGrid','tg',10,10);
   createGrid('oceanGrid','og',10,10);
@@ -43,6 +51,7 @@ let setupGame = function(){
   getAndUpdateGameStatus();
   // hasOpponentLeft();
   showShipDetailsOnHover();
+  utils.sendAjax(utils.get(),'/audioStatus',handleAudios);
   document.querySelector('#loader-wrapper').style.display = 'none';
 };
 

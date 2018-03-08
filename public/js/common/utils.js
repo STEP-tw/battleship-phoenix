@@ -8,9 +8,12 @@ utils.get = function() {
 utils.post = function() {
   return 'POST';
 };
+utils.parse = function(text){
+  return JSON.parse(text);
+};
 
 utils.getResponse = function(xhr) {
-  return JSON.parse(xhr.responseText);
+  return utils.parse(xhr.responseText);
 };
 
 utils.toS = function(content) {

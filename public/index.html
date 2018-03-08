@@ -19,7 +19,7 @@
     <div id="loader"></div>
     <div id="loaderText">Loading</div>
   </div>
-  <audio autoplay loop id="bgm">
+  <audio loop id="bgm">
     <source src="/assets/audio/battleship.mp3" type="audio/mp3">
   </audio>
   <center>
@@ -37,9 +37,24 @@
     <div class="popupContent animateZoom" style="padding:32px">
       <h2>Settings</h2>
       <ul>
-        <li id="sound">Sound</li>
-        <li id="music">Music</li>
-        <li id="translater"></li>
+
+        <div class="settingsOption">
+          Sound
+          <label class="switch">
+            <input type="checkbox" id="sound" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="settingsOption">
+          Music
+          <label class="switch">
+            <input type="checkbox" id="music" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="settingsOption" id="translater"></div>
       </ul>
       <button id=cancelSettings class="blueLongButton" >Cancel</button>
     </div>

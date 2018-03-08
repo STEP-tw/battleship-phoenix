@@ -33,11 +33,14 @@ app.get('/gameStatus',handlers.getGameStatus);
 // app.get('/quit',handlers.quitGame);
 // app.get('/hasOpponentLeft',handlers.hasOpponentLeft);
 app.get('/getHostedGames',handlers.getHostedGames);
+app.get('/audioStatus',handlers.getAudioStatus);
 
 app.post('/updateFiredShot',handlers.isAlreadyFired,handlers.updateShot);
 app.post('/start-game',handlers.loadFleet);
 app.post('/host',handlers.hostGame);
 app.post('/join',handlers.joinGame);
+app.post('/controlMusic',handlers.musicController);
+app.post('/controlSound',handlers.soundController);
 
 app.use(express.static('public'));
 

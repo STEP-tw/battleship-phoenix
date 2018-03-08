@@ -60,6 +60,46 @@ describe('app', () => {
         .end(done);
     });
   });
+  describe('POST /controlMusic', function () {
+    it('should respond with current music status', function (done) {
+      request(app)
+        .post('/controlMusic')
+        .send({music:true})
+        .expect(200)
+        .expect({music:true})
+        .expect((res)=>{
+          let expected = 'music=true';
+          let actual = res.header['set-cookie'][0].split(';')[0];
+          assert.equal(expected,actual);
+        })
+        .end(done);
+    });
+  });
+  describe('POST /controlSound', function () {
+    it('should respond with current sound status', function (done) {
+      request(app)
+        .post('/controlSound')
+        .set('cookie',`sound=true`)
+        .send({sound:true})
+        .expect(200)
+        .expect((res)=>{
+          let expected = 'sound=true';
+          let actual = res.header['set-cookie'][0].split(';')[0];
+          assert.equal(expected,actual);
+        })
+        .end(done);
+    });
+  });
+  describe('GET /audioStatus', function () {
+    it('should respond with current audio status', function (done) {
+      request(app)
+        .get('/audioStatus')
+        .set('cookie',[`sound=false`,`music=true`])
+        .expect(200)
+        .expect({music:'true',sound:'false'})
+        .end(done);
+    });
+  });
   describe('POST /host', function() {
     it('just stay on the page and wait for opponent', function(done) {
       request(app)
@@ -285,7 +325,8 @@ describe('app', () => {
           status: true,
           winStatus: false,
           myTurn: false,
-          destroyedShipsCoords: []
+          destroyedShipsCoords: [],
+          sound :true
         })
         .end(done);
     });

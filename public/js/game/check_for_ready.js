@@ -209,14 +209,15 @@ const reduceOpponentHealth = function() {
   enemyHealth.value--;
 };
 
-const playMissSound = function() {
+const playMissSound = function(status) {
   let audio = new Audio('../assets/audio/miss.mp3');
-  audio.play();
+  status && audio.play();
 };
 
-const playHitSound = function() {
+const playHitSound = function(status) {
   let audio = new Audio('../assets/audio/hit.mp3');
-  audio.play();
+  status && audio.play();
+
 };
 
 const displayShot = function() {
@@ -229,11 +230,12 @@ const displayShot = function() {
   let cell = document.getElementById(generateCellId('tg', shotResult.firedPos));
   let destroyedShipsCount = shotResult.destroyedShipsCoords.length;
   let destroyedShipsCoords = shotResult.destroyedShipsCoords;
+  let soundStatus = utils.parse(shotResult.sound);
   if (!shotResult.status) {
-    playMissSound();
+    playMissSound(soundStatus);
     cell.style.backgroundImage = "url('../assets/images/miss.png')";
   } else {
-    playHitSound();
+    playHitSound(soundStatus);
     cell.style.backgroundImage = "url('../assets/images/hit.png')";
     reduceOpponentHealth();
     updateSankShips(destroyedShipsCount, destroyedShipsCoords);
@@ -274,7 +276,7 @@ const playHitOrMissSound = function (response) {
 // };
 //
 // const handleStatus = function() {
-//   let status = JSON.parse(this.responseText);
+//   let status = utils.parse(this.responseText);
 //   if(isPlayerWillingToLeave()||this.responseText=='{}'){
 //     return;
 //   }

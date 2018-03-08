@@ -79,7 +79,7 @@ const arePlayersReady = function(req, res) {
   let turnStatus = game.validateId(currentPlayerIndex,playerId);
   let playerStatus = {
     status: utils.arePlayersReady(game),
-    myTurn: turnStatus
+    myTurn: turnStatus,
   };
   res.send(playerStatus);
 };
@@ -103,6 +103,7 @@ const updateShot = function(req,res) {
   let victoryStatus = utils.hasOpponentLost(req);
   let turnStatus = utils.getChangedTurnStatus(game,currentPlayerID);
   let destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
+  let soundStatus = req.cookies.sound || true;
   game.updatePlayerShot(currentPlayerID,firedPos);
   game.updateLastShot(currentPlayerID,firedPos,hitStatus);
   let shotStatus = {
@@ -110,7 +111,8 @@ const updateShot = function(req,res) {
     status:hitStatus,
     winStatus:victoryStatus,
     myTurn:turnStatus,
-    destroyedShipsCoords: destroyedShipsCoords
+    destroyedShipsCoords: destroyedShipsCoords,
+    sound:soundStatus
   };
   res.json(shotStatus);
 };
@@ -160,6 +162,24 @@ const getGameStatus = function(req,res){
   });
 };
 
+const musicController = function(req,res){
+  res.cookie('music',req.body.music);
+  res.json({music:req.body.music});
+};
+const soundController = function(req,res){
+  res.cookie('sound',req.body.sound);
+  res.end();
+};
+
+const getAudioStatus = function(req,res){
+  let musicStatus = req.cookies.music || true;
+  let soundStatus = req.cookies.sound || true;
+  res.json({
+    music: musicStatus,
+    sound: soundStatus
+  });
+};
+
 // const quitGame = function(req,res) {
 //   utils.getGame(req).removePlayer(req.cookies.player);
 //   res.redirect('/');
@@ -198,5 +218,8 @@ module.exports = {
   getGameStatus,
   // quitGame,
   // hasOpponentLeft,
-  handleTresspassing
+  handleTresspassing,
+  musicController,
+  soundController,
+  getAudioStatus
 };

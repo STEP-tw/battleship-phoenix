@@ -1,34 +1,54 @@
 const aboutGameAction = function (){
-  document.getElementById('aboutGame').style.display='block';
+  document.querySelector('#aboutGame').style.display='block';
 };
 const settingsAction = function (){
-  document.getElementById('settings').style.display='block';
+  document.querySelector('#settings').style.display='block';
 };
 const cancelSettingsAction = function (){
-  document.getElementById('settings').style.display='none';
+  document.querySelector('#settings').style.display='none';
 };
 const joinButtonAction = function (){
   location.href = '/hostedGames.html';
 };
 const hostButtonAction = function (){
-  document.getElementById('login').style.display='block';
+  document.querySelector('#login').style.display='block';
 };
 
 const hostOrJoin = function(){
-  document.getElementById('playnow').style.display='block';
+  document.querySelector('#playnow').style.display='block';
+};
+
+const controlAudio = function(){
+  let musicButton = document.querySelector('#music');
+  let soundButton = document.querySelector('#sound');
+  let backgroundMusic = document.querySelector('#bgm');
+  let response = utils.getResponse(this);
+
+  response.music = utils.parse(response.music);
+  response.sound = utils.parse(response.sound);
+  musicButton.checked = response.music;
+  soundButton.checked = response.sound;
+  backgroundMusic.play();
+  backgroundMusic.muted = !response.music;
 };
 
 const addOnclickListeners = function (){
-  document.getElementById('aboutGameButton').onclick=aboutGameAction;
-  document.getElementById('playnowButton').onclick=hostOrJoin;
-  document.getElementById('settingsButton').onclick=settingsAction;
-  document.getElementById('cancel').onclick=cancelGame;
-  document.querySelector('.joinButton').onclick=joinButtonAction;
-  document.querySelector('.hostButton').onclick=hostButtonAction;
-  document.getElementById('music').onclick=bgmController;
-  document.getElementById('cancelSettings').onclick=cancelSettingsAction;
-  document.getElementById('cancelSettings').onclick=cancelSettingsAction;
+  document.querySelector('#aboutGameButton').onclick = aboutGameAction;
+  document.querySelector('#playnowButton').onclick = hostOrJoin;
+  document.querySelector('#settingsButton').onclick = settingsAction;
+  document.querySelector('#cancel').onclick = cancelGame;
+  document.querySelector('.joinButton').onclick = joinButtonAction;
+  document.querySelector('.hostButton').onclick = hostButtonAction;
+  document.querySelector('#music').onclick = bgmController;
+  document.querySelector('#sound').onclick = soundController;
+  document.querySelector('#cancelSettings').onclick = cancelSettingsAction;
+  document.querySelector('#cancelSettings').onclick = cancelSettingsAction;
   document.querySelector('#loader-wrapper').style.display = 'none';
 };
 
-window.onload = addOnclickListeners;
+const activateOptions = function(){
+  utils.sendAjax(utils.get(),'/audioStatus',controlAudio);
+  addOnclickListeners();
+};
+
+window.onload = activateOptions;

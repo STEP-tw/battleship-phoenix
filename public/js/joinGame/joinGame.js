@@ -1,5 +1,6 @@
 const getHostedGames = function () {
   document.querySelector('#loader-wrapper').style.display = 'none';
+  utils.sendAjax(utils.get(),'/audioStatus',controlAudio);
   utils.poll(utils.get(),'/getHostedGames',showHostedGames,4000);
 };
 
@@ -29,6 +30,15 @@ const showHostedGames = function () {
   let hostedGamesTable = utils.getHostedGamesTable();
   hostedGamesTable.innerHTML = '';
   hostedGames.reduce(utils.appendGameInTable,hostedGamesTable);
+};
+
+const controlAudio = function(){
+  let backgroundMusic = document.querySelector('#bgm');
+  let response = utils.getResponse(this);
+
+  response.music = utils.parse(response.music);
+  backgroundMusic.play();
+  backgroundMusic.muted = !response.music;
 };
 
 window.onload = getHostedGames;

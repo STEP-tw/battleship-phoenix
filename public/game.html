@@ -13,6 +13,7 @@
   <script src="positionSystem" charset="utf-8"></script>
   <script src="/js/game/check_for_ready.js" charset="utf-8"></script>
   <script src="/js/game/rotateShip.js"></script>
+  <script src="/js/index/settings.js"></script>
   <link defer href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
   <title>Battleship</title>
 </head>
@@ -22,6 +23,9 @@
     <div id="loader"></div>
     <div id="loaderText">Loading</div>
   </div>
+  <audio loop id="bgm">
+    <source src="/assets/audio/battleship.mp3" type="audio/mp3">
+  </audio>
   <div align="center" class="header">BATTLESHIP<br>
     <button type="button" id="quitGame"  >Quit Game</button>
     <div class="messageBox">Place your ships</div>
