@@ -1,26 +1,23 @@
 const Game = require('./game.js');
 
 function fetchGame(games,gameId) {
-  return games.find(function (game) {
-    return game.id == gameId;
-  });
+  return games[gameId];
 }
 
 function removeGame(games,game) {
-  let gameIndex = games.indexOf(game);
-  let removedGame = games.splice(gameIndex,1);
-  return removedGame;
+  let gameId = game.id;
+  delete games[gameId];
 }
 class GamesHandler {
   constructor(hostedGames,runningGames,completedGames,cancelledGames) {
-    this._hostedGames = hostedGames || [];
-    this._runningGames = runningGames || [];
-    this._completedGames = completedGames || [];
-    this._cancelledGames = cancelledGames || [];
+    this._hostedGames = hostedGames || {};
+    this._runningGames = runningGames || {};
+    this._completedGames = completedGames || {};
+    this._cancelledGames = cancelledGames || {};
   }
 
   addGame(game){
-    this._hostedGames.push(game);
+    this._hostedGames[game.id] = game;
     return this._hostedGames;
   }
 
@@ -42,21 +39,24 @@ class GamesHandler {
 
   startGame(game){
     removeGame(this._hostedGames,game);
-    return this._runningGames.push(game);
+    this._runningGames[game.id] = game;
   }
 
   endGame(game){
     removeGame(this._runningGames,game);
-    return this._completedGames.push(game);
+    this._completedGames[game.id] = game;
   }
 
   cancelGame(game){
     removeGame(this._hostedGames,game);
-    return this._cancelledGames.push(game);
+    this._cancelledGames[game.id] = game;
   }
 
   get hostedGamesDetails(){
-    return this._hostedGames.map(function (game) {
+    let hostedGameIds = Object.keys(this._hostedGames);
+    let hostedGames = this._hostedGames;
+    return hostedGameIds.map(function (gameId) {
+      let game = hostedGames[gameId];
       return {gameId: game.id, hostName: game.hostName};
     });
   }

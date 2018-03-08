@@ -6,7 +6,7 @@ const Fleet = require('./../../src/models/fleet.js');
 let game;
 describe('Game', () => {
   beforeEach(function() {
-    game = new Game();
+    game = new Game(1);
   });
   describe('hostName', function () {
     it('should return the host\'s name', function () {
@@ -388,6 +388,23 @@ describe('Game', () => {
     it('should change the start status of game', function() {
       let actual = game.status;
       assert.ok(actual);
+    });
+  });
+  describe('hasOpponentLeft', function() {
+    beforeEach(function() {
+      game.addPlayer('ishu', 1);
+      game.addPlayer('arvind', 2);
+      game.removePlayer(1);
+    });
+    it('should return true if opponent leaves', function() {
+      let actual = game.hasOpponentLeft(2);
+      assert.ok(actual);
+    });
+  });
+  describe('getid', function() {
+    it('should give the id of the game', function() {
+      let actual = game.id;
+      assert.equal(actual,1);
     });
   });
 });

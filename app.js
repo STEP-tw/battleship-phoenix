@@ -30,8 +30,7 @@ app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 app.get('/hasOpponentWon',handlers.hasOpponentWon);
 app.get('/gameStatus',handlers.getGameStatus);
-// app.get('/quit',handlers.quitGame);
-// app.get('/hasOpponentLeft',handlers.hasOpponentLeft);
+app.get('/quit',handlers.quitGame);
 app.get('/getHostedGames',handlers.getHostedGames);
 app.get('/audioStatus',handlers.getAudioStatus);
 

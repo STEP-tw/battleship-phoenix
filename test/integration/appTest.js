@@ -154,7 +154,7 @@ describe('app', () => {
     it('responds true if opponent is present', function(done) {
       game.addPlayer('ishu', sessionId);
       let sessionId2 = app.generateSessionId();
-      gamesHandler._runningGames.push(game);
+      gamesHandler._runningGames[game.id]=game;
       game.addPlayer('arvind', sessionId2);
       game.assignTurn();
       game.changeStartedStatus();
@@ -233,7 +233,7 @@ describe('app', () => {
         .get('/cancel-game')
         .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
         .expect((res) => {
-          assert.deepEqual(gamesHandler._cancelledGames[0], game);
+          assert.deepEqual(gamesHandler._cancelledGames[game.id], game);
         })
         .end(done);
     });
@@ -371,6 +371,16 @@ describe('app', () => {
         .expect(200)
         .end(done);
     });
+    it('should give hasOpponentLeft as true if opponent leaves',(done)=>{
+      game.removePlayer(sessionId2);
+      request(app)
+        .post('/updateFiredShot')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .send({firedPosition: [4, 2]})
+        .expect(200)
+        .expect('{"hasOpponentLeft":true}')
+        .end(done);
+    });
   });
   describe('hasOpponentWon', function() {
     beforeEach(function() {
@@ -411,6 +421,15 @@ describe('app', () => {
         .expect(/"status":false/)
         .end(done);
     });
+    it('should give hasOpponentLeft as true if opponent leaves',(done)=>{
+      game.removePlayer(sessionId2);
+      request(app)
+        .get('/hasopponentwon')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect('{"hasOpponentLeft":true}')
+        .end(done);
+    });
   });
   describe('getGameStatus', function() {
     it('should return empty fleet on no ships', function(done) {
@@ -418,7 +437,7 @@ describe('app', () => {
       sessionId2 = app.generateSessionId();
       game.addPlayer('arvind', sessionId2);
       game.assignTurn();
-      gamesHandler._runningGames.push(game);
+      gamesHandler._runningGames[game.id]=game;
       request(app)
         .get('/gameStatus')
         .set('cookie', [`player=${sessionId}`,`gameId=${sessionId}`])
@@ -438,7 +457,7 @@ describe('app', () => {
       sessionId2 = app.generateSessionId();
       game.addPlayer('arvind', sessionId2);
       game.assignTurn();
-      gamesHandler._runningGames.push(game);
+      gamesHandler._runningGames[game.id]=game;
       game.assignFleet(sessionId, fleet);
       game.assignFleet(sessionId2, fleet);
       request(app)
@@ -465,71 +484,17 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe.skip('GET /quit', function() {
-    before(() => {
-      let _playerId = 0;
-      app.game = new Game();
-      app.generateSessionId = function() {
-        return ++_playerId;
-      };
-      let sessionId = app.generateSessionId();
-      app.game.addPlayer('manindra', sessionId);
-      app.game.addPlayer('ishu', sessionId);
-    });
-    it('should add the details of the join player', function(done) {
+  describe('GET /quit', () => {
+    it('should cancel the game', (done) => {
+      game.addPlayer('arvind', sessionId);
+      game.addPlayer('ishu', 2);
+      gamesHandler.addGame(game);
+      gamesHandler.startGame(game);
       request(app)
         .get('/quit')
-        .set('cookie','player=1')
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
         .expect(302)
         .expect('Location','/')
-        .end(done);
-    });
-  });
-  describe.skip('GET /hasOpponentLeft', function() {
-    before(() => {
-      let _playerId = 0;
-      app.game = new Game();
-      app.generateSessionId = function() {
-        return ++_playerId;
-      };
-      let sessionId = app.generateSessionId();
-      app.game.addPlayer('manindra', sessionId);
-    });
-    it('should return true if player count is 1', function(done) {
-      request(app)
-        .get('/hasOpponentLeft')
-        .set('cookie','player=1')
-        .expect(200)
-        .expect('{"hasOpponentLeft":true}')
-        .end(done);
-    });
-  });
-  describe.skip('GET /hasOpponentLeft', function() {
-    before(() => {
-      let _playerId = 0;
-      app.game = new Game();
-      app.generateSessionId = function() {
-        return ++_playerId;
-      };
-      let sessionId = app.generateSessionId();
-      app.game.addPlayer('manindra', sessionId);
-      app.game.addPlayer('ishu', sessionId);
-    });
-    it('should return false if player count is 2', function(done) {
-      request(app)
-        .get('/hasOpponentLeft')
-        .set('cookie','player=1')
-        .expect(200)
-        .expect('{"hasOpponentLeft":false}')
-        .end(done);
-    });
-  });
-  describe.skip('GET /hasOpponentLeft', function() {
-    it('should return empty object if there is no game', function(done) {
-      request(app)
-        .get('/hasOpponentLeft')
-        .expect(200)
-        .expect('{}')
         .end(done);
     });
   });

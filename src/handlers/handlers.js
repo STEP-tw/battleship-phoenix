@@ -98,6 +98,12 @@ const isAlreadyFired = function (req,res,next) {
 const updateShot = function(req,res) {
   let game = utils.getRunningGame(req);
   let currentPlayerID = utils.getPlayerId(req);
+  let opponentLeft = game.hasOpponentLeft(currentPlayerID);
+  if(opponentLeft){
+    res.json({hasOpponentLeft:opponentLeft});
+    utils.endGame(req,game);
+    return;
+  }
   let firedPos = utils.getFiredPosition(req);
   let hitStatus =game.checkOpponentIsHit(currentPlayerID,firedPos);
   let victoryStatus = utils.hasOpponentLost(req);
@@ -120,6 +126,13 @@ const updateShot = function(req,res) {
 const hasOpponentWon = function(req,res){
   let game = utils.getRunningGame(req);
   let currentPlayerID = utils.getPlayerId(req);
+  let opponentLeft = game.hasOpponentLeft(currentPlayerID);
+  let soundStatus = req.cookies.sound || true;
+  if(opponentLeft){
+    res.json({hasOpponentLeft:opponentLeft});
+    utils.endGame(req,game);
+    return;
+  }
   let defeatStatus = game.hasOpponentWon(currentPlayerID);
   let turnStatus = game.validateId(game.turn,currentPlayerID);
   let opponentShots = game.getOpponentShots(currentPlayerID);
@@ -128,7 +141,8 @@ const hasOpponentWon = function(req,res){
     status:defeatStatus,
     myTurn:turnStatus,
     opponentShots:opponentShots,
-    lastShot:game.getOpponentLastShot(currentPlayerID)
+    lastShot:game.getOpponentLastShot(currentPlayerID),
+    sound:soundStatus
   });
 };
 
@@ -143,14 +157,8 @@ const getGameStatus = function(req,res){
   let opponentName = opponent.playerName;
   let oppMisses = oppShots.misses;
   let hits = oppShots.hits;
-  let ships;
-  let destroyedShipsCoords = [];
-  if(!fleet) {
-    ships = [];
-  } else {
-    ships = fleet.getAllShips();
-    destroyedShipsCoords = game.getOpponentSunkShipsCoords(playerId);
-  }
+  let ships = fleet.getAllShips();
+  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(playerId);
   res.json({
     fleet:ships,
     opponentHits:oppShots.hits,
@@ -180,29 +188,10 @@ const getAudioStatus = function(req,res){
   });
 };
 
-// const quitGame = function(req,res) {
-//   utils.getGame(req).removePlayer(req.cookies.player);
-//   res.redirect('/');
-// };
-//
-// const sendOpponentStatus = function(req,res) {
-//   let game = utils.getGame(req);
-//   if (game.playerCount==1) {
-//     res.json({hasOpponentLeft:true});
-//     delete req.app.game;
-//     return;
-//   }
-//   res.json({hasOpponentLeft:false});
-// };
-//
-// const hasOpponentLeft = function(req,res) {
-//   let game = utils.getGame(req);
-//   if(!game){
-//     res.json({});
-//     return;
-//   }
-//   sendOpponentStatus(req,res);
-// };
+const quitGame = function(req,res) {
+  utils.getRunningGame(req).removePlayer(req.cookies.player);
+  res.redirect('/');
+};
 
 module.exports = {
   cancelGame,
@@ -216,10 +205,9 @@ module.exports = {
   updateShot,
   hasOpponentWon,
   getGameStatus,
-  // quitGame,
-  // hasOpponentLeft,
   handleTresspassing,
   musicController,
   soundController,
-  getAudioStatus
+  getAudioStatus,
+  quitGame
 };

@@ -3,7 +3,7 @@ const generateTurn = require('../utils/turnGenerator.js').generateTurn;
 
 class Game {
   constructor(id,players,started,cpi) {
-    this.id = id;
+    this._id = id;
     this._players = players || [];
     this._started = started || false;
     this.currentPlayerIndex = cpi;
@@ -117,6 +117,12 @@ class Game {
   updateLastShot(currentPlayerID,shot,status){
     let player = this.getPlayer(currentPlayerID);
     player.updateLastShot(shot,status);
+  }
+  hasOpponentLeft(currentPlayerID){
+    return !this.getOpponentPlayer(currentPlayerID);
+  }
+  get id(){
+    return this._id;
   }
 }
 module.exports = Game;

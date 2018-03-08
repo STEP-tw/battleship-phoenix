@@ -17,6 +17,7 @@ const gameStarts = function(response) {
   let myTurn = response.myTurn;
   let targetGrid = utils.getTargetGrid();
   utils.updateMessage("Game Started");
+  document.getElementById("quitGame").style.display = 'block';
   handleTurn(myTurn);
   dontAllowHover('og');
   viewFleetAndPlayerDetails();
@@ -91,6 +92,9 @@ const updateSankShips = function(shipsCount, sunkShipsCoords) {
 
 const displayLost = function() {
   let response = utils.getResponse(this);
+  if (response.hasOpponentLeft) {
+    return displayOpponentLeft();
+  }
   playHitOrMissSound(response);
   updateOceanGrid(response);
   if(response.status){
@@ -217,11 +221,13 @@ const playMissSound = function(status) {
 const playHitSound = function(status) {
   let audio = new Audio('../assets/audio/hit.mp3');
   status && audio.play();
-
 };
 
 const displayShot = function() {
   let shotResult = utils.getResponse(this);
+  if (shotResult.hasOpponentLeft) {
+    return displayOpponentLeft();
+  }
   if (shotResult.isAlreadyFired) {
     return;
   }
@@ -263,28 +269,12 @@ const isPlayerWillingToLeave = function() {
 };
 
 const playHitOrMissSound = function (response) {
+  let sound = response.sound;
   if ('lastShot' in response) {
-    response.lastShot.status ? playHitSound() : playMissSound();
+    response.lastShot.status ? playHitSound(sound) : playMissSound(sound);
   }
 };
-// const displayOpponentLeft = function(status) {
-//   if (status.hasOpponentLeft) {
-//     document.getElementById('opponentLeft').style.display = 'block';
-//     return;
-//   }
-//   hasOpponentLeft();
-// };
-//
-// const handleStatus = function() {
-//   let status = utils.parse(this.responseText);
-//   if(isPlayerWillingToLeave()||this.responseText=='{}'){
-//     return;
-//   }
-//   displayOpponentLeft(status);
-// };
-//
-// const hasOpponentLeft = function() {
-//   setTimeout(()=>{
-//     utils.sendAjax(utils.get(),'/hasOpponentLeft',handleStatus);
-//   },1000);
-// };
+
+const displayOpponentLeft = function() {
+  document.getElementById('opponentLeft').style.display = 'block';
+};

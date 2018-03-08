@@ -15,7 +15,7 @@ describe('GamesHandler', function () {
   });
   describe('addGame()', function () {
     it('should add given game as hosted game', function () {
-      assert.include(gamesHandler._hostedGames,game);
+      assert.deepEqual(gamesHandler._hostedGames[1],game);
     });
   });
 
@@ -27,34 +27,34 @@ describe('GamesHandler', function () {
   });
   describe('getRunningGame', function () {
     it('should get a game from list of running games', function () {
-      gamesHandler._runningGames.push(game);
+      gamesHandler._runningGames[game.id]=game;
       let reqGame = gamesHandler.fetchRunningGame(1);
       assert.deepEqual(reqGame,game);
     });
   });
   describe('getCompletedGame', function () {
     it('should get a game from list of completed games', function () {
-      gamesHandler._completedGames.push(game);
+      gamesHandler._completedGames[game.id]=game;
       let reqGame = gamesHandler.fetchCompletedGame(1);
       assert.deepEqual(reqGame,game);
     });
   });
   describe('getCancelledGame', function () {
     it('should get a game from list of cancelled games', function () {
-      gamesHandler._cancelledGames.push(game);
+      gamesHandler._cancelledGames[game.id]=game;
       let reqGame = gamesHandler.fetchCancelledGame(1);
       assert.deepEqual(reqGame,game);
     });
   });
   describe('startGame()', function () {
     it('should remove the game from hosted games', function () {
-      gamesHandler.startGame(1234);
-      assert.notInclude(gamesHandler._hostedGames,1234);
+      gamesHandler.startGame({'id':1234});
+      assert.notInclude(gamesHandler._hostedGames,{'id':1234});
     });
     it('should add the given game to running games', function () {
-      gamesHandler.addGame(463467);
-      gamesHandler.startGame(463467);
-      assert.include(gamesHandler._runningGames,463467);
+      gamesHandler.addGame({"id":463467});
+      gamesHandler.startGame({"id":463467});
+      assert.deepInclude(gamesHandler._runningGames,{463467:{"id":463467}});
     });
   });
   describe('endGame()', function () {
@@ -63,11 +63,11 @@ describe('GamesHandler', function () {
       gamesHandler.endGame(game);
     });
     it('should remove the game from _runningGames', function () {
-      assert.notInclude(gamesHandler._runningGames,game);
+      assert.notInclude(gamesHandler._runningGames,{[game.id]:game});
     });
 
     it('should add that game in _completedGames', function () {
-      assert.include(gamesHandler._completedGames,game);
+      assert.deepInclude(gamesHandler._completedGames,{[game.id]:game});
     });
   });
   describe('cancelGame()', function () {
@@ -76,11 +76,11 @@ describe('GamesHandler', function () {
       gamesHandler.cancelGame(game);
     });
     it('should remove the game from _hostedGames', function () {
-      assert.notInclude(gamesHandler._hostedGames,game);
+      assert.notInclude(gamesHandler._hostedGames,{[game.id]:game});
     });
 
     it('should add that game in _cancelledGames', function () {
-      assert.include(gamesHandler._cancelledGames,game);
+      assert.deepInclude(gamesHandler._cancelledGames,{[game.id]:game});
     });
   });
   describe('getHostedGamesDetails', function () {
