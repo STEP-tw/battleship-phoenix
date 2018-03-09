@@ -17,20 +17,29 @@ const createRow = function(row,colSize,rowIndex,prefix){
   return row;
 };
 
-const quitGameOption = function (){
-  document.getElementById('quit').style.display='block';
+const displayQuitGameOption = function (){
+  document.querySelector('#quit').style.display='block';
+};
+
+const displayLeaveGame = function (){
+  document.querySelector('#leave').style.display='block';
 };
 
 const initializeQuit = function() {
-  let quitButton = document.getElementById('quitGame');
-  quitButton.onclick=quitGameOption;
+  let leaveGameButton = document.querySelector('#leaveGame');
+  let quitButton = document.querySelector('#quitGame');
+  quitButton.onclick=displayQuitGameOption;
+  leaveGameButton.onclick = displayLeaveGame;
 };
 
-const cancelQuit = function() {
-  let cancelButton = document.getElementById('No');
+const initializeCancel = function() {
+  let cancelButton = document.querySelector('#No');
   cancelButton.onclick = ()=>{
-    document.getElementById('quit').style.display='none';
-    hasOpponentLeft();
+    document.querySelector('#quit').style.display='none';
+  };
+  cancelButton = document.querySelector('#NotLeave');
+  cancelButton.onclick = ()=>{
+    document.querySelector('#leave').style.display='none';
   };
 };
 
@@ -47,9 +56,9 @@ let setupGame = function(){
   createGrid('oceanGrid','og',10,10);
   addListener();
   initializeQuit();
-  cancelQuit();
+  initializeCancel();
   getAndUpdateGameStatus();
-  // hasOpponentLeft();
+  document.querySelector('#leaveGame').style.display= 'block';
   showShipDetailsOnHover();
   utils.sendAjax(utils.get(),'/audioStatus',handleAudios);
   document.querySelector('#loader-wrapper').style.display = 'none';

@@ -14,11 +14,6 @@ describe('Game', () => {
       assert.equal(game.hostName,'arjun');
     });
   });
-  describe('get playerCount', () => {
-    it('should give no: of players', () => {
-      assert.equal(game.playerCount, 0);
-    });
-  });
   describe('addPlayer', () => {
     it('should add a new player with Id 1', () => {
       game.addPlayer('player1', 1);
@@ -334,7 +329,7 @@ describe('Game', () => {
     });
     it('should remove player from player list', () => {
       game.removePlayer(1);
-      assert.equal(game.playerCount,1);
+      assert.equal(game.getOpponentPlayer(2),undefined);
     });
   });
   describe('updateLastShot', function() {
@@ -381,15 +376,6 @@ describe('Game', () => {
       let actual = game.getOpponentSunkShipsCoords(1);
       let expected=[[[ 2,3],[2,4]]];
       assert.deepEqual(actual, expected);
-    });
-  });
-  describe('changeStartedStatus', function() {
-    beforeEach(function() {
-      game.changeStartedStatus();
-    });
-    it('should change the start status of game', function() {
-      let actual = game.status;
-      assert.ok(actual);
     });
   });
   describe('hasOpponentLeft', function() {

@@ -12,9 +12,6 @@ class Game {
     let player = new Player(id, name);
     this._players.push(player);
   }
-  get playerCount(){
-    return this._players.length;
-  }
   assignFleet(playerId, fleet) {
     let player = this.getPlayer(playerId);
     player.addFleet(fleet);
@@ -53,12 +50,6 @@ class Game {
     return this._players.find(function(player) {
       return currentPlayerID == player.playerId;
     });
-  }
-  changeStartedStatus(){
-    this._started = !this._started;
-  }
-  get status(){
-    return this._started;
   }
   assignTurn(random=Math.random()){
     let turn = generateTurn(random);

@@ -27,7 +27,8 @@
     <source src="/assets/audio/battleship.mp3" type="audio/mp3">
   </audio>
   <div align="center" class="header">BATTLESHIP<br>
-    <button type="button" id="quitGame"  >Quit Game</button>
+    <button type="button" id="quitGame">Quit Game</button>
+    <button type="button" id="leaveGame">Leave Game</button>
     <div class="messageBox">Place your ships</div>
   </div>
   <div class="playerDetails">
@@ -103,14 +104,29 @@
   <div class="popupContent animateZoom">
     <h2>Are you sure you want to quit the game?</h2>
     <a href="/quit">
-    <button type="button" class="submitOnHost blueLongButton ">Yes</button></a>
-    <button type="button" id ="No" class="submitOnHost blueLongButton ">No</button>
+    <button type="button" class="submitOnHost blueLongButton">Yes</button></a>
+    <button type="button" id="No" class="submitOnHost blueLongButton ">No</button>
+  </div>
+</div>
+<div id="leave" class="overflow-model">
+  <div class="popupContent animateZoom">
+    <h2>Are you sure you want to leave the game?</h2>
+    <a href="/leave">
+    <button type="button" class="submitOnHost blueLongButton">Yes</button></a>
+    <button type="button" id="NotLeave" class="submitOnHost blueLongButton ">No</button>
   </div>
 </div>
 <div id="opponentLeft" class="overflow-model">
   <div class="popupContent animateZoom">
     <h2>Oops...! Your opponent left</h2>
     <h2>You Won</h2>
+    <a href="/">
+    <button type="button" class="submitOnHost blueLongButton ">Home</button></a>
+  </div>
+</div>
+<div id="rivalLeft" class="overflow-model">
+  <div class="popupContent animateZoom">
+    <h2>Oops...! Your opponent left</h2>
     <a href="/">
     <button type="button" class="submitOnHost blueLongButton ">Home</button></a>
   </div>

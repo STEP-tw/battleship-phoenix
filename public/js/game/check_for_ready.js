@@ -4,11 +4,20 @@ const addListener = function() {
 };
 
 const handleReady = function() {
+  document.getElementById("leaveGame").style.display = 'none';
   loadFleet();
+};
+
+const showOpponentLeft = function(){
+  utils.clearIntervals();
+  document.querySelector('#rivalLeft').style.display='block';
 };
 
 const handleStartGame = function() {
   let response = utils.getResponse(this);
+  if(response.hasOpponentLeft) {
+    return showOpponentLeft();
+  }
   response.status ? gameStarts(response) : showWaitingMessage();
 };
 

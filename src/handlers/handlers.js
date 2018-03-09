@@ -1,4 +1,3 @@
-// const Game = require('../models/game');
 const utils = require('../utils/utils.js');
 const isValidFleet = require('../utils/validateFleet.js').isValidFleet;
 
@@ -44,7 +43,6 @@ const joinGame = function(req,res) {
   }
   let game = utils.getHostedGame(req);
   utils.addPlayerDetails(req,res,game);
-  game.changeStartedStatus();
   utils.startGame(req,game);
   res.end();
 };
@@ -76,6 +74,12 @@ const loadFleet = function(req, res) {
 const arePlayersReady = function(req, res) {
   let game = utils.getRunningGame(req);
   let currentPlayerIndex = utils.getCurrentPlayerIndex(game);
+  let opponentLeft = game.hasOpponentLeft(utils.getPlayerId(req));
+  if(opponentLeft){
+    res.json({hasOpponentLeft:opponentLeft});
+    utils.endGame(req,game);
+    return;
+  }
   let playerId = utils.getPlayerId(req);
   let turnStatus = game.validateId(currentPlayerIndex,playerId);
   let playerStatus = {
@@ -193,7 +197,12 @@ const getAudioStatus = function(req,res){
 };
 
 const quitGame = function(req,res) {
-  utils.getRunningGame(req).removePlayer(req.cookies.player);
+  utils.getRunningGame(req).removePlayer(utils.getPlayerId(req));
+  res.redirect('/');
+};
+
+const leaveGame = function(req,res){
+  utils.getRunningGame(req).removePlayer(utils.getPlayerId(req));
   res.redirect('/');
 };
 
@@ -209,6 +218,7 @@ module.exports = {
   updateShot,
   hasOpponentWon,
   getGameStatus,
+  leaveGame,
   handleTresspassing,
   musicController,
   soundController,

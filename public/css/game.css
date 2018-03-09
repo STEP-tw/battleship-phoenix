@@ -349,7 +349,7 @@ li:hover {
   display: none;
 }
 
-#quitGame {
+#quitGame,#leaveGame {
    background-color: #9d9eac;
    color: rgb(33,54,60);
    float: right;

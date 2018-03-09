@@ -33,6 +33,7 @@ app.get('/gameStatus',handlers.getGameStatus);
 app.get('/quit',handlers.quitGame);
 app.get('/getHostedGames',handlers.getHostedGames);
 app.get('/audioStatus',handlers.getAudioStatus);
+app.get('/leave',handlers.leaveGame);
 
 app.post('/updateFiredShot',handlers.isAlreadyFired,handlers.updateShot);
 app.post('/start-game',handlers.loadFleet);

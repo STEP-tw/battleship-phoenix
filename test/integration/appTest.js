@@ -173,7 +173,6 @@ describe('app', () => {
       gamesHandler._runningGames[game.id]=game;
       game.addPlayer('arvind', sessionId2);
       game.assignTurn();
-      game.changeStartedStatus();
       delete game.currentPlayerIndex;
       request(app)
         .get('/hasOpponentJoined')
@@ -209,6 +208,21 @@ describe('app', () => {
         .end(done);
     });
 
+    describe('GET /arePlayersReady', function() {
+      it('responds true when opponent is ready', function(done) {
+        game.addPlayer('ishu', 1);
+        gamesHandler.addGame(game);
+        gamesHandler.startGame(game);
+        request(app)
+          .get('/arePlayersReady')
+          .set('cookie', [`player=${1}`, `gameId=${sessionId}`])
+          .expect(200)
+          .expect({
+            hasOpponentLeft:true
+          })
+          .end(done);
+      });
+    });
 
     it('responds false when opponent is not ready', function(done) {
       let sessionId2 = app.generateSessionId();
@@ -518,13 +532,27 @@ describe('app', () => {
   });
 
   describe('GET /quit', () => {
-    it('should cancel the game', (done) => {
+    it('should remove the player and redirect to home page', (done) => {
       game.addPlayer('arvind', sessionId);
       game.addPlayer('ishu', 2);
       gamesHandler.addGame(game);
       gamesHandler.startGame(game);
       request(app)
         .get('/quit')
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
+        .expect(302)
+        .expect('Location','/')
+        .end(done);
+    });
+  });
+  describe('GET /leave', () => {
+    it('should cancel the game and redirect to home page', (done) => {
+      game.addPlayer('arvind', sessionId);
+      game.addPlayer('ishu', 2);
+      gamesHandler.addGame(game);
+      gamesHandler.startGame(game);
+      request(app)
+        .get('/leave')
         .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
         .expect(302)
         .expect('Location','/')
