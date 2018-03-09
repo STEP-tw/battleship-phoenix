@@ -413,7 +413,7 @@ describe('app', () => {
         .expect(200)
         .end(done);
     });
-    it.skip('should give hasOpponentLeft as true if opponent leaves',(done)=>{
+    it('should give hasOpponentLeft as true if opponent leaves',(done)=>{
       game.removePlayer(sessionId2);
       request(app)
         .post('/updateFiredShot')

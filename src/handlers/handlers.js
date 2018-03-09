@@ -107,6 +107,7 @@ const updateShot = function(req,res) {
   if(opponentLeft){
     res.json({hasOpponentLeft:opponentLeft});
     utils.endGame(req,game);
+    return;
   }
   if(!game.isCurrentPlayer(playerId)){
     res.json({illegalTurn:true});
