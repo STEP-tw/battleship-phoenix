@@ -1,12 +1,13 @@
 const Ship = require('./ship.js');
 
+
 class Fleet {
   constructor(ships, shipsCount=5) {
     this._ships = ships || [];
     this._requiredShipsCount=shipsCount;
   }
   addShip(shipInfo){
-    let ship = new Ship(shipInfo.dir,shipInfo.length,shipInfo.headPos);
+    let ship = new Ship(shipInfo.dir,shipInfo.name,shipInfo.headPos);
     this._ships.push(ship);
   }
   get shipsCount(){

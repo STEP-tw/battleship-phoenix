@@ -33,6 +33,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('GET /', () => {
     it('responds with index.html page content with join or host game options',
       function(done) {
@@ -43,6 +44,7 @@ describe('app', () => {
           .end(done);
       });
   });
+
   describe('GET /unpermitted content', () => {
     it('should redirect to index page', function(done) {
       request(app)
@@ -52,6 +54,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('POST /', () => {
     it('should give the waiting for opponent message', (done) => {
       request(app)
@@ -60,6 +63,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('POST /controlMusic', function () {
     it('should respond with current music status', function (done) {
       request(app)
@@ -75,6 +79,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('POST /controlSound', function () {
     it('should respond with current sound status', function (done) {
       request(app)
@@ -90,6 +95,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('GET /audioStatus', function () {
     it('should respond with current audio status', function (done) {
       request(app)
@@ -107,6 +113,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('POST /host', function() {
     it('just stay on the page and wait for opponent', function(done) {
       request(app)
@@ -118,6 +125,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('POST /join', function() {
     it('should add the details of the join player', function(done) {
       game.addPlayer('arvind', sessionId);
@@ -157,6 +165,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('GET /hasOpponentJoined', function() {
     it('responds true if opponent is present', function(done) {
       game.addPlayer('ishu', sessionId);
@@ -176,6 +185,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('GET /arePlayersReady', function() {
     it('responds true when opponent is ready', function(done) {
       game.addPlayer('ishu', sessionId);
@@ -217,6 +227,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('GET /positionSystem', function() {
     it('should response with content of position_system file', function(done) {
       game.addPlayer('arvind', sessionId);
@@ -232,6 +243,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('GET /cancel-game', () => {
     it('should cancel the game', (done) => {
       game.addPlayer('arvind', sessionId);
@@ -245,6 +257,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('POST /start-game', () => {
     it(`should send false when fleet does not have required ships`, (done) => {
       game.addPlayer('arvind', sessionId);
@@ -272,24 +285,24 @@ describe('app', () => {
       gamesHandler.startGame(game);
       let fleetsInfo=[{
         "dir": "south",
-        "headPos": "og_4_5",
-        "length": 3
+        "headPos": [4,5],
+        "name" : "cruiser"
       },{
         "dir": "south",
-        "headPos": "og_4_5",
-        "length": 3
+        "headPos": [1,8],
+        "name":"destroyer"
       },{
         "dir": "south",
-        "headPos": "og_4_5",
-        "length": 3
+        "headPos": [0,0],
+        "name":"carrier"
       },{
-        "dir": "south",
-        "headPos": "og_4_5",
-        "length": 3
+        "dir": "north",
+        "headPos": [4,4],
+        "name":"submarine"
       },{
-        "dir": "south",
-        "headPos": "og_4_5",
-        "length": 3
+        "dir": "east",
+        "headPos": [1,8],
+        "name":"battleship"
       }];
       request(app)
         .post('/start-game')
@@ -307,7 +320,7 @@ describe('app', () => {
     it('Should respond with status true if any ship is hit', function(done) {
       let shipInfo = {
         dir: "south",
-        length: 3,
+        name: "carrier",
         headPos: [1, 2]
       };
       let fleet = new Fleet();
@@ -343,7 +356,7 @@ describe('app', () => {
     beforeEach(function() {
       let shipInfo = {
         dir: "south",
-        length: 3,
+        name:"carrier",
         headPos: [1, 2]
       };
       gamesHandler = app.gamesHandler;
@@ -397,11 +410,12 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('hasOpponentWon', function() {
     beforeEach(function() {
       let shipInfo = {
         dir: "south",
-        length: 1,
+        name:"destroyer",
         headPos: [3, 4]
       };
       gamesHandler = app.gamesHandler;
@@ -419,7 +433,8 @@ describe('app', () => {
 
 
     it('should return true if my all ships has sank', function(done) {
-      game.updatePlayerShot(1, [3,4]);
+      game.updatePlayerShot(1,[3,4]);
+      game.updatePlayerShot(1,[3,5]);
       request(app)
         .get('/hasOpponentWon')
         .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
@@ -446,6 +461,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('getGameStatus', function() {
     it('should return empty fleet on no ships', function(done) {
       game.addPlayer('ishu', sessionId);
@@ -463,7 +479,7 @@ describe('app', () => {
     it('should return player\'s hit and miss details', function(done) {
       let shipInfo = {
         dir: "south",
-        length: 1,
+        name:"carrier",
         headPos: [1, 2]
       };
       fleet = new Fleet();
@@ -482,7 +498,8 @@ describe('app', () => {
         .expect({
           "fleet": [{
             "direction": "south",
-            "length": 1,
+            "name":"carrier",
+            "length":5,
             "initialPos": [1, 2],
             "posOfDamage": []
           }],
@@ -499,6 +516,7 @@ describe('app', () => {
         .end(done);
     });
   });
+
   describe('GET /quit', () => {
     it('should cancel the game', (done) => {
       game.addPlayer('arvind', sessionId);

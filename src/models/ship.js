@@ -1,11 +1,13 @@
 const getCoordinates = require('./position_system.js');
+const getShipLength=require('../utils/validateFleet').getShipLength;
 
 class Ship {
-  constructor(direction,length,initialPos,damages) {
+  constructor(direction,name,initialPos,damages) {
     this.direction = direction;
-    this.length = length;
+    this.length = getShipLength(name);
     this.initialPos = initialPos;
     this.posOfDamage = damages || [];
+    this.name=name;
   }
   getShipCoords(){
     return getCoordinates(this.direction,this.initialPos,this.length);

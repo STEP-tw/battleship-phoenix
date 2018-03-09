@@ -1,5 +1,6 @@
 // const Game = require('../models/game');
 const utils = require('../utils/utils.js');
+const isValidFleet = require('../utils/validateFleet.js').isValidFleet;
 
 const handleTresspassing = function(req, res, next) {
   if (utils.isUserTresspassing(req)) {
@@ -63,8 +64,8 @@ const loadFleet = function(req, res) {
   let game = utils.getRunningGame(req);
   let playerId = utils.getPlayerId(req);
   let fleet = utils.getFleet(req);
-  game.assignFleet(playerId,fleet);
-  if (fleet.hasRequiredShips()) {
+  if (fleet.hasRequiredShips() && isValidFleet(fleet.getAllShips())) {
+    game.assignFleet(playerId,fleet);
     game.changePlayerStatus(playerId);
     res.json({status:true});
     return;

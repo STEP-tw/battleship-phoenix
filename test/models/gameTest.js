@@ -102,7 +102,7 @@ describe('Game', () => {
       let fleet = new Fleet();
       let subShipInfo = {
         dir: 'south',
-        length: 4,
+        name: "destroyer",
         headPos: [2, 3]
       };
       fleet.addShip(subShipInfo);
@@ -190,7 +190,7 @@ describe('Game', () => {
       let fleet = new Fleet();
       let subShipInfo = {
         dir: 'south',
-        length: 4,
+        name: "destroyer",
         headPos: [2, 3]
       };
       fleet.addShip(subShipInfo);
@@ -367,7 +367,7 @@ describe('Game', () => {
       let fleet = new Fleet();
       let subShipInfo = {
         dir: 'south',
-        length: 1,
+        name: "destroyer",
         headPos: [2, 3]
       };
       fleet.addShip(subShipInfo);
@@ -376,8 +376,10 @@ describe('Game', () => {
       game.assignFleet(1, fleet);
       game.assignFleet(2, fleet);
       game.updatePlayerShot(2, [2, 3]);
-      let actual = game.getOpponentSunkShipsCoords(2);
-      let expected=[[[ 2,3]]];
+      game.updatePlayerShot(2, [2, 4]);
+
+      let actual = game.getOpponentSunkShipsCoords(1);
+      let expected=[[[ 2,3],[2,4]]];
       assert.deepEqual(actual, expected);
     });
   });

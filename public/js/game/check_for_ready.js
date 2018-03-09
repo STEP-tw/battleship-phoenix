@@ -37,8 +37,12 @@ const checkFleetStatus=function(){
     utils.getReadyButton().style.display = 'none';
     utils.poll(utils.get(), '/arePlayersReady', handleStartGame);
     disableOceanGrid();
+    return;
   }
-  utils.updateMessage('please place all of your ships');
+  utils.updateMessage('Invalid fleet position');
+  setTimeout(()=>{
+    location.reload();
+  },2000);
 };
 const loadFleet = function() {
   let fleet = utils.toS({

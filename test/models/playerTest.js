@@ -38,7 +38,7 @@ describe('Player', () => {
   describe('isHit', () => {
     it('should return true when fleet any ship hit by opponent', () => {
       let fleet = new Fleet();
-      let subShipInfo = {dir:'south',length:4,headPos:[2,3]};
+      let subShipInfo = {dir:'south',name:"carrier",headPos:[2,3]};
       fleet.addShip(subShipInfo);
       player.addFleet(fleet);
       let actual = player.isHit([2,3]);
@@ -100,7 +100,7 @@ describe('Player', () => {
   describe('getDestroyedShipsCoords', () => {
     beforeEach(() => {
       let fleet = new Fleet();
-      let subShipInfo = {dir:'south',length:2,headPos:[0,0]};
+      let subShipInfo = {dir:'south',name:"destroyer",headPos:[0,0]};
       fleet.addShip(subShipInfo);
       player.addFleet(fleet);
     });
