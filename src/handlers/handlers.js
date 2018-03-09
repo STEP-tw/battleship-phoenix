@@ -97,21 +97,24 @@ const isAlreadyFired = function (req,res,next) {
 
 const updateShot = function(req,res) {
   let game = utils.getRunningGame(req);
-  let currentPlayerID = utils.getPlayerId(req);
-  let opponentLeft = game.hasOpponentLeft(currentPlayerID);
+  let playerId = utils.getPlayerId(req);
+  let opponentLeft = game.hasOpponentLeft(playerId);
   if(opponentLeft){
     res.json({hasOpponentLeft:opponentLeft});
     utils.endGame(req,game);
+  }
+  if(!game.isCurrentPlayer(playerId)){
+    res.json({illegalTurn:true});
     return;
   }
   let firedPos = utils.getFiredPosition(req);
-  let hitStatus =game.checkOpponentIsHit(currentPlayerID,firedPos);
+  let hitStatus =game.checkOpponentIsHit(playerId,firedPos);
   let victoryStatus = utils.hasOpponentLost(req);
-  let turnStatus = utils.getChangedTurnStatus(game,currentPlayerID);
-  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(currentPlayerID);
+  let turnStatus = utils.getChangedTurnStatus(game,playerId);
+  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(playerId);
   let soundStatus = req.cookies.sound || true;
-  game.updatePlayerShot(currentPlayerID,firedPos);
-  game.updateLastShot(currentPlayerID,firedPos,hitStatus);
+  game.updatePlayerShot(playerId,firedPos);
+  game.updateLastShot(playerId,firedPos,hitStatus);
   let shotStatus = {
     firedPos:firedPos,
     status:hitStatus,

@@ -48,14 +48,14 @@ const loadFleet = function() {
 };
 
 const handleTurn = function(myTurn) {
-  let message = myTurn ? 'Your turn' : 'Opponent\'s turn';
-  utils.updateMessage(message);
   utils.clearIntervals();
   if (myTurn) {
+    utils.updateMessage('Your turn');
     makeTargetGridFirable();
   } else {
-    deactivateTargetGrid();
+    utils.updateMessage('Opponent\'s turn');
     utils.clearIntervals();
+    deactivateTargetGrid();
     setTimeout(()=>{
       utils.sendAjax(utils.get(),'/hasOpponentWon',displayLost);
     },1000);
@@ -227,6 +227,10 @@ const displayShot = function() {
   let shotResult = utils.getResponse(this);
   if (shotResult.hasOpponentLeft) {
     return displayOpponentLeft();
+  }
+  if(shotResult.illegalTurn){
+    utils.updateMessage('Not your turn');
+    return;
   }
   if (shotResult.isAlreadyFired) {
     return;

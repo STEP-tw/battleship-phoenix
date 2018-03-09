@@ -124,5 +124,8 @@ class Game {
   get id(){
     return this._id;
   }
+  isCurrentPlayer(playerId){
+    return this.validateId(this.turn,playerId);
+  }
 }
 module.exports = Game;

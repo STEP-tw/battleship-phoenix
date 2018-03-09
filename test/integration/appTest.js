@@ -99,6 +99,13 @@ describe('app', () => {
         .expect({music:'true',sound:'false'})
         .end(done);
     });
+    it('should respond with true by default', function (done) {
+      request(app)
+        .get('/audioStatus')
+        .expect(200)
+        .expect({music:true,sound:true})
+        .end(done);
+    });
   });
   describe('POST /host', function() {
     it('just stay on the page and wait for opponent', function(done) {
@@ -360,6 +367,14 @@ describe('app', () => {
           firedPosition: [1, 2]
         })
         .expect({isAlreadyFired: true})
+        .end(done);
+    });
+    it('should respond with an empty object for illegal turn', function (done) {
+      request(app)
+        .post('/updateFiredShot')
+        .set('cookie', [`player=${sessionId2}`, `gameId=${sessionId}`])
+        .send({firedposition:[1,2]})
+        .expect({illegalTurn:true})
         .end(done);
     });
     it('should return response 200 for fired at a position', function(done) {
