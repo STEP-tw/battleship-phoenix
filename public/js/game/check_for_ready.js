@@ -40,9 +40,6 @@ const checkFleetStatus=function(){
     return;
   }
   utils.updateMessage('Invalid fleet position');
-  setTimeout(()=>{
-    location.reload();
-  },2000);
 };
 const loadFleet = function() {
   let fleet = utils.toS({
