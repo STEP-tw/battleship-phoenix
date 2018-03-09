@@ -1,9 +1,16 @@
 const getHostedGames = function () {
-  document.querySelector('#loader-wrapper').style.display = 'none';
-  utils.sendAjax(utils.get(),'/audioStatus',controlAudio);
-  utils.poll(utils.get(),'/getHostedGames',showHostedGames,4000);
+  utils.sendAjax(utils.get(),'/getHostedGames',showHostedGames);
 };
 
+const getAudioStatus = function(){
+  document.querySelector('#loader-wrapper').style.display = 'none';
+  utils.sendAjax(utils.get(),'/audioStatus',controlAudio);
+};
+
+const handleOnload = function(){
+  getAudioStatus();
+  getHostedGames();
+};
 const joinGame = function(){
   let gameId = event.target.id;
   let name = document.querySelector('#username2').value;
@@ -30,6 +37,7 @@ const showHostedGames = function () {
   let hostedGamesTable = utils.getHostedGamesTable();
   hostedGamesTable.innerHTML = '';
   hostedGames.reduce(utils.appendGameInTable,hostedGamesTable);
+  setTimeout(getHostedGames,2000);
 };
 
 const controlAudio = function(){
@@ -41,4 +49,4 @@ const controlAudio = function(){
   backgroundMusic.muted = !response.music;
 };
 
-window.onload = getHostedGames;
+window.onload = handleOnload;
