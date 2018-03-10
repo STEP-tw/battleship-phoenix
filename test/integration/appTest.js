@@ -303,7 +303,7 @@ describe('app', () => {
         "name" : "cruiser"
       },{
         "dir": "south",
-        "headPos": [1,8],
+        "headPos": [7,8],
         "name":"destroyer"
       },{
         "dir": "south",

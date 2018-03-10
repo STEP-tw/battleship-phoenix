@@ -75,7 +75,7 @@ utils.getFleet = function (req) {
   let fleet = new Fleet();
   let shipsHeadPositions = utils.getFleetDetails(req);
   shipsHeadPositions.forEach(function(shipInfo) {
-    if (!isShipAlreadyPresent(fleet._ships,shipInfo)) {
+    if (!isShipAlreadyPresent(fleet._ships,shipInfo) ) {
       fleet.addShip(shipInfo);
     }
   });
