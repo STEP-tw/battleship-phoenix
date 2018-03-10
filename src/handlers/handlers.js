@@ -100,83 +100,48 @@ const isAlreadyFired = function (req,res,next) {
   }
 };
 
-const updateShot = function(req,res) {
+const sendOpponentLeft = function(req,res,game){
+  res.json({hasOpponentLeft:true});
+  utils.endGame(req,game);
+};
+
+const statusAfterShotIsFired = function(req,res) {
   let game = utils.getRunningGame(req);
   let playerId = utils.getPlayerId(req);
   let opponentLeft = game.hasOpponentLeft(playerId);
   if(opponentLeft){
-    res.json({hasOpponentLeft:opponentLeft});
-    utils.endGame(req,game);
-    return;
+    return sendOpponentLeft(req,res,game);
   }
   if(!game.isCurrentPlayer(playerId)){
-    res.json({illegalTurn:true});
-    return;
+    return res.json({illegalTurn:true});
   }
   let firedPos = utils.getFiredPosition(req);
-  let hitStatus =game.checkOpponentIsHit(playerId,firedPos);
-  let victoryStatus = utils.hasOpponentLost(req);
-  let turnStatus = utils.getChangedTurnStatus(game,playerId);
-  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(playerId);
   let soundStatus = req.cookies.sound || true;
-  game.updatePlayerShot(playerId,firedPos);
-  game.updateLastShot(playerId,firedPos,hitStatus);
-  let shotStatus = {
-    firedPos:firedPos,
-    status:hitStatus,
-    winStatus:victoryStatus,
-    myTurn:turnStatus,
-    destroyedShipsCoords: destroyedShipsCoords,
-    sound:soundStatus
-  };
+  let shotStatus =game.getStatusAfterShotIsFired(playerId,firedPos,soundStatus);
   res.json(shotStatus);
 };
 
-const hasOpponentWon = function(req,res){
+const statusDuringOpponentTurn = function(req,res){
   let game = utils.getRunningGame(req);
   let currentPlayerID = utils.getPlayerId(req);
   let opponentLeft = game.hasOpponentLeft(currentPlayerID);
   let soundStatus = req.cookies.sound || true;
   if(opponentLeft){
-    res.json({hasOpponentLeft:opponentLeft});
-    utils.endGame(req,game);
-    return;
+    return sendOpponentLeft(req,res,game);
   }
-  let defeatStatus = game.hasOpponentWon(currentPlayerID);
-  let turnStatus = game.validateId(game.turn,currentPlayerID);
-  let opponentShots = game.getOpponentShots(currentPlayerID);
-  utils.handleEndgame(req,game,defeatStatus);
-  res.json({
-    status:defeatStatus,
-    myTurn:turnStatus,
-    opponentShots:opponentShots,
-    lastShot:game.getOpponentLastShot(currentPlayerID),
-    sound:soundStatus
-  });
+  let response = game.getStatusDuringOpponentTurn(currentPlayerID,soundStatus);
+  utils.handleEndgame(req,game,response.defeatStatus);
+  res.json(response);
 };
 
 const getGameStatus = function(req,res){
   let playerId = utils.getPlayerId(req);
   let game = utils.getRunningGame(req);
-  let fleet = game.getFleet(playerId);
-  let shots = game.getCurrentPlayerShots(playerId);
-  let oppShots = game.getOpponentShots(playerId);
-  let playerName= game.getPlayer(playerId).playerName;
-  let opponent= game.getOpponentPlayer(playerId);
-  let opponentName = opponent.playerName;
-  let oppMisses = oppShots.misses;
-  let hits = oppShots.hits;
-  let ships = fleet.getAllShips();
-  let destroyedShipsCoords = game.getOpponentSunkShipsCoords(playerId);
-  res.json({
-    fleet:ships,
-    opponentHits:oppShots.hits,
-    playerShots:shots,
-    opponentMisses:oppShots.misses,
-    playerName:playerName,
-    enemyName:opponent.playerName,
-    destroyedShipsCoords: destroyedShipsCoords
-  });
+  if(game.hasOpponentLeft(playerId)){
+    return sendOpponentLeft(req,res,game);
+  }
+  let gameStatus = game.getGameStatus(playerId);
+  res.json(gameStatus);
 };
 
 const musicController = function(req,res){
@@ -216,8 +181,8 @@ module.exports = {
   loadFleet,
   hasOpponentJoined,
   isAlreadyFired,
-  updateShot,
-  hasOpponentWon,
+  statusAfterShotIsFired,
+  statusDuringOpponentTurn,
   getGameStatus,
   leaveGame,
   handleTresspassing,

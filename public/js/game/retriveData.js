@@ -35,6 +35,10 @@ const updateHealth = function(hits,healthBlock= '#myHealth') {
 
 const updateDisplay = function() {
   let response = utils.getResponse(this);
+  if(response.hasOpponentLeft){
+    document.querySelector('#rivalLeft').style.display='block';
+    return;
+  }
   let fleet = response.fleet;
   let destroyedShipsCoords = response.destroyedShipsCoords;
   let destroyedShipsCount = destroyedShipsCoords.length;
@@ -45,7 +49,8 @@ const updateDisplay = function() {
   if (fleet && fleet.length != 0) {
     document.getElementsByClassName('shipsBlock')[0].style.display = 'none';
     document.getElementsByClassName('buttonBlock')[0].style.display = 'none';
-    utils.sendAjax(utils.get(), '/arePlayersReady', handleStartGame);
+    utils.poll(utils.get(), '/arePlayersReady', handleStartGame);
+    document.querySelector('#leaveGame').style.display = 'none';
   }
   fleet.map(displayShip);
   updateShotsOnTargetGrid(response.playerShots, 'hits'

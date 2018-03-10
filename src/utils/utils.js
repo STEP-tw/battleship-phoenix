@@ -107,13 +107,6 @@ utils.newSessionId = function (req) {
   return req.app.generateSessionId();
 };
 
-utils.hasOpponentLost = function(req,res){
-  let game = utils.getRunningGame(req);
-  let currentPlayerID = utils.getPlayerId(req);
-  let victoryStatus = game.hasOpponentLost(currentPlayerID);
-  return victoryStatus;
-};
-
 utils.createGame = function (req) {
   let sessionId = utils.newSessionId(req);
   let game = new Game(sessionId);
@@ -130,11 +123,6 @@ utils.addPlayerDetails = function (req,res,game) {
 
 utils.arePlayersReady = function (game) {
   return game && game.arePlayersReady();
-};
-
-utils.getChangedTurnStatus = function (game,currentPlayerID) {
-  game.changeTurn();
-  return game.validateId(game.turn,currentPlayerID);
 };
 
 utils.handleEndgame = function (req,game,defeatStatus) {

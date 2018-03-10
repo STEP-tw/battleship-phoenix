@@ -66,11 +66,11 @@ class Game {
     let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.isHit(position);
   }
-  hasOpponentLost(currentPlayerID){
+  statusAfterShotIsFired(currentPlayerID){
     let opponent = this.getOpponentPlayer(currentPlayerID);
     return opponent.hasFleetDestroyed();
   }
-  hasOpponentWon(currentPlayerID){
+  statusDuringOpponentTurn(currentPlayerID){
     return this.getCurrentPlayer(currentPlayerID).hasFleetDestroyed();
   }
   updatePlayerShot(currentPlayerID,position){
@@ -117,6 +117,56 @@ class Game {
   }
   isCurrentPlayer(playerId){
     return this.validateId(this.turn,playerId);
+  }
+  getChangedTurnStatus(currentPlayerID){
+    this.changeTurn();
+    return this.validateId(this.turn,currentPlayerID);
+  }
+  getGameStatus(playerId){
+    let ships = this.getFleet(playerId).getAllShips();
+    let shots = this.getCurrentPlayerShots(playerId);
+    let oppShots = this.getOpponentShots(playerId);
+    let playerName= this.getPlayer(playerId).playerName;
+    let opponent= this.getOpponentPlayer(playerId);
+    let destroyedShipsCoords = this.getOpponentSunkShipsCoords(playerId);
+    return {
+      fleet:ships,
+      opponentHits:oppShots.hits,
+      playerShots:shots,
+      opponentMisses:oppShots.misses,
+      playerName:playerName,
+      enemyName:opponent.playerName,
+      destroyedShipsCoords: destroyedShipsCoords
+    };
+  }
+  getStatusAfterShotIsFired(playerId,firedPos,soundStatus){
+    let hitStatus =this.checkOpponentIsHit(playerId,firedPos);
+    let victoryStatus = this.statusAfterShotIsFired(playerId);
+    let turnStatus = this.getChangedTurnStatus(playerId);
+    let destroyedShipsCoords = this.getOpponentSunkShipsCoords(playerId);
+    this.updatePlayerShot(playerId,firedPos);
+    this.updateLastShot(playerId,firedPos,hitStatus);
+    return {
+      firedPos:firedPos,
+      status:hitStatus,
+      winStatus:victoryStatus,
+      myTurn:turnStatus,
+      destroyedShipsCoords: destroyedShipsCoords,
+      sound:soundStatus
+    };
+  }
+  getStatusDuringOpponentTurn(currentPlayerID,soundStatus){
+    let defeatStatus = this.statusDuringOpponentTurn(currentPlayerID);
+    let turnStatus = this.validateId(this.turn,currentPlayerID);
+    let opponentShots = this.getOpponentShots(currentPlayerID);
+    let lastShot = this.getOpponentLastShot(currentPlayerID);
+    return {
+      status:defeatStatus,
+      myTurn:turnStatus,
+      opponentShots:opponentShots,
+      lastShot:lastShot,
+      sound:soundStatus
+    };
   }
 }
 module.exports = Game;

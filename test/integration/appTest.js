@@ -418,14 +418,14 @@ describe('app', () => {
       request(app)
         .post('/updateFiredShot')
         .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-        .send({firedPosition: [4, 2]})
+        .send({firedPosition: [4, 4]})
         .expect(200)
-        .expect('{"hasOpponentLeft":true}')
+        .expect({hasOpponentLeft:true})
         .end(done);
     });
   });
 
-  describe('hasOpponentWon', function() {
+  describe('statusDuringOpponentTurn', function() {
     beforeEach(function() {
       let shipInfo = {
         dir: "south",
@@ -450,7 +450,7 @@ describe('app', () => {
       game.updatePlayerShot(1,[3,4]);
       game.updatePlayerShot(1,[3,5]);
       request(app)
-        .get('/hasOpponentWon')
+        .get('/statusDuringOpponentTurn')
         .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
         .expect(200)
         .expect(/"status":true/)
@@ -459,7 +459,7 @@ describe('app', () => {
 
     it('should return false if my all ship has not sank', function(done) {
       request(app)
-        .get('/hasOpponentWon')
+        .get('/statusDuringOpponentTurn')
         .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
         .expect(200)
         .expect(/"status":false/)
@@ -468,7 +468,7 @@ describe('app', () => {
     it('should give hasOpponentLeft as true if opponent leaves',(done)=>{
       game.removePlayer(sessionId2);
       request(app)
-        .get('/hasopponentwon')
+        .get('/statusDuringOpponentTurn')
         .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
         .expect(200)
         .expect('{"hasOpponentLeft":true}')
@@ -526,6 +526,20 @@ describe('app', () => {
           playerName: 'arvind',
           enemyName: 'ishu',
           destroyedShipsCoords: []
+        })
+        .end(done);
+    });
+    it('should return player\'s hit and miss details', function(done) {
+      game.addPlayer('ishu', sessionId);
+      sessionId2 = app.generateSessionId();
+      game.assignTurn();
+      gamesHandler._runningGames[game.id]=game;
+      request(app)
+        .get('/gameStatus')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect({
+          hasOpponentLeft:true
         })
         .end(done);
     });

@@ -41,7 +41,7 @@ const makeShipPlacable = function (event,size){
   });
 
   document.getElementById(shipName).style.color="rgb(96, 96, 96)";
-
+  document.querySelector('#ready').style.display='none';
   addMouseEvent();
   isPlaced = false;
 };

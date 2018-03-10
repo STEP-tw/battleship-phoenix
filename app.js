@@ -13,6 +13,9 @@ const logRequest = require('./src/utils/logRequest').logRequest;
 const GamesHandler = require('./src/models/gamesHandler.js');
 
 let app = express();
+let isAlreadyFired = handlers.isAlreadyFired;
+let statusAfterShotIsFired = handlers.statusAfterShotIsFired;
+
 app.fs = fs;
 app.generateSessionId = generateSessionId;
 app.gamesHandler = new GamesHandler();
@@ -28,14 +31,14 @@ app.get('/arePlayersReady',handlers.arePlayersReady);
 app.get('/hasOpponentJoined',handlers.hasOpponentJoined);
 app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
-app.get('/hasOpponentWon',handlers.hasOpponentWon);
+app.get('/statusDuringOpponentTurn',handlers.statusDuringOpponentTurn);
 app.get('/gameStatus',handlers.getGameStatus);
 app.get('/quit',handlers.quitGame);
 app.get('/getHostedGames',handlers.getHostedGames);
 app.get('/audioStatus',handlers.getAudioStatus);
 app.get('/leave',handlers.leaveGame);
 
-app.post('/updateFiredShot',handlers.isAlreadyFired,handlers.updateShot);
+app.post('/updateFiredShot',isAlreadyFired,statusAfterShotIsFired);
 app.post('/start-game',handlers.loadFleet);
 app.post('/host',handlers.hostGame);
 app.post('/join',handlers.joinGame);

@@ -67,7 +67,7 @@ const handleTurn = function(myTurn) {
     utils.clearIntervals();
     deactivateTargetGrid();
     setTimeout(()=>{
-      utils.sendAjax(utils.get(),'/hasOpponentWon',displayLost);
+      utils.sendAjax(utils.get(),'/statusDuringOpponentTurn',displayLost);
     },1000);
   }
 };
