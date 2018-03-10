@@ -4,7 +4,7 @@ const addListener = function() {
 };
 
 const handleReady = function() {
-  document.getElementById("leaveGame").style.display = 'none';
+  document.getElementById("leaveGame").style.display ='none';
   loadFleet();
 };
 
