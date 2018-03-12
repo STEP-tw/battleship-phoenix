@@ -105,11 +105,11 @@ describe('app', () => {
         .expect({music:'true',sound:'false'})
         .end(done);
     });
-    it('should respond with true by default', function (done) {
+    it('should respond with false by default', function (done) {
       request(app)
         .get('/audioStatus')
         .expect(200)
-        .expect({music:true,sound:true})
+        .expect({music:false,sound:false})
         .end(done);
     });
   });
@@ -360,7 +360,7 @@ describe('app', () => {
           winStatus: false,
           myTurn: false,
           destroyedShipsCoords: [],
-          sound :true
+          sound :false
         })
         .end(done);
     });

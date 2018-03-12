@@ -116,7 +116,7 @@ const statusAfterShotIsFired = function(req,res) {
     return res.json({illegalTurn:true});
   }
   let firedPos = utils.getFiredPosition(req);
-  let soundStatus = req.cookies.sound || true;
+  let soundStatus = req.cookies.sound || false;
   let shotStatus =game.getStatusAfterShotIsFired(playerId,firedPos,soundStatus);
   res.json(shotStatus);
 };
@@ -125,7 +125,7 @@ const statusDuringOpponentTurn = function(req,res){
   let game = utils.getRunningGame(req);
   let currentPlayerID = utils.getPlayerId(req);
   let opponentLeft = game.hasOpponentLeft(currentPlayerID);
-  let soundStatus = req.cookies.sound || true;
+  let soundStatus = req.cookies.sound || false;
   if(opponentLeft){
     return sendOpponentLeft(req,res,game);
   }
@@ -154,17 +154,12 @@ const soundController = function(req,res){
 };
 
 const getAudioStatus = function(req,res){
-  let musicStatus = req.cookies.music || true;
-  let soundStatus = req.cookies.sound || true;
+  let musicStatus = req.cookies.music || false;
+  let soundStatus = req.cookies.sound || false;
   res.json({
     music: musicStatus,
     sound: soundStatus
   });
-};
-
-const quitGame = function(req,res) {
-  utils.getRunningGame(req).removePlayer(utils.getPlayerId(req));
-  res.redirect('/');
 };
 
 const leaveGame = function(req,res){
@@ -188,6 +183,5 @@ module.exports = {
   handleTresspassing,
   musicController,
   soundController,
-  getAudioStatus,
-  quitGame
+  getAudioStatus
 };

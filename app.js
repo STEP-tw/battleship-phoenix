@@ -33,7 +33,7 @@ app.get('/cancel-game',handlers.cancelGame);
 app.get('/positionSystem',servePosSysRoute);
 app.get('/statusDuringOpponentTurn',handlers.statusDuringOpponentTurn);
 app.get('/gameStatus',handlers.getGameStatus);
-app.get('/quit',handlers.quitGame);
+app.get('/quit',handlers.leaveGame);
 app.get('/getHostedGames',handlers.getHostedGames);
 app.get('/audioStatus',handlers.getAudioStatus);
 app.get('/leave',handlers.leaveGame);
