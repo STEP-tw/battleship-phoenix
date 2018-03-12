@@ -6,6 +6,7 @@ body {
   background-image: url("../assets/images/cover2.jpg");
   background-size: 100%;
   font-family: 'Coda', cursive;
+  background-attachment: fixed;
 }
 @keyframes animatezoom{
   from{transform:scale(0)}
@@ -94,12 +95,11 @@ h4 {
   background-color:rgba(0, 0, 0, 0.19);
 }
 .buttonBlock {
-  text-align: center;
+  text-align:center;
   position: absolute;
-  margin-top: 43%;
   width: 100%;
   height: 100px;
-  margin-left: 0;
+  margin: auto;
 }
 @media only screen and (min-width:1048px){
   .playerDetails {
@@ -130,7 +130,7 @@ h4 {
     border:0.5px solid rgb(50, 176, 184);
     float: right;
     width: 15%;
-    margin: 25% -15% 50% 0;
+    margin:18% -15% 50% 0;
   }
   .buttonBlock {
     width: 100%;
@@ -280,8 +280,8 @@ li:hover {
   width: 150px;
   height: 45px;
   border-radius: 7px;
-  margin-left: 13%;
   display: none;
+  margin-top: 38%;
   animation: fadeIn 2s;
 }
 
@@ -348,7 +348,7 @@ li:hover {
 #targetGridBox {
   display: none;
 }
-#quitGame:hover,#leaveGame:hover {
+#statusAfterShotIsFiredme:hover,#leaveGame:hover {
   cursor: pointer;
   background-color: rgba(27, 144, 141, 0.2);
 }
@@ -368,6 +368,7 @@ li:hover {
   float: right;
   width: 15%;
   height: auto;
+  margin-top: -4%;
 }
 .overflow-model {
   display:none;

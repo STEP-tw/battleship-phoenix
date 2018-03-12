@@ -29,6 +29,10 @@
   </audio>
   <div align="center" class="header">BATTLESHIP<br>
     <div class="messageBox">Place your ships</div>
+    <div class= "quitButtonBlock">
+      <button id="quitGame">Leave Game</button>
+      <button id="leaveGame">Leave Game</button>
+    </div>
   </div>
   <div class="playerDetails">
       <span class="titles">You</span><br>
@@ -77,13 +81,6 @@
           <tr><td></td><td></td><td></td><td></td><td></td></tr>
         </table>
       </div>
-    </div>
-  </div>
-  <div class="buttonBlock">
-    <button id="ready" onclick="addListener()">Ready</button>
-    <div class= "quitButtonBlock">
-      <button id="quitGame">Leave Game</button>
-      <button id="leaveGame">Leave Game</button>
     </div>
   </div>
 </div>
@@ -137,5 +134,8 @@
   </div>
 </div>
 <div class="shipDetails"></div>
+<div class="buttonBlock">
+  <button id="ready" onclick="addListener()">Ready</button>
+</div>
 </body>
 </html>

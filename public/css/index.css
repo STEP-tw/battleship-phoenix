@@ -6,6 +6,7 @@ html {
 body {
   overflow: hidden;
   background-image: url('../assets/images/cover.jpg');
+  background-attachment: fixed;
   background-size: 100% 100%;
   font-family: 'Cinzel', serif
 }
