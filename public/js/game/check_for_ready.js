@@ -283,7 +283,7 @@ const isPlayerWillingToLeave = function() {
 };
 
 const playHitOrMissSound = function (response) {
-  let sound = response.sound;
+  let sound = utils.parse(response.sound);
   if ('lastShot' in response) {
     response.lastShot.status ? playHitSound(sound) : playMissSound(sound);
   }

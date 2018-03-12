@@ -95,45 +95,31 @@ utils.sendAjax = function(method, url, callback, data = "{}") {
   req.send(data);
 };
 
-utils.createJoinButton = function(id, onclickFun) {
-  let button = utils.createButton('JOIN');
-  button.id = id;
-  button.onclick = onclickFun;
-  return button;
-};
-utils.setBackgroundColor=function(rows,columnForGame,columnForButton,button){
+utils.setBackgroundColor=function(rows,columnForGame){
   if (rows%2 == 1) {
     columnForGame.style.backgroundColor = "rgba(43, 63, 80, 0.58)";
-    columnForButton.style.backgroundColor = "rgba(43, 63, 80, 0.58)";
 
   }else {
     columnForGame.style.backgroundColor = "rgba(1,1,1,0.4)";
-    columnForButton.style.backgroundColor = "rgba(1,1,1,0.4)";
   }
 };
 
-utils.getColumnForButton = function(button, id) {
-  let columnForButton = document.createElement('td');
-  columnForButton.id = id;
-  columnForButton.appendChild(button);
-  return columnForButton;
-};
-
-utils.getColumnForGameName = function(gameName) {
+utils.getColumnForGameName = function(gameName,gameId,onclickFun) {
   let columnForGameName = document.createElement('td');
   columnForGameName.innerHTML = `${gameName}'s game`;
   columnForGameName.className = "hostedGame";
+  columnForGameName.id = gameId;
+  columnForGameName.onclick = onclickFun;
   return columnForGameName;
 };
 
 utils.appendGameInTable = function(hostedGamesTable, game) {
   let rowsCount = hostedGamesTable.getElementsByTagName("tr").length;
-  let button =utils.createJoinButton('joinHostedGameButton',openJoinBlock);
-  let columnForButton=utils.getColumnForButton(button,game.gameId);
-  let gameRow=document.createElement('tr');
-  let columnForGameName=utils.getColumnForGameName(game.hostName);
-  utils.setBackgroundColor(rowsCount,columnForGameName,columnForButton,button);
-  gameRow.appendChild(columnForButton);
+  let gameRow = document.createElement('tr');
+  let host = game.hostName;
+  let id = game.gameId;
+  let columnForGameName = utils.getColumnForGameName(host,id,openJoinBlock);
+  utils.setBackgroundColor(rowsCount,columnForGameName);
   gameRow.appendChild(columnForGameName);
   hostedGamesTable.appendChild(gameRow);
   return hostedGamesTable;

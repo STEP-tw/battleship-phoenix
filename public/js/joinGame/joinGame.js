@@ -26,7 +26,7 @@ const startgameMessage = function(){
 };
 
 const openJoinBlock = function () {
-  let gameId = event.target.parentNode.id;
+  let gameId = event.target.id;
   let joinForm = document.querySelector('.joinForm');
   joinForm.id = gameId;
   document.getElementById('joinBlock').style.display='block';
