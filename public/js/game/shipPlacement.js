@@ -226,3 +226,28 @@ const isShipInRange = function(lastCoord,lowerBoundary,upperBoundary) {
   return lastCoord[1] < upperBoundary && lastCoord[1] >= lowerBoundary
   && lastCoord[0] >= lowerBoundary && lastCoord[0] < upperBoundary;
 };
+
+const displayShipOnDock = function(shipName) {
+  document.getElementById(shipName).style.display = "block";
+  document.getElementById(shipName).style.color = "rgb(67, 195, 199)";
+};
+
+
+const removeShipFromBase = function (ship) {
+  let shipPositions = getCoordinates(ship.dir,ship.headPos,ship.length);
+  shipPositions.forEach((shipPos)=>{
+    let cellId = generateCellId('og',shipPos);
+    let gridPos = document.querySelector(`#${cellId}`);
+    gridPos.checked = false;
+    gridPos.style.backgroundImage = null;
+  });
+};
+
+const resetShipPositions = function() {
+  document.querySelector('#ready').style.display = "none";
+  shipsHeadPositions.forEach((ship)=>{
+    displayShipOnDock(ship.name);
+    removeShipFromBase(ship);
+  });
+  shipsHeadPositions = [];
+};

@@ -5,6 +5,7 @@ const addListener = function() {
 
 const handleReady = function() {
   document.getElementById("leaveGame").style.display ='none';
+  document.getElementById("resetShips").style.display ='none';
   loadFleet();
 };
 
