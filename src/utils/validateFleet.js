@@ -12,7 +12,7 @@ const shipLength={
 
 const isValidFleet=function(allShips){
   return areAllValidShips(allShips) && isValidDirection(allShips)
-        && isValidPosition(allShips) && !doesShipsOverlap(allShips);
+        && isValidFleetPositions(allShips) && !doesShipsOverlap(allShips);
 };
 
 const getShipLength=function(shipName){
@@ -33,19 +33,14 @@ const isValidDirection=function(fleet){
   });
 };
 
-const isValidPosition=function(fleet){
-  let allShipsLastPos = fleet.map(getShipLastCoord);
-  return allShipsLastPos.every(isShipInRange);
+const isValidFleetPositions=function(fleet){
+  let allShipsCoordinates = getAllShipsCoordinates(fleet);
+  return allShipsCoordinates.every(isCoordInRange);
 };
 
-const getShipLastCoord=function(ship){
-  let allCoordinates=getCoordinates(ship.direction,ship.initialPos,ship.length);
-  return allCoordinates[ship.length-1];
-};
-
-const isShipInRange = function(lastCoord) {
-  return lastCoord[1] < upperBoundary && lastCoord[1] >= lowerBoundary
-  && lastCoord[0] >= lowerBoundary && lastCoord[0] < upperBoundary;
+const isCoordInRange = function(coord) {
+  return coord[1] < upperBoundary && coord[1] >= lowerBoundary
+  && coord[0] >= lowerBoundary && coord[0] < upperBoundary;
 };
 
 const isShipAlreadyPresent=function(allShips,newShip){
@@ -67,47 +62,19 @@ const getAllShipsCoordinates=function(allShips){
 
 const doesShipsOverlap = function(allShips){
   let allCoordinates=getAllShipsCoordinates(allShips);
-  for(let index = 0; index < allCoordinates.length; index++){
-    let remainingCoords = deleteAt(allCoordinates,index);
-    for(let iterator = 0; iterator < remainingCoords.length; iterator++){
-      if(areEqual(remainingCoords[iterator],allCoordinates[index])) {
-        return true;
-      }
-    }
-  }
-  return false;
-};
-
-const deleteAt = function(list,posAt) {
-  let newList = [];
-  for(let index = 0; index < list.length; index++){
-    if(index != posAt){
-      newList.push(list[index]);
-    }
-  }
-  return newList;
-};
-
-const areEqual = function(firstList, secondList) {
-  for (let index = 0; index < firstList.length; index++) {
-    if (firstList[index] != secondList[index]) {
-      return false;
-    }
-  }
-  return firstList.length == secondList.length;
+  let fleetCoords = allCoordinates.map((ele)=>ele.join(''));
+  return fleetCoords.some((ele,index)=>{
+    return fleetCoords.indexOf(ele) != index;
+  });
 };
 
 module.exports={
-  getShipLength:getShipLength,
-  isShipAlreadyPresent:isShipAlreadyPresent,
-  isValidFleet:isValidFleet,
-  isValidDirection:isValidDirection,
-  getShipLastCoord:getShipLastCoord,
-  isValidPosition:isValidPosition,
-  isShipInRange:isShipInRange,
-  getShipLastCoord:getShipLastCoord,
-  doesShipsOverlap:doesShipsOverlap,
-  getAllShipsCoordinates:getAllShipsCoordinates,
-  areEqual:areEqual,
-  deleteAt:deleteAt
+  getShipLength,
+  isShipAlreadyPresent,
+  isValidFleet,
+  isValidDirection,
+  isValidFleetPositions,
+  isCoordInRange,
+  doesShipsOverlap,
+  getAllShipsCoordinates
 };

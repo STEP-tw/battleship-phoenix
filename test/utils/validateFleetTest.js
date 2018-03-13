@@ -17,17 +17,17 @@ describe('isValidDirection', function () {
     });
 });
 
-describe('isValidPosition', function () {
+describe('isValidFleetPositions', function () {
   it('should return false when any ship position is out of range', function () {
     let fleet=[{direction:"south",initialPos:[10,10],length:3},
       {direction:"north",initialPos:[9,-5],length:3}];
-    assert.isNotOk(validator.isValidPosition(fleet));
+    assert.isNotOk(validator.isValidFleetPositions(fleet));
   });
   it('should return true when all ships positions is in the range',
     function () {
       let fleet=[{direction:"south",initialPos:[2,5],length:3},
         {direction:"north",initialPos:[6,5],length:3}];
-      assert.isOk(validator.isValidPosition(fleet));
+      assert.isOk(validator.isValidFleetPositions(fleet));
     });
 });
 
@@ -47,17 +47,6 @@ describe('isShipAlreadyPresent', function () {
   });
 });
 
-describe('getShipLastCoord', function () {
-  it('should return last coordinate of ship based on length,dir and headPos',
-    function () {
-      let destroyer={direction:"south",initialPos:[4,4],length:2};
-      let battleship={direction:"north",initialPos:[2,3],length:4};
-      let carrier={direction:"west",initialPos:[8,3],length:5,name:"carrier"};
-      assert.deepEqual(validator.getShipLastCoord(destroyer),[4,5]);
-      assert.deepEqual(validator.getShipLastCoord(battleship),[2,0]);
-      assert.deepEqual(validator.getShipLastCoord(carrier),[4,3]);
-    });
-});
 
 describe('getShipLength', function () {
   it('should give length of ship when it is a valid ship ', function () {
@@ -111,39 +100,8 @@ describe('doesShipsOverlap', function () {
 
   it('should return false when ship does not overlap', function () {
     let fleet=[{direction:"south",initialPos:[2,5],length:3},
-      {direction:"north",initialPos:[6,5],length:3}];
+      {direction:"north",initialPos:[6,4],length:3},
+      {direction:"south",initialPos:[6,5],length:3}];
     assert.isNotOk(validator.doesShipsOverlap(fleet));
-  });
-});
-
-
-describe('areEqual', function () {
-  it('should return true when lists are [1,2],[1,2]',function(){
-    assert.isOk(validator.areEqual([1,2],[1,2]));
-  });
-
-  it('should return false when lists are [2,1],[1,2]',function(){
-    assert.isNotOk(validator.areEqual([2,1],[1,2]));
-  });
-
-  it('should return false when lists are [2,2,3],[1,2]',function(){
-    assert.isNotOk(validator.areEqual([2,2,3],[1,2]));
-  });
-
-  it('should return false when lists are [1,4],[5,2]',function(){
-    assert.isNotOk(validator.areEqual([1,4],[5,2]));
-  });
-});
-
-describe('deleteAt', function () {
-  it('should return [1,2,3] when given list is [1,2,4,3] at 2', function () {
-    assert.deepEqual(validator.deleteAt([1,2,4,3],2),[1,2,3]);
-  });
-  it('should return [[1,2],[1,1]] when given list is [[1,2],[4,3],[1,1]] at 1',
-    function () {
-      assert.deepEqual(validator.deleteAt([[1,2],[4,3],[1,1]],1),[[1,2],[1,1]]);
-    });
-  it('should return [1,2,3] when given list is [1,2,4,3] at 4', function () {
-    assert.deepEqual(validator.deleteAt([1,2,4,3],4),[1,2,4,3]);
   });
 });
