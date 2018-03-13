@@ -251,10 +251,8 @@ margin: auto;
   font-size: 20px;
   width: 600px;
   height: 400px;
-  position: absolute;
   overflow: auto;
-  top:20%;
-  left: 30%;
+  margin: 7% auto;
 }
 .opponent_arrival_message button{
   background-color: rgba(60, 117, 105, 0.71);
