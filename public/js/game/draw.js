@@ -17,27 +17,17 @@ const createRow = function(row,colSize,rowIndex,prefix){
   return row;
 };
 
-const displayQuitGameOption = function (){
-  document.querySelector('#quit').style.display='block';
-};
-
 const displayLeaveGame = function (){
   document.querySelector('#leave').style.display='block';
 };
 
 const initializeQuit = function() {
   let leaveGameButton = document.querySelector('#leaveGame');
-  let quitButton = document.querySelector('#quitGame');
-  quitButton.onclick=displayQuitGameOption;
   leaveGameButton.onclick = displayLeaveGame;
 };
 
 const initializeCancel = function() {
   let cancelButton = document.querySelector('#No');
-  cancelButton.onclick = ()=>{
-    document.querySelector('#quit').style.display='none';
-  };
-  cancelButton = document.querySelector('#NotLeave');
   cancelButton.onclick = ()=>{
     document.querySelector('#leave').style.display='none';
   };
