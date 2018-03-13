@@ -10,7 +10,7 @@ const toggleMusic = function (){
   musicElement.muted = !response.music;
 };
 
-const soundController = function(){
+const soundController = function(event){
   let soundButton = document.querySelector(`#${event.target.id}`);
   let buttonData = utils.toS({sound:soundButton.checked});
   utils.sendAjax(utils.post(),'/controlSound',null,buttonData);

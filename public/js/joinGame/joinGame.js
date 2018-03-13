@@ -10,8 +10,9 @@ const getAudioStatus = function(){
 const handleOnload = function(){
   getAudioStatus();
   getHostedGames();
+  utils.initializeSettings('settingsIcon');
 };
-const joinGame = function(){
+const joinGame = function(event){
   let gameId = event.target.id;
   let name = document.querySelector('#username2').value;
   if(name){
@@ -25,7 +26,7 @@ const startgameMessage = function(){
   location.href = "game.html";
 };
 
-const openJoinBlock = function () {
+const openJoinBlock = function (event) {
   let gameId = event.target.id;
   let joinForm = document.querySelector('.joinForm');
   joinForm.id = gameId;

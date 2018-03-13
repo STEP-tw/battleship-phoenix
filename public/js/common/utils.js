@@ -129,6 +129,36 @@ utils.closePopup = function(id) {
   document.getElementById(id).style.display = 'none';
 };
 
+utils.openPopup = function(id){
+  document.getElementById(id).style.display = 'block';
+};
+
+utils.setButton = function(){
+  let response = utils.getResponse(this);
+  let music = utils.parse(response.music);
+  let sound = utils.parse(response.sound);
+  if(music){
+    document.querySelector('#music').checked = true;
+  }
+  if(sound){
+    document.querySelector('#sound').checked = true;
+  }
+};
+
+utils.initializeSettings = function(settingsButtonId){
+  let settingsButton = document.querySelector(`#${settingsButtonId}`);
+  settingsButton.onclick = ()=>{
+    utils.openPopup('settings');
+  };
+  let cancel = document.querySelector('#cancelSettings');
+  cancel.onclick = ()=>{
+    utils.closePopup('settings');
+  };
+  document.getElementById('sound').onclick =soundController;
+  document.getElementById('music').onclick =bgmController;
+  utils.sendAjax(utils.get(),'/audioStatus',utils.setButton);
+};
+
 utils.areEqual = function(firstList, secondList) {
   for (let index = 0; index < firstList.length; index++) {
     if (firstList[index] != secondList[index]) {

@@ -52,6 +52,7 @@ let setupGame = function(){
   showShipDetailsOnHover();
   utils.sendAjax(utils.get(),'/audioStatus',handleAudios);
   document.querySelector('#loader-wrapper').style.display = 'none';
+  utils.initializeSettings('settingsButton');
 };
 
 window.onload = setupGame;

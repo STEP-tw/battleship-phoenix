@@ -95,12 +95,11 @@ h4 {
   background-color:rgba(0, 0, 0, 0.19);
 }
 .buttonBlock {
-  z-index: -1;
   text-align:center;
   position: absolute;
   width: 100%;
   height: 100px;
-  margin: 38% auto;
+  margin: 38% 0;
 }
 @media only screen and (min-width:1048px){
   .playerDetails {
@@ -457,11 +456,12 @@ li:hover {
 }
 
 .shipPositioningBlock{
-  z-index: 1;
+  position:absolute;
+  z-index: 3;
   float: left;
   width: 15%;
   height: auto;
-  margin-top: 33.2%;
+  margin-top: 38%;
   margin-left: 3%;
 }
 
@@ -474,4 +474,36 @@ li:hover {
   font-family: 'Coda', cursive;
   font-size: 17px;
   border-radius: 6px;
+}
+
+#settings{
+  text-align: left;
+  font-family: 'Cinzel', serif;
+}
+
+#settings h2{
+  font-weight: 200;
+  text-align: left;
+}
+
+#settings ul{
+  text-align: left;
+}
+
+#settingsButton:hover ,#resetShips:hover{
+  cursor: pointer;
+  background-color: rgba(27, 144, 141, 0.2);
+}
+
+#settingsButton {
+  font-size: 29px;
+  text-decoration: none;
+  position: absolute;
+  border: 0.7px solid rgb(50, 176, 184);
+  border-radius: 6px;
+  color: rgb(50, 176, 184);
+  animation: fadeIn 2s;
+  padding: 7px 8px;
+  margin-top: 0.1%;
+  margin-left: 47%;
 }

@@ -1,8 +1,0 @@
-Steps to follow :
-
-   Get all the shipHeadPositions.
-   Make all cells of ocean grid unchecked and remove bgimg
-
-         * make bg img of ship cells null.
-         * make ship cells unchecked.
-         * make that ship name visible in dock.

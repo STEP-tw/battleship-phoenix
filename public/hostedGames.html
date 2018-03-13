@@ -5,12 +5,14 @@
     <title>Hosted Games</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <script defer src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="icon" href="/assets/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700|Coda" rel="stylesheet">
     <script src="./js/joinGame/joinGame.js" charset="utf-8" defer></script>
     <script src="./js/common/utils.js" charset="utf-8" defer></script>
+    <script src="js/common/settings.js" charset="utf-8"></script>
   </head>
   <body>
     <div id="loader-wrapper">
@@ -26,6 +28,7 @@
     <a href="/" id="homeButton">
       <i class="fas fa-home"></i>
     </a>
+    <i id="settingsIcon" class="fas fa-cog"></i>
     <div id="joinBlock" class="overflow-model">
       <div class="popupContent animateZoom" style="padding:32px">
         <div class="closeContainer">
@@ -34,7 +37,7 @@
           </span>
         </div>
         <div class="field">
-          <form action="" class="joinForm" onsubmit="joinGame()" autocomplete="off">
+          <form action="" class="joinForm" onsubmit="joinGame(event)" autocomplete="off">
           <input autofocus type="text" class= "textField" id="username2" placeholder="Enter your name" pattern="^[a-zA-Z0-9]{1,10}$" title="Spaces,special characters are not allowed and max 10 characters allowed!" required/><br>
           <input type="submit" class="submitOnJoin blueLongButton" value="Submit"/>
           </form>
@@ -43,6 +46,32 @@
     </div>
     <div class="tableContainer">
       <table class="hostedTable" ></table>
+    </div>
+    <div id="settings" class="overflow-model">
+      <div class="popupContent animateZoom" style="padding:32px">
+        <h2>Settings</h2>
+        <ul>
+
+          <div class="settingsOption">
+            Sound
+            <label class="switch">
+              <input type="checkbox" id="sound">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="settingsOption">
+            Music
+            <label class="switch">
+              <input type="checkbox" id="music">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="settingsOption" id="translater"></div>
+        </ul>
+        <button id=cancelSettings class="blueLongButton" >Cancel</button>
+      </div>
     </div>
   </body>
 </html>
