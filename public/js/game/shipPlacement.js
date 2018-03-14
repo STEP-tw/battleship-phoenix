@@ -62,51 +62,39 @@ const repositionShip = function(shipName){
   ship.click();
 };
 
-const replaceShip = function(event,cellIdList){
-  let tableCells = document.querySelectorAll('[id^="og"]');
-  tableCells.forEach(id => {
-    id.onclick=null;
-  });
+const replaceShip = function(event,cellIdList,name){
   if(isPlaced){
-    let ship = shipsHeadPositions.filter((ship)=>{
-      return utils.areEqual(ship.headPos,cellIdList[0]);
-    });
     shipsHeadPositions = shipsHeadPositions.filter((ship)=>{
       return !utils.areEqual(ship.headPos,cellIdList[0]);
     });
-
     cellIdList.forEach((cell)=>{
       let occupiedCell=document.querySelector(`#${generateCellId('og',cell)}`);
       occupiedCell.style.backgroundImage = null;
       occupiedCell.style.backgroundColor = "rgba(177, 177, 177, 0.63)";
       occupiedCell.checked = false;
     });
-    repositionShip(ship[0].name);
+    repositionShip(name);
   }
 };
 
-const getHeadPositionOf = function(id){
-  let selectedShip = shipsHeadPositions.filter((ship)=>{
+const getShip = function(id){
+  return shipsHeadPositions.find((ship)=>{
     let shipCoords = getCoordinates(ship.dir,ship.headPos,ship.length);
     return shipCoords.some((coord)=>{
       return utils.areEqual(coord,id);
     });
   });
-  return selectedShip[0].headPos||[];
 };
 
 const addClickForReposition = function(event,headPosition){
   let parsedCoordinate = parseCoordinates(event.target.id);
-  let headPos = headPosition || getHeadPositionOf(parsedCoordinate);
-  let ship = shipsHeadPositions.find((shipHead)=>{
-    return utils.areEqual(headPos,shipHead.headPos);
-  });
-  let cellIdList = getCoordinates(ship.dir,headPos,ship.length);
+  let ship = getShip(headPosition||parsedCoordinate);
+  let cellIdList = getCoordinates(ship.dir,ship.headPos,ship.length);
   direction = ship.dir;
   cellIdList.forEach((cell)=>{
     let occupiedCell = document.querySelector(`#${generateCellId('og',cell)}`);
     occupiedCell.ondblclick = ()=>{
-      replaceShip(event,cellIdList);
+      replaceShip(event,cellIdList,ship.name);
     };
   });
 };
@@ -123,12 +111,10 @@ const placeShip = function(event){
     markCellsChecked(event);
     storePlacedShips(event);
     displayReadyButton();
-
     addClickForReposition(event);
     isPlaced = true;
   }else {
     showInvalidCell(event);
-    remHighlightOnShips();
   }
 };
 
