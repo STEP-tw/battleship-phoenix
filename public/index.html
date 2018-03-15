@@ -9,6 +9,7 @@
   <link defer href="https://fonts.googleapis.com/css?family=Cinzel|Montserrat:100,400,500,700" rel="stylesheet">
   <script defer src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
   <script src="/js/common/utils.js" charset="utf-8"></script>
   <script src="/js/common/opponent_arrival.js" charset="utf-8"></script>
   <script src="/js/index/login.js" charset="utf-8"></script>
@@ -62,10 +63,14 @@
   </div>
   <div id="playnow" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
-      <div class="closeContainer">
+      <div class="closeContainer" id= "playnowClose">
         <span class="close" onclick="utils.closePopup('playnow')">
-          <i class="fa fa-times"></i>
+          <i class="far fa-times-circle"></i>
         </span>
+      </div>
+      <div class="toggleWrapper">
+	      <input type="checkbox" id="dn" class="dn">
+	      <label for="dn" class="toggle"><span class="toggle__handler"></span></label>
       </div>
       <button class="hostButton" id="hostButton">Host</button>
       <button class="joinButton" id="joinButton">Join</button>
@@ -75,7 +80,7 @@
     <div class="aboutGamePopup animateZoom" style="padding:32px">
       <div class="closeContainer">
         <span class="close" onclick="utils.closePopup('aboutGame')">
-          <i class="fa fa-times"></i>
+          <i class="far fa-times-circle"></i>
         </span>
       </div>
       <h2 class="sideHeadings">What is Battleship game</h2><br>
@@ -159,7 +164,7 @@
   <div id="login" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
       <div class="closeContainer">
-        <span class="close" onclick="utils.closePopup('login')"><i class="fa fa-times"></i></span>
+        <span class="close" onclick="utils.closePopup('login')"><i class="far fa-times-circle"></i></span>
       </div>
       <div class="field">
         <form class="username_form"  action="" onsubmit="hostGame(); return false" autocomplete="off">
@@ -172,7 +177,7 @@
   <div id="join" class="overflow-model">
     <div class="popupContent animateZoom" style="padding:32px">
       <div class="closeContainer">
-        <span class="close" onclick="utils.closePopup('join')"><i class="fa fa-times"></i></span>
+        <span class="close" onclick="utils.closePopup('join')"><i class="far fa-times-circle"></i></span>
       </div>
       <div class="field">
         <form class="username_form"  action="" autocomplete="off">
