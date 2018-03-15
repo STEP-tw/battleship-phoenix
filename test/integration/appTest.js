@@ -1,12 +1,15 @@
 /*eslint-disable max-lines*/
 const chai = require('chai');
 const assert = chai.assert;
+const prefix = '../../src/models/';
 const request = require('supertest');
 const Mockfs = require('../testHelper/mockfs');
 const app = require('../../app.js');
-const Game = require('../../src/models/game.js');
-const Fleet = require('../../src/models/fleet.js');
-const GamesHandler = require('../../src/models/gamesHandler.js');
+const Game = require(`${prefix}game.js`);
+const Fleet = require(`${prefix}fleet.js`);
+const GamesHandler = require(`${prefix}gamesHandler.js`);
+const Validator = require(`${prefix}validator.js`);
+
 app.fs = new Mockfs();
 app.fs.addFile('./public/game.html', 'game started');
 
@@ -273,6 +276,10 @@ describe('app', () => {
   });
 
   describe('POST /start-game', () => {
+    let validator;
+    beforeEach(()=>{
+      validator = new Validator(0,10,5);
+    });
     it(`should send false when fleet does not have required ships`, (done) => {
       game.addPlayer('arvind', sessionId);
       delete game.currentPlayerIndex;

@@ -22,7 +22,7 @@ class Player {
   addFleet(fleet) {
     this._fleet = fleet;
   }
-  getFleet() {
+  get fleet() {
     return this._fleet;
   }
   isReady() {

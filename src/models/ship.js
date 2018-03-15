@@ -1,10 +1,10 @@
 const getCoordinates = require('./position_system.js');
-const getShipLength=require('../utils/validateFleet').getShipLength;
+const gameSpecs=require('../utils/gameSpecifications');
 
 class Ship {
   constructor(direction,name,initialPos,damages) {
     this.direction = direction;
-    this.length = getShipLength(name);
+    this.length = gameSpecs.getShipLength(name);
     this.initialPos = initialPos;
     this.posOfDamage = damages || [];
     this.name=name;

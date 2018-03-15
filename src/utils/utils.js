@@ -1,6 +1,8 @@
-const Game = require('../models/game.js');
-const Fleet = require('../models/fleet.js');
-const isShipAlreadyPresent=require('./validateFleet').isShipAlreadyPresent;
+const prefix = '../models/';
+const Game = require(`${prefix}game.js`);
+const Fleet = require(`${prefix}fleet.js`);
+const Validator = require(`${prefix}validator.js`);
+const gameSpecs = require('./gameSpecifications.js');
 let utils={};
 
 utils.setGameStatus = function (game) {
@@ -74,11 +76,7 @@ utils.getFleetDetails = function (req) {
 utils.getFleet = function (req) {
   let fleet = new Fleet();
   let shipsHeadPositions = utils.getFleetDetails(req);
-  shipsHeadPositions.forEach(function(shipInfo) {
-    if (!isShipAlreadyPresent(fleet._ships,shipInfo) ) {
-      fleet.addShip(shipInfo);
-    }
-  });
+  shipsHeadPositions.forEach((ship)=>fleet.addShip(ship));
   return fleet;
 };
 

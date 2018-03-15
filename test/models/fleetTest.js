@@ -7,14 +7,14 @@ describe('Fleet', () => {
       let fleet=new Fleet();
       let shipInfo = {dir:'south',name:"cruiser",headPos:[1,2]};
       fleet.addShip(shipInfo);
-      let actual=fleet.getAllShips();
+      let actual=fleet.ships;
       let expected= [
         {direction:'south',length:3,name:"cruiser",
           initialPos:[1,2],posOfDamage:[]}];
       assert.deepEqual(actual, expected);
     });
   });
-  describe('getAllShips', () => {
+  describe('getter ships', () => {
     it('should give all the ships in the fleet', () => {
       let fleet=new Fleet();
       let carShipInfo = {dir:'south',name:"cruiser",headPos:[1,2]};
@@ -22,13 +22,12 @@ describe('Fleet', () => {
 
       fleet.addShip(carShipInfo);
       fleet.addShip(subShipInfo);
-      let actual=fleet.getAllShips();
       let expected= [
         {direction:'south',name:"cruiser",length:3
           ,initialPos:[1,2],posOfDamage:[]},
         {direction:'south',name:"battleship",length:4
           ,initialPos:[2,3],posOfDamage:[]}];
-      assert.deepEqual(actual, expected);
+      assert.deepEqual(fleet.ships, expected);
     });
   });
   describe('isAnyShipHit', () => {
@@ -62,8 +61,8 @@ describe('Fleet', () => {
     });
     it('should return false if all ships are sunk ', () => {
       let fleet=new Fleet();
-      let carShipInfo = {dir:'south',name:3,headPos:[1,2]};
-      let subShipInfo = {dir:'south',name:4,headPos:[2,3]};
+      let carShipInfo = {dir:'south',name:'submarine',headPos:[1,2]};
+      let subShipInfo = {dir:'south',name:'battleship',headPos:[2,3]};
       fleet.addShip(carShipInfo);
       fleet.addShip(subShipInfo);
       fleet.isAnyShipHit([3,2]);
@@ -80,32 +79,53 @@ describe('Fleet', () => {
       assert.equal(fleet.shipsCount,2);
     });
   });
-  describe('requiredShipsCount', () => {
-    it('should return count of all required ships to make fleet', () => {
-      let fleet=new Fleet([],4);
-      assert.equal(fleet.requiredShipsCount,4);
-      let otherFleet=new Fleet();
-      assert.equal(otherFleet.requiredShipsCount,5);
+
+  describe('getAllSunkShips',()=>{
+    it('should return [] when no ship is sunk',()=>{
+      let fleet=new Fleet();
+      let carShipInfo = {dir:'south',name:'cruiser',headPos:[1,2]};
+      let subShipInfo = {dir:'south',name:'battleship',headPos:[2,3]};
+      fleet.addShip(carShipInfo);
+      fleet.addShip(subShipInfo);
+      assert.deepEqual(fleet.getAllSunkShips(),[]);
+    });
+
+    it('should return the ship that is sunk here cruiser',()=>{
+      let fleet=new Fleet();
+      let carShipInfo = {dir:'south',name:'cruiser',
+        headPos:[1,2],damages:[[1,2],[1,3],[1,4]]};
+      let subShipInfo = {dir:'south',name:'battleship',
+        headPos:[2,3]};
+      let expected = [{direction:"south",initialPos:[1,2],length:3,
+        name:"cruiser",posOfDamage:[[1,2],[1,3],[1,4]]}];
+      fleet.addShip(carShipInfo);
+      fleet.addShip(subShipInfo);
+      assert.deepEqual(fleet.getAllSunkShips(),expected);
     });
   });
-  describe('hasRequiredShips', () => {
-    it('should return true if shipsCount is equal to required ships', () => {
-      let fleet=new Fleet([],1);
-      let carrierInfo = {dir:'south',name:3,headPos:[1,2]};
-      fleet.addShip(carrierInfo);
-      let actual = fleet.hasRequiredShips();
-      assert.ok(actual);
+
+  describe('hasAllShipsSunk',()=>{
+    it('should return true when all ships have not sunk',()=>{
+      let fleet=new Fleet();
+      let carShipInfo = {dir:'south',name:'cruiser',
+        headPos:[1,2],damages:[[1,2],[1,3],[1,4]]};
+      let subShipInfo = {dir:'south',name:'battleship',
+        headPos:[2,3],damages:[[2,3],[2,4],[2,5],[2,6]]};
+      fleet.addShip(carShipInfo);
+      fleet.addShip(subShipInfo);
+      assert.isOk(fleet.hasAllShipsSunk());
     });
-    it('should return true if shipsCount is equal to required ships', () => {
-      let fleet=new Fleet([],2);
-      let carrierInfo = {dir:'south',name:3,headPos:[1,2]};
-      let SubmarineInfo = {dir:'south',name:4,headPos:[2,3]};
-      let battleInfo = {dir:'south',name:3,headPos:[1,2]};
-      fleet.addShip(carrierInfo);
-      fleet.addShip(SubmarineInfo);
-      fleet.addShip(battleInfo);
-      let actual = fleet.hasRequiredShips();
-      assert.isNotOk(actual);
+
+    it('should return false when all ships have not sunk',()=>{
+      let fleet=new Fleet();
+      let carShipInfo = {dir:'south',name:'cruiser',
+        headPos:[1,2],damages:[[1,2],[1,3],[1,4]]};
+      let subShipInfo = {dir:'south',name:'battleship',
+        headPos:[2,3]};
+      fleet.addShip(carShipInfo);
+      fleet.addShip(subShipInfo);
+      assert.isNotOk(fleet.hasAllShipsSunk());
     });
   });
+
 });

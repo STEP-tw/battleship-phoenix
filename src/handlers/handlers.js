@@ -1,6 +1,6 @@
-const utils = require('../utils/utils.js');
-const isValidFleet = require('../utils/validateFleet.js').isValidFleet;
-
+let prefix = '../utils/';
+const utils = require(`${prefix}utils.js`);
+const Validator = require('../models/validator.js');
 const handleTresspassing = function(req, res, next) {
   if (utils.isUserTresspassing(req)) {
     res.redirect('index.html');
@@ -61,14 +61,15 @@ const hasOpponentJoined = function(req, res) {
 const loadFleet = function(req, res) {
   let game = utils.getRunningGame(req);
   let playerId = utils.getPlayerId(req);
+  let validator = new Validator(0,10,5);
+  let fleetStatus = false;
   let fleet = utils.getFleet(req);
-  if (fleet.hasRequiredShips() && isValidFleet(fleet.getAllShips())) {
+  if (validator.isValidFleet(fleet.ships)) {
     game.assignFleet(playerId,fleet);
     game.changePlayerStatus(playerId);
-    res.json({status:true});
-    return;
+    fleetStatus = true;
   }
-  res.json({status:false});
+  res.json({status:fleetStatus});
 };
 
 const arePlayersReady = function(req, res) {

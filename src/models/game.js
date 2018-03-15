@@ -18,7 +18,7 @@ class Game {
   }
   getFleet(playerId) {
     let player = this.getPlayer(playerId);
-    return player.getFleet();
+    return player.fleet;
   }
   getPlayer(playerId) {
     let player = this._players.find((player) => {
@@ -123,7 +123,7 @@ class Game {
     return this.validateId(this.turn,currentPlayerID);
   }
   getGameStatus(playerId){
-    let ships = this.getFleet(playerId).getAllShips();
+    let ships = this.getFleet(playerId).ships;
     let shots = this.getCurrentPlayerShots(playerId);
     let oppShots = this.getOpponentShots(playerId);
     let playerName= this.getPlayer(playerId).playerName;

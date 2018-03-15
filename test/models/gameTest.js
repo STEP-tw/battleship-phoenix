@@ -21,7 +21,6 @@ describe('Game', () => {
       let expected = {
         _id: 1,
         _fleet: {
-          _requiredShipsCount:5,
           _ships:[]},
         _ready: false,
         _shots: {
