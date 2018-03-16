@@ -513,4 +513,25 @@ describe('Game', () => {
       assert.deepEqual(actual, expected);
     });
   });
+  describe('getPlayerPerformance', function() {
+    it('should return the total shots,hits and accuracy of the player',()=>{
+      let fleet = new Fleet();
+      let subShipInfo = {
+        dir: 'south',
+        name: "destroyer",
+        headPos: [2, 3]
+      };
+      fleet.addShip(subShipInfo);
+      game.addPlayer('ishu', 1);
+      game.addPlayer('arvind', 2);
+      game.assignFleet(1, fleet);
+      game.assignFleet(2, fleet);
+      game.updatePlayerShot(2, [2, 3]);
+      game.updatePlayerShot(2, [2, 4]);
+
+      let actual = game.getPlayerPerformance(2);
+      let expected={shots:2,hits:2,accuracy:100};
+      assert.deepEqual(actual, expected);
+    });
+  });
 });

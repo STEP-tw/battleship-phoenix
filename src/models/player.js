@@ -72,6 +72,14 @@ class Player {
     this._lastShot.shot = shot;
     this._lastShot.status = status;
   }
+  get totalShots(){
+    let hits = this.shots.hits.length;
+    let misses = this.shots.misses.length;
+    return hits + misses;
+  }
+  get totalHits(){
+    return this.shots.hits.length;
+  }
 }
 
 module.exports = Player;

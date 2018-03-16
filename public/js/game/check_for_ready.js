@@ -109,11 +109,12 @@ const displayLost = function() {
   playHitOrMissSound(response);
   updateOceanGrid(response);
   if(response.status){
-    utils.clearIntervals();
-    utils.getTargetGrid().onclick = null;
-    setTimeout(() => {
-      document.querySelector('.defeat').style.display = "block";
-    }, 500);
+    let callBack = function(){
+      let statusCode = 'l';
+      let statusBlock = 'defeat';
+      displayResult(statusCode,statusBlock,this.responseText);
+    };
+    utils.sendAjax(utils.get(),'/getPlayerPerformance',callBack);
     return;
   }
   handleTurn(response.myTurn);
@@ -196,7 +197,13 @@ const showWaitingMessage = function() {
 };
 
 const displayWon = function(hasWon) {
+  let callBack = function(){
+    let statusCode = 'w';
+    let statusBlock = 'victory';
+    displayResult(statusCode,statusBlock,this.responseText);
+  };
   if (hasWon) {
+    utils.sendAjax(utils.get(),'/getPlayerPerformance',callBack);
     utils.clearIntervals();
     utils.getTargetGrid().onclick = null;
     setTimeout(() => {
@@ -292,4 +299,45 @@ const playHitOrMissSound = function (response) {
 
 const displayOpponentLeft = function() {
   document.getElementById('opponentLeft').style.display = 'block';
+};
+
+const getStars = function(score) {
+  if(score > 90){
+    return getRating(5);
+  }
+  if(score > 70){
+    return getRating(4);
+  }
+  if(score > 50){
+    return getRating(3);
+  }
+  if(score > 30){
+    return getRating(2);
+  }
+  return getRating(1);
+};
+
+const displayResult = function(sCode,statusBlock,response) {
+  let result = utils.parse(response);
+  document.querySelector(`#${sCode}Shots`).innerText += result.shots;
+  document.querySelector(`#${sCode}Hits`).innerText += result.hits;
+  document.querySelector(`#${sCode}Accuracy`).innerText += result.accuracy+'%';
+  document.querySelector(`.${sCode}stars`).innerHTML= getStars(result.accuracy);
+  utils.clearIntervals();
+  utils.getTargetGrid().onclick = null;
+  setTimeout(() => {
+    document.querySelector(`.${statusBlock}`).style.display = "block";
+  }, 500);
+};
+
+
+const getRating=function(stars){
+  let rating='';
+  for(let iter=0;iter<stars;iter++){
+    rating+=`<img id='stars' src="../../assets/images/rated.png">`;
+  }
+  for(let iter=stars;iter<5;iter++){
+    rating+=`<img id='stars' src="../../assets/images/unrated.png">`;
+  }
+  return `${rating}`;
 };

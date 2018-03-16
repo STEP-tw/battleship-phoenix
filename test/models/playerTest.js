@@ -142,4 +142,26 @@ describe('Player', () => {
       assert.deepEqual(player.getLastShot(),undefined);
     });
   });
+  describe('totalShots', () => {
+    beforeEach(() => {
+      player.updateShot('hits',[1,2]);
+      player.updateShot('hits',[2,3]);
+      player.updateShot('misses',[2,4]);
+    });
+    it('should return the total shots of the player', () =>{
+      let actual = player.totalShots;
+      assert.equal(actual,3);
+    });
+  });
+  describe('totalHits', () => {
+    beforeEach(() => {
+      player.updateShot('hits',[1,2]);
+      player.updateShot('hits',[2,3]);
+      player.updateShot('misses',[2,4]);
+    });
+    it('should return the total shots of the player', () =>{
+      let actual = player.totalHits;
+      assert.equal(actual,2);
+    });
+  });
 });

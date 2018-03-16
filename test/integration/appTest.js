@@ -573,4 +573,35 @@ describe('app', () => {
         .end(done);
     });
   });
+  describe('updateShot', function() {
+    beforeEach(function() {
+      let shipInfo = {
+        dir: "south",
+        name:"carrier",
+        headPos: [1, 2]
+      };
+      gamesHandler = app.gamesHandler;
+      let fleet = new Fleet();
+      fleet.addShip(shipInfo);
+      game.addPlayer('ishu', sessionId);
+      sessionId2 = app.generateSessionId();
+      game.addPlayer('teja', sessionId2);
+      game.assignFleet(sessionId, fleet);
+      game.assignFleet(sessionId2, fleet);
+      game.assignTurn(0.4);
+      game.updatePlayerShot(1, [1, 2]);
+      game.updatePlayerShot(1, [1, 3]);
+      game.updatePlayerShot(1, [1, 4]);
+      gamesHandler.addGame(game);
+      gamesHandler.startGame(game);
+    });
+    it('should return the player performance when player has won', (done) => {
+      request(app)
+        .get('/getPlayerPerformance')
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
+        .expect(200)
+        .expect('{"shots":3,"hits":3,"accuracy":100}')
+        .end(done);
+    });
+  });
 });

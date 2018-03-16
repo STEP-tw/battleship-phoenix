@@ -168,5 +168,12 @@ class Game {
       sound:soundStatus
     };
   }
+  getPlayerPerformance(playerId){
+    let player = this.getPlayer(playerId);
+    let shots = player.totalShots;
+    let hits = player.totalHits;
+    let accuracy = +((hits/shots)*100).toFixed(2);
+    return {shots:shots,hits:hits,accuracy:accuracy};
+  }
 }
 module.exports = Game;

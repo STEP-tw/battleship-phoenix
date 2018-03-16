@@ -167,6 +167,13 @@ const leaveGame = function(req,res){
   res.redirect('/');
 };
 
+const getPlayerPerformance = function(req,res) {
+  let game = utils.getRunningGame(req);
+  let playerId = utils.getPlayerId(req);
+  let performanceInfo = game.getPlayerPerformance(playerId);
+  res.json(performanceInfo);
+};
+
 module.exports = {
   cancelGame,
   hostGame,
@@ -183,5 +190,6 @@ module.exports = {
   handleTresspassing,
   musicController,
   soundController,
-  getAudioStatus
+  getAudioStatus,
+  getPlayerPerformance
 };
