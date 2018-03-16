@@ -105,9 +105,15 @@ utils.newSessionId = function (req) {
   return req.app.generateSessionId();
 };
 
+utils.isClassicGame = function(req){
+  let isClassic = JSON.parse(req.cookies.isClassicGame || true);
+  return isClassic;
+};
+
 utils.createGame = function (req) {
   let sessionId = utils.newSessionId(req);
-  let game = new Game(sessionId);
+  let isClassic = utils.isClassicGame(req);
+  let game = new Game(sessionId,isClassic);
   return game;
 };
 

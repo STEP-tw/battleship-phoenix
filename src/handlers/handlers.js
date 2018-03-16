@@ -48,8 +48,19 @@ const joinGame = function(req,res) {
   res.end();
 };
 
+const getCondition = function(game,isClassicType){
+  if(isClassicType) {
+    return game.isClassic;
+  }
+  return !game.isClassic;
+};
+
 const getHostedGames = function (req,res) {
+  let isClassic = utils.isClassicGame(req);
   let hostedGames = utils.getHostedGamesDetails(req);
+  hostedGames = hostedGames.filter((game)=>{
+    return getCondition(game,isClassic);
+  });
   res.send(hostedGames);
 };
 

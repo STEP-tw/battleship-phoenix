@@ -17,8 +17,9 @@ const drawShipsRandomly = function(){
 };
 
 const handleReady = function() {
-  document.getElementById("leaveGame").style.display ='none';
-  document.getElementById("resetShips").style.display ='none';
+  document.querySelector('#setup').style.display = 'none';
+  document.querySelector("#leaveGame").style.display ='none';
+  document.querySelector("#resetShips").style.display ='none';
   loadFleet();
 };
 
@@ -40,7 +41,7 @@ const gameStarts = function(response) {
   let myTurn = response.myTurn;
   let targetGrid = utils.getTargetGrid();
   utils.updateMessage("Game Started");
-  document.getElementById("leaveGame").style.display = 'block';
+  document.querySelector("#leaveGame").style.display = 'block';
   handleTurn(myTurn);
   dontAllowHover('og');
   viewFleetAndPlayerDetails();
@@ -82,7 +83,7 @@ const handleTurn = function(myTurn) {
     deactivateTargetGrid();
     setTimeout(()=>{
       utils.sendAjax(utils.get(),'/statusDuringOpponentTurn',displayLost);
-    },1000);
+    },500);
   }
 };
 

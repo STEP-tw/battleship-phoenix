@@ -1,3 +1,4 @@
+/*eslint-disable max-lines*/
 const assert = require('chai').assert;
 const Game = require('./../../src/models/game.js');
 const Player = require('./../../src/models/player.js');
@@ -6,7 +7,7 @@ const Fleet = require('./../../src/models/fleet.js');
 let game;
 describe('Game', () => {
   beforeEach(function() {
-    game = new Game(1);
+    game = new Game(1,true);
   });
   describe('hostName', function () {
     it('should return the host\'s name', function () {
@@ -404,17 +405,34 @@ describe('Game', () => {
       assert.isOk(game.isCurrentPlayer(1));
     });
   });
-  describe('getChangedTurnStatus', function() {
+  describe('getChangedTurnStatus in classic mode', function() {
     beforeEach(function() {
       game.addPlayer('sudhin', 1);
       game.addPlayer('sridev', 2);
       game.assignTurn(0.4);
       game.changeTurn();
     });
-    it('should return true if it is currentplayer', function() {
-      assert.isOk(game.getChangedTurnStatus(1));
+    it('should return true if it is currentplayer and it is a miss', function(){
+      assert.isTrue(game.getChangedTurnStatus(1,true));
     });
   });
+
+  describe('getChangedTurnStatus in classic+ mode', function() {
+    beforeEach(function() {
+      game=new Game(1,false);
+      game.addPlayer('sudhin', 1);
+      game.addPlayer('sridev', 2);
+      game.assignTurn(0.4);
+      game.changeTurn();
+    });
+    it('should return true if it is currentplayer and it is a miss', function(){
+      assert.isTrue(game.getChangedTurnStatus(1,true));
+    });
+    it('should return false if it is currentplayer and it is a hit', function(){
+      assert.isNotOk(game.getChangedTurnStatus(1,false));
+    });
+  });
+
   describe('getGameStatus', function() {
     beforeEach(function() {
       let fleet = new Fleet();
@@ -453,7 +471,7 @@ describe('Game', () => {
       assert.deepEqual(actual, expected);
     });
   });
-  describe('getStatusAfterShotIsFired', function() {
+  describe('getStatusAfterShotIsFired in classic mode', function() {
     beforeEach(function() {
       let fleet = new Fleet();
       let subShipInfo = {
@@ -483,7 +501,52 @@ describe('Game', () => {
       assert.deepEqual(actual, expected);
     });
   });
-  describe('getStatusDuringOpponentTurn', function() {
+
+  describe('getStatusAfterShotIsFired in classic+ mode', function() {
+    beforeEach(function() {
+      let fleet = new Fleet();
+      let subShipInfo = {
+        dir: "south",
+        name:"carrier",
+        headPos: [1, 2]
+      };
+      game=new Game(1,false);
+      fleet.addShip(subShipInfo);
+      game.addPlayer('ishu', 1);
+      game.addPlayer('arvind', 2);
+      game.assignFleet(1, fleet);
+      game.assignFleet(2, fleet);
+      game.assignTurn(0.4);
+      game.changeTurn();
+      game.updatePlayerShot(1, [1, 2]);
+    });
+    it('should return the status after shot is fired', function() {
+      let actual = game.getStatusAfterShotIsFired(2,[1,2],true);
+      let expected ={
+        firedPos:[1,2],
+        status:true,
+        winStatus:false,
+        myTurn:true,
+        destroyedShipsCoords:[],
+        sound:true
+      };
+      assert.deepEqual(actual, expected);
+    });
+    it('should return the status false after shot is fired and its miss', ()=>{
+      let actual = game.getStatusAfterShotIsFired(2,[1,1],true);
+      let expected ={
+        firedPos:[1,1],
+        status:false,
+        winStatus:false,
+        myTurn:false,
+        destroyedShipsCoords:[],
+        sound:true
+      };
+      assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('getStatusDuringOpponentTurn in classic mode', function() {
     beforeEach(function() {
       let fleet = new Fleet();
       let subShipInfo = {
@@ -512,6 +575,7 @@ describe('Game', () => {
       assert.deepEqual(actual, expected);
     });
   });
+
   describe('getPlayerPerformance', function() {
     it('should return the total shots,hits and accuracy of the player',()=>{
       let fleet = new Fleet();
@@ -527,9 +591,56 @@ describe('Game', () => {
       game.assignFleet(2, fleet);
       game.updatePlayerShot(2, [2, 3]);
       game.updatePlayerShot(2, [2, 4]);
-
       let actual = game.getPlayerPerformance(2);
       let expected={shots:2,hits:2,accuracy:100};
+      assert.deepEqual(actual, expected);
+    });
+  });
+
+  describe('getStatusDuringOpponentTurn in classic+ mode', function() {
+    beforeEach(function() {
+      let fleet = new Fleet();
+      let subShipInfo = {
+        dir: "south",
+        name:"carrier",
+        headPos: [1, 2]
+      };
+      game=new Game(1,false);
+      fleet.addShip(subShipInfo);
+      game.addPlayer('ishu', 1);
+      game.addPlayer('arvind', 2);
+      game.assignFleet(1, fleet);
+      game.assignFleet(2, fleet);
+      game.assignTurn(0.4);
+    });
+    it('should return the status after shot is fired', function() {
+      game.getStatusAfterShotIsFired(1, [1, 2],true);
+      let actual = game.getStatusDuringOpponentTurn(2,true);
+      let expected ={
+        status:false,
+        myTurn:false,
+        opponentShots:{hits:[[1,2]],misses:[]},
+        lastShot:{
+          shot:[1,2],
+          status:true
+        },
+        sound:true
+      };
+      assert.deepEqual(actual, expected);
+    });
+    it('should return the status after shot is fired', function() {
+      game.getStatusAfterShotIsFired(1, [3, 1],true);
+      let actual = game.getStatusDuringOpponentTurn(2,true);
+      let expected ={
+        status:false,
+        myTurn:true,
+        opponentShots:{hits:[],misses:[[3,1]]},
+        lastShot:{
+          shot:[3,1],
+          status:false
+        },
+        sound:true
+      };
       assert.deepEqual(actual, expected);
     });
   });

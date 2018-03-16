@@ -2,11 +2,15 @@ const Player = require('./player');
 const generateTurn = require('../utils/turnGenerator.js').generateTurn;
 
 class Game {
-  constructor(id,players,started,cpi) {
+  constructor(id,isClassic,players,started,cpi) {
     this._id = id;
     this._players = players || [];
     this._started = started || false;
     this.currentPlayerIndex = cpi;
+    this._isClassic = isClassic;
+  }
+  get isClassic(){
+    return this._isClassic;
   }
   addPlayer(name, id) {
     let player = new Player(id, name);
@@ -118,8 +122,10 @@ class Game {
   isCurrentPlayer(playerId){
     return this.validateId(this.turn,playerId);
   }
-  getChangedTurnStatus(currentPlayerID){
-    this.changeTurn();
+  getChangedTurnStatus(currentPlayerID,isMiss){
+    if(this.isClassic || isMiss){
+      this.changeTurn();
+    }
     return this.validateId(this.turn,currentPlayerID);
   }
   getGameStatus(playerId){
@@ -142,7 +148,7 @@ class Game {
   getStatusAfterShotIsFired(playerId,firedPos,soundStatus){
     let hitStatus =this.checkOpponentIsHit(playerId,firedPos);
     let victoryStatus = this.statusAfterShotIsFired(playerId);
-    let turnStatus = this.getChangedTurnStatus(playerId);
+    let turnStatus = this.getChangedTurnStatus(playerId,!hitStatus);
     let destroyedShipsCoords = this.getOpponentSunkShipsCoords(playerId);
     this.updatePlayerShot(playerId,firedPos);
     this.updateLastShot(playerId,firedPos,hitStatus);

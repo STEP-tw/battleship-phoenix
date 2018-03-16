@@ -490,7 +490,7 @@ li:hover {
   text-align: left;
 }
 
-#settingsButton:hover ,#resetShips:hover{
+#settingsButton:hover ,#resetShips:hover ,#setup:hover{
   cursor: pointer;
   background-color: rgba(27, 144, 141, 0.2);
 }
@@ -522,4 +522,18 @@ li:hover {
 
 #message{
   color: #86aaaa;
+}
+
+#setup {
+  position: absolute;
+  margin-top: 9.5%;
+  margin-left: 2.5%;
+  border: 0.7px solid rgb(50, 176, 184);
+  background-color: rgba(7, 22, 34, 0.78);
+  color: rgb(50, 176, 184);
+  width: 140px;
+  height: 45px;
+  font-family: 'Coda', cursive;
+  font-size: 17px;
+  border-radius: 6px;
 }

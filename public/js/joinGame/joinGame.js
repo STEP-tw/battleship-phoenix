@@ -33,8 +33,19 @@ const openJoinBlock = function (event) {
   document.getElementById('joinBlock').style.display='block';
 };
 
+const displayGameType = function(game){
+  let box = document.querySelector('.gameJoinHeading');
+  if(game && game.isClassic){
+    box.innerHTML = "Classic games you can join";
+    return;
+  }else if(game){
+    box.innerHTML = "Classic+ games you can join";
+  }
+};
+
 const showHostedGames = function () {
   let hostedGames = utils.getResponse(this);
+  displayGameType(hostedGames[0]);
   let hostedGamesTable = utils.getHostedGamesTable();
   hostedGamesTable.innerHTML = '';
   hostedGames.reduce(utils.appendGameInTable,hostedGamesTable);

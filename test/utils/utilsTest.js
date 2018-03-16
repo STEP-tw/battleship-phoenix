@@ -90,3 +90,24 @@ describe('isUserTresspassing()', function() {
       assert.isNotOk(utils.isUserTresspassing(req));
     });
 });
+
+describe('isClassicGame', function() {
+  it('should return true where game is Classic', function() {
+    let req = {
+      cookies: {
+        "player": 2,
+        "isClassicGame":"true"
+      }
+    };
+    assert.isTrue(utils.isClassicGame(req));
+  });
+  it('should return false where game is not classic', function() {
+    let req = {
+      cookies: {
+        "player": 2,
+        "isClassicGame":"false"
+      }
+    };
+    assert.isFalse(utils.isClassicGame(req));
+  });
+});

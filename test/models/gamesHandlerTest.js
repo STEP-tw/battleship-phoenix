@@ -9,7 +9,7 @@ let gamesHandler;
 describe('GamesHandler', function () {
   beforeEach(function () {
     gamesHandler = new GamesHandler();
-    game = new Game(1);
+    game = new Game(1,true);
     game.addPlayer('arjun',3);
     gamesHandler.addGame(game);
   });
@@ -84,8 +84,8 @@ describe('GamesHandler', function () {
     });
   });
   describe('getHostedGamesDetails', function () {
-    it('should get all hosted game\'s id with playerName', function () {
-      let expected = [{gameId: 1, hostName: 'arjun'}];
+    it("should get all hosted game's id with playerName", function () {
+      let expected = [{gameId: 1, hostName: 'arjun',"isClassic": true}];
       let actual = gamesHandler.hostedGamesDetails;
       assert.deepEqual(expected,actual);
     });

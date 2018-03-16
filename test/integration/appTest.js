@@ -26,106 +26,106 @@ describe('app', () => {
       return ++_playerId;
     };
     sessionId = app.generateSessionId();
-    game = new Game(sessionId);
+    game = new Game(sessionId,true);
   });
   describe('GET /bad', () => {
     it('responds with 404', (done) => {
       request(app)
-      .get('/bad')
-      .expect(404)
-      .end(done);
+        .get('/bad')
+        .expect(404)
+        .end(done);
     });
   });
 
   describe('GET /', () => {
     it('responds with index.html page content with join or host game options',
-    function(done) {
-      request(app)
-      .get('/')
-      .expect(200)
-      .expect(/You can place ships in your base/)
-      .end(done);
-    });
+      function(done) {
+        request(app)
+          .get('/')
+          .expect(200)
+          .expect(/You can place ships in your base/)
+          .end(done);
+      });
   });
 
   describe('GET /unpermitted content', () => {
     it('should redirect to index page', function(done) {
       request(app)
-      .get('/game.html')
-      .expect('location', 'index.html')
-      .expect(302)
-      .end(done);
+        .get('/game.html')
+        .expect('location', 'index.html')
+        .expect(302)
+        .end(done);
     });
   });
 
   describe('POST /', () => {
     it('should give the waiting for opponent message', (done) => {
       request(app)
-      .post('/')
-      .expect(404)
-      .end(done);
+        .post('/')
+        .expect(404)
+        .end(done);
     });
   });
 
   describe('POST /controlMusic', function () {
     it('should respond with current music status', function (done) {
       request(app)
-      .post('/controlMusic')
-      .send({music:true})
-      .expect(200)
-      .expect({music:true})
-      .expect((res)=>{
-        let expected = 'music=true';
-        let actual = res.header['set-cookie'][0].split(';')[0];
-        assert.equal(expected,actual);
-      })
-      .end(done);
+        .post('/controlMusic')
+        .send({music:true})
+        .expect(200)
+        .expect({music:true})
+        .expect((res)=>{
+          let expected = 'music=true';
+          let actual = res.header['set-cookie'][0].split(';')[0];
+          assert.equal(expected,actual);
+        })
+        .end(done);
     });
   });
 
   describe('POST /controlSound', function () {
     it('should respond with current sound status', function (done) {
       request(app)
-      .post('/controlSound')
-      .set('cookie',`sound=true`)
-      .send({sound:true})
-      .expect(200)
-      .expect((res)=>{
-        let expected = 'sound=true';
-        let actual = res.header['set-cookie'][0].split(';')[0];
-        assert.equal(expected,actual);
-      })
-      .end(done);
+        .post('/controlSound')
+        .set('cookie',`sound=true`)
+        .send({sound:true})
+        .expect(200)
+        .expect((res)=>{
+          let expected = 'sound=true';
+          let actual = res.header['set-cookie'][0].split(';')[0];
+          assert.equal(expected,actual);
+        })
+        .end(done);
     });
   });
 
   describe('GET /audioStatus', function () {
     it('should respond with current audio status', function (done) {
       request(app)
-      .get('/audioStatus')
-      .set('cookie',[`sound=false`,`music=true`])
-      .expect(200)
-      .expect({music:'true',sound:'false'})
-      .end(done);
+        .get('/audioStatus')
+        .set('cookie',[`sound=false`,`music=true`])
+        .expect(200)
+        .expect({music:'true',sound:'false'})
+        .end(done);
     });
     it('should respond with false by default', function (done) {
       request(app)
-      .get('/audioStatus')
-      .expect(200)
-      .expect({music:false,sound:false})
-      .end(done);
+        .get('/audioStatus')
+        .expect(200)
+        .expect({music:false,sound:false})
+        .end(done);
     });
   });
 
   describe('POST /host', function() {
     it('just stay on the page and wait for opponent', function(done) {
       request(app)
-      .post('/host')
-      .send({
-        username: "arvind"
-      })
-      .expect(200)
-      .end(done);
+        .post('/host')
+        .send({
+          username: "arvind"
+        })
+        .expect(200)
+        .end(done);
     });
   });
 
@@ -134,13 +134,13 @@ describe('app', () => {
       game.addPlayer('arvind', sessionId);
       gamesHandler.addGame(game);
       request(app)
-      .post('/join')
-      .set('cookie', `gameId=${sessionId}`)
-      .send({
-        username: "arvinds"
-      })
-      .expect(200)
-      .end(done);
+        .post('/join')
+        .set('cookie', `gameId=${sessionId}`)
+        .send({
+          username: "arvinds"
+        })
+        .expect(200)
+        .end(done);
     });
   });
 
@@ -149,10 +149,14 @@ describe('app', () => {
       game.addPlayer('arvind', sessionId);
       gamesHandler.addGame(game);
       request(app)
-      .get('/getHostedGames')
-      .expect(200)
-      .expect([{"gameId":`${sessionId}`,"hostName":"arvind"}])
-      .end(done);
+        .get('/getHostedGames')
+        .expect(200)
+        .expect([{
+          "gameId":sessionId,
+          "hostName":"arvind",
+          "isClassic":true
+        }])
+        .end(done);
     });
   });
 
@@ -161,11 +165,11 @@ describe('app', () => {
       game.addPlayer('arvind', sessionId);
       gamesHandler.addGame(game);
       request(app)
-      .get('/hasOpponentJoined')
-      .set('cookie', `gameId=${sessionId}`)
-      .expect(200)
-      .expect({})
-      .end(done);
+        .get('/hasOpponentJoined')
+        .set('cookie', `gameId=${sessionId}`)
+        .expect(200)
+        .expect({})
+        .end(done);
     });
   });
 
@@ -178,13 +182,13 @@ describe('app', () => {
       game.assignTurn();
       delete game.currentPlayerIndex;
       request(app)
-      .get('/hasOpponentJoined')
-      .set('cookie', `gameId=${sessionId}`)
-      .expect(200)
-      .expect({
-        status: game
-      })
-      .end(done);
+        .get('/hasOpponentJoined')
+        .set('cookie', `gameId=${sessionId}`,`isClassicGame=true`)
+        .expect(200)
+        .expect({
+          status: game
+        })
+        .end(done);
     });
   });
 
@@ -201,14 +205,14 @@ describe('app', () => {
       gamesHandler.addGame(game);
       gamesHandler.startGame(game);
       request(app)
-      .get('/arePlayersReady')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .expect(200)
-      .expect({
-        status: true,
-        myTurn: false
-      })
-      .end(done);
+        .get('/arePlayersReady')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect({
+          status: true,
+          myTurn: false
+        })
+        .end(done);
     });
 
     describe('GET /arePlayersReady', function() {
@@ -217,13 +221,13 @@ describe('app', () => {
         gamesHandler.addGame(game);
         gamesHandler.startGame(game);
         request(app)
-        .get('/arePlayersReady')
-        .set('cookie', [`player=${1}`, `gameId=${sessionId}`])
-        .expect(200)
-        .expect({
-          hasOpponentLeft:true
-        })
-        .end(done);
+          .get('/arePlayersReady')
+          .set('cookie', [`player=${1}`, `gameId=${sessionId}`])
+          .expect(200)
+          .expect({
+            hasOpponentLeft:true
+          })
+          .end(done);
       });
     });
 
@@ -234,14 +238,14 @@ describe('app', () => {
       gamesHandler.startGame(game);
       game.addPlayer('geniusPeople', sessionId2);
       request(app)
-      .get('/arePlayersReady')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .expect(200)
-      .expect({
-        status: false,
-        myTurn: false
-      })
-      .end(done);
+        .get('/arePlayersReady')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect({
+          status: false,
+          myTurn: false
+        })
+        .end(done);
     });
   });
 
@@ -251,13 +255,13 @@ describe('app', () => {
       gamesHandler.addGame(game);
       gamesHandler.startGame(game);
       app.fs.addFile('./src/models/position_system.js',
-      'positionSystemContent\n\n');
+        'positionSystemContent\n\n');
       request(app)
-      .get('/positionSystem')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .expect(200)
-      .expect(/positionSystemContent/)
-      .end(done);
+        .get('/positionSystem')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect(/positionSystemContent/)
+        .end(done);
     });
   });
 
@@ -266,12 +270,12 @@ describe('app', () => {
       game.addPlayer('arvind', sessionId);
       gamesHandler.addGame(game);
       request(app)
-      .get('/cancel-game')
-      .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
-      .expect((res) => {
-        assert.deepEqual(gamesHandler._cancelledGames[game.id], game);
-      })
-      .end(done);
+        .get('/cancel-game')
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
+        .expect((res) => {
+          assert.deepEqual(gamesHandler._cancelledGames[game.id], game);
+        })
+        .end(done);
     });
   });
 
@@ -286,18 +290,18 @@ describe('app', () => {
       gamesHandler.addGame(game);
       gamesHandler.startGame(game);
       request(app)
-      .post('/start-game')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .send({
-        fleetDetails: [{
-          "dir": "south",
-          "headPos": "og_4_5",
-          "length": 3
-        }]
-      })
-      .expect(200)
-      .expect({status:false})
-      .end(done);
+        .post('/start-game')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .send({
+          fleetDetails: [{
+            "dir": "south",
+            "headPos": "og_4_5",
+            "length": 3
+          }]
+        })
+        .expect(200)
+        .expect({status:false})
+        .end(done);
     });
     it(`should send true when fleet has required ships`, (done) => {
       game.addPlayer('arvind', sessionId);
@@ -326,14 +330,14 @@ describe('app', () => {
         "name":"battleship"
       }];
       request(app)
-      .post('/start-game')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .send({
-        fleetDetails:fleetsInfo
-      })
-      .expect(200)
-      .expect({status:true})
-      .end(done);
+        .post('/start-game')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .send({
+          fleetDetails:fleetsInfo
+        })
+        .expect(200)
+        .expect({status:true})
+        .end(done);
     });
   });
 
@@ -355,21 +359,21 @@ describe('app', () => {
       gamesHandler.addGame(game);
       gamesHandler.startGame(game);
       request(app)
-      .post('/updateFiredShot')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .send({
-        firedPosition: [1, 2]
-      })
-      .expect(200)
-      .expect({
-        firedPos: [1, 2],
-        status: true,
-        winStatus: false,
-        myTurn: false,
-        destroyedShipsCoords: [],
-        sound :false
-      })
-      .end(done);
+        .post('/updateFiredShot')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .send({
+          firedPosition: [1, 2]
+        })
+        .expect(200)
+        .expect({
+          firedPos: [1, 2],
+          status: true,
+          winStatus: false,
+          myTurn: false,
+          destroyedShipsCoords: [],
+          sound :false
+        })
+        .end(done);
     });
   });
 
@@ -395,40 +399,40 @@ describe('app', () => {
     });
     it('should return 406 for refire at a position again', function(done) {
       request(app)
-      .post('/updateFiredShot')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .send({
-        firedPosition: [1, 2]
-      })
-      .expect({isAlreadyFired: true})
-      .end(done);
+        .post('/updateFiredShot')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .send({
+          firedPosition: [1, 2]
+        })
+        .expect({isAlreadyFired: true})
+        .end(done);
     });
     it('should respond with an empty object for illegal turn', function (done) {
       request(app)
-      .post('/updateFiredShot')
-      .set('cookie', [`player=${sessionId2}`, `gameId=${sessionId}`])
-      .send({firedposition:[1,2]})
-      .expect({illegalTurn:true})
-      .end(done);
+        .post('/updateFiredShot')
+        .set('cookie', [`player=${sessionId2}`, `gameId=${sessionId}`])
+        .send({firedposition:[1,2]})
+        .expect({illegalTurn:true})
+        .end(done);
     });
     it('should return response 200 for fired at a position', function(done) {
       request(app)
-      .post('/updateFiredShot')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .send({firedPosition: [4, 2]
-      })
-      .expect(200)
-      .end(done);
+        .post('/updateFiredShot')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .send({firedPosition: [4, 2]
+        })
+        .expect(200)
+        .end(done);
     });
     it('should give hasOpponentLeft as true if opponent leaves',(done)=>{
       game.removePlayer(sessionId2);
       request(app)
-      .post('/updateFiredShot')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .send({firedPosition: [4, 4]})
-      .expect(200)
-      .expect({hasOpponentLeft:true})
-      .end(done);
+        .post('/updateFiredShot')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .send({firedPosition: [4, 4]})
+        .expect(200)
+        .expect({hasOpponentLeft:true})
+        .end(done);
     });
   });
 
@@ -457,29 +461,29 @@ describe('app', () => {
       game.updatePlayerShot(1,[3,4]);
       game.updatePlayerShot(1,[3,5]);
       request(app)
-      .get('/statusDuringOpponentTurn')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .expect(200)
-      .expect(/"status":true/)
-      .end(done);
+        .get('/statusDuringOpponentTurn')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect(/"status":true/)
+        .end(done);
     });
 
     it('should return false if my all ship has not sank', function(done) {
       request(app)
-      .get('/statusDuringOpponentTurn')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .expect(200)
-      .expect(/"status":false/)
-      .end(done);
+        .get('/statusDuringOpponentTurn')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect(/"status":false/)
+        .end(done);
     });
     it('should give hasOpponentLeft as true if opponent leaves',(done)=>{
       game.removePlayer(sessionId2);
       request(app)
-      .get('/statusDuringOpponentTurn')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .expect(200)
-      .expect('{"hasOpponentLeft":true}')
-      .end(done);
+        .get('/statusDuringOpponentTurn')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect('{"hasOpponentLeft":true}')
+        .end(done);
     });
   });
 
@@ -491,11 +495,11 @@ describe('app', () => {
       game.assignTurn();
       gamesHandler._runningGames[game.id]=game;
       request(app)
-      .get('/gameStatus')
-      .set('cookie', [`player=${sessionId}`,`gameId=${sessionId}`])
-      .expect(200)
-      .expect(/"fleet":\[]/)
-      .end(done);
+        .get('/gameStatus')
+        .set('cookie', [`player=${sessionId}`,`gameId=${sessionId}`])
+        .expect(200)
+        .expect(/"fleet":\[]/)
+        .end(done);
     });
     it('should return player\'s hit and miss details', function(done) {
       let shipInfo = {
@@ -513,28 +517,28 @@ describe('app', () => {
       game.assignFleet(sessionId, fleet);
       game.assignFleet(sessionId2, fleet);
       request(app)
-      .get('/gameStatus')
-      .set('cookie', [`player=${sessionId2}`, `gameId=${sessionId}`])
-      .expect(200)
-      .expect({
-        "fleet": [{
-          "direction": "south",
-          "name":"carrier",
-          "length":5,
-          "initialPos": [1, 2],
-          "posOfDamage": []
-        }],
-        "playerShots": {
-          "hits": [],
-          "misses": []
-        },
-        "opponentMisses": [],
-        "opponentHits": [],
-        playerName: 'arvind',
-        enemyName: 'ishu',
-        destroyedShipsCoords: []
-      })
-      .end(done);
+        .get('/gameStatus')
+        .set('cookie', [`player=${sessionId2}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect({
+          "fleet": [{
+            "direction": "south",
+            "name":"carrier",
+            "length":5,
+            "initialPos": [1, 2],
+            "posOfDamage": []
+          }],
+          "playerShots": {
+            "hits": [],
+            "misses": []
+          },
+          "opponentMisses": [],
+          "opponentHits": [],
+          playerName: 'arvind',
+          enemyName: 'ishu',
+          destroyedShipsCoords: []
+        })
+        .end(done);
     });
     it('should return player\'s hit and miss details', function(done) {
       game.addPlayer('ishu', sessionId);
@@ -542,13 +546,13 @@ describe('app', () => {
       game.assignTurn();
       gamesHandler._runningGames[game.id]=game;
       request(app)
-      .get('/gameStatus')
-      .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
-      .expect(200)
-      .expect({
-        hasOpponentLeft:true
-      })
-      .end(done);
+        .get('/gameStatus')
+        .set('cookie', [`player=${sessionId}`, `gameId=${sessionId}`])
+        .expect(200)
+        .expect({
+          hasOpponentLeft:true
+        })
+        .end(done);
     });
   });
 
@@ -559,13 +563,14 @@ describe('app', () => {
       gamesHandler.addGame(game);
       gamesHandler.startGame(game);
       request(app)
-      .get('/quit')
-      .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
-      .expect(302)
-      .expect('Location','/')
-      .end(done);
+        .get('/quit')
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
+        .expect(302)
+        .expect('Location','/')
+        .end(done);
     });
   });
+
   describe('GET /leave', () => {
     it('should cancel the game and redirect to home page', (done) => {
       game.addPlayer('arvind', sessionId);
@@ -573,11 +578,11 @@ describe('app', () => {
       gamesHandler.addGame(game);
       gamesHandler.startGame(game);
       request(app)
-      .get('/leave')
-      .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
-      .expect(302)
-      .expect('Location','/')
-      .end(done);
+        .get('/leave')
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
+        .expect(302)
+        .expect('Location','/')
+        .end(done);
     });
   });
 
@@ -605,22 +610,22 @@ describe('app', () => {
     });
     it('should return the player performance when player has won', (done) => {
       request(app)
-      .get('/getPlayerPerformance')
-      .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
-      .expect(200)
-      .expect('{"shots":3,"hits":3,"accuracy":100}')
-      .end(done);
+        .get('/getPlayerPerformance')
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
+        .expect(200)
+        .expect('{"shots":3,"hits":3,"accuracy":100}')
+        .end(done);
     });
   });
 
   describe('GET /random-setup', () => {
     it('should get random fleet positions', (done) => {
       request(app)
-      .get('/random-setup')
-      .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
-      .expect(200)
-      .expect(/"name":"carrier","direction":"/)
-      .end(done);
+        .get('/random-setup')
+        .set('cookie', [`player=${sessionId}`, `gameId=${1}`])
+        .expect(200)
+        .expect(/"name":"carrier","direction":"/)
+        .end(done);
     });
   });
 });

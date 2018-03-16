@@ -152,7 +152,7 @@ b {
   text-align:center;
   font-family: 'Coda', cursive;
 }
-#gameJoinHeading{
+.gameJoinHeading{
   color:rgb(124, 143, 155);
   background-color: rgba(53,62,77,0.46);
   font-size: 30px;

@@ -57,7 +57,7 @@ class GamesHandler {
     let hostedGames = this._hostedGames;
     return hostedGameIds.map(function (gameId) {
       let game = hostedGames[gameId];
-      return {gameId: game.id, hostName: game.hostName};
+      return {gameId: game.id,hostName: game.hostName,isClassic:game.isClassic};
     });
   }
 }

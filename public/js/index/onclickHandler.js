@@ -18,6 +18,11 @@ const hostOrJoin = function(){
   document.querySelector('#playnow').style.display='block';
 };
 
+const gameTypeAction = function(){
+  let isClassicGame = !document.querySelector('#dn').checked;
+  document.cookie = `isClassicGame=${isClassicGame}`;
+};
+
 const controlAudio = function(){
   let musicButton = document.querySelector('#music');
   let soundButton = document.querySelector('#sound');
@@ -33,6 +38,7 @@ const controlAudio = function(){
 };
 
 const addOnclickListeners = function (){
+  document.querySelector('#dn').onclick = gameTypeAction;
   document.querySelector('#aboutGameButton').onclick = aboutGameAction;
   document.querySelector('#playnowButton').onclick = hostOrJoin;
   document.querySelector('#settingsButton').onclick = settingsAction;
