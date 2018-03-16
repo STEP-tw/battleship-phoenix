@@ -1,6 +1,19 @@
 const addListener = function() {
   let readyButton = utils.getReadyButton();
   readyButton.onclick = handleReady;
+  document.getElementById('setup').onclick = randomSetup;
+};
+
+const drawShipsRandomly = function(){
+  let fleet = utils.getResponse(this);
+  let shipLength = {carrier :5,battleship:4,cruiser:3,destroyer:2,submarine:3};
+  fleet.forEach((ship)=>{
+    let length = shipLength[ship.name];
+    direction = ship.direction;
+    document.getElementById(ship.name).click();
+    let initialPos = generateCellId('og',ship.initialPos);
+    document.getElementById(initialPos).click();
+  });
 };
 
 const handleReady = function() {

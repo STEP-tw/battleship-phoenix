@@ -12,7 +12,7 @@ gameSpecs.getShipSizes = function () {
 };
 
 gameSpecs.getDirections = function () {
-  let validDirections = ["south", "west", "east", "north"];
+  let validDirections = ['north','south','west','east'];
   return validDirections;
 };
 
@@ -21,4 +21,13 @@ gameSpecs.getShipLength = function(shipName) {
   return shipSizes[shipName];
 };
 
+gameSpecs.getShipNames = function () {
+  let shipNames = [
+    {name:'carrier'},
+    {name:'cruiser'},
+    {name:'destroyer'},
+    {name:'battleship'},
+    {name:'submarine'}];
+  return shipNames;
+};
 module.exports = gameSpecs;

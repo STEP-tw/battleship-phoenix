@@ -83,7 +83,7 @@ describe('Validator',function(){
     assert.deepEqual(validator.validShipSizes,expected);
   });
   it('validator.validDirections should return validShipSizes',()=>{
-    let expected = ["south", "west", "east", "north"];
+    let expected = ['north','south','west','east'];
     assert.deepEqual(validator.validDirections,expected);
   });
 

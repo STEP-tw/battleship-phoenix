@@ -1,6 +1,7 @@
 let prefix = '../utils/';
 const utils = require(`${prefix}utils.js`);
 const Validator = require('../models/validator.js');
+const RandomPositioner = require('../models/random_positioner.js');
 const handleTresspassing = function(req, res, next) {
   if (utils.isUserTresspassing(req)) {
     res.redirect('index.html');
@@ -175,6 +176,12 @@ const getPlayerPerformance = function(req,res) {
   res.json(performanceInfo);
 };
 
+const randomSetup = function (req,res){
+  let randomPositioner = new RandomPositioner(0,10);
+  let fleet = randomPositioner.genValidRandomFleet();
+  res.json(fleet);
+};
+
 module.exports = {
   cancelGame,
   hostGame,
@@ -192,5 +199,6 @@ module.exports = {
   musicController,
   soundController,
   getAudioStatus,
-  getPlayerPerformance
+  getPlayerPerformance,
+  randomSetup
 };

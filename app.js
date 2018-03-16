@@ -38,6 +38,7 @@ app.get('/getHostedGames',handlers.getHostedGames);
 app.get('/audioStatus',handlers.getAudioStatus);
 app.get('/leave',handlers.leaveGame);
 app.get('/getPlayerPerformance',handlers.getPlayerPerformance);
+app.get('/random-setup',handlers.randomSetup);
 
 app.post('/updateFiredShot',isAlreadyFired,statusAfterShotIsFired);
 app.post('/start-game',handlers.loadFleet);

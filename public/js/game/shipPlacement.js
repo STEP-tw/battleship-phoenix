@@ -4,6 +4,13 @@ let direction = 'south';
 let shipsHeadPositions = [];
 let isPlaced = false;
 
+const randomSetup = function(){
+  let gridCoords = document.querySelectorAll('#oceanGrid td');
+  gridCoords.forEach(clearCell);
+  shipsHeadPositions = [];
+  utils.sendAjax(utils.get(), "/random-setup", drawShipsRandomly);
+};
+
 
 const remHighlightOnShips = function(){
   let allShipCells = getPlacedShipsCells();

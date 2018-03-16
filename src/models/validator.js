@@ -43,8 +43,7 @@ class Validator {
   isValidFleet (allShips) {
     return this.areShipNamesValid(allShips)
     && this.areDirecsValid(allShips)
-    && this.isValidFleetPositions(allShips)
-    && (!lib.doesShipsOverlap(allShips));
+    && this.isValidPosition(allShips);
   }
 
   areDirecsValid (fleet) {
@@ -61,6 +60,11 @@ class Validator {
   isCoordInRange (coord) {
     let lb = this.lowerBoundary, ub = this.upperBoundary;
     return lib.inRange(lb,ub,coord[0]) && lib.inRange(lb,ub,coord[1]);
+  }
+
+  isValidPosition(allShips){
+    return this.isValidFleetPositions(allShips)
+    && !lib.doesShipsOverlap(allShips);
   }
 }
 

@@ -58,14 +58,23 @@ const rotateShip = function (event) {
   addClickForReposition(event,ship.headPos);
 };
 
+const clearCell = function(cell){
+  cell.style.backgroundImage = null;
+  cell.checked = false;
+  cell.onmouseover=showOccupiedPosition;
+  cell.onmouseout=removeHighlight;
+  cell.onclick=placeShip;
+};
+
 const removeShip = function (shipCoords) {
   shipCoords.forEach((coord) => {
     let cellId = document.getElementById(generateCellId("og", coord));
-    cellId.style.backgroundImage = null;
-    cellId.checked = false;
-    cellId.onmouseover=showOccupiedPosition;
-    cellId.onmouseout=removeHighlight;
-    cellId.onclick=placeShip;
+    clearCell(cellId);
+    // cellId.style.backgroundImage = null;
+    // cellId.checked = false;
+    // cellId.onmouseover=showOccupiedPosition;
+    // cellId.onmouseout=removeHighlight;
+    // cellId.onclick=placeShip;
   });
 };
 

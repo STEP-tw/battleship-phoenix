@@ -105,4 +105,16 @@ describe('Validator lib',()=>{
     assert.deepEqual(lib.getShipName(ship),'carrier');
   });
 
+  describe('randomIntBetween',()=>{
+    it('should return 4 as random number',()=>{
+      let number = lib.randomIntBetween(0,10,()=>(0.4));
+      assert.equal(number,4);
+    });
+
+    it('should return a random number',()=>{
+      let number = lib.randomIntBetween(0,4);
+      assert.notEqual(number,4);
+    });
+  });
+
 });

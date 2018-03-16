@@ -3,6 +3,11 @@ const gameSpecs = require('../utils/gameSpecifications.js');
 
 const lib = {};
 
+lib.randomIntBetween = function(min,max,random = Math.random){
+  return Math.floor(random() * (max - min)) + min;
+};
+
+
 lib.inRange = function (lowerBdry,upperBdry,coord) {
   return coord >= lowerBdry && coord < upperBdry;
 };

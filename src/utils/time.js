@@ -5,5 +5,5 @@ exports.timeStamp = () => {
 
 exports.generateSessionId = () =>{
   let date = new Date();
-  return date.getTime( );
+  return date.getTime();
 };
