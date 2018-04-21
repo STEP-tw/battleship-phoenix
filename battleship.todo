@@ -1,46 +1,8 @@
-[ishu anjum] :
+ num |    name    
+-----+------------
+  12 | dhana
+ 105 | nothing
+ 107 | something
+ 108 | everything
+(4 rows)
 
-story name : [Player 1 is waiting]
-tasks :
-
-                 ✔ A requestHandler which responds the player count. @done(2018-02-15 15:34) @project(tasks )
-                 ✔ A requestHandler to serve the game page. @done(2018-02-15 15:34) @project(tasks )
-                 ✔ Client side : Function that will ask about the opponent's presence. @done(2018-02-15 18:00) @project(tasks )
-                 ✔ Client side : Function that will update the game page. @done(2018-02-15 18:00) @project(tasks )
-
-
-[arvind sudhin] :
-
-story name : [view Battleship]
-
-tasks :
-
-    ✔ made a list of contains ship names. @done(2018-02-16 12:06) @project(tasks )
-    ✔ put it into dock. @done(2018-02-16 12:06) @project(tasks )
-
-
-    [arvind sudhin] :
-
-    story name : [view possible ship placement area for any ship at center]
-
-    tasks :
-
-    ✔ implement position system for getting ship's occupying area. @done(2018-02-16 15:02) @project(tasks )
-    ✔ assume the ship size is 3. @done(2018-02-16 15:24) @project(tasks )
-    ✔ find the cell id on mouseover the cell. @done(2018-02-17 10:27) @project(tasks )
-    ✔ generate ships co-ordinates. @done(2018-02-17 10:27) @project(tasks )
-    ✔ highlight that cells. @done(2018-02-17 10:27) @project(tasks )
-    ✔ highlight the cells according to the ship length. @done(2018-02-17 10:27) @project(tasks )
-    [arvind / sudhin] :
-
-    story name : [place a ship at center]
-
-    tasks :
-
-    ✔ onclicking on any ship in dock, ocean grid should be active to listen click. @done(2018-02-17 13:30) @project(tasks )
-    ✔ onclicking on any cell on ocean grid should highlight that ship on ocean gird @done(2018-02-17 13:30) @project(tasks )
-    ☐ store the head position of placed ship
-    ✔ ship will disappear from dock after it placing on ocean grid. @done(2018-02-17 13:30) @project(tasks )
-    ✔ after placed all the ships start game button. @done(2018-02-17 13:30) @project(tasks )
-    bug :
-    ☐ submarine won't disappear and you can place 3 size ship as many as you want.
