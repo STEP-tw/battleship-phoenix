@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "nodemon": "nodemon -w src -w server.js -w app.js",
-    "test": "mocha --recursive"
+    "test": "npm i -g mocha && mocha --recursive"
   },
   "repository": {
     "type": "git",
