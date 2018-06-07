@@ -54,6 +54,7 @@ const viewFleetAndPlayerDetails = function(){
   document.querySelector('#targetGridBox').style.display = 'block';
   document.querySelector('.enemyFleet').style.display = 'block';
 };
+
 const checkFleetStatus=function(){
   let response=utils.getResponse(this);
   if (response.status) {
@@ -65,6 +66,7 @@ const checkFleetStatus=function(){
   }
   utils.updateMessage('Invalid fleet position');
 };
+
 const loadFleet = function() {
   let fleet = utils.toS({
     fleetDetails: shipsHeadPositions

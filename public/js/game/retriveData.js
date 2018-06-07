@@ -48,9 +48,10 @@ const updateDisplay = function() {
   updateSankShips(destroyedShipsCount, destroyedShipsCoords);
   if (fleet && fleet.length != 0) {
     document.getElementsByClassName('shipsBlock')[0].style.display = 'none';
+    document.querySelector('#setup').style.display = 'none';
     document.querySelector('#ready').style.display = 'none';
     document.querySelector('#resetShips').style.display = 'none';
-    utils.sendAjax(utils.get(), '/arePlayersReady', handleStartGame);
+    utils.poll(utils.get(), '/arePlayersReady', handleStartGame);
     document.querySelector('#leaveGame').style.display = 'none';
   }
   fleet.map(displayShip);
