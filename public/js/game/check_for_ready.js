@@ -42,6 +42,7 @@ const gameStarts = function(response) {
   let targetGrid = utils.getTargetGrid();
   utils.updateMessage("Game Started");
   document.querySelector("#leaveGame").style.display = 'block';
+  document.querySelector('#setup').style.display = 'none';
   handleTurn(myTurn);
   dontAllowHover('og');
   viewFleetAndPlayerDetails();
