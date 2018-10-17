@@ -4,4 +4,4 @@
 
 #### then run command   ```sh bin/setup.sh```
 
-#### here is the link to the game https://battleship-phoenix.herokuapp.com
+<!-- #### here is the link to the game https://battleship-phoenix.herokuapp.com -->
